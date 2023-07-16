@@ -1,0 +1,8 @@
+flask
+Werkzeug
+Jinja2
+itangerous
+click
+blinker
+colorama
+MarkupSafe
