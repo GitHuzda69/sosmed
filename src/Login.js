@@ -1,4 +1,3 @@
-// src/Login.js
 import React, { useState } from 'react';
 import axios from 'axios';
 
@@ -6,38 +5,36 @@ const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post('/api/login', {
-        username,
-        password,
+
+    const userData = {
+      username,
+      password
+    };
+
+    axios.post('http://localhost:5000/login', userData)
+      .then((response) => {
+        console.log(response.data.message); // Untuk sementara, tampilkan pesan dari server di konsol
+        // Lakukan logika untuk menangani autentikasi sesuai dengan respons dari server
+      })
+      .catch((error) => {
+        console.error('Error saat login: ', error);
+        // Lakukan penanganan error di sini
       });
-      console.log(response.data); // You can handle authentication logic here
-    } catch (error) {
-      console.error(error);
-    }
   };
 
   return (
     <div>
-      <h1>Login Page</h1>
-      <form onSubmit={handleLogin}>
+      <h2>Halaman Login</h2>
+      <form onSubmit={handleSubmit}>
         <div>
           <label>Username:</label>
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
+          <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
         </div>
         <div>
           <label>Password:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
         </div>
         <button type="submit">Login</button>
       </form>
