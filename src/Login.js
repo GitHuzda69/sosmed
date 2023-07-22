@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
+import './App.css'; // Tambahkan file CSS yang akan digunakan
+
 import axios from 'axios';
 
-const Login = () => {
+const App = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -20,26 +23,32 @@ const Login = () => {
       })
       .catch((error) => {
         console.error('Error saat login: ', error);
-        // Lakukan penanganan error di sini
+        setError('Username atau password salah'); // Set pesan error jika login gagal
       });
   };
 
   return (
-    <div>
+    <div className="login-container">
       <h2>Halaman Login</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
+      <form onSubmit={handleSubmit} className="login-form">
+        <div className="form-group">
           <label>Username:</label>
           <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
         </div>
-        <div>
+        <div className="form-group">
           <label>Password:</label>
           <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
         </div>
-        <button type="submit">Login</button>
+        {error && <p className="error-message">{error}</p>}
+        <button type="submit" className="btn">Login</button>
       </form>
+      <div className="social-icons">
+        <i className="fa fa-facebook"></i>
+        <i className="fa fa-twitter"></i>
+        <i className="fa fa-instagram"></i>
+      </div>
     </div>
   );
 };
 
-export default Login;
+export default App;
