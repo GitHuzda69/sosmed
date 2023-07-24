@@ -3,7 +3,7 @@ import './App.css'; // Tambahkan file CSS yang akan digunakan
 
 import axios from 'axios';
 
-const App = () => {
+const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -40,15 +40,16 @@ const App = () => {
           <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
         </div>
         {error && <p className="error-message">{error}</p>}
-        <button type="submit" className="btn">Login</button>
+        <button type="submit" className="btn" href="home.js">Login</button>
       </form>
       <div className="social-icons">
         <i className="fa fa-facebook"></i>
         <i className="fa fa-twitter"></i>
         <i className="fa fa-instagram"></i>
       </div>
+      <a href='home.js'>skip</a>
     </div>
   );
 };
 
-export default App;
+export default Login;
