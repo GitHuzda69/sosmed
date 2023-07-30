@@ -6,8 +6,8 @@
   height: 100vh;
 }
 
-.center {
-  align-self: center;
+.white {
+    color: #ccc;
 }
 
 .login-form {

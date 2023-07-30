@@ -1,6 +1,6 @@
-import React, {useState} from 'react'
+import React, {useState} from 'react';
 import './App.css';
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom';
 import Validation from './SignupValidation';
 import axios from 'axios';
 
@@ -9,25 +9,26 @@ function Signup() {
         username: '',
         email: '',
         password: ''
-    })
+    });
     const navigate = useNavigate();
-    const [errors, setErrors] = useState({})
+    const [errors, setErrors] = useState({});
     const handleInput = (event) => {
-        setValues(prev => ({...prev, [event.target.name]: [event.target.value]}))
-    }
+        setValues((prev) => ({ ...prev, [event.target.name]: event.target.value }));
+    };
 
     const handleSubmit = (event) => {
         event.preventDefault();
         const err = Validation(values);
         setErrors(err);
-        if(errors.name === "" && errors.email === "" && errors.password === "") {
-            axios.post('http://localhost:8081/signup', values)
-            .then(res => {
-                navigate('/');
-            })
-            .catch(err => console.log(err));
-        } 
-    }
+        if (err.username === '' && err.email === '' && err.password === '') {
+            axios
+                .post('http://localhost:8081/signup', values)
+                .then((res) => {
+                    navigate('/');
+                })
+                .catch((err) => console.log(err));
+        }
+    };
     
     return (
         <div className='login-container'>
@@ -62,4 +63,4 @@ function Signup() {
     )
 }
 
-export default Signup
+export default Signup;
