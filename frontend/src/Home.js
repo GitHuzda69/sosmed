@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./App.css";
+import { Link} from 'react-router-dom';
 
 function Home() {
   const [posts, setPosts] = useState([
@@ -54,7 +55,7 @@ function Home() {
             <li>Home</li>
             <li>Profile</li>
             <li>Messages</li>
-            <li>Logout</li>
+            <Link to="/" className="white">Logout</Link>
           </ul>
         </nav>
       </header>
