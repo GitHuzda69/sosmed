@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "./App.css";
-import { Link} from 'react-router-dom';
+import { Link } from "react-router-dom";
+import Sidebar from "./component/navbar/Sidebar";
+import SearchBar from "./component/search/Search";
 
 function Home() {
   const [posts, setPosts] = useState([
@@ -46,19 +48,14 @@ function Home() {
     );
   };
 
+  const handleSearch = (searchTerm) => {
+    console.log("Pencarian:", searchTerm);
+  };
+
   return (
     <div className="app">
-      <header className="header">
-        <h1>Social Media</h1>
-        <nav>
-          <ul>
-            <li>Home</li>
-            <li>Profile</li>
-            <li>Messages</li>
-            <Link to="/" className="white">Logout</Link>
-          </ul>
-        </nav>
-      </header>
+      <Sidebar />
+      <SearchBar onSearch={handleSearch} />
       <main className="main">
         <div className="post-form">
           <h2>Create New Post</h2>

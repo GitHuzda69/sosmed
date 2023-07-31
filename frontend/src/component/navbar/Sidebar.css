@@ -1,0 +1,26 @@
+.sidebar {
+    width: 50px;
+    height: 70%;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    top: 0;
+    position: absolute;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+  }
+  
+  button {
+    margin-bottom: 5px;
+    padding: 5px;
+    border: none;
+    background-color: #ffffff;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #f1f1f1;
+    border-radius: 15%;
+    transition: all 0.3s ease;
+  }
+  
