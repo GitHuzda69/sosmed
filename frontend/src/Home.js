@@ -6,18 +6,7 @@ import SearchBar from "./component/search/Search";
 
 function Home() {
   const [posts, setPosts] = useState([
-    {
-      id: 1,
-      author: "John Doe",
-      content: "This is my first post! #excited",
-      likes: 5,
-    },
-    {
-      id: 2,
-      author: "Jane Smith",
-      content: "Hello, world! #firstpost",
-      likes: 10,
-    },
+    
   ]);
 
   const [newPost, setNewPost] = useState({ author: "", content: "" });
