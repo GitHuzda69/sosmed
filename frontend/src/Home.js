@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import "./App.css";
 import { Icon } from "@iconify/react";
-import { Link } from "react-router-dom";
 import Sidebar from "./component/navbar/Sidebar";
 import SearchBar from "./component/search/Search";
 
