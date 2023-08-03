@@ -4,7 +4,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Sebelum memulai PASTIKAN
 
-### 'npm i'
+### `npm i`
 
 In the project directory, you can run:
 
