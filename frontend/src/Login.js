@@ -36,8 +36,15 @@ function Login() {
     <div className="login-container">
       <div className="login-form">
         <form action="" onSubmit={handleSubmit}>
-          <div className="form-group">
-            <strong>
+          <div
+            className="form-group"
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <strong style={{ paddingBottom: "10px" }}>
               <label>Username</label>
             </strong>
             <input
@@ -50,8 +57,15 @@ function Login() {
               <span className="error-message">{errors.username}</span>
             )}
           </div>
-          <div className="form-group">
-            <strong>
+          <div
+            className="form-group"
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <strong style={{ paddingBottom: "10px" }}>
               <label>Password</label>
             </strong>
             <input
@@ -63,17 +77,33 @@ function Login() {
             {errors.password && (
               <span className="error-message">{errors.password}</span>
             )}
+            <button
+              type="submit"
+              className="btn-white"
+              style={{ marginTop: "20px" }}
+            >
+              Log In
+            </button>
           </div>
-          <button type="submit" className="btn-white">
-            Log In
-          </button>
-          <p>Doesn't have an account?</p>
-          <Link to="/signup" className="btn-red center">
-            Sign Up
-          </Link>
-          <Link to="/home" className="">
-            Skip
-          </Link>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <p>Doesn't have an account?</p>
+            <Link
+              to="/signup"
+              className="btn-red center"
+              style={{ width: "60px" }}
+            >
+              Sign Up
+            </Link>
+            <Link to="/home" className="">
+              Skip
+            </Link>
+          </div>
         </form>
       </div>
       <div className="social-icons">

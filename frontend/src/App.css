@@ -16,6 +16,7 @@
   align-items: center;
   background-color: #f1f1f1;
   padding: 20px;
+  padding-bottom: 40px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 300px;
@@ -194,8 +195,9 @@ nav li:hover {
 }
 
 .post {
-  border: 1px solid #ccc;
+  border: 2px solid #ccc;
   padding: 10px;
+  border-radius: 10px;
 }
 
 .likes {
@@ -205,16 +207,19 @@ nav li:hover {
 }
 
 .likes button {
+  display: inline-flex;
   background-color: #4caf50;
   color: white;
   border: none;
   padding: 6px 12px;
   cursor: pointer;
   transition: background-color 0.3s;
+  border-radius: 2px;
 }
 
 .likes button:hover {
   background-color: #45a049;
+  border-radius: 5px;
 }
 
 .likes span {

@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 import "./App.css";
-import { Link } from "react-router-dom";
+import { Icon } from "@iconify/react";
 import Sidebar from "./component/navbar/Sidebar";
 import SearchBar from "./component/search/Search";
 
 function Home() {
-  const [posts, setPosts] = useState([
-    
-  ]);
+  const [posts, setPosts] = useState([]);
 
   const [newPost, setNewPost] = useState({ author: "", content: "" });
 
@@ -68,10 +66,23 @@ function Home() {
         <div className="post-list">
           {posts.map((post) => (
             <div className="post" key={post.id}>
-              <h2>{post.author}</h2>
-              <p>{post.content}</p>
+              <div className="post-content">
+                <h2>{post.author}</h2>
+                <p>{post.content}</p>
+              </div>
               <div className="likes">
-                <button onClick={() => handleLike(post.id)}>Like</button>
+                <button onClick={() => handleLike(post.id)}>
+                  Like
+                  <Icon
+                    icon="iconamoon:like-fill"
+                    width={18}
+                    height={18}
+                    style={{
+                      marginLeft: "1px",
+                      marginTop: "-2px",
+                    }}
+                  />
+                </button>
                 <span>{post.likes} Likes</span>
               </div>
             </div>
