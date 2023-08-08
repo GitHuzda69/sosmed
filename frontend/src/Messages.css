@@ -3,7 +3,7 @@
   font-family: "Inter", sans-serif;
   font-weight: bold;
   font-size: 40px;
-  margin-top: 30px;
+  margin-top: 10px;
 }
 .message-form{
   position: fixed;
@@ -51,6 +51,7 @@
   flex-direction: column;
   flex-grow: 1;
   padding-left: 50px;
+  margin-bottom: 200px;
 }
 .message{
   display: flex;
@@ -71,9 +72,14 @@
 }
 .message-content h2{
   margin-top: -35px;
+  font-family: "Inter", sans-serif;
+  font-weight: bold;
+  text-decoration: underline;
 }
 .message-content p{
-  margin-top: -20px;
+  margin-top: -15px;
+  text-decoration: underline;
+  font-family: "Inter", sans-serif;
 }
 
 .avatar {

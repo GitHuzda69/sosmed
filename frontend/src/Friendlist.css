@@ -1,0 +1,48 @@
+.friend-list {
+    display: flex;
+    flex-direction: column;
+    margin-left: 130px;
+  }
+.friend-list h2{
+    font-family: "Inter", sans-serif;
+    font-weight: bold;
+    font-size: 40px;
+    margin-top: 10px;
+}
+  
+  .friend {
+    display: flex;
+    align-items: center;
+    margin-bottom: 50px;
+  }
+  
+  .avatar {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    margin-right: 10px;
+    border: 1px rgb(241, 241, 241) solid;
+  }
+  
+  .friend-info {
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+  }
+
+  .friend-info h3{
+    font-family: "Inter", sans-serif;
+    font-weight: bold;
+    font-size: 20px;
+    position: relative;
+    margin-top: -20px;
+    text-decoration: underline;
+  }
+  .friend-info p{
+    font-family: "Inter", sans-serif;
+    font-size: 15px;
+    position: relative;
+    margin-top: -10px;
+    text-decoration: underline;
+  }
+  

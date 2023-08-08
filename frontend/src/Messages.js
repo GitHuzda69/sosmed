@@ -69,12 +69,7 @@ function Friendslist() {
               style={{ height: textareaHeight, maxHeight: maxTextareaHeight }}
             />
             <button className="post-button" type="submit">
-              <Icon
-                icon="solar:map-arrow-up-bold"
-                rotate={1}
-                height={25}
-                width={25}
-              />
+              <Icon icon="fluent:send-28-filled" height={25} width={25} />
             </button>
             <input
               className="author"
