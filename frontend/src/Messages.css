@@ -22,6 +22,7 @@
   margin-left: 100px;
   margin-bottom: -10px;
   background-color: lightgray;
+  border-radius: 10px;
 }
 .author:focus {
   border-color: grey;
@@ -34,7 +35,8 @@
   resize: none;
   overflow: hidden;
   background-color: lightgray;
-  border-radius: 5px;
+  border: none;
+  border-radius: 10px;
   padding: 10px;
 }
 .content-text:focus {
@@ -52,6 +54,7 @@
   flex-grow: 1;
   padding-left: 50px;
   margin-bottom: 200px;
+  margin-top: 20px;
 }
 .message{
   display: flex;
