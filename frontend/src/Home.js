@@ -1,13 +1,31 @@
-import React, { useState } from "react";
-import "./App.css";
+import React, { useState, useRef, useEffect } from "react";
 import { Icon } from "@iconify/react";
 import Sidebar from "./component/navbar/Sidebar";
 import SearchBar from "./component/search/Search";
+import profilimage from "./assets/profil.jpg";
+import "./Messages.css";
+import "./App.css";
 
 function Home() {
   const [posts, setPosts] = useState([]);
 
   const [newPost, setNewPost] = useState({ author: "", content: "" });
+  const [textareaHeight] = useState("auto");
+  const [maxTextareaHeight] = useState("50px");
+  const textareaRef = useRef(null);
+
+  const handleTextareaChange = () => {
+    const textarea = textareaRef.current;
+    textarea.style.height = "auto";
+    textarea.style.height = textarea.scrollHeight + "px";
+
+    if (textarea.scrollHeight > parseInt(maxTextareaHeight)) {
+      textarea.style.overflowY = "scroll";
+      textarea.style.height = maxTextareaHeight;
+    } else {
+      textarea.style.overflowY = "hidden";
+    }
+  };
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -26,6 +44,11 @@ function Home() {
       setNewPost({ author: "", content: "" });
     }
   };
+  useEffect(() => {
+    const textarea = textareaRef.current;
+    textarea.style.width = "1000px";
+    textarea.style.width = textarea.scrollWidth + "px";
+  }, [newPost.content]);
 
   const handleLike = (id) => {
     setPosts((prevPosts) =>
@@ -44,32 +67,67 @@ function Home() {
       <Sidebar />
       <SearchBar onSearch={handleSearch} />
       <main className="main">
-        <div className="post-form">
-          <h2>Create New Post</h2>
+        <div className="message-form">
+          <div className="button-container">
+            <button className="button-content">
+              <Icon icon="oi:share" width={30} height={30} />
+            </button>
+            <button className="button-content">
+              <Icon icon="ci:download" width={30} height={30} />
+            </button>
+            <button className="button-content">
+              <Icon icon="mdi:heart-outline" width={30} height={30} />
+            </button>
+            <button className="button-content">
+              <Icon icon="ri:share-line" width={30} height={30} />
+            </button>
+            <button className="button-content">
+              <Icon
+                icon="radix-icons:dots-vertical"
+                rotate={1}
+                width={30}
+                height={30}
+              />
+            </button>
+          </div>
           <form onSubmit={handleSubmit}>
+            <div className="avatar2">
+              <img src={profilimage} alt="Avatar" />
+            </div>
+            <textarea
+              className="content-text"
+              ref={textareaRef}
+              name="content"
+              placeholder="What's on your mind?"
+              value={newPost.content}
+              onChange={handleInputChange}
+              onInput={handleTextareaChange}
+              style={{ height: textareaHeight, maxHeight: maxTextareaHeight }}
+            />
+            <button className="post-button" type="submit">
+              <Icon icon="fluent:send-28-filled" height={25} width={25} />
+            </button>
             <input
+              className="author"
               type="text"
               name="author"
               placeholder="Your Name"
               value={newPost.author}
               onChange={handleInputChange}
             />
-            <textarea
-              name="content"
-              placeholder="What's on your mind?"
-              value={newPost.content}
-              onChange={handleInputChange}
-            />
-            <button type="submit">Post</button>
           </form>
         </div>
-        <div className="post-list">
+        <div className="message-list">
           {posts.map((post) => (
-            <div className="post" key={post.id}>
-              <div className="post-content">
+            <div className="message" key={post.id}>
+              <div className="avatar">
+                <img src={profilimage} alt="Avatar" />
+              </div>
+              <div className="message-content">
                 <h2>{post.author}</h2>
                 <p>{post.content}</p>
               </div>
+              <span className="span-likes">{post.likes} Likes</span>
               <div className="likes">
                 <button onClick={() => handleLike(post.id)}>
                   Like
@@ -83,7 +141,6 @@ function Home() {
                     }}
                   />
                 </button>
-                <span>{post.likes} Likes</span>
               </div>
             </div>
           ))}

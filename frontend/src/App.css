@@ -204,6 +204,7 @@ nav li:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: 100px;
 }
 
 .likes button {
@@ -214,15 +215,36 @@ nav li:hover {
   padding: 6px 12px;
   cursor: pointer;
   transition: background-color 0.3s;
-  border-radius: 2px;
+  border-radius: 5px;
+  margin-right: 20px;
 }
 
 .likes button:hover {
   background-color: #45a049;
-  border-radius: 5px;
+  border-radius: 10px;
 }
 
-.likes span {
-  margin-left: 10px;
+.span-likes {
+  position: absolute;
+  margin-left: 700px;
+  margin-bottom: -95px;
   font-weight: bold;
+}
+
+.button-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  gap: 10px; 
+  justify-content: center;
+  align-items: center;
+  margin-left: 460px;
+}
+
+.button-content{
+  width: 50px;
+  border-radius: 15px;
+}
+.button-content:hover{
+  background-color: #f1f1f1;
+  border-radius: 20px;
 }
