@@ -200,35 +200,144 @@ nav li:hover {
   border-radius: 10px;
 }
 
+.post-content{
+  background-color: rgb(255, 255, 255);
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column; 
+  margin-left: 5px;
+}
+.post-content h2{
+  margin-top: 0px;
+  font-family: "Inter", sans-serif;
+  font-weight: bold;
+  text-decoration: underline;
+}
+.post-content p{
+  margin-top: -10px;
+  text-decoration: underline;
+  font-family: "Inter", sans-serif;
+}
+
+.post-avatar {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  overflow: hidden; 
+  margin-right: 12px;
+  margin-left: 5px;
+  margin-top: -30px;
+}
+
+.post-avatar img {
+  width: 100%; 
+  height: 100%;
+  object-fit: cover;
+}
+.message-list-and-comments {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+.comments-section{
+  flex: 1;
+}
+
+.button {
+  display: flex;
+  flex-direction: row;
+}
+
+.likes-container {
+  display: flex;
+  flex-direction: row;
+}
+
 .likes {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 100px;
 }
 
 .likes button {
   display: inline-flex;
-  background-color: #4caf50;
   color: white;
   border: none;
   padding: 6px 12px;
   cursor: pointer;
   transition: background-color 0.3s;
   border-radius: 5px;
-  margin-right: 20px;
+  margin-right: 2px;
+  transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;
 }
-
 .likes button:hover {
-  background-color: #45a049;
-  border-radius: 10px;
+  border-radius: 25px;
+}
+.likes.clicked {
+  transform: scale(1.1);
 }
 
-.span-likes {
-  position: absolute;
-  margin-left: 700px;
-  margin-bottom: -95px;
-  font-weight: bold;
+
+.likes span{
+  margin-top: -6px;
+  margin-left: 0px;
+  margin-right: 3px;
+}
+
+.comment {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 10px;
+}
+
+.comment button {
+  display: inline-flex;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  border-radius: 5px;
+  margin-right: -1px;
+}
+
+.comment button:hover {
+  border-radius: 25px;
+}
+
+.comment span{
+  margin-top: -6px;
+  margin-left: 0px;
+  margin-right: 3px;
+}
+
+.Shares {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 10px;
+}
+
+.Shares button {
+  display: inline-flex;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  border-radius: 5px;
+  margin-right: -1px;
+}
+
+.Shares button:hover {
+  border-radius: 25px;
+}
+
+.Shares span{
+  margin-top: -6px;
+  margin-left: 0px;
+  margin-right: 3px;
 }
 
 .button-container {

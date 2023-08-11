@@ -8,11 +8,12 @@ import "./App.css";
 
 function Home() {
   const [posts, setPosts] = useState([]);
-
   const [newPost, setNewPost] = useState({ author: "", content: "" });
   const [textareaHeight] = useState("auto");
   const [maxTextareaHeight] = useState("50px");
   const textareaRef = useRef(null);
+  const [likeStatus, setLikeStatus] = useState({});
+  const [selectedCommentPostId, setSelectedCommentPostId] = useState(null);
 
   const handleTextareaChange = () => {
     const textarea = textareaRef.current;
@@ -31,19 +32,48 @@ function Home() {
     const { name, value } = event.target;
     setNewPost({ ...newPost, [name]: value });
   };
+  const handleComment = (postId) => {
+    if (selectedCommentPostId === postId) {
+      setSelectedCommentPostId(null);
+    } else {
+      setSelectedCommentPostId(postId);
+    }
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
     if (newPost.author && newPost.content) {
-      const newPostWithId = {
-        ...newPost,
-        id: Date.now(),
-        likes: 0,
-      };
-      setPosts([...posts, newPostWithId]);
+      let updatedPosts = [...posts];
+      if (selectedCommentPostId !== null) {
+        updatedPosts = updatedPosts.map((post) =>
+          post.id === selectedCommentPostId
+            ? {
+                ...post,
+                comments: [
+                  ...(post.comments || []),
+                  {
+                    id: Date.now(),
+                    author: newPost.author,
+                    content: newPost.content,
+                  },
+                ],
+              }
+            : post
+        );
+      } else {
+        const newPostWithId = {
+          ...newPost,
+          id: Date.now(),
+          likes: 0,
+          comments: [],
+        };
+        updatedPosts.push(newPostWithId);
+      }
+      setPosts(updatedPosts);
       setNewPost({ author: "", content: "" });
     }
   };
+
   useEffect(() => {
     const textarea = textareaRef.current;
     textarea.style.width = "1000px";
@@ -52,9 +82,17 @@ function Home() {
 
   const handleLike = (id) => {
     setPosts((prevPosts) =>
-      prevPosts.map((post) =>
-        post.id === id ? { ...post, likes: post.likes + 1 } : post
-      )
+      prevPosts.map((post) => {
+        if (post.id === id) {
+          const newLikes =
+            post.likes === 0 ? 1 : post.likes === 1 ? 0 : post.likes;
+          const newStatus = { ...likeStatus };
+          newStatus[id] = newLikes > 0;
+          setLikeStatus(newStatus);
+          return { ...post, likes: newLikes };
+        }
+        return post;
+      })
     );
   };
 
@@ -98,7 +136,11 @@ function Home() {
               className="content-text"
               ref={textareaRef}
               name="content"
-              placeholder="What's on your mind?"
+              placeholder={
+                selectedCommentPostId !== null
+                  ? "Write a comment..."
+                  : "What's on your mind?"
+              }
               value={newPost.content}
               onChange={handleInputChange}
               onInput={handleTextareaChange}
@@ -117,33 +159,98 @@ function Home() {
             />
           </form>
         </div>
-        <div className="message-list">
-          {posts.map((post) => (
-            <div className="message" key={post.id}>
-              <div className="avatar">
-                <img src={profilimage} alt="Avatar" />
+        <div className="message-list-and-comments">
+          <div className="message-list">
+            {posts.map((post) => (
+              <div className="message" key={post.id}>
+                <div className="post-avatar">
+                  <img src={profilimage} alt="Avatar" />
+                </div>
+                <div className="post-container">
+                  <div className="post-content">
+                    <h2>{post.author}</h2>
+                    <p>{post.content}</p>
+                  </div>
+                  <div className="button">
+                    <div className="likes-container">
+                      <div
+                        className={`likes ${
+                          likeStatus[post.id] ? "clicked" : ""
+                        }`}
+                      >
+                        <button onClick={() => handleLike(post.id)}>
+                          <Icon
+                            icon={
+                              likeStatus[post.id]
+                                ? "mdi:heart"
+                                : "mdi:heart-outline"
+                            }
+                            width={20}
+                            height={20}
+                            color={likeStatus[post.id] ? "red" : "black"}
+                            style={{
+                              marginLeft: "-5px",
+                              marginRight: "-5px",
+                            }}
+                          />
+                        </button>
+                        <span>{post.likes} Likes</span>
+                      </div>
+                      <div
+                        className="comment"
+                        onClick={() => handleComment(post.id)}
+                      >
+                        <button>
+                          <Icon
+                            icon="majesticons:comment-line"
+                            width={20}
+                            height={20}
+                            color="black"
+                            style={{
+                              marginLeft: "-5px",
+                              marginRight: "-5px",
+                            }}
+                          />
+                        </button>
+                        <span>Comments</span>
+                      </div>
+                      <div className="Shares">
+                        <button>
+                          <Icon
+                            icon="majesticons:share-line"
+                            width={22}
+                            height={22}
+                            color="black"
+                            style={{
+                              marginLeft: "-5px",
+                              marginRight: "-5px",
+                            }}
+                          />
+                        </button>
+                        <span>Shares</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div className="message-content">
-                <h2>{post.author}</h2>
-                <p>{post.content}</p>
-              </div>
-              <span className="span-likes">{post.likes} Likes</span>
-              <div className="likes">
-                <button onClick={() => handleLike(post.id)}>
-                  Like
-                  <Icon
-                    icon="iconamoon:like-fill"
-                    width={18}
-                    height={18}
-                    style={{
-                      marginLeft: "1px",
-                      marginTop: "-2px",
-                    }}
-                  />
-                </button>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
+          <div className="comments-section">
+            {selectedCommentPostId !== null &&
+              posts.map((post) =>
+                post.id === selectedCommentPostId ? (
+                  <div key={post.id}>
+                    {post.comments &&
+                      post.comments.map((comment) => (
+                        <div className="comment" key={comment.id}>
+                          <h2>{comment.author}</h2>
+                          <p>{comment.content}</p>
+                        </div>
+                      ))}
+                  </div>
+                ) : null
+              )}
+          </div>
         </div>
       </main>
     </div>
