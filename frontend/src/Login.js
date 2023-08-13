@@ -1,41 +1,30 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "./App.css";
-import { Link, useNavigate } from "react-router-dom";
-import Validation from "./LoginValidation";
-import axios from "axios";
+import { Link } from "react-router-dom";
+import { AuthContext } from "./context/authContext";
 
-function Login() {
-  const [values, setValues] = useState({
+const Login = () => {
+  const [inputs, setInputs] = useState({
     username: "",
     password: "",
   });
-  const [errors, setErrors] = useState({});
-  const handleInput = (event) => {
-    setValues((prev) => ({ ...prev, [event.target.name]: event.target.value }));
+  const [err, setErrors] = useState(null);
+  const handleChange = (e) => {
+    setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
-  const navigate = useNavigate();
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const err = Validation(values);
-    setErrors(err);
-    if (err.username === "" && err.password === "") {
-      axios
-        .post("http://localhost:8081/login", values)
-        .then((res) => {
-          if (res.data === "Success") {
-            navigate("/home");
-          } else {
-            alert("No Record data exist");
-          }
-        })
-        .catch((err) => console.log(err));
-    }
-  };
+  const { login } = useContext(AuthContext)
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      await login(inputs);
+    } catch(err){
+      setErrors(err.response.data);
+      }}
 
   return (
     <div className="login-container">
       <div className="login-form">
-        <form action="" onSubmit={handleSubmit}>
+        <form action="">
           <div
             className="form-group"
             style={{
@@ -50,12 +39,9 @@ function Login() {
             <input
               type="username"
               placeholder="Enter Username"
-              onChange={handleInput}
+              onChange={handleChange}
               name="username"
             />
-            {errors.username && (
-              <span className="error-message">{errors.username}</span>
-            )}
           </div>
           <div
             className="form-group"
@@ -71,17 +57,15 @@ function Login() {
             <input
               type="password"
               placeholder="Enter Password"
-              onChange={handleInput}
+              onChange={handleChange}
               name="password"
             />
-            {errors.password && (
-              <span className="error-message">{errors.password}</span>
-            )}
+            {err && err}
             <button
               type="submit"
               className="btn-white"
               style={{ marginTop: "20px" }}
-            >
+              onClick={handleLogin}>
               Log In
             </button>
           </div>
@@ -113,6 +97,6 @@ function Login() {
       </div>
     </div>
   );
-}
+} 
 
 export default Login;

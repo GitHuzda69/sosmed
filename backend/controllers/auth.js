@@ -1,23 +1,24 @@
 import { db } from "../connect.js";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 export const register = (req,res)=> {
     //mengecek user jika ada
 
-    const q = "SELECT FROM users WHERE username = ?"
+    const q = "SELECT * FROM users WHERE username = ?"
 
-    db.query(q, [req.body.username], (err,data)=> {
+    db.query(q, [req.body.username], (err, data) => {
         if(err) return res.status(500).json(err)
-        if(data.length) return res.status(409).json("User already exists!")
+        if (data.length) return res.status(409).json("User already exists!");
         //buat user baru
             //hash password
             const salt = bcrypt.genSaltSync(10);
-            const hashedPassword = bcrypt.hashSync(req.body.password, salt)
+            const hashedPassword = bcrypt.hashSync(req.body.password, salt);
 
-            const q = "INSERT INTO users ('username','email','password') VALUE (?)"
+            const q = "INSERT INTO users (`username`, `email`, `password`) VALUES (?)";
 
-            db.query(q, [values], (err, data) => {
-                if(err) return res.status(500).json(err);
+            db.query(q, [[req.body.username, req.body.email, hashedPassword]], (err, data) => {
+                if (err) return res.status(500).json(err);
                 return res.status(200).json("User has been created");
             })
     })
@@ -25,8 +26,24 @@ export const register = (req,res)=> {
 
 export const login = (req,res)=> {
 
+    const q = "SELECT * FROM users WHERE username = ?";
+
+    db.query(q, [req.body.username], (err,data)=>{
+        if (err) return res.status(500).json(err);
+        if (data.length === 0) return res.status(404).json("User Not Found");
+
+
+        const checkPassword = bcrypt.compareSync(req.body.password, data[0].password)
+
+        if(!checkPassword) return res.status(400).json("Wrong Password or username!")
+
+    const token = jwt.sign({ id : data[0].id }, "secretkey");
+    const {password, ...others} = data[0];
+
+    res.cookie("accessToken", token,{httpOnly: true}).status(200).json(others);
+    });
 }
 
 export const logout = (req,res)=> {
-    
+    res.clearCookie("accesToken", {secure:true,sameSite:"none"}).status(200).json("User has been logged out");
 }

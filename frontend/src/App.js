@@ -5,9 +5,9 @@ import Home from "./Home";
 import Settings from "./Setting";
 import Message from "./Messages";
 import Friends from "./Friendlist";
-
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "font-awesome/css/font-awesome.min.css";
+
 
 function App() {
   return (
