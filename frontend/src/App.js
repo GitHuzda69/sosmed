@@ -7,21 +7,33 @@ import Message from "./Messages";
 import Friends from "./Friendlist";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "font-awesome/css/font-awesome.min.css";
+import { AuthContext } from "../src/context/authContext"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useContext } from "react";
 
 
 function App() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Login />}></Route>
-        <Route path="/signup" element={<Signup />}></Route>
-        <Route path="/home" element={<Home />}></Route>
-        <Route path="/settings" element={<Settings />}></Route>
-        <Route path="/messages" element={<Message />}></Route>
-        <Route path="/friend" element={<Friends />}></Route>
-      </Routes>
-    </BrowserRouter>
-  );
+  const { currentUser } = useContext(AuthContext)
+  const queryClient = new QueryClient();
+
+  const Layout = () => {
+    return (
+      <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Login />}></Route>
+          <Route path="/signup" element={<Signup />}></Route>
+          <Route path="/home" element={<Home />}></Route>
+          <Route path="/settings" element={<Settings />}></Route>
+          <Route path="/messages" element={<Message />}></Route>
+          <Route path="/friend" element={<Friends />}></Route>
+        </Routes>
+      </BrowserRouter>
+      </QueryClientProvider>
+    );
+  }
 }
+
+
 
 export default App;
