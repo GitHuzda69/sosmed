@@ -1,8 +1,7 @@
 import React, { useContext, useState } from "react";
 import "./App.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "./context/authContext";
-import useNavigate from ""
 
 const Login = () => {
   const [inputs, setInputs] = useState({
@@ -10,7 +9,7 @@ const Login = () => {
     password: "",
   });
   const [err, setErrors] = useState(null);
-  const navigate = useNavigaate();
+  const navigate = useNavigate();
   const handleChange = (e) => {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
@@ -19,10 +18,14 @@ const Login = () => {
     e.preventDefault();
     try {
       await login(inputs);
-      navigate("./home")
-    } catch(err){
-      setErrors(err.response.data);
-      }}
+      navigate("/home");
+    } catch (err) {
+      if (err.response) {
+        setErrors(err.response.data);
+      }
+    }
+  };
+  
 
   return (
     <div className="login-container">

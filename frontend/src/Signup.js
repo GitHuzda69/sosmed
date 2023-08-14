@@ -15,16 +15,17 @@ const Register = () => {
     const handleChange = (e) => {
         setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }))};
     
-    const handleClick = async (e) => {
-        e.preventDefault();
-        try{
-            await axios.post("http://localhost:8800/api/auth/register", inputs);
-        } catch (err) {
-            setErrors(err);
-        }
-        
-        console.log(err.response.data);
-        }
+        const handleClick = async (e) => {
+            e.preventDefault();
+            try {
+                await axios.post("http://localhost:8800/api/auth/register", inputs);
+            } catch (err) {
+                setErrors(err);
+                if (err.response) {
+                    console.log(err.response.data);
+                }
+            }
+        };
  
     return (
         <div className='login-container'>

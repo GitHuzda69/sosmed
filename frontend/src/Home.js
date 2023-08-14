@@ -5,6 +5,9 @@ import SearchBar from "./component/search/Search";
 import profilimage from "./assets/profil.jpg";
 import "./Messages.css";
 import "./App.css";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 function Home() {
   const [posts, setPosts] = useState([]);
@@ -61,8 +64,8 @@ function Home() {
   const handleSearch = (searchTerm) => {
     console.log("Pencarian:", searchTerm);
   };
-
   return (
+    <QueryClientProvider client={queryClient}>
     <div className="app">
       <Sidebar />
       <SearchBar onSearch={handleSearch} />
@@ -87,7 +90,7 @@ function Home() {
                 rotate={1}
                 width={30}
                 height={30}
-              />
+                />
             </button>
           </div>
           <form onSubmit={handleSubmit}>
@@ -103,7 +106,7 @@ function Home() {
               onChange={handleInputChange}
               onInput={handleTextareaChange}
               style={{ height: textareaHeight, maxHeight: maxTextareaHeight }}
-            />
+              />
             <button className="post-button" type="submit">
               <Icon icon="fluent:send-28-filled" height={25} width={25} />
             </button>
@@ -114,7 +117,7 @@ function Home() {
               placeholder="Your Name"
               value={newPost.author}
               onChange={handleInputChange}
-            />
+              />
           </form>
         </div>
         <div className="message-list">
@@ -139,7 +142,7 @@ function Home() {
                       marginLeft: "1px",
                       marginTop: "-2px",
                     }}
-                  />
+                    />
                 </button>
               </div>
             </div>
@@ -147,6 +150,7 @@ function Home() {
         </div>
       </main>
     </div>
+    </QueryClientProvider>
   );
 }
 

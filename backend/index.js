@@ -18,6 +18,7 @@ app.use((req, res, next) =>{
 app.use(Express.json())
 app.use(cors({
     origin: "http://localhost:3000",
+    credentials: true,
 }))
 app.use(cookieParser())
 app.use('/api/auth', authRoutes)
@@ -40,38 +41,6 @@ db.connect((err) => {
     }
     console.error("Success");
 })
-
-app.post('/signup', (req, res) =>  {
-    const { username, email, password } = req.body;
-    const sql = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
-    const values = [username, email, password];
-
-    db.query(sql, values, (err, data) => {
-        if (err) {
-            return res.json("Error");
-        }
-        return res.json(data);
-    });
-});
-
-
-app.post('/login', (req, res) => {
-    const { username, password } = req.body;
-    const sql = 'SELECT * FROM users WHERE username = ? AND password = ?';
-    const values = [username, password];
-    
-    db.query(sql, values, (err, data) => {
-        if (err) {
-            return res.json("Error");
-        }
-        if (data.length === 1) {
-            return res.status(200).json("Success");
-        } else {
-            return res.json("Failed");
-        }
-    });
-});
-
 
 app.listen(8800, ()=>{
     console.log("Server Working....")
