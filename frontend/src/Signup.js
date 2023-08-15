@@ -1,55 +1,49 @@
 import React, {useState} from 'react';
 import './App.css';
-import { Link, useNavigate } from 'react-router-dom';
-import Validation from './SignupValidation';
+import { Link,} from 'react-router-dom';
 import axios from 'axios';
+import { Icon } from "@iconify/react";
 
-function Signup() {
-    const [values, setValues] = useState({
-        username: '',
-        email: '',
-        password: ''
-    });
-    const navigate = useNavigate();
-    const [errors, setErrors] = useState({});
-    const handleInput = (event) => {
-        setValues((prev) => ({ ...prev, [event.target.name]: event.target.value }));
-    };
+const Register = () => {
+    const [inputs, setInputs] = useState({
+        username:"",
+        email:"",
+        password:"",
+    })
+    const [err, setErrors] = useState(null);
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        const err = Validation(values);
-        setErrors(err);
-        if (err.username === '' && err.email === '' && err.password === '') {
-            axios
-                .post('http://localhost:8081/signup', values)
-                .then((res) => {
-                    navigate('/');
-                })
-                .catch((err) => console.log(err));
-        }
-    };
+    const handleChange = (e) => {
+        setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }))};
     
+        const handleClick = async (e) => {
+            e.preventDefault();
+            try {
+                await axios.post("http://localhost:8800/api/auth/register", inputs);
+            } catch (err) {
+                setErrors(err);
+                if (err.response) {
+                    console.log(err.response.data);
+                }
+            }
+        };
+ 
     return (
         <div className='login-container'>
             <div className='login-form'>
-                <form action='' onSubmit={handleSubmit}>
+                <form action=''>
                     <div className='form-group'>
                         <strong><label>Username</label></strong>
-                        <input type='username' placeholder='Enter Username' name='username' onChange={handleInput}/>
-                        {errors.username && <span className='error-message'>{errors.username}</span>}
+                        <input type='username' placeholder='Enter Username' name='username' onChange={handleChange}/>
                     </div>
                     <div className='form-group'>
                         <strong><label type='email'>Email</label></strong>
-                        <input type='email' placeholder='Enter Email' name='email' onChange={handleInput}/>
-                        {errors.email && <span className='error-message'>{errors.email}</span>}
+                        <input type='email' placeholder='Enter Email' name='email' onChange={handleChange}/>
                     </div>
                     <div className='form-group'>
                         <strong><label type='password'>Password</label></strong>
-                        <input type='password' placeholder='Enter Password' name='password' onChange={handleInput}/>
-                        {errors.password && <span className='error-message'>{errors.password}</span>}
+                        <input type='password' placeholder='Enter Password' name='password' onChange={handleChange}/>
                     </div>
-                    <button type='submit' className='btn-green'>Sign Up</button>
+                    <button className='btn-green' onClick={handleClick}>Sign Up</button>
                     <p className='gray'>Already have account?</p>
                     <Link to='/' className='btn-white center'>Log In</Link>
                 </form>
@@ -63,4 +57,4 @@ function Signup() {
     )
 }
 
-export default Signup;
+export default Register;

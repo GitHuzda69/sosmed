@@ -5,6 +5,9 @@ import SearchBar from "./component/search/Search";
 import profilimage from "./assets/profil.jpg";
 import "./Messages.css";
 import "./App.css";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 function Home() {
   const [posts, setPosts] = useState([]);
@@ -102,8 +105,8 @@ function Home() {
   const handleSearch = (searchTerm) => {
     console.log("Pencarian:", searchTerm);
   };
-
   return (
+    <QueryClientProvider client={queryClient}>
     <div className="app">
       <Sidebar />
       <SearchBar onSearch={handleSearch} />
@@ -121,6 +124,24 @@ function Home() {
                   {mode === "comment" ? "Post" : "Comment"}
                 </button>
               )}
+              <Icon icon="oi:share" width={30} height={30} />
+            </button>
+            <button className="button-content">
+              <Icon icon="ci:download" width={30} height={30} />
+            </button>
+            <button className="button-content">
+              <Icon icon="mdi:heart-outline" width={30} height={30} />
+            </button>
+            <button className="button-content">
+              <Icon icon="ri:share-line" width={30} height={30} />
+            </button>
+            <button className="button-content">
+              <Icon
+                icon="radix-icons:dots-vertical"
+                rotate={1}
+                width={30}
+                height={30}
+                />
             </button>
           </div>
           <form onSubmit={handleSubmit}>
@@ -140,7 +161,7 @@ function Home() {
               onChange={handleInputChange}
               onInput={handleTextareaChange}
               style={{ height: textareaHeight, maxHeight: maxTextareaHeight }}
-            />
+              />
             <button className="post-button" type="submit">
               <Icon icon="fluent:send-28-filled" height={25} width={25} />
             </button>
@@ -151,7 +172,7 @@ function Home() {
               placeholder="Your Name"
               value={newPost.author}
               onChange={handleInputChange}
-            />
+              />
           </form>
         </div>
         <div className="message-list-and-comments">
@@ -255,11 +276,38 @@ function Home() {
                     </div>
                   ) : null
                 )}
+
+        <div className="message-list">
+          {posts.map((post) => (
+            <div className="message" key={post.id}>
+              <div className="avatar">
+                <img src={profilimage} alt="Avatar" />
+              </div>
+              <div className="message-content">
+                <h2>{post.author}</h2>
+                <p>{post.content}</p>
+              </div>
+              <span className="span-likes">{post.likes} Likes</span>
+              <div className="likes">
+                <button onClick={() => handleLike(post.id)}>
+                  Like
+                  <Icon
+                    icon="iconamoon:like-fill"
+                    width={18}
+                    height={18}
+                    style={{
+                      marginLeft: "1px",
+                      marginTop: "-2px",
+                    }}
+                    />
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </main>
     </div>
+    </QueryClientProvider>
   );
 }
 
