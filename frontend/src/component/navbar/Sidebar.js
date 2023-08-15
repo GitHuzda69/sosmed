@@ -6,7 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 const Sidebar = () => {
   return (
     <div className="sidebar">
-      <Link to='/home'>
+      <Link to='/'>
       <button>
         <Icon icon="ic:round-home" width="40" height="40" />
       </button></Link>
@@ -31,7 +31,7 @@ const Sidebar = () => {
       <button>
         <Icon icon="fluent:people-community-20-filled" width="40" height="40" />
       </button></Link>
-      <Link to='/'>
+      <Link to='/login'>
       <button>
       <Icon icon="material-symbols:logout" width="40" height="40"/>
       </button></Link>

@@ -8,7 +8,7 @@ function Setting() {
       <div>
         <button>
           <Link
-            to="/home"
+            to="/"
             style={{
               display: "flex",
               justifyContent: "center",

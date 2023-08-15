@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
-import profilimage from "./assets/profil.jpg";
-import Sidebar from "../src/component/navbar/Sidebar";
+import profilimage from "../../assets/profil.jpg";
+import Sidebar from "../../component/navbar/Sidebar.js";
 import { Icon } from "@iconify/react";
 import "./Messages.css";
 import { Link } from "react-router-dom";

@@ -1,11 +1,11 @@
 import React from "react";
-import "./Friendlist.css";
-import Sidebar from "./component/navbar/Sidebar";
-import avatar1 from "./assets/friend/friend1.jpg";
-import avatar2 from "./assets/friend/friend2.jpg";
-import avatar3 from "./assets/friend/friend3.jpg";
-import avatar4 from "./assets/friend/friend4.jpg";
-import avatar5 from "./assets/friend/friend5.jpeg";
+import "./FriendsList.css";
+import Sidebar from "../../component/navbar/Sidebar";
+import avatar1 from "../../assets/friend/friend1.jpg";
+import avatar2 from "../../assets/friend/friend2.jpg";
+import avatar3 from "../../assets/friend/friend3.jpg";
+import avatar4 from "../../assets/friend/friend4.jpg";
+import avatar5 from "../../assets/friend/friend5.jpeg";
 
 const FriendList = () => {
   const friends = [
