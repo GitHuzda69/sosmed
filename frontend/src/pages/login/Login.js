@@ -13,7 +13,7 @@ const Login = () => {
   const handleChange = (e) => {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
-  const { login } = useContext(AuthContext)
+  const { login } = useContext(AuthContext);
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
@@ -25,7 +25,6 @@ const Login = () => {
       }
     }
   };
-  
 
   return (
     <div className="login-container">
@@ -71,7 +70,8 @@ const Login = () => {
               type="submit"
               className="btn-white"
               style={{ marginTop: "20px" }}
-              onClick={handleLogin}>
+              onClick={handleLogin}
+            >
               Log In
             </button>
           </div>
@@ -100,6 +100,6 @@ const Login = () => {
       </div>
     </div>
   );
-} 
+};
 
 export default Login;
