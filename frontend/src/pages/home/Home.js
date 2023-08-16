@@ -1,7 +1,6 @@
 import React from "react";
 import Sidebar from "../../component/navbar/Sidebar";
 import SearchBar from "../../component/search/Search";
-import profilimage from "../../assets/profil.jpg";
 import "./Home.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Posts from "../../component/posts/Posts";
