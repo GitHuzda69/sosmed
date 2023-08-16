@@ -240,13 +240,13 @@ const Posts = () => {
                 </div>
               )}
             </div>
-            <div className="comments-container">
-              <div className="comments">
-                <h3>Comments</h3>
+            <div className="comment-section">
+              <h4>Comments</h4>
+              <div className="comment-list">
                 {activePostId === post.id &&
                   comments[post.id].map((comment) => (
-                    <div key={comment.id} className="comment-list">
-                      <h4>{comment.author}</h4>
+                    <div key={comment.id} className="comment-contect">
+                      <h5>{comment.author}</h5>
                       <p>{comment.text}</p>
                     </div>
                   ))}

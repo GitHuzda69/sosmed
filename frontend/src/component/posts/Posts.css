@@ -241,40 +241,50 @@
     display: flex;
     position: fixed;
   }
-  .comments-container{
+  .comment-section{
     position: fixed;
     right: 0;
     top: 0;
-    margin-top: 70px;
+    margin-top: 30px;
     max-width: 350px;
     width: 100%;
     margin-right: 20px;
     padding: 10px;
-    height: 400px;
-    margin-bottom: 100px;
-  }
-  .comments{
-    padding: 20px;
-    border: 2px rgb(0, 0, 0) solid;
+    height: 450px;
     box-shadow: 5px 15px 20px rgba(0, 0, 0.3, 0.3);
   }
-  .comments h3{
-    margin-top: -10px;
-    margin-bottom: 5px;
-    font-size: 30px;
+  .comment-section h4{
+    margin-top: 30px;
+    margin-bottom: -80px;
+    flex: 1;
+    max-height: 100%;
+    border-bottom: 2px black solid;
+  }
+  .comment-list{
+    margin-top: 90px;
+    height: 100%;
+    max-height: 370px;
+    overflow-y: auto;
+  }
+  .comment-list h4{
+    position: fixed;
+    margin-top: 20px;
+  }
+  .comment-contect {
+    margin-top: 50px;
+    margin-left: 10px;
+  }
+  .comment-contect h5{
+    margin-top: -30px;
+    font-size: 25px;
     font-family: "Inter", sans-serif;
     font-weight: bold;
     text-decoration: underline;
   }
-  .comment-list{
-    max-height: 200px;
-    overflow-y: auto;
-    margin-top: -10px;
-  }
-  .comment-list h4{
+  .comment-contect p{
+    margin-top: -35px;
     font-size: 20px;
+    font-family: "Inter", sans-serif;
+    font-weight: 500;
     text-decoration: underline;
-  }
-  .comment-list p{
-    font-size: 15px;
   }
