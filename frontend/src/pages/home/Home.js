@@ -1,5 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
-import { Icon } from "@iconify/react";
+import React from "react";
 import Sidebar from "../../component/navbar/Sidebar";
 import SearchBar from "../../component/search/Search";
 import profilimage from "../../assets/profil.jpg";

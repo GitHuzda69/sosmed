@@ -16,6 +16,7 @@ function App() {
         <Route path="/settings" element={<Settings />}></Route>
         <Route path="/messages" element={<Message />}></Route>
         <Route path="/friend" element={<Friends />}></Route>
+        <Route path="/profile/:id" element ></Route>
       </Routes>
     </BrowserRouter>
   );
