@@ -7,7 +7,7 @@ const Posts = () => {
   const [posts, setPosts] = useState([]);
   const [newPost, setNewPost] = useState({ author: "", content: "" });
   const [textareaHeight] = useState("auto");
-  const [maxTextareaHeight] = useState("40px");
+  const [maxTextareaHeight] = useState("45px");
   const textareaRef = useRef(null);
   const [likeStatus, setLikeStatus] = useState({});
   const [comments, setComments] = useState({});
@@ -142,13 +142,6 @@ const Posts = () => {
                             [post.id]: [],
                           }));
                         }
-                        setComments((prevComments) => ({
-                          ...prevComments,
-                          [post.id]: [
-                            ...prevComments[post.id],
-                            { id: Date.now(), text: "" },
-                          ],
-                        }));
                       }}
                     >
                       <Icon
@@ -237,7 +230,23 @@ const Posts = () => {
                       }
                     }}
                   >
-                    Send
+                    <Icon icon="fluent:send-28-filled" height={15} width={15} />
+                  </button>
+                  <button
+                    className="comment-cancel-button"
+                    onClick={() => {
+                      setShowCommentInput(false);
+                      setCommentInput((prevInput) => ({
+                        ...prevInput,
+                        [post.id]: "",
+                      }));
+                      setCommentAuthor((prevAuthor) => ({
+                        ...prevAuthor,
+                        [post.id]: "",
+                      }));
+                    }}
+                  >
+                    <Icon icon="mdi:cancel-bold" height={15} width={15} />
                   </button>
                 </div>
               )}
@@ -250,7 +259,7 @@ const Posts = () => {
                   style={{ maxHeight: "350px", overflowY: "auto" }}
                 >
                   {comments[post.id]?.map((comment) => (
-                    <div key={comment.id} className="comment-contect">
+                    <div key={comment.id} className="comment-content">
                       <h5>{comment.author}</h5>
                       <p>{comment.text}</p>
                     </div>
