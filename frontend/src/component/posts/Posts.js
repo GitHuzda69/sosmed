@@ -15,6 +15,7 @@ const Posts = () => {
   const [commentAuthor, setCommentAuthor] = useState({});
   const [showCommentInput, setShowCommentInput] = useState({});
   const [activePostId, setActivePostId] = useState(null);
+  const [lastClickedPostId, setLastClickedPostId] = useState(null);
 
   const handleTextareaChange = () => {
     const textarea = textareaRef.current;
@@ -134,6 +135,7 @@ const Posts = () => {
                           ...prevShowInput,
                           [post.id]: !prevShowInput[post.id],
                         }));
+                        setLastClickedPostId(post.id);
                         if (!comments[post.id]) {
                           setComments((prevComments) => ({
                             ...prevComments,
@@ -240,18 +242,22 @@ const Posts = () => {
                 </div>
               )}
             </div>
-            <div className="comment-section">
-              <h4>Comments</h4>
-              <div className="comment-list">
-                {activePostId === post.id &&
-                  comments[post.id].map((comment) => (
+            {lastClickedPostId === post.id && (
+              <div className="comment-section">
+                <h4>Comments</h4>
+                <div
+                  className="comment-list"
+                  style={{ maxHeight: "350px", overflowY: "auto" }}
+                >
+                  {comments[post.id]?.map((comment) => (
                     <div key={comment.id} className="comment-contect">
                       <h5>{comment.author}</h5>
                       <p>{comment.text}</p>
                     </div>
                   ))}
+                </div>
               </div>
-            </div>
+            )}
           </div>
         ))}
       </div>

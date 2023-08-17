@@ -260,12 +260,12 @@
     max-height: 100%;
     border-bottom: 2px black solid;
   }
-  .comment-list{
+  .comment-list {
     margin-top: 90px;
-    height: 100%;
-    max-height: 370px;
-    overflow-y: auto;
+    max-height: 370px; /* Set a maximum height for the comment list */
+    overflow-y: scroll; /* Add this to enable vertical scrolling */
   }
+  
   .comment-list h4{
     position: fixed;
     margin-top: 20px;
