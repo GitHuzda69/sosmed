@@ -7,7 +7,7 @@ const Posts = () => {
   const [posts, setPosts] = useState([]);
   const [newPost, setNewPost] = useState({ author: "", content: "" });
   const [textareaHeight] = useState("auto");
-  const [maxTextareaHeight] = useState("40px");
+  const [maxTextareaHeight] = useState("45px");
   const textareaRef = useRef(null);
   const [likeStatus, setLikeStatus] = useState({});
   const [comments, setComments] = useState({});
@@ -15,6 +15,7 @@ const Posts = () => {
   const [commentAuthor, setCommentAuthor] = useState({});
   const [showCommentInput, setShowCommentInput] = useState({});
   const [activePostId, setActivePostId] = useState(null);
+  const [lastClickedPostId, setLastClickedPostId] = useState(null);
 
   const handleTextareaChange = () => {
     const textarea = textareaRef.current;
@@ -134,19 +135,13 @@ const Posts = () => {
                           ...prevShowInput,
                           [post.id]: !prevShowInput[post.id],
                         }));
+                        setLastClickedPostId(post.id);
                         if (!comments[post.id]) {
                           setComments((prevComments) => ({
                             ...prevComments,
                             [post.id]: [],
                           }));
                         }
-                        setComments((prevComments) => ({
-                          ...prevComments,
-                          [post.id]: [
-                            ...prevComments[post.id],
-                            { id: Date.now(), text: "" },
-                          ],
-                        }));
                       }}
                     >
                       <Icon
@@ -235,23 +230,43 @@ const Posts = () => {
                       }
                     }}
                   >
-                    Send
+                    <Icon icon="fluent:send-28-filled" height={15} width={15} />
+                  </button>
+                  <button
+                    className="comment-cancel-button"
+                    onClick={() => {
+                      setShowCommentInput(false);
+                      setCommentInput((prevInput) => ({
+                        ...prevInput,
+                        [post.id]: "",
+                      }));
+                      setCommentAuthor((prevAuthor) => ({
+                        ...prevAuthor,
+                        [post.id]: "",
+                      }));
+                    }}
+                  >
+                    <Icon icon="mdi:cancel-bold" height={15} width={15} />
                   </button>
                 </div>
               )}
             </div>
-            <div className="comments-container">
-              <div className="comments">
-                <h3>Comments</h3>
-                {activePostId === post.id &&
-                  comments[post.id].map((comment) => (
-                    <div key={comment.id} className="comment-list">
-                      <h4>{comment.author}</h4>
+            {lastClickedPostId === post.id && (
+              <div className="comment-section">
+                <h4>Comments</h4>
+                <div
+                  className="comment-list"
+                  style={{ maxHeight: "350px", overflowY: "auto" }}
+                >
+                  {comments[post.id]?.map((comment) => (
+                    <div key={comment.id} className="comment-content">
+                      <h5>{comment.author}</h5>
                       <p>{comment.text}</p>
                     </div>
                   ))}
+                </div>
               </div>
-            </div>
+            )}
           </div>
         ))}
       </div>

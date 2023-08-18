@@ -1,3 +1,20 @@
+.posts-main{
+    scrollbar-width: thin;
+    scrollbar-color: gray transparent;
+  }
+  .comment-list::-webkit-scrollbar {
+    width: 8px; 
+  }
+  
+  .comment-list::-webkit-scrollbar-thumb {
+    background-color: gray; 
+    border-radius: 5px; 
+  }
+  
+  .comment-list::-webkit-scrollbar-track {
+    background: transparent; 
+  }
+
 .posts{
   margin-left: 120px;
   font-family: "Inter", sans-serif;
@@ -39,6 +56,20 @@
   border: none;
   border-radius: 10px;
   padding: 10px;
+  scrollbar-width: thin;
+  scrollbar-color: gray transparent;
+}
+.content::-webkit-scrollbar {
+  width: 8px; 
+}
+
+.content::-webkit-scrollbar-thumb {
+  background-color: gray; 
+  border-radius: 5px; 
+}
+
+.content::-webkit-scrollbar-track {
+  background: transparent; 
 }
 .content:focus {
   border-color: grey;
@@ -61,7 +92,7 @@
   }
   .posts{
     display: flex;
-    align-items: center; 
+    align-items: flex-start; 
     border-radius: 0;
     border: 1px whitesmoke solid;
     box-shadow: 5px 15px 20px rgba(0, 0, 0.3, 0.3);
@@ -112,6 +143,7 @@
   border-radius: 50%;
   overflow: hidden; 
   margin-right: 10px;
+  margin-top: 5px;
 }
 
 .post-avatar img {
@@ -241,40 +273,146 @@
     display: flex;
     position: fixed;
   }
-  .comments-container{
+  .comment-section{
     position: fixed;
     right: 0;
     top: 0;
-    margin-top: 70px;
+    margin-top: 30px;
     max-width: 350px;
     width: 100%;
     margin-right: 20px;
     padding: 10px;
-    height: 400px;
-    margin-bottom: 100px;
-  }
-  .comments{
-    padding: 20px;
-    border: 2px rgb(0, 0, 0) solid;
+    height: 450px;
     box-shadow: 5px 15px 20px rgba(0, 0, 0.3, 0.3);
+    border: 2px black solid;
   }
-  .comments h3{
-    margin-top: -10px;
-    margin-bottom: 5px;
+  .comment-section h4{
     font-size: 30px;
+    margin-top: 5px;
+    margin-bottom: -80px;
+    margin-left: -10px;
+    padding-left: 15px;
+    padding-bottom: 5px;
+    flex: 1;
+    max-height: 100%;
+    border-bottom: 2px black solid;
+    font-family: "Inter", sans-serif;
+    font-weight: bold;
+    width: 355px;
+  }
+  .comment-list {
+    margin-top: 90px;
+    max-height: 370px; 
+    overflow-y: scroll;
+    scrollbar-width: thin;
+    scrollbar-color: gray transparent;
+  }
+  .comment-list::-webkit-scrollbar {
+    width: 8px; 
+  }
+  
+  .comment-list::-webkit-scrollbar-thumb {
+    background-color: gray; 
+    border-radius: 5px; 
+  }
+  
+  .comment-list::-webkit-scrollbar-track {
+    background: transparent; 
+  }
+  
+  .comment-content {
+    margin-top: 50px;
+    border-bottom: 1px gray solid;
+  }
+  
+  .comment-content h5{
+    margin-top: -30px;
+    font-size: 20px;
     font-family: "Inter", sans-serif;
     font-weight: bold;
     text-decoration: underline;
   }
-  .comment-list{
-    max-height: 200px;
-    overflow-y: auto;
-    margin-top: -10px;
-  }
-  .comment-list h4{
-    font-size: 20px;
+  .comment-content p{
+    margin-top: -35px;
+    margin-bottom: 5px;
+    font-size: 15px;
+    font-family: "Inter", sans-serif;
+    font-weight: 500;
     text-decoration: underline;
   }
-  .comment-list p{
-    font-size: 15px;
+
+  .comment-form {
+    margin-top: -15px;
+    width: 500px;
+    display: flex;
+    flex-direction: column;
   }
+  
+  .comment-input,
+  .comment-author-input {
+    padding: 10px;
+    border: none;
+    background-color: lightgray; 
+    border-radius: 10px; 
+    margin-bottom: 5px;
+    margin-left: 2px;
+    border: 1px rgb(231, 231, 231) solid;
+  }
+  
+  .comment-input {
+    margin-top: 20px;
+    width: 60%;
+    flex: 1;
+    resize: none;
+    scrollbar-width: thin;
+    scrollbar-color: gray transparent;
+  }
+  .comment-input::-webkit-scrollbar {
+    width: 8px; 
+  }
+  
+  .comment-input::-webkit-scrollbar-thumb {
+    background-color: gray; 
+    border-radius: 5px; 
+  }
+  
+  .comment-input::-webkit-scrollbar-track {
+    background: transparent; 
+  }
+  
+  .comment-author-input {
+    width: 30%;
+    margin-bottom: 10px;
+  }
+  
+  .comment-send-button {
+    margin-top: -42px;
+    align-self: flex-end; 
+    padding: 10px 15px;
+    border: none;
+    background-color: lightgray; 
+    border-radius: 10px; 
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+  .comment-send-button span {
+    margin-right: 5px; 
+  }
+  
+  .comment-cancel-button {
+    margin-top: -40px;
+    margin-right: 60px;
+    align-self: flex-end; 
+    padding: 10px 15px;
+    border: none;
+    background-color: lightgray; 
+    border-radius: 10px; 
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+  .comment-cancel-button span {
+    margin-right: 5px; 
+  }
+  
