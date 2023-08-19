@@ -1,5 +1,5 @@
 import React from "react";
-import Sidebar from "../../component/navbar/Sidebar";
+import Sidebar from "../../component/Leftbar/Leftbar.js";
 import SearchBar from "../../component/search/Search";
 import "./Home.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";

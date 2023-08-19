@@ -34,18 +34,18 @@ const Comments = () => {
     return (
         <div className="comments">
             <div className="write">
-                <img src={currentUser.profilePic} alt="" />
-                <input type="text" placeholder="Write a commnet" />
-                <button>Send</button>
+                <img src={comments.profilePic} alt="" />
+                <input className="comment-input" type="text" placeholder="Write a comment" />
+                <button className="comment-button">Send</button>
             </div>
             {comments.map((comment) => (
             <div className="comment">
-                <img src={comment.profilePic} />
-                <div className="info">
-                    <span>{comment.name}</span>
-                    <p>{comment.desc}</p>
+                <img className="comments-pic" src={comment.profilePic} />
+                <div className="comment-info">
+                    <span className="name">{comment.name}</span>
+                    <p className="desc">{comment.desc}</p>
                 </div>
-                <span className="date">Baru saja</span>
+                <span className="comment-date">Baru saja</span>
             </div>
             ))}
         </div>
