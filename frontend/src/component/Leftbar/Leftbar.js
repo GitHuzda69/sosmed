@@ -1,5 +1,5 @@
 import React from "react";
-import "./Sidebar.css";
+import "./Leftbar.css";
 import { Icon } from "@iconify/react";
 import { Link, useNavigate } from 'react-router-dom';
 
