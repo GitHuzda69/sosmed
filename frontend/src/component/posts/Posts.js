@@ -1,8 +1,7 @@
-import React, { useState, useRef, useEffect } from "react";
+import React from "react";
 import profilimage from "../../assets/profil.jpg";
 import friend3 from "../../assets/friend/friend3.jpg";
 import friend4 from "../../assets/friend/friend4.jpg";
-import { Icon } from "@iconify/react";
 import "./Posts.css";
 import Post from "../post/Post.js";
 
