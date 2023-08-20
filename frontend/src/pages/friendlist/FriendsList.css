@@ -1,33 +1,141 @@
-/* FriendsList.css */
 
-.friends-list-container {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.friendlist-container h2{
+  font-size: 40px;
+  font-family: "Inter", sans-serif;
+  font-weight: bold;
+  margin-left: 120px;
+}
+.friendlist-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  margin-top: -30px;
 }
 
-h1 {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.friends-list {
-  list-style: none;
-  padding: 0;
-}
-
-.friends-list li {
-  padding: 10px;
-  border-bottom: 1px solid #ccc;
-  transition: background-color 0.3s;
-}
-
-.friends-list li:last-child {
-  border-bottom: none;
-}
-
-.friends-list li:hover {
-  background-color: #f0f0f0;
+.button-info {
+  color: white;
+  border: 1px black solid;
+  border-radius: 50%;
+  padding: 3px 6px;
+  margin-right: 220px;
   cursor: pointer;
 }
+.button-info:hover{
+  border-radius: 50%;
+}
+
+.friendlist {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: 115px;
+  max-height: 500px;
+  overflow-y: auto;
+}
+.friendlist::-webkit-scrollbar {
+  width: 8px;
+}
+
+.friendlist::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
+
+.friendlist::-webkit-scrollbar-thumb {
+  background-color: #000000;
+  border-radius: 4px;
+}
+.friendlist::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+.friend {
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+  margin-right: 10px;
+  margin-left: 10px;
+  border: 1px black solid;
+  border-radius: 8px;
+  box-shadow: 0px 4px 0px rgb(182, 182, 182);
+}
+
+.friend-avatar{
+  margin-top: 15px;
+  margin-left: 15px;
+}
+
+.friend-info-details {
+  display: flex;
+  flex-direction: column;
+  align-items: top;
+  margin-top: -46px;
+  margin-left: 65px;
+}
+.friend-info-details h3{
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  font-size: bold;
+  margin-top: 8px;
+  margin-bottom: -8px;
+}
+.friend-info-details h4{
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  font-weight: normal;
+  margin-top: 8px;
+}
+.button-popup{
+  display: flex;
+  justify-content: flex-end;
+  width: 30px;
+  margin-left: 395px;
+  margin-top: -60px;
+}
+.button-popup:hover{
+  border-radius: 15px;
+}
+.popup{
+  top: 0;
+  width: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  background-color: white;
+  border: 1px gray solid;
+  border-radius: 10px;
+  padding: 5px;
+  margin-left: 20px;
+}
+
+.icon-button {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.icon-button:hover{
+  border-radius: 10px;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.friend-desc {
+  flex: 1;
+  margin-top: 25px;
+  margin-left: 20px;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  font-weight: normal;
+}
+

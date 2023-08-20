@@ -1,9 +1,13 @@
-import React, { useContext, useState } from "react";
-import "./Login.css";
+import React, { useContext, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/authContext";
+import { Icon } from "@iconify/react";
+import "./Login.css";
 
 const Login = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
+
   const [inputs, setInputs] = useState({
     username: "",
     password: "",
@@ -18,6 +22,11 @@ const Login = () => {
     e.preventDefault();
     try {
       await login(inputs);
+      if (rememberMe) {
+        localStorage.setItem("rememberMe", "true");
+      } else {
+        localStorage.removeItem("rememberMe");
+      }
       navigate("/");
     } catch (err) {
       if (err.response) {
@@ -25,13 +34,20 @@ const Login = () => {
       }
     }
   };
+  useEffect(() => {
+    const rememberMeStatus = localStorage.getItem("rememberMe");
+    if (rememberMeStatus === "true") {
+      setRememberMe(true);
+    }
+  }, []);
 
   return (
-    <div className="login-container">
-      <div className="login-form">
+    <div className="login-containers">
+      <div className="login-forms">
+        <h3>Log in</h3>
         <form action="">
           <div
-            className="form-group"
+            className="form-groups"
             style={{
               display: "flex",
               flexDirection: "column",
@@ -42,6 +58,7 @@ const Login = () => {
               <label>Username</label>
             </strong>
             <input
+              className="input"
               type="username"
               placeholder="Enter Username"
               onChange={handleChange}
@@ -49,7 +66,7 @@ const Login = () => {
             />
           </div>
           <div
-            className="form-group"
+            className="form-groups"
             style={{
               display: "flex",
               flexDirection: "column",
@@ -60,43 +77,113 @@ const Login = () => {
               <label>Password</label>
             </strong>
             <input
-              type="password"
+              className="input"
+              type={showPassword ? "text" : "password"}
               placeholder="Enter Password"
               onChange={handleChange}
               name="password"
             />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="show-password-button"
+            >
+              {showPassword ? (
+                <Icon
+                  icon="clarity:eye-hide-line"
+                  color="black"
+                  width={23}
+                  height={23}
+                />
+              ) : (
+                <Icon
+                  icon="clarity:eye-line"
+                  color="black"
+                  width={23}
+                  height={23}
+                />
+              )}
+            </button>
+            <div className="form-groups">
+              <label className="checkbox-container checkbox-label">
+                <input
+                  type="checkbox"
+                  className="checkbox-input"
+                  checked={rememberMe}
+                  onChange={() => setRememberMe(!rememberMe)}
+                />
+                <h4>Remember Me</h4>
+              </label>
+            </div>
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="forgot-password-button"
+            >
+              Forgot Password
+            </button>
             {err && err}
             <button
               type="submit"
-              className="btn-white"
+              className="login"
               style={{ marginTop: "20px" }}
               onClick={handleLogin}
             >
-              Log In
+              Sign in
             </button>
           </div>
+          <div className="or-divider">
+            <div className="divider-line"></div>
+            <div className="divider-text">OR</div>
+            <div className="divider-line"></div>
+          </div>
+          <button
+            type="submit"
+            className="login-else"
+            style={{ marginTop: "20px" }}
+            onClick={handleLogin}
+          >
+            <span className="login-else-icon">
+              <Icon icon="devicon:google" width={20} height={20} />
+            </span>
+            <h5>Continue with Google</h5>
+          </button>
+          <button
+            type="submit"
+            className="login-else"
+            style={{ marginTop: "20px" }}
+            onClick={handleLogin}
+          >
+            <span className="login-else-icon">
+              <Icon
+                icon="brandico:facebook-rect"
+                width={20}
+                height={20}
+                color="rgb(43, 88, 209)"
+              />
+            </span>
+            <h5>Continue with Facebook</h5>
+          </button>
           <div
+            className="signup"
             style={{
               display: "flex",
-              flexDirection: "column",
+              flexDirection: "row",
               alignItems: "center",
+              justifyContent: "center",
+              marginTop: "20px",
             }}
           >
             <p>Doesn't have an account?</p>
             <Link
               to="/signup"
-              className="btn-red center"
+              className="button-signup"
               style={{ width: "60px" }}
             >
               Sign Up
             </Link>
           </div>
         </form>
-      </div>
-      <div className="social-icons">
-        <i className="fa fa-facebook"></i>
-        <i className="fa fa-twitter"></i>
-        <i className="fa fa-instagram"></i>
       </div>
     </div>
   );
