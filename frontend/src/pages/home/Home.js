@@ -18,7 +18,6 @@ function Home() {
         <Sidebar />
         <SearchBar onSearch={handleSearch} />
         <Posts />
-        {/* <Post /> */}
       </div>
     </QueryClientProvider>
   );

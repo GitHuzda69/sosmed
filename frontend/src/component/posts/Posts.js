@@ -5,7 +5,6 @@ import "./Posts.css";
 import Post from "../post/Post.js";
 
 const Posts = () => {
-
   // Data Dummy
   const posts = [
     {
@@ -14,7 +13,7 @@ const Posts = () => {
       userId: 1,
       profilePic: profilimage,
       desc: "Lorem ipsum dolor sit amet asioasdios aosidjas asdpoasd po poadjpoasd ",
-      img:"profilimage"
+      img: profilimage,
     },
     {
       id: 2,
@@ -26,13 +25,13 @@ const Posts = () => {
     },
   ];
 
-  return <div className="posts">
-      {posts.map(post=>(
-        <Post post={post} key={[post.id]} />
+  return (
+    <div className="posts">
+      {posts.map((post) => (
+        <Post post={post} key={post.id} />
       ))}
-      
     </div>
+  );
 };
-
 
 export default Posts;
