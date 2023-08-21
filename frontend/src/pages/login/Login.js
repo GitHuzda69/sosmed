@@ -117,7 +117,6 @@ const Login = () => {
             </div>
             <button
               type="button"
-              onClick={() => setShowPassword(!showPassword)}
               className="forgot-password-button"
             >
               Forgot Password

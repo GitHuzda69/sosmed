@@ -6,14 +6,16 @@ import "./Posts.css";
 import Post from "../post/Post.js";
 
 const Posts = () => {
+
+  // Data Dummy
+
   const posts = [
     {
       id: 1,
       name: "Jeou",
       userId: 1,
-      profilePic: profilimage,
-      desc: "Lorem ipsum dolor sit amet asioasdios aosidjas asdpoasd po poadjpoasd ",
       img: friend4,
+      desc: "Lorem ipsum dolor sit amet asioasdios aosidjas asdpoasd po poadjpoasd ",
     },
     {
       id: 2,
