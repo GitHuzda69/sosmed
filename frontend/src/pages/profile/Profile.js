@@ -1,5 +1,5 @@
 import "./Profile.css";
-import profileimg from "../../assets/profile.jpg"
+import profileimg from "../../assets/profil.jpg"
 
 const Profile = () => {
     return (
@@ -8,7 +8,9 @@ const Profile = () => {
             <div className="cover-img">
 
             </div>
-            <div className="profilePic">profileimg</div>
+            <div className="profilePic">
+                <img src={profileimg} />
+            </div>
             <div className="profileUserInfo">
                 <button>Add Friend</button>
             </div>
@@ -16,7 +18,7 @@ const Profile = () => {
             <div className="post">
 
             </div>
-            <div className="rightprofilebar">
+            <div className="rightProfileBar">
 
             </div>
         </div>

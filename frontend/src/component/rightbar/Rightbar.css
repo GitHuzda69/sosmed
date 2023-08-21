@@ -1,0 +1,47 @@
+.rightBar{
+    width: 200px;
+    height: 100%;
+    background-color: #ffffff;
+    float: right;
+    flex-direction: column;
+    padding: 10px;
+    top: 0;  
+}
+
+.rightBarContainer {
+    padding: 20px;
+}
+.rightBarName{
+    color: black;
+}
+
+.rightBarUserStatus{
+    color: grey;
+}
+
+.rightBarUser {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 20px 0px;
+}
+.rightBarUserInfo {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.rightBarImg {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.rightBarButton{
+    display: flex;
+    align-items: center;
+    border: none;
+    padding: 5px;
+    color: white;
+    cursor: pointer;
+}

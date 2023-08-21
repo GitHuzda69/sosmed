@@ -4,6 +4,7 @@ import Home from "./pages/home/Home.js";
 import Settings from "./pages/setting/Setting.js";
 import Message from "./pages/messages/Messages.js";
 import Friends from "./pages/friendlist/FriendsList.js";
+import Profile from "./pages/profile/Profile.js";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -16,7 +17,7 @@ function App() {
         <Route path="/settings" element={<Settings />}></Route>
         <Route path="/messages" element={<Message />}></Route>
         <Route path="/friend" element={<Friends />}></Route>
-        <Route path="/profile/:id" element ></Route>
+        <Route path="/profile" element={<Profile />} ></Route>
       </Routes>
     </BrowserRouter>
   );

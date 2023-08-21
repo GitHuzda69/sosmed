@@ -125,6 +125,11 @@
   border-radius: 10px;
 }
 
+.loginError{
+  color: red;
+  text-align: left;
+}
+
 .or-divider {
   display: flex;
   align-items: center;

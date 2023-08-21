@@ -1,5 +1,6 @@
 import React from "react";
 import Sidebar from "../../component/Leftbar/Leftbar.js";
+import Righbar from "../../component/rightbar/Rightbar.js"
 import SearchBar from "../../component/search/Search";
 import "./Home.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -16,6 +17,7 @@ function Home() {
     <QueryClientProvider client={queryClient}>
       <div className="app">
         <Sidebar />
+        <Righbar />
         <SearchBar onSearch={handleSearch} />
         <Posts />
       </div>
