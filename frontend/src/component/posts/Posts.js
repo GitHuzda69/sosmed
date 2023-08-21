@@ -1,19 +1,21 @@
-import React, { useState, useRef, useEffect } from "react";
+import React from "react";
 import profilimage from "../../assets/profil.jpg";
-import { Icon } from "@iconify/react";
+import friend3 from "../../assets/friend/friend3.jpg";
+import friend4 from "../../assets/friend/friend4.jpg";
 import "./Posts.css";
 import Post from "../post/Post.js";
 
 const Posts = () => {
+
   // Data Dummy
+
   const posts = [
     {
       id: 1,
       name: "Jeou",
       userId: 1,
-      profilePic: profilimage,
+      img: friend4,
       desc: "Lorem ipsum dolor sit amet asioasdios aosidjas asdpoasd po poadjpoasd ",
-      img: profilimage,
     },
     {
       id: 2,
@@ -23,12 +25,28 @@ const Posts = () => {
       desc: "Lorem ipsum dolor sit amet asioasdios aosidjas asdpoasd po poadjpoasd asdkas a;askjhnd oiasdoiasoa isasdoi asoidh asoidihasoid ",
       img: "",
     },
+    {
+      id: 3,
+      name: "Orang",
+      userId: 3,
+      profilePic: profilimage,
+      desc: "Lorem ipsum dolor sit amet asioasdios aosidjas asdpoasd po poadjpoasd asdkas Lorem ipsum dolor sit amet asioasdios aosidjas asdpoasd po poadjpoasd asdkas Lorem ipsum dolor sit amet asioasdios aosidjas asdpoasd po poadjpoasd asdkas Lorem ipsum dolor sit amet asioasdios aosidjas asdpoasd po poadjpoasd asdkas a;askjhnd oiasdoiasoa isasdoi asoidh asoidihasoid ",
+      img: "",
+    },
+    {
+      id: 4,
+      name: "Biasa",
+      userId: 4,
+      profilePic: profilimage,
+      desc: "Lorem ipsum dolor sit amet asioasdiLorem ipsum dolor sit amet asioasdios aosidjas asdpoasd po poadjpoasd lala asdkas Lorem ipsum dolor sit amet asioasdios aosidjas asdpoasd po poadjpods lala asdkas Lorem ipsum dolor sit amet asioasdios aosidjas asdpoasd po poadjpoasd lala asdkas os aosidjas asdpoasd po poadjpoasd asdkas a;askjhnd oiasdoiasoa isasdoi Lorem ipsum dolor sit amet asioasdiLorem ipsum dolor sit amet asioasdios aosidjas asdpoasd po poadjpoasd lala asdkas Lorem ipsum dolor sit amet asioasdios aosidjas asdpoasd po poadjpods lala asdkas Lorem ipsum dolor sit amet asioasdios aosidjas asdpoasd po poadjpoasd lala asdkas os aosidjas asdpoasd po poadjpoasd asdkas a;askjhnd oiasdoiasoa isas Lorem ipsum dolor sit amet asioasdiLorem ipsum dolor sit amet asioasdios aosidjas asdpoasd po poadjpoasd lala asdkas Lorem ipsum dolor sit amet asioasdios aosidjas asdpoasd po poadjpods lala asdkas Lorem ipsum dolor sit amet asioasdios aosidjas asdpoasd po poadjpoasd lala asdkas os aosidjas asdpoasd po poadjpoasd asdkas a;askjhnd oiasdoiasoa isas Lorem ipsum dolor sit amet asioasdiLorem ipsum dolor sit amet asioasdios aosidjas asdpoasd po poadjpoasd lala asdkas Lorem ipsum dolor sit amet asioasdios aosidjas asdpoasd po poadjpods lala asdkas Lorem ipsum dolor sit amet asioasdios aosidjas asdpoasd po poadjpoasd lala asdkas os aosidjas asdpoasd po poadjpoasd asdkas a;askjhnd oiasdoiasoa isasasoidh asoidihasoid ",
+      img: friend3,
+    },
   ];
 
   return (
-    <div className="posts">
+    <div className="posts" style={{ width: "1200px" }}>
       {posts.map((post) => (
-        <Post post={post} key={post.id} />
+        <Post post={post} key={[post.id]} />
       ))}
     </div>
   );

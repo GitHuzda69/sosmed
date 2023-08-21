@@ -16,12 +16,13 @@
   }
 
 .posts{
-  margin-left: 120px;
+  margin-left: 100px;
   font-family: "Inter", sans-serif;
   font-weight: bold;
   font-size: 40px;
   margin-top: 10px;
   display: flex;
+  flex-direction: column;
 }
 .posts-form{
   position: fixed;

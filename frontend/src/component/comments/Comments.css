@@ -1,40 +1,67 @@
 .comments{
-
+  height: 600px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #aaa #ddd; 
+  margin-bottom: 20px;
 }
+
+.comments::-webkit-scrollbar {
+  width: 8px; 
+}
+
+.comments::-webkit-scrollbar-thumb {
+  background-color: #aaa; 
+  border-radius: 10px;
+}
+
+.comments::-webkit-scrollbar-track {
+  background-color: #ddd;
+  border-radius: 10px;
+}
+
 .write{
   display: flex;
+  flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   gap: 20px;
 }
-.comment-input{
-  width: 100%;
-  padding: 20px;
-  border: 1px solid;
-  border-color: transparent;
+.write img {
+  margin-right: 10px; 
 }
-.comment-button{
+.input-comment{
+  display: flex;
+  width: 100%;
+  padding: 10px;
+  border: 1px gray solid;
+  border-radius: 10px;
+  background-color: lightgray;
+}
+.button-comment{
   border: none;
   background-color: whitesmoke;
   color: black;
-  padding: 10px;
   cursor: pointer;
   border-radius: 3px;
-}
-.comments-pic {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-.name{
-  font-weight: 500;
+  margin-top: 5px;
+  margin-left: -5px;
+  margin-right: 20px;
 }
 .comment{
   margin: 30px 0px;
+  margin-left: 10px;
   display: flex;
   justify-content: space-between;
   gap: 20px;
+  border-bottom: 2px gray solid;
+  width: 98%;
+}
+.comments-pic {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 .comment-info{
   flex: 5;
@@ -42,8 +69,21 @@
   flex-direction: column;
   gap: 3px;
 }
-p{
-
+.comment-info span{
+  font-size: 20px;
+  font-weight: bold;
+  font-family: "Inter", sans-serif;
+  margin-top: 10px;
+  margin-left: -5px;
+}
+.comment-info p{
+  margin-top: 30px;
+  margin-left: -65px;
+  margin-right: -190px;
+  margin-bottom: 20px;
+  font-size: 15px;
+  font-weight: normal;
+  font-family: "Inter", sans-serif;
 }
 .comment-date{
   flex: 1;
