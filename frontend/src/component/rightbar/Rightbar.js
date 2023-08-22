@@ -1,82 +1,116 @@
 import "./Rightbar.css";
+import { Icon } from "@iconify/react";
+
 import avatar1 from "../../assets/friend/friend1.jpg";
 import avatar2 from "../../assets/friend/friend2.jpg";
 import avatar3 from "../../assets/friend/friend3.jpg";
 import avatar4 from "../../assets/friend/friend4.jpg";
 import avatar5 from "../../assets/friend/friend5.jpeg";
-
+import profilimage from "../../assets/profil.jpg";
 
 const Rightbar = () => {
-    return (
-        <div className="rightBar">
-            <div className="rightBarContainer">
-                <div className="rightBarItem">
-                    <span>Friends</span>
-                    <div className="rightBarUser">
-                        <div className="rightBarUserInfo">
-                            <img className="rightBarImg" src={avatar1} />
-                            <p className="rightBarUserStatus">
-                            <span className="rightBarName">John Doe</span>
-                            Online
-                            </p>
-                        </div>
-                        <div className="rightBarButtons">
-                            <button  className="rightBarButton">Icon</button>
-                        </div>
-                    </div>
-                    <div className="rightBarUser">
-                        <div className="rightBarUserInfo">
-                            <img src={avatar2} className="rightBarImg" />
-                            <p className="rightBarUserStatus">
-                            <span className="rightBarName">James Smith</span>
-                            Online 12 Minutes Ago
-                            </p>
-                        </div>
-                        <div className="rightBarButtons">
-                            <button  className="rightBarButton">Icon</button>
-                        </div>
-                    </div>
-                    <div className="rightBarUser">
-                        <div className="rightBarUserInfo">
-                            <img src={avatar3} className="rightBarImg" />
-                            <p className="rightBarUserStatus">
-                            <span className="rightBarName">Michael Jackson</span>
-                            Online 30 Minutes Ago
-                            </p>
-                        </div>
-                        <div className="buttons">
-                            <button  className="rightBarButton">Icon</button>
-                        </div>
-                    </div>
-                    <div className="rightBarUser">
-                        <div className="rightBarUserInfo">
-                            <img src={avatar3} className="rightBarImg" />
-                            <p className="rightBarUserStatus">
-                            <span className="rightBarName">Yessa Pamungkas</span>
-                            Online 2 Hours Ago
-                            </p>
-                        </div>
-                        <div className="rightBarButtons">
-                            <button  className="rightBarButton">Icon</button>
-                        </div>
-                    </div>
-                    <div className="rightBarUser">
-                        <div className="rightBarUserInfo">
-                            <img src={avatar5} className="rightBarImg" />
-                            <p className="rightBarUserStatus">
-                            <span  className="rightBarName">Yessa Pangestu</span>
-                            Online 3 Days Ago
-                            </p>
-                        </div>
-                        <div className="rightBarButtons">
-                            <button className="rightBarButton">Icon</button>
-                        </div>
-                    </div>
-                </div>
+  const rightbar = [
+    {
+      id: 1,
+      name: "Jeou",
+      userId: 1,
+      profilePic: profilimage,
+      online: "Online ",
+      status: 1,
+    },
+    {
+      id: 2,
+      name: "Bukan",
+      userId: 2,
+      profilePic: avatar3,
+      online: "Online 44 minutes ago",
+      status: 0,
+    },
+    {
+      id: 3,
+      name: "Orang",
+      userId: 3,
+      profilePic: avatar4,
+      online: "Online 7 hours ago",
+      status: 0,
+    },
+    {
+      id: 4,
+      name: "Biasa",
+      userId: 4,
+      profilePic: avatar2,
+      online: "Online ",
+      status: 1,
+    },
+    {
+      id: 5,
+      name: "Lalo",
+      userId: 5,
+      profilePic: avatar1,
+      online: "Online 12 hours ago",
+      status: 0,
+    },
+    {
+      id: 6,
+      name: "Bila",
+      userId: 6,
+      profilePic: avatar5,
+      online: "Online ",
+      status: 1,
+    },
+    {
+      id: 7,
+      name: "Yoko",
+      userId: 7,
+      profilePic: avatar2,
+      online: "Online 2 days ago",
+      status: 0,
+    },
+    {
+      id: 8,
+      name: "Asas",
+      userId: 8,
+      profilePic: profilimage,
+      online: "Online ",
+      status: 1,
+    },
+  ];
+  return (
+    <div className="rightBar">
+      <h2>Friends</h2>
+      <div className="rightBarContainer">
+        {rightbar.map((friend) => (
+          <div key={friend.id} className="rightBarItem">
+            <div className="rightBarUser">
+              <div className="rightBarUserInfo">
+                <img
+                  className="rightBarImg"
+                  src={friend.profilePic}
+                  alt={friend.name}
+                />
+                <div
+                  className={`statusDot ${
+                    friend.status === 1 ? "greenDot" : "grayDot"
+                  }`}
+                />
+              </div>
+              <p className="rightBarUserStatus">
+                <span className="rightBarName">{friend.name}</span>
+                {friend.online}
+              </p>
             </div>
-        </div>
-    )
+            <button className="rightBarButton">
+              <Icon
+                icon="ion:chatbox-ellipses-outline"
+                width={25}
+                height={25}
+              />
+            </button>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
 
-}
-
-export default Rightbar
+export default Rightbar;

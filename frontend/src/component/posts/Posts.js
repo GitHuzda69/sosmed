@@ -6,7 +6,6 @@ import "./Posts.css";
 import Post from "../post/Post.js";
 
 const Posts = () => {
-
   // Data Dummy
 
   const posts = [
@@ -14,6 +13,7 @@ const Posts = () => {
       id: 1,
       name: "Jeou",
       userId: 1,
+      profilePic: profilimage,
       img: friend4,
       desc: "Lorem ipsum dolor sit amet asioasdios aosidjas asdpoasd po poadjpoasd ",
     },
@@ -44,7 +44,12 @@ const Posts = () => {
   ];
 
   return (
-    <div className="posts" style={{ width: "1200px" }}>
+    <div
+      className="posts"
+      style={{
+        width: "920px",
+      }}
+    >
       {posts.map((post) => (
         <Post post={post} key={[post.id]} />
       ))}

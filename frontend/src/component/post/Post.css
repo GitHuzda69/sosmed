@@ -2,7 +2,9 @@
   display: flex;
   flex-direction: column;
   margin-top: 20px;
-  width: 1200px;
+  margin-left: 3px;
+  margin-bottom: 5px;
+  width: 900px;
 }
 .post {
   border-radius: 20px;

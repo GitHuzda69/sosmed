@@ -1,5 +1,6 @@
 .comments{
   height: 600px;
+  width: 880px;
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: #aaa #ddd; 
@@ -79,7 +80,7 @@
 .comment-info p{
   margin-top: 30px;
   margin-left: -65px;
-  margin-right: -190px;
+  margin-right: -140px;
   margin-bottom: 20px;
   font-size: 15px;
   font-weight: normal;
