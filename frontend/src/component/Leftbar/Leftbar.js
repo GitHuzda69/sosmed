@@ -2,6 +2,7 @@ import React from "react";
 import "./Leftbar.css";
 import { Icon } from "@iconify/react";
 import { Link, useNavigate } from 'react-router-dom';
+import avatar1 from "../../assets/friend/friend1.jpg";
 
 const Sidebar = () => {
   return (
@@ -35,6 +36,10 @@ const Sidebar = () => {
       <button>
       <Icon icon="material-symbols:logout" width="40" height="40"/>
       </button></Link>
+      <div className="leftBarUser">
+        <img className="leftBarImg" src={avatar1} />
+        <span>Jeou</span>
+      </div>
     </div>
   );
 };

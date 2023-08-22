@@ -4,10 +4,16 @@ import friend3 from "../../assets/friend/friend3.jpg";
 import friend4 from "../../assets/friend/friend4.jpg";
 import "./Posts.css";
 import Post from "../post/Post.js";
+import { useQuery } from "@tanstack/react-query";
+import { makeRequest } from "../../axios";
 
 const Posts = () => {
+  const { isLoading, error, data } = useQuery(['posts'], ()  =>
+  makeRequest,get("/posts").then((res) => {
+    return res.data;
+  })
+  );
   // Data Dummy
-
   const posts = [
     {
       id: 1,
@@ -50,7 +56,7 @@ const Posts = () => {
         width: "920px",
       }}
     >
-      {posts.map((post) => (
+      {data.map((post) => (
         <Post post={post} key={[post.id]} />
       ))}
     </div>

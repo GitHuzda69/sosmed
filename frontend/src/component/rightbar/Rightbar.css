@@ -1,6 +1,6 @@
 .rightBar{
     width: 280px;
-    height: 550px;
+    height: 750px;
     background-color: #ffffff;
     float: right;
     flex-direction: column;
@@ -11,7 +11,7 @@
     position: fixed;
     border: 2px lightgray solid;
     border-radius: 20px;
-    overflow-y: hidden;
+    overflow-y: visible;
 }
 .rightBar h2{
     display: flex;

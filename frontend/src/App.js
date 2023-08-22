@@ -5,21 +5,66 @@ import Settings from "./pages/setting/Setting.js";
 import Message from "./pages/messages/Messages.js";
 import Friends from "./pages/friendlist/FriendsList.js";
 import Profile from "./pages/profile/Profile.js";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { RouterProvider, createBrowserRouter, Navigate, Outlet } from "react-router-dom";
+import { QueryClient, QueryClient, QueryClientProvider} from "@tanstack/react-query";
+import Sidebar from "./component/Leftbar/Leftbar.js";
+import Rightbar from "./component/rightbar/Rightbar.js";
+import SearchBar from "./component/search/Search.js";
+import AuthContext from "./context/authContext.js";
+import { useContext } from "react";
 
 function App() {
+  const QueryClient = new queryClient
+  const Layout = () => {
+    return (
+      <QueryClientProvider client={queryClient} > 
+      <div>
+        <SearchBar/>
+        <div style={{ display: "flex"}}>
+          <Sidebar/>
+          <Outlet/>
+          <Rightbar/>
+        </div>
+      </div>
+      </QueryClientProvider>
+    )
+  }
+  const { currentUser } = useContext(AuthContext);
+  const ProtectedRoute = ({ children }) => {
+    if (!currentUser) {
+      return <Navigate to="/login" />;    }
+  
+  return children;
+    };
+
+  const router = createBrowserRouter([
+    {
+      path:"/", element: <Layout/>,
+      children: [{
+        path: "/",  
+        element: <Home />
+      },{
+        path:  "/profile/:id",
+        element: <Profile />
+      },],
+    },{
+      path:"/login", element: <Login />
+    },
+    {
+      path:"/signup", element: <Signup />
+    },{
+      path:"/settings", element: <Settings />
+    },{
+      path:"/messages", element: <Message />
+    },{
+      path:"/friend", element: <Friends />
+    }
+  ])
+
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/login" element={<Login />}></Route>
-        <Route path="/signup" element={<Signup />}></Route>
-        <Route path="/" element={<Home />}></Route>
-        <Route path="/settings" element={<Settings />}></Route>
-        <Route path="/messages" element={<Message />}></Route>
-        <Route path="/friend" element={<Friends />}></Route>
-        <Route path="/profile" element={<Profile />} ></Route>
-      </Routes>
-    </BrowserRouter>
+    <div>
+      <RouterProvider router={router} />
+    </div>
   );
 }
 
