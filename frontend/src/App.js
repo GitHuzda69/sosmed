@@ -6,7 +6,7 @@ import Message from "./pages/messages/Messages.js";
 import Friends from "./pages/friendlist/FriendsList.js";
 import Profile from "./pages/profile/Profile.js";
 import { RouterProvider, createBrowserRouter, Navigate, Outlet } from "react-router-dom";
-import { QueryClient, QueryClient, QueryClientProvider} from "@tanstack/react-query";
+import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import Sidebar from "./component/Leftbar/Leftbar.js";
 import Rightbar from "./component/rightbar/Rightbar.js";
 import SearchBar from "./component/search/Search.js";
@@ -14,7 +14,7 @@ import AuthContext from "./context/authContext.js";
 import { useContext } from "react";
 
 function App() {
-  const QueryClient = new queryClient
+  const queryClient = new QueryClient();
   const Layout = () => {
     return (
       <QueryClientProvider client={queryClient} > 
@@ -30,7 +30,7 @@ function App() {
     )
   }
   const { currentUser } = useContext(AuthContext);
-  const ProtectedRoute = ({ children }) => {
+  const ProtectedRoute = ({ children }) => { 
     if (!currentUser) {
       return <Navigate to="/login" />;    }
   

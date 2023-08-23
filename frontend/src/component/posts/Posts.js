@@ -9,7 +9,7 @@ import { makeRequest } from "../../axios";
 
 const Posts = () => {
   const { isLoading, error, data } = useQuery(['posts'], ()  =>
-  makeRequest,get("/posts").then((res) => {
+  makeRequest.get("/posts").then((res) => {
     return res.data;
   })
   );
@@ -56,7 +56,7 @@ const Posts = () => {
         width: "920px",
       }}
     >
-      {data.map((post) => (
+      {posts.map((post) => (
         <Post post={post} key={[post.id]} />
       ))}
     </div>

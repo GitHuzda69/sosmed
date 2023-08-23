@@ -3,8 +3,11 @@ import "./Leftbar.css";
 import { Icon } from "@iconify/react";
 import { Link, useNavigate } from 'react-router-dom';
 import avatar1 from "../../assets/friend/friend1.jpg";
+import { useContext } from "react";
+import AuthContext from "../../context/authContext";
 
 const Sidebar = () => {
+  const { currentUser } = useContext(AuthContext)
   return (
     <div className="sidebar">
       <Link to='/'>
@@ -38,7 +41,7 @@ const Sidebar = () => {
       </button></Link>
       <div className="leftBarUser">
         <img className="leftBarImg" src={avatar1} />
-        <span>Jeou</span>
+        <span>{currentUser.name}</span>
       </div>
     </div>
   );
