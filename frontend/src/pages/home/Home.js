@@ -18,7 +18,6 @@ function Home() {
       <div className="app">
         <Sidebar />
         <Righbar />
-        <SearchBar onSearch={handleSearch} />
         <Posts />
       </div>
     </QueryClientProvider>

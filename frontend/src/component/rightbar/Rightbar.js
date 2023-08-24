@@ -1,6 +1,6 @@
 import "./Rightbar.css";
 import { Icon } from "@iconify/react";
-
+import { Link } from "react-router-dom";
 import avatar1 from "../../assets/friend/friend1.jpg";
 import avatar2 from "../../assets/friend/friend2.jpg";
 import avatar3 from "../../assets/friend/friend3.jpg";
@@ -103,6 +103,7 @@ const Rightbar = () => {
                 {friend.online}
               </p>
             </div>
+            <Link to="/messages">
             <button className="rightBarButton">
               <Icon
                 icon="ion:chatbox-ellipses-outline"
@@ -110,6 +111,7 @@ const Rightbar = () => {
                 height={25}
               />
             </button>
+            </Link>
           </div>
         ))}
       </div>
