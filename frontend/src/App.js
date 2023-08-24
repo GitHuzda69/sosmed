@@ -5,7 +5,12 @@ import Settings from "./pages/setting/Setting.js";
 import Message from "./pages/messages/Messages.js";
 import Friends from "./pages/friendlist/FriendsList.js";
 import Profile from "./pages/profile/Profile.js";
-import { RouterProvider, createBrowserRouter, Navigate, Outlet } from "react-router-dom";
+import {
+  RouterProvider,
+  createBrowserRouter,
+  Navigate,
+  Outlet,
+} from "react-router-dom";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import Sidebar from "./component/Leftbar/Leftbar.js";
 import Rightbar from "./component/rightbar/Rightbar.js";
@@ -17,49 +22,63 @@ function App() {
   const queryClient = new QueryClient();
   const Layout = () => {
     return (
-      <QueryClientProvider client={queryClient} > 
-      <div>
-        <SearchBar/>
-        <div style={{ display: "flex"}}>
-          <Sidebar/>
-          <Outlet/>
-          <Rightbar/>
+      <QueryClientProvider client={queryClient}>
+        <div>
+          <SearchBar />
+          <div style={{ display: "flex" }}>
+            <Sidebar />
+            <Outlet />
+            <Rightbar />
+          </div>
         </div>
-      </div>
       </QueryClientProvider>
-    )
-  }
+    );
+  };
   const { currentUser } = useContext(AuthContext);
-  const ProtectedRoute = ({ children }) => { 
+  const ProtectedRoute = ({ children }) => {
     if (!currentUser) {
-      return <Navigate to="/login" />;    }
-  
-  return children;
-    };
+      return <Navigate to="/login" />;
+    }
+
+    return children;
+  };
 
   const router = createBrowserRouter([
     {
-      path:"/", element: <Layout/>,
-      children: [{
-        path: "/",  
-        element: <Home />
-      },{
-        path:  "/profile/:id",
-        element: <Profile />
-      },],
-    },{
-      path:"/login", element: <Login />
+      path: "/",
+      element: <Layout />,
+      children: [
+        {
+          path: "/",
+          element: <Home />,
+        },
+      ],
     },
     {
-      path:"/signup", element: <Signup />
-    },{
-      path:"/settings", element: <Settings />
-    },{
-      path:"/messages", element: <Message />
-    },{
-      path:"/friend", element: <Friends />
-    }
-  ])
+      path: "/profile/:id",
+      element: <Profile />,
+    },
+    {
+      path: "/login",
+      element: <Login />,
+    },
+    {
+      path: "/signup",
+      element: <Signup />,
+    },
+    {
+      path: "/settings",
+      element: <Settings />,
+    },
+    {
+      path: "/messages",
+      element: <Message />,
+    },
+    {
+      path: "/friend",
+      element: <Friends />,
+    },
+  ]);
 
   return (
     <div>

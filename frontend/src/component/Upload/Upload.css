@@ -1,11 +1,102 @@
- .upload{
+.upload {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  bottom: 0;
+  margin-left: 90px;
+  padding: 10px;
+  height: 90px;
+  width: 900px;
+  border-radius: 20px 20px 0px 0px;
+  border: 1px black solid;
+  background-color: #f0f0f0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
- }
+.input-post {
+  flex: 1;
+  padding-right: 10px;
+}
 
- .uploadContainer{
+.input-post textarea {
+  height: 60px;
+  width: 96%;
+  resize: none;
+  margin-top: 5px;
+  margin-left: 10px;
+  border: 1px black solid ;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 14px;
+}
+.input-post textarea::-webkit-scrollbar {
+  width: 8px;
+}
 
- }
- 
- .uploadButton{
-    
- }
+.input-post textarea::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
+
+.input-post textarea::-webkit-scrollbar-thumb {
+  background-color: gray;
+  border-radius: 5px;
+}
+.input-post textarea::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+
+.placeholder {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  pointer-events: none;
+  color: #999;
+  transition: all 0.2s ease;
+}
+
+.input-post textarea:focus+.placeholder,
+.input-post textarea:not(:placeholder-shown)+.placeholder {
+  transform: translateY(-26px) scale(0.8);
+  color: #666;
+}
+
+.button-upload {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.uploadItem-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.uploadButton {
+  width: 85%;
+  border: none;
+  border-radius: 7px;
+  margin-top: -5px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  background-color: black;
+  color: white;
+  font-family: "Inter", sans-serif;
+}
+
+.uploadButton:hover {
+  background-color: rgb(54, 54, 54);
+  border-radius: 10px;
+}
+
+.uploadItem {
+  display: flex;
+  align-items: center;
+  border-radius: 4px;
+}
+.uploadItem:hover{
+  background-color: lightgray;
+  border-radius: 10px;
+}
