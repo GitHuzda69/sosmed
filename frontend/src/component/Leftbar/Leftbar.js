@@ -9,7 +9,8 @@ import AuthContext from "../../context/authContext";
 
 
 const Sidebar = () => {
-  const { currentUser } = useContext(AuthContext)
+  const { currentUser } = useContext(AuthContext);
+  
   return (
     <div className="sidebar">
       <Link to="/">
@@ -54,20 +55,12 @@ const Sidebar = () => {
         to={"/profile/${post.userId}"}
         style={{ textDecoration: "none", color: "inherit" }}
         className="profileavatar"
-      >
+      ><div className="leftBarUser">
         <img className="profile2" src={avatar} alt="" />
+        </div>
       </Link>
-      <button>
-        <Icon icon="fluent:people-community-20-filled" width="40" height="40" />
-      </button></Link>
-      <Link to='/login'>
-      <button>
-      <Icon icon="material-symbols:logout" width="40" height="40"/>
-      </button></Link>
-      <div className="leftBarUser">
-        <img className="leftBarImg" src={avatar1} />
         <span>{currentUser.name}</span>
-      </div>
+      
     </div>
   );
 };

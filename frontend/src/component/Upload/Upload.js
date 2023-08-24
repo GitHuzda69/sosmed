@@ -1,23 +1,29 @@
 import "./Upload.css";
-import { useContext } from "react";
-import { AuthContext } from "../../context/authContext.js";
+import { useContext, useState } from "react";
+import AuthContext from "../../context/authContext.js";
 import { Icon } from "@iconify/react";
 
 const Upload = () => {
-    const { currentUser } =  useContext();
+    const [file, setFile] = useState(null);
+    const [desc, setDesc] = useState(null);
 
+    const { currentUser } =  useContext(AuthContext);
+
+    const handleClick = e => {
+        e.preventDefault()
+    }
     return (
         <div className="upload">
             <div className="uploadContainer">
                 <div className="">
-                    <input type="text" placeholder={'Tulis sesuatu ${currentUser.name}?'} />
-                </div>
-                <div className="">
-                    <button className="uploadButton">Posting</button>
+                    <input type="text" placeholder={'Tulis sesuatu ?'}
+                    onChange={(e) => setDesc(e.target.value)} />
                 </div>
                 <div className="uploadItem">
-                    <Icon></Icon>
+                    <input type="file" onChange={(e) => setFile(e.target.file[0])} />
+                    <label htmlFor="file">
                     <span>Add Image</span>
+                    </label>
                 </div>
                 <div className="uploadItem">
                     <Icon></Icon>
@@ -27,6 +33,7 @@ const Upload = () => {
                     <Icon></Icon>
                     <span>Add Image</span>
                 </div>
+                    <button className="uploadButton" onClick={handleClick} >Posting</button>
             </div>
         </div>
     )

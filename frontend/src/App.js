@@ -43,10 +43,7 @@ function App() {
       children: [{
         path: "/",  
         element: <Home />
-      },{
-        path:  "/profile/:id",
-        element: <Profile />
-      },],
+      }],
     },{
       path:"/login", element: <Login />
     },
@@ -58,6 +55,8 @@ function App() {
       path:"/messages", element: <Message />
     },{
       path:"/friend", element: <Friends />
+    },{
+      path:"/profile/:id", element: <Profile/>
     }
   ])
 
