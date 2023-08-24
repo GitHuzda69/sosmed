@@ -94,7 +94,11 @@ const Rightbar = () => {
                   }`}
                 />
               </div>
-              <p className="rightBarUserStatus">
+              <p
+                className={`rightBarUserStatus ${
+                  friend.status === 1 ? "rightBarUserStatus2" : ""
+                }`}
+              >
                 <span className="rightBarName">{friend.name}</span>
                 {friend.online}
               </p>
