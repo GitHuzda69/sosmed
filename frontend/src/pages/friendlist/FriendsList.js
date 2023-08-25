@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Icon } from "@iconify/react";
 import "./FriendsList.css";
-import Sidebar from "../../component/Leftbar/Leftbar.js";
 import avatar1 from "../../assets/friend/friend1.jpg";
 import avatar2 from "../../assets/friend/friend2.jpg";
 import avatar3 from "../../assets/friend/friend3.jpg";
@@ -133,7 +132,6 @@ const FriendList = () => {
 
   return (
     <div className="friendlist-container">
-      <Sidebar />
       <div className="friendlist-header">
         <h2>Friendlist</h2>
         <button className="button-info">

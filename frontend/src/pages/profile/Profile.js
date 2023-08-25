@@ -1,7 +1,5 @@
 import "./Profile.css";
 import { Icon } from "@iconify/react";
-import Sidebar from "../../component/Leftbar/Leftbar";
-
 import profileimg from "../../assets/profil.jpg";
 import banner from "../../assets/banner.jpg";
 import avatar1 from "../../assets/friend/friend1.jpg";
@@ -45,7 +43,6 @@ const Profile = () => {
   ];
   return (
     <div>
-      <Sidebar />
       <div className="profil">
         <div className="profil-container">
           <div className="cover-img">

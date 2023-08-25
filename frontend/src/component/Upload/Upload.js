@@ -19,11 +19,13 @@ const Upload = () => {
         <textarea
           type="text"
           placeholder={"Tulis sesuatu ${currentUser.name}?"}
+          onChange={(e) => setDesc(e.target.value)}
         />
       </div>
       <div className="button-upload">
         <div className="uploadItem-row">
           <button className="uploadItem">
+            <input type="file" id="file" onChange={(e) => setFile(e.target.file[0])} />
             <Icon icon="ic:outline-poll" width={25} height={25}></Icon>
           </button>
           <button className="uploadItem">
@@ -40,9 +42,6 @@ const Upload = () => {
              <button className="uploadButton" onClick={handleClick} >Posting</button>
             </div>
         </div>
-        <button className="uploadButton">Post</button>
-      </div>
-    </div>
   );
 };
 

@@ -1,12 +1,16 @@
 import React from "react";
+import { useState, useContext } from "react";
 import "./Leftbar.css";
 import avatar from "../../assets/profil.jpg";
 import { Icon } from "@iconify/react";
 import { Link } from "react-router-dom";
+import AuthContext from "../../context/authContext";
+import Settings from "../Settings/Settings";
 
 const Sidebar = () => {
-
   const { currentUser } = useContext(AuthContext);
+
+  const [settingOpen, setSettingOpen] = useState(false);
 
   return (
     <div className="sidebar">
@@ -15,12 +19,11 @@ const Sidebar = () => {
           <Icon icon="ic:round-home" width="40" height="40" />
         </button>
       </Link>
-      <Link to="/settings">
-        <button>
+        <button onClick={() => setSettingOpen(!settingOpen)}>
           <Icon icon="clarity:settings-solid" width="40" height="40" />
         </button>
-      </Link>
-      <button>
+        {settingOpen && <Settings />}
+      <button >
         <Icon icon="bi:instagram" width="40" height="40" />
       </button>
       <button>
@@ -56,7 +59,7 @@ const Sidebar = () => {
         <img className="profile2" src={avatar} alt="" />
         </div>
       </Link>
-        <span>{currentUser.name}</span>
+        <span>Nama dummy</span>
     </div>
   );
 };
