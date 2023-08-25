@@ -1,11 +1,18 @@
 import "./Upload.css";
-import { useContext } from "react";
-import { AuthContext } from "../../context/authContext.js";
+import { useContext, useState } from "react";
+import AuthContext from "../../context/authContext.js";
 import { Icon } from "@iconify/react";
 
 const Upload = () => {
-  const { currentUser } = useContext(AuthContext);
 
+    const [file, setFile] = useState(null);
+    const [desc, setDesc] = useState(null);
+
+    const { currentUser } =  useContext(AuthContext);
+
+    const handleClick = e => {
+        e.preventDefault()
+    }
   return (
     <div className="upload">
       <div className="input-post">
@@ -29,6 +36,9 @@ const Upload = () => {
               height={25}
             ></Icon>
           </button>
+         </div>
+             <button className="uploadButton" onClick={handleClick} >Posting</button>
+            </div>
         </div>
         <button className="uploadButton">Post</button>
       </div>

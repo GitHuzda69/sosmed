@@ -5,6 +5,9 @@ import { Icon } from "@iconify/react";
 import { Link } from "react-router-dom";
 
 const Sidebar = () => {
+
+  const { currentUser } = useContext(AuthContext);
+
   return (
     <div className="sidebar">
       <Link to="/">
@@ -49,9 +52,11 @@ const Sidebar = () => {
         to={"/profile/${post.userId}"}
         style={{ textDecoration: "none", color: "inherit" }}
         className="profileavatar"
-      >
+      ><div className="leftBarUser">
         <img className="profile2" src={avatar} alt="" />
+        </div>
       </Link>
+        <span>{currentUser.name}</span>
     </div>
   );
 };
