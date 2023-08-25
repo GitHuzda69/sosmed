@@ -8,7 +8,6 @@ import Posts from "../../component/posts/Posts";
 import Post from "../../component/post/Post";
 import Upload from "../../component/Upload/Upload.js";
 
-
 const queryClient = new QueryClient();
 
 function Home() {
@@ -19,10 +18,9 @@ function Home() {
     <QueryClientProvider client={queryClient}>
       <div className="app">
         <Sidebar />
-        <Upload/>
+        <Upload />
         <Righbar />
         <Posts />
-        <Upload />
       </div>
     </QueryClientProvider>
   );

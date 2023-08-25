@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
+import AuthContext from "../../context/authContext.js";
 import "./Leftbar.css";
 import avatar from "../../assets/profil.jpg";
 import { Icon } from "@iconify/react";
 import { Link } from "react-router-dom";
 
 const Sidebar = () => {
-
   const { currentUser } = useContext(AuthContext);
 
   return (
@@ -52,11 +52,13 @@ const Sidebar = () => {
         to={"/profile/${post.userId}"}
         style={{ textDecoration: "none", color: "inherit" }}
         className="profileavatar"
-      ><div className="leftBarUser">
-        <img className="profile2" src={avatar} alt="" />
+      >
+        <div className="leftBarUser">
+          <img className="profile2" src={avatar} alt="" />
         </div>
       </Link>
-        <span>{currentUser.name}</span>
+      {/* ke gini biar ga error */}
+      <span>{currentUser?.name}</span>
     </div>
   );
 };
