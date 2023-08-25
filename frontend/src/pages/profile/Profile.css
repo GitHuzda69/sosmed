@@ -1,0 +1,227 @@
+.profil {
+    display: flex;
+    flex-direction: row;
+    margin-top: -8px;
+    margin-left: 90px;
+    margin-right: -5px;
+  }
+  
+  .profil-container {
+    width: 900px;
+    position: relative;
+    border: 1px black solid;
+  }
+  
+  .cover-img img {
+    width: 900px;
+    height: 180px;
+    object-fit: cover;
+  }
+  
+  .profil-user{
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+  }
+  .profil-info{
+    width: 70%;
+  }
+  .profilePic {
+    width: 130px;
+    position: relative;
+    margin-top: -40px;
+    margin-left: 30px;
+    text-align: flex-start;
+  }
+  
+  .profilePic img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 2px solid black;
+  }
+  .profil-bio{
+    height: 90px;
+    margin-top: -100px;
+    margin-left: 170px;
+  }
+  .profil-bio h2 {
+    font-family: "Inter", sans-serif;
+    font-weight: bold;
+    font-size: 28px;
+  }
+  
+  .profil-bio h4{
+    margin-top: -20px;
+    font-family: "Inter", sans-serif;
+    font-weight: 500;
+    font-size: 18px;
+  }
+  .profiluser-button {
+    margin-top: 5px;
+    margin-left: 65px;
+    display: flex;
+    flex-direction: row;
+    align-items: end;
+    text-align: center;
+    gap: 5px;
+  }
+  .add-button{
+    padding: 5px 12px;
+    border: 1px black solid;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  .add-button:hover{
+    border-radius: 50px;
+    background-color: lightgray;
+  }
+  .add-button span{
+    margin-left: 8px;
+    font-family: "Inter", sans-serif;
+    font-size: 15px;
+  }
+  .message-user-button{
+    border: 1px black solid;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    padding: 5px 5px;
+    color: black;
+    cursor: pointer;
+  }
+  .message-user-button:hover{
+    border-radius: 50px;
+    background-color: lightgray;
+  }
+  .share-user-button{
+    border: 1px black solid;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    padding: 5px 5px;
+    color: black;
+    cursor: pointer;
+  }
+  .share-user-button:hover{
+    border-radius: 50px;
+    background-color: lightgray;
+  }
+  .post-profil {
+    border-top: 1px black solid;
+    height: 200px;
+  }
+  .rightProfileBar{
+    border: 1px black solid;
+    border-left: none;
+    width: 100%;
+    height: 600px;
+  }
+  .search-profile{
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+  }
+  .input-profile{
+    width: 300px;
+    border: 1px black solid;
+    border-radius: 20px;
+    display: flex;
+    text-indent: 10px;
+  }
+  .intro{
+    margin-left: 25px;
+    font-family: "Inter", sans-serif;
+  }
+  .intro h2{
+    font-size: 25px;
+  }
+  .intro h3{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 15px;
+    font-weight: normal;
+  }
+  .intro span{
+    font-size: 15px;
+    font-weight: bold;
+  }
+  .intro h4{
+    font-size: 15px;
+    font-weight: normal;
+    margin-right: 30px;
+  }
+  .friends-rec {
+    height: 280px;
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 25px;
+    overflow-y: auto;
+  }
+  .friends-rec::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .friends-rec::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+  }
+  
+  .friends-rec::-webkit-scrollbar-thumb {
+    background-color: #000000;
+    border-radius: 4px;
+  }
+  .friends-rec::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+  }
+  .friend-profil{
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  margin-left: 10px;
+  border: 1px black solid;
+  border-radius: 8px;
+  }
+.friend-avatar-profil{
+    margin-top: 10px;
+    margin-left: 15px;
+  }
+  .friend-info-profil {
+    display: flex;
+    flex-direction: column;
+    align-items: top;
+    margin-top: -46px;
+    margin-left: 65px;
+    margin-bottom: 10px;
+  }
+  .friend-info-profil h3{
+    font-family: "Inter", sans-serif;
+    font-size: 12px;
+    font-size: bold;
+    margin-top: 8px;
+    margin-bottom: -8px;
+  }
+  .friend-info-profil h4{
+    font-family: "Inter", sans-serif;
+    font-size: 12px;
+    font-weight: normal;
+    margin-top: 8px;
+  }
+  .button-add{
+    display: flex;
+    justify-content: center;
+    height: 35px;
+    width: 35px;
+    border: 1px black solid;
+    border-radius: 50%;
+    margin-top: -45px;
+    margin-left: 170px;
+  }
+  .button-add:hover{
+    border-radius: 50%;
+    background-color: lightgray;
+  }

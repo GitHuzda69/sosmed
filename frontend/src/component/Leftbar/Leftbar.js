@@ -2,15 +2,12 @@ import React from "react";
 import "./Leftbar.css";
 import avatar from "../../assets/profil.jpg";
 import { Icon } from "@iconify/react";
-import { Link, useNavigate } from 'react-router-dom';
-import avatar1 from "../../assets/friend/friend1.jpg";
-import { useContext } from "react";
-import AuthContext from "../../context/authContext";
-
+import { Link } from "react-router-dom";
 
 const Sidebar = () => {
+
   const { currentUser } = useContext(AuthContext);
-  
+
   return (
     <div className="sidebar">
       <Link to="/">
@@ -60,7 +57,6 @@ const Sidebar = () => {
         </div>
       </Link>
         <span>{currentUser.name}</span>
-      
     </div>
   );
 };

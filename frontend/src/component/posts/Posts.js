@@ -8,10 +8,10 @@ import { useQuery } from "@tanstack/react-query";
 import { makeRequest } from "../../axios";
 
 const Posts = () => {
-  const { isLoading, error, data } = useQuery(['posts'], ()  =>
-  makeRequest.get("/posts").then((res) => {
-    return res.data;
-  })
+  const { isLoading, error, data } = useQuery(["posts"], () =>
+    makeRequest.get("/posts").then((res) => {
+      return res.data;
+    })
   );
   // Data Dummy
   const posts = [
