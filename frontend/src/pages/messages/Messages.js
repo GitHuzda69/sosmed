@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
 import profilimage from "../../assets/profil.jpg";
-import Sidebar from "../../component/Leftbar/Leftbar.js";
 import { Icon } from "@iconify/react";
 import "./Messages.css";
 import { Link } from "react-router-dom";
@@ -67,7 +66,6 @@ function Friendslist() {
 
   return (
     <div>
-      <Sidebar />
       <h1 className="messages-main">Messages</h1>
       <main className="main">
         <div className="message-form">

@@ -100,3 +100,18 @@
   background-color: lightgray;
   border-radius: 10px;
 }
+
+.uploadItem-popup{
+  position: absolute;
+  bottom: 100px;
+  right: 0px;
+  max-width: 350px;
+  border-radius: 10px;
+  background-color: rgb(173, 173, 173);
+  transition: background-color 0.2s;
+  cursor: pointer;
+}
+.uploadItem-popup:hover{
+  background-color: gray;
+  border-radius: 11px;
+}
