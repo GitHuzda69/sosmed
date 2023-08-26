@@ -41,6 +41,40 @@ const Profile = () => {
       avatar: avatar1,
     },
   ];
+
+  const posts = [
+    {
+      id: 1,
+      name: "Jeou",
+      date: "12 hours ago",
+      userId: 1,
+      profilePic: profileimg,
+      pinned: 1,
+      img: "",
+      desc: "Lorem ipsum dolor sit amet asioasdios aosidjas asdpoasd po poadjpoasd ",
+    },
+    {
+      id: 2,
+      name: "Bukan",
+      date: "2 days ago",
+      userId: 2,
+      profilePic: profileimg,
+      pinned: 0,
+      desc: "Lorem ipsum dolor sit amet asioasdios aosidjas asdpoasd po poadjpoasd asdkas a;askjhnd oiasdoiasoa isasdoi asoidh asoidihasoid ",
+      img: "",
+    },
+    {
+      id: 3,
+      name: "Orang",
+      date: "4 days ago",
+      userId: 3,
+      profilePic: profileimg,
+      pinned: 0,
+      desc: "Lorem ipsum dolor sit amet asioasdios aosidjas asdpoasd po poadjpoasd asdkas Lorem ipsum dolor sit amet asioasdios aosidjas asdpoasd po poadjpoasd asdkas Lorem ipsum dolor sit amet asioasdios aosidjas asdpoasd po poadjpoasd asdkas Lorem ipsum dolor sit amet asioasdios aosidjas asdpoasd po poadjpoasd asdkas a;askjhnd oiasdoiasoa isasdoi asoidh asoidihasoid ",
+      img: avatar2,
+    },
+  ];
+
   return (
     <div>
       <div className="profil">
@@ -86,9 +120,77 @@ const Profile = () => {
               </button>
             </div>
           </div>
-          <div className="post-profil">
-            <h1>Post belum jadi </h1>
-          </div>
+          {posts.map((posts) => (
+            <div className="post-profil">
+              <div className="post-avatar-profil">
+                <img
+                  src={posts.profilePic}
+                  alt={posts.name}
+                  className="avatar-post"
+                />
+                <div className="post-profil-info">
+                  <h2>{posts.name}</h2>
+                  <h3>{posts.date}</h3>
+                </div>
+                {posts.pinned === 1 ? (
+                  <>
+                    <button className="button-post-profil-pinned">
+                      <Icon icon="tabler:dots" width={22} height={22} />
+                    </button>
+                    <div className="pinned-post">
+                      <Icon icon="typcn:pin" width={25} height={25} />
+                      <h5>Pinned post</h5>
+                    </div>
+                  </>
+                ) : (
+                  <button className="button-post-profil">
+                    <Icon icon="tabler:dots" width={22} height={22} />
+                  </button>
+                )}
+              </div>
+              <div className="posts-profil-content">
+                <h4>{posts.desc}</h4>
+                {posts.img && (
+                  <img
+                    className="posts-profil-img"
+                    src={posts.img}
+                    alt="posts-img"
+                  />
+                )}
+              </div>
+              <div className="button-posts-profil">
+                <div className="button-posts">
+                  <Icon
+                    className="icon"
+                    icon="mdi:heart-outline"
+                    width={20}
+                    height={20}
+                    color={"black"}
+                  />
+
+                  <h3>12 Likes</h3>
+                </div>
+                <div className="button-posts">
+                  <Icon
+                    className="icon"
+                    icon="ant-design:message-filled"
+                    width={20}
+                    height={20}
+                  />
+                  <h3>12 Comments</h3>
+                </div>
+                <div className="button-posts">
+                  <Icon
+                    className="icon"
+                    icon="mdi:share"
+                    width={20}
+                    height={20}
+                  />
+                  <h3>449 Share</h3>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
         <div className="rightProfileBar">
           <div className="search-profile">

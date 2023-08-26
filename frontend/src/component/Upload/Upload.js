@@ -4,15 +4,19 @@ import AuthContext from "../../context/authContext.js";
 import { Icon } from "@iconify/react";
 
 const Upload = () => {
+  const [file, setFile] = useState(null);
+  const [desc, setDesc] = useState(null);
+  const [showFileInput, setShowFileInput] = useState(false);
 
-    const [file, setFile] = useState(null);
-    const [desc, setDesc] = useState(null);
+  const { currentUser } = useContext(AuthContext);
 
-    const { currentUser } =  useContext(AuthContext);
+  const handleMediaButtonClick = () => {
+    setShowFileInput(!showFileInput);
+  };
 
-    const handleClick = e => {
-        e.preventDefault()
-    }
+  const handleClick = (e) => {
+    e.preventDefault();
+  };
   return (
     <div className="upload">
       <div className="input-post">
@@ -25,23 +29,32 @@ const Upload = () => {
       <div className="button-upload">
         <div className="uploadItem-row">
           <button className="uploadItem">
-            <input type="file" id="file" onChange={(e) => setFile(e.target.file[0])} />
             <Icon icon="ic:outline-poll" width={25} height={25}></Icon>
           </button>
           <button className="uploadItem">
             <Icon icon="fluent:gif-16-regular" width={25} height={25}></Icon>
           </button>
-          <button className="uploadItem">
+          <button className="uploadItem" onClick={handleMediaButtonClick}>
             <Icon
               icon="material-symbols:perm-media-outline"
               width={25}
               height={25}
             ></Icon>
           </button>
-         </div>
-             <button className="uploadButton" onClick={handleClick} >Posting</button>
-            </div>
         </div>
+        <button className="uploadButton" onClick={handleClick}>
+          Post
+        </button>
+      </div>
+      {showFileInput && (
+        <input
+          className="uploadItem-popup"
+          type="file"
+          id="file"
+          onChange={(e) => setFile(e.target.files[0])}
+        />
+      )}
+    </div>
   );
 };
 

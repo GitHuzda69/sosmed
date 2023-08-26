@@ -1,11 +1,11 @@
 import React from "react";
-import Righbar from "../../component/rightbar/Rightbar.js";
+import Sidebar from "../../component/Leftbar/Leftbar.js";
+import Rightbar from "../../component/rightbar/Rightbar.js";
 import SearchBar from "../../component/search/Search";
 import "./Home.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Posts from "../../component/posts/Posts";
 import Upload from "../../component/Upload/Upload.js";
-
 
 const queryClient = new QueryClient();
 
@@ -16,9 +16,8 @@ function Home() {
   return (
     <QueryClientProvider client={queryClient}>
       <div className="app">
-        <Righbar />
-        <SearchBar/>
-        <Upload/>
+        <Sidebar />
+        <Rightbar />
         <Posts />
         <Upload />
       </div>

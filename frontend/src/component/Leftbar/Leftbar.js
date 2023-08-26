@@ -1,5 +1,4 @@
-import React from "react";
-import { useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 import "./Leftbar.css";
 import avatar from "../../assets/profil.jpg";
 import { Icon } from "@iconify/react";
@@ -19,11 +18,11 @@ const Sidebar = () => {
           <Icon icon="ic:round-home" width="40" height="40" />
         </button>
       </Link>
-        <button onClick={() => setSettingOpen(!settingOpen)}>
-          <Icon icon="clarity:settings-solid" width="40" height="40" />
-        </button>
-        {settingOpen && <Settings />}
-      <button >
+      <button onClick={() => setSettingOpen(!settingOpen)}>
+        <Icon icon="clarity:settings-solid" width="40" height="40" />
+      </button>
+      {settingOpen && <Settings />}
+      <button>
         <Icon icon="bi:instagram" width="40" height="40" />
       </button>
       <button>
@@ -55,11 +54,15 @@ const Sidebar = () => {
         to={"/profile/${post.userId}"}
         style={{ textDecoration: "none", color: "inherit" }}
         className="profileavatar"
-      ><div className="leftBarUser">
-        <img className="profile2" src={avatar} alt="" />
+      >
+        <div className="leftBarUser">
+          <img className="profile2" src={avatar} alt="" />
         </div>
       </Link>
-        <span>Nama dummy</span>
+      {/* ke gini biar ga error 
+      <span>{currentUser?.name}</span>*/}
+
+      <span>Nama dummy</span>
     </div>
   );
 };
