@@ -17,6 +17,7 @@ function Home() {
     <QueryClientProvider client={queryClient}>
       <div className="app">
         <Sidebar />
+        <SearchBar/>
         <Rightbar />
         <Posts />
         <Upload />

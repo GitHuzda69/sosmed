@@ -22,7 +22,7 @@ const Upload = () => {
       <div className="input-post">
         <textarea
           type="text"
-          placeholder={"Tulis sesuatu ${currentUser.name}?"}
+          placeholder={`Tuliskan sesuatu ${currentUser.username}`}
           onChange={(e) => setDesc(e.target.value)}
         />
       </div>

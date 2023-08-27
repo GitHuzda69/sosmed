@@ -1,13 +1,13 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Comments from "../comments/Comments.js";
 import "./Post.css";
 import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
+import AuthContext from "../../context/authContext.js";
 
 const Post = ({ post }) => {
   //SEMENTARA
   const liked = true;
-
   const [commentOpen, setCommentOpen] = useState(false);
 
   return (
@@ -17,12 +17,12 @@ const Post = ({ post }) => {
           <div className="user">
             <div className="userinfo">
               <Link
-                to={"/profile/${post.userId}"}
+                to={`/profile/${post.userId}`}
                 style={{ textDecoration: "none", color: "inherit" }}
               >
-                <img className="profile" src={post.profilePic} alt="" />
+                <img className="profile" src={post.profilepic} alt="" />
                 <div className="details">
-                  <span className="name">{post.name}</span>
+                  <span className="name">{post.username}</span>
                   <span className="date">Baru saja</span>
                 </div>
               </Link>
@@ -30,8 +30,8 @@ const Post = ({ post }) => {
           </div>
         </div>
         <div className="post-content">
-          <p className="post-desc">{post.desc}</p>
-          {post.img && <img className="post-img" src={post.img} alt="" />}
+          <p className="post-desc">{post.decs}</p>
+          <img className="post-img" src={post.img} alt="" />
         </div>
         <div className="info">
           <div className="item">
