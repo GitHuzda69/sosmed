@@ -2,13 +2,25 @@ import "./Upload.css";
 import { useContext, useState } from "react";
 import AuthContext from "../../context/authContext.js";
 import { Icon } from "@iconify/react";
+import { useMutation, QueryClient } from "@tanstack/react-query";
+import { makeRequest } from "../../axios.js";
 
 const Upload = () => {
   const [file, setFile] = useState(null);
-  const [desc, setDesc] = useState(null);
+  const [decs, setDecs] = useState(null);
   const [showFileInput, setShowFileInput] = useState(false);
 
   const { currentUser } = useContext(AuthContext);
+
+  const queryClient = new QueryClient();
+
+  const mutation = useMutation((newPost) =>{
+    return makeRequest.post("/posts", newPost);
+  },{
+    onSuccess: () => {
+      queryClient.invalidateQueries(["[posts]"])
+    }
+  })
 
   const handleMediaButtonClick = () => {
     setShowFileInput(!showFileInput);
@@ -16,6 +28,7 @@ const Upload = () => {
 
   const handleClick = (e) => {
     e.preventDefault();
+    mutation.mutate({decs})
   };
   return (
     <div className="upload">
@@ -23,7 +36,7 @@ const Upload = () => {
         <textarea
           type="text"
           placeholder={`Tuliskan sesuatu ${currentUser.username}`}
-          onChange={(e) => setDesc(e.target.value)}
+          onChange={(e) => setDecs(e.target.value)}
         />
       </div>
       <div className="button-upload">

@@ -15,7 +15,11 @@
 
 ## Post Database
 
-``` CREATE TABLE `sosmed`.`posts` (`id` INT NOT NULL AUTO_INCREMENT, `decs` VARCHAR(255) NULL, `img` VARCHAR(255) NULL, `userid` INT NULL, `createdat` DATETIME NULL, PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC), INDEX `useridx` (`userid` ASC), CONSTRAINT `userid` FOREIGN KEY (`userid`) REFERENCES `sosmed`.`users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE); ```
+``` CREATE TABLE `sosmed`.`posts` (`id` INT NOT NULL AUTO_INCREMENT, `decs` VARCHAR(200) NULL, `img` VARCHAR(200) NULL, `userid` INT NULL, PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC), INDEX `userid_idx` (`userid` ASC), CONSTRAINT `userid` FOREIGN KEY (`userid`) REFERENCES `social`.`users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE); ```
+
+``` ALTER TABLE `sosmed`.`posts`  DROP FOREIGN KEY `userid`; ```
+``` ALTER TABLE `sosmed`.`posts` ADD COLUMN `createdat` DATETIME NULL AFTER `userid`, CHANGE COLUMN `userid` `userid` INT NOT NULL; ```
+``` ALTER TABLE `sosmed`.`posts` ADD CONSTRAINT `userid` FOREIGN KEY (`userid`) REFERENCES `sosmed`.`users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE; ```
 
 ## Comments Database
 
