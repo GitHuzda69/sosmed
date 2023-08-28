@@ -10,9 +10,6 @@ import Upload from "../../component/Upload/Upload.js";
 const queryClient = new QueryClient();
 
 function Home() {
-  const handleSearch = (searchTerm) => {
-    console.log("Pencarian:", searchTerm);
-  };
   return (
     <QueryClientProvider client={queryClient}>
       <div className="app">

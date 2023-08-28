@@ -60,9 +60,3 @@ const Posts = () => {
 };
 
 export default Posts;
-
-/* JANGAN DIHAPOS
-{error ? "Something went wrong!" : isLoading ? "loading" : posts.map((post) =>
-        <Post post={post} key={post.id} />
-      )}
-*/

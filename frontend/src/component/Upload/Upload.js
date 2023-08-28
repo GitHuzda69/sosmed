@@ -10,6 +10,16 @@ const Upload = () => {
   const [decs, setDecs] = useState(null);
   const [showFileInput, setShowFileInput] = useState(false);
 
+  const upload = async ()=>{
+    try{
+      const formData = new FormData();
+      formData.append("file", file)
+      const res = await makeRequest.post('/upload', formData)
+      return res.data
+  }catch(err){
+    console.log(err)
+  }}
+
   const { currentUser } = useContext(AuthContext);
 
   const queryClient = new QueryClient();
@@ -18,7 +28,7 @@ const Upload = () => {
     return makeRequest.post("/posts", newPost);
   },{
     onSuccess: () => {
-      queryClient.invalidateQueries(["[posts]"])
+      queryClient.invalidateQueries(["posts"])
     }
   })
 
@@ -26,9 +36,11 @@ const Upload = () => {
     setShowFileInput(!showFileInput);
   };
 
-  const handleClick = (e) => {
+  const handleClick = async (e) => {
     e.preventDefault();
-    mutation.mutate({decs})
+    let imgUrl = "";
+    if (file) imgUrl = await upload();
+    mutation.mutate({decs, img: imgUrl })
   };
   return (
     <div className="upload">
