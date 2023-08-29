@@ -3,6 +3,7 @@ import Comments from "../comments/Comments.js";
 import "./Post.css";
 import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
+import moment from "moment"
 import AuthContext from "../../context/authContext.js";
 
 const Post = ({ post }) => {
@@ -23,7 +24,7 @@ const Post = ({ post }) => {
                 <img className="profile" src={post.profilepic} alt="" />
                 <div className="details">
                   <span className="name">{post.username}</span>
-                  <span className="date">Baru saja</span>
+                  <span className="date">{moment(post.createdat).fromNow()}</span>
                 </div>
               </Link>
             </div>
@@ -31,7 +32,7 @@ const Post = ({ post }) => {
         </div>
         <div className="post-content">
           <p className="post-desc">{post.decs}</p>
-          <img className="post-img" src={post.img} alt="" />
+          <img className="post-img" src={"./data/"+post.img} alt="" />
         </div>
         <div className="info">
           <div className="item">

@@ -7,7 +7,7 @@ import commentRoutes from "./routes/comments.js";
 import likeRoutes from "./routes/likes.js";
 import cookieParser from "cookie-parser";
 import cors from "cors"
-import mutler from "mutler"
+import multer from "multer";
 
 const app = Express()
 //middlewares
@@ -22,7 +22,7 @@ app.use(cors({
 }))
 app.use(cookieParser())
 
-    const storage = mutler.diskStorage({
+    const storage = multer.diskStorage({
         destination: function (req, file, cb) {
             cb(null, '../frontend/public/data')
         },
@@ -31,7 +31,7 @@ app.use(cookieParser())
         } 
     })
 
-    const upload = mutler({ storage: storage })
+    const upload = multer({ storage: storage })
 
 app.post('/api/upload', upload.single("file"), (req, res) => {
     const file = req.file;

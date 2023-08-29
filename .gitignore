@@ -34,3 +34,5 @@ yarn-error.log*
 /frontend/yarn-error.log*
 
 /backend/node_modules
+
+/public

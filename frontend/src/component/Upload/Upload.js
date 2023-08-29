@@ -2,10 +2,12 @@ import "./Upload.css";
 import { useContext, useState } from "react";
 import AuthContext from "../../context/authContext.js";
 import { Icon } from "@iconify/react";
-import { useMutation, QueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { makeRequest } from "../../axios.js";
+import { useNavigate } from "react-router";
 
 const Upload = () => {
+  const navigate = useNavigate();
   const [file, setFile] = useState(null);
   const [decs, setDecs] = useState(null);
   const [showFileInput, setShowFileInput] = useState(false);
@@ -22,7 +24,7 @@ const Upload = () => {
 
   const { currentUser } = useContext(AuthContext);
 
-  const queryClient = new QueryClient();
+  const queryClient = useQueryClient();
 
   const mutation = useMutation((newPost) =>{
     return makeRequest.post("/posts", newPost);
@@ -41,6 +43,8 @@ const Upload = () => {
     let imgUrl = "";
     if (file) imgUrl = await upload();
     mutation.mutate({decs, img: imgUrl })
+    setDecs("")
+    setFile(null)
   };
   return (
     <div className="upload">
@@ -49,7 +53,9 @@ const Upload = () => {
           type="text"
           placeholder={`Tuliskan sesuatu ${currentUser.username}`}
           onChange={(e) => setDecs(e.target.value)}
+          value={decs}
         />
+        {file && <img className="file" alt="" src={URL.createObjectURL(file)} />}
       </div>
       <div className="button-upload">
         <div className="uploadItem-row">

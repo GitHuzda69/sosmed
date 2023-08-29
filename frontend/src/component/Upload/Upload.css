@@ -115,3 +115,10 @@
   background-color: gray;
   border-radius: 11px;
 }
+
+.file{
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 0px;
+}
