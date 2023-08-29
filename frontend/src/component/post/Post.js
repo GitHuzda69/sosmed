@@ -9,6 +9,7 @@ const Post = ({ post }) => {
   const liked = true;
 
   const [commentOpen, setCommentOpen] = useState(false);
+  const [imagePopupOpen, setImagePopupOpen] = useState(false);
 
   return (
     <div className="post-container">
@@ -31,7 +32,16 @@ const Post = ({ post }) => {
         </div>
         <div className="post-content">
           <p className="post-desc">{post.desc}</p>
-          {post.img && <img className="post-img" src={post.img} alt="" />}
+          {post.img && (
+            <div className="post-img-container">
+              <button
+                className="img-button"
+                onClick={() => setImagePopupOpen(true)}
+              >
+                <img className="post-img" src={post.img} alt="" />
+              </button>
+            </div>
+          )}
         </div>
         <div className="info">
           <div className="item">
@@ -64,6 +74,17 @@ const Post = ({ post }) => {
         </div>
         {commentOpen && <Comments />}
       </div>
+      {imagePopupOpen && (
+        <div className="image-popup">
+          <button
+            className="close-button"
+            onClick={() => setImagePopupOpen(false)}
+          >
+            <Icon icon="ph:x-bold" color="black" width={40} height={40}/>
+          </button>
+          <img className="popup-img" src={post.img} alt="" />
+        </div>
+      )}
     </div>
   );
 };
