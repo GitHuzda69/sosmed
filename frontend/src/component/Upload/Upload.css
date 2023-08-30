@@ -6,8 +6,9 @@
   bottom: 0;
   margin-left: 90px;
   padding: 10px;
-  height: 90px;
+  height: auto;
   width: 900px;
+  max-height: 490px;
   border-radius: 20px 20px 0px 0px;
   border: 1px black solid;
   background-color: #f0f0f0;
@@ -115,6 +116,48 @@
   background-color: gray;
   border-radius: 11px;
 }
+
+.selected-file-container{
+  position: absolute;
+  bottom: 115px;
+  right: 20px;
+}
+.selected-file-info{
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 15px;
+  font-family: "Inter", sans-serif;
+  border: 1px black solid;
+}
+.selected-image{
+  max-width: 300px;
+  max-height: 300px;
+  border-radius: 9px 9px 5px 5px;
+  border-bottom: 1px black solid;
+}
+.file-name{
+  margin-left: 5px;
+  margin-right: 30px;
+  padding: 2px;
+  overflow: hidden;
+}
+.clear-file-button{
+  display: flex;
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  border-radius: 50%;
+  padding: 3px 4px;
+  background-color: rgb(0, 0, 0, 0.5);
+}
+.clear-file-button:hover{  
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 50%;
+  transform: translate(0, -1px) scale(1.0);
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
 
 .file{
   width: 100px;

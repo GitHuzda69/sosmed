@@ -6,6 +6,15 @@
   background-color: #ffffff;
   margin-right: 20vh;
 }
+.login-containers h1{
+  position: absolute;
+  top: 15px;
+  left: 40px;
+  width: 790px;
+  font-family: "Inter", sans-serif;
+  font-size: 35px;
+  font-weight: 600;
+}  
 
 .login-forms {
   background-color: white; 
@@ -89,11 +98,11 @@
   border: 1px black solid;
 }
 .checkbox-input:checked::before {
-  content: '\25CF'; 
+  content: '\2713'; 
   position: fixed;
-  margin-top: -17px;
-  margin-left: -8px;
-  font-size: 28px;
+  margin-top: -12px;
+  margin-left: -6px;
+  font-size: 18px;
   font-weight: bold;
   color: rgb(0, 0, 0);
 }
