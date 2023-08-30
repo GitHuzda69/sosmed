@@ -56,13 +56,10 @@ const Sidebar = () => {
         className="profileavatar"
       >
         <div className="leftBarUser">
-          <img className="profile2" src={avatar} alt="" />
+          <img className="profile2" src={currentUser.profilepic} alt="" />
         </div>
       </Link>
-      {/* ke gini biar ga error 
-      <span>{currentUser?.name}</span>*/}
-
-      <span>Nama dummy</span>
+      <span>{currentUser.username}</span>
     </div>
   );
 };

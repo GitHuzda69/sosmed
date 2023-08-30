@@ -2,15 +2,28 @@ import "./Upload.css";
 import { useContext, useState, useRef } from "react";
 import AuthContext from "../../context/authContext.js";
 import { Icon } from "@iconify/react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { makeRequest } from "../../axios.js";
+import { useNavigate } from "react-router";
 
 const Upload = () => {
+  const navigate = useNavigate();
   const [file, setFile] = useState(null);
   const [desc, setDesc] = useState(null);
   const fileInputRef = useRef(null);
   const [showFileInput, setShowFileInput] = useState(false);
 
-  const { currentUser } = useContext(AuthContext);
+  const upload = async ()=>{
+    try{
+      const formData = new FormData();
+      formData.append("file", file)
+      const res = await makeRequest.post('/upload', formData)
+      return res.data
+  }catch(err){
+    console.log(err)
+  }}
 
+  const { currentUser } = useContext(AuthContext);
   const handleFileInputChange = (e) => {
     const selectedFile = e.target.files[0];
     setFile(selectedFile);
@@ -19,6 +32,16 @@ const Upload = () => {
   const clearSelectedFile = () => {
     setFile(null);
   };
+  
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation((newPost) =>{
+    return makeRequest.post("/posts", newPost);
+  },{
+    onSuccess: () => {
+      queryClient.invalidateQueries(["posts"])
+    }
+  })
 
   const handleMediaButtonClick = () => {
     setShowFileInput(!showFileInput);
@@ -27,8 +50,13 @@ const Upload = () => {
     }
   };
 
-  const handleClick = (e) => {
+  const handleClick = async (e) => {
     e.preventDefault();
+    let imgUrl = "";
+    if (file) imgUrl = await upload();
+    mutation.mutate({decs, img: imgUrl })
+    setDecs("")
+    setFile(null)
   };
   return (
     <div className="upload">
@@ -50,9 +78,11 @@ const Upload = () => {
       <div className="input-post">
         <textarea
           type="text"
-          placeholder={"Tulis sesuatu ${currentUser.name}?"}
-          onChange={(e) => setDesc(e.target.value)}
+          placeholder={`Tuliskan sesuatu ${currentUser.username}`}
+          onChange={(e) => setDecs(e.target.value)}
+          value={decs}
         />
+        {file && <img className="file" alt="" src={URL.createObjectURL(file)} />}
       </div>
       <div className="button-upload">
         <div className="uploadItem-row">

@@ -1,13 +1,14 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Comments from "../comments/Comments.js";
 import "./Post.css";
 import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
+import moment from "moment"
+import AuthContext from "../../context/authContext.js";
 
 const Post = ({ post }) => {
   //SEMENTARA
   const liked = true;
-
   const [commentOpen, setCommentOpen] = useState(false);
   const [imagePopupOpen, setImagePopupOpen] = useState(false);
 
@@ -18,13 +19,13 @@ const Post = ({ post }) => {
           <div className="user">
             <div className="userinfo">
               <Link
-                to={"/profile/${post.userId}"}
+                to={`/profile/${post.userId}`}
                 style={{ textDecoration: "none", color: "inherit" }}
               >
-                <img className="profile" src={post.profilePic} alt="" />
+                <img className="profile" src={post.profilepic} alt="" />
                 <div className="details">
-                  <span className="name">{post.name}</span>
-                  <span className="date">Baru saja</span>
+                  <span className="name">{post.username}</span>
+                  <span className="date">{moment(post.createdat).fromNow()}</span>
                 </div>
               </Link>
             </div>
@@ -38,7 +39,7 @@ const Post = ({ post }) => {
                 className="img-button"
                 onClick={() => setImagePopupOpen(true)}
               >
-                <img className="post-img" src={post.img} alt="" />
+                <img className="post-img" src={"./data/"+post.img} alt="" />
               </button>
             </div>
           )}
