@@ -33,7 +33,6 @@ const Post = ({ post }) => {
         </div>
         <div className="post-content">
           <p className="post-desc">{post.desc}</p>
-          {post.img && (
             <div className="post-img-container">
               <button
                 className="img-button"
@@ -42,7 +41,6 @@ const Post = ({ post }) => {
                 <img className="post-img" src={"./data/"+post.img} alt="" />
               </button>
             </div>
-          )}
         </div>
         <div className="info">
           <div className="item">
@@ -73,7 +71,7 @@ const Post = ({ post }) => {
             <h3>Share</h3>
           </div>
         </div>
-        {commentOpen && <Comments />}
+        {commentOpen && <Comments postid={post.id} />}
       </div>
       {imagePopupOpen && (
         <div className="image-popup">
@@ -83,7 +81,7 @@ const Post = ({ post }) => {
           >
             <Icon icon="ph:x-bold" color="black" width={40} height={40}/>
           </button>
-          <img className="popup-img" src={post.img} alt="" />
+          <img className="popup-img" src={"./data/"+post.img} alt="" />
         </div>
       )}
     </div>

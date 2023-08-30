@@ -9,7 +9,7 @@ import { useNavigate } from "react-router";
 const Upload = () => {
   const navigate = useNavigate();
   const [file, setFile] = useState(null);
-  const [desc, setDesc] = useState(null);
+  const [desc, setDesc] = useState(undefined);
   const fileInputRef = useRef(null);
   const [showFileInput, setShowFileInput] = useState(false);
 
@@ -54,13 +54,22 @@ const Upload = () => {
     e.preventDefault();
     let imgUrl = "";
     if (file) imgUrl = await upload();
-    mutation.mutate({decs, img: imgUrl })
-    setDecs("")
+    mutation.mutate({desc, img: imgUrl })
+    setDesc("")
     setFile(null)
   };
+  
   return (
     <div className="upload">
       <div className="selected-file-container">
+      </div>
+      <div className="input-post">
+        <textarea
+          type="text"
+          placeholder={`Tuliskan sesuatu ${currentUser.username}`}
+          onChange={(e) => setDesc(e.target.value)}
+          value={desc}
+        />
         {file && (
           <div className="selected-file-info">
             <img
@@ -74,15 +83,6 @@ const Upload = () => {
             </button>
           </div>
         )}
-      </div>
-      <div className="input-post">
-        <textarea
-          type="text"
-          placeholder={`Tuliskan sesuatu ${currentUser.username}`}
-          onChange={(e) => setDecs(e.target.value)}
-          value={decs}
-        />
-        {file && <img className="file" alt="" src={URL.createObjectURL(file)} />}
       </div>
       <div className="button-upload">
         <div className="uploadItem-row">
