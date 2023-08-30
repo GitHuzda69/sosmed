@@ -29,14 +29,15 @@ export const addPost = (req, res)=> {
     const q = 'INSERT INTO posts (`desc`, `img`, `createdat`, `userid`) VALUES (?)';
 
     const values = [
-        req.body.decs,
-        req.body.img,
-        moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"),
-        userInfo.id
-    ]
+      req.body.decs,
+      req.body.img,
+      moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"),
+      userInfo.id,
+    ];
 
-    db.query(q, [values], (err, data)=>{
-        if (err) return res.status(500).json(err);
-        return res.status(200).json("Post has been created")
-    })})
-}
+    db.query(q, [values], (err, data) => {
+      if (err) return res.status(500).json(err);
+      return res.status(200).json("Post has been created");
+    });
+  });
+};

@@ -13,15 +13,16 @@ const Upload = () => {
   const fileInputRef = useRef(null);
   const [showFileInput, setShowFileInput] = useState(false);
 
-  const upload = async ()=>{
-    try{
+  const upload = async () => {
+    try {
       const formData = new FormData();
-      formData.append("file", file)
-      const res = await makeRequest.post('/upload', formData)
-      return res.data
-  }catch(err){
-    console.log(err)
-  }}
+      formData.append("file", file);
+      const res = await makeRequest.post("/upload", formData);
+      return res.data;
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const { currentUser } = useContext(AuthContext);
   const handleFileInputChange = (e) => {
@@ -32,16 +33,19 @@ const Upload = () => {
   const clearSelectedFile = () => {
     setFile(null);
   };
-  
+
   const queryClient = useQueryClient();
 
-  const mutation = useMutation((newPost) =>{
-    return makeRequest.post("/posts", newPost);
-  },{
-    onSuccess: () => {
-      queryClient.invalidateQueries(["posts"])
+  const mutation = useMutation(
+    (newPost) => {
+      return makeRequest.post("/posts", newPost);
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["posts"]);
+      },
     }
-  })
+  );
 
   const handleMediaButtonClick = () => {
     setShowFileInput(!showFileInput);
@@ -49,14 +53,25 @@ const Upload = () => {
       fileInputRef.current.click();
     }
   };
-
   const handleClick = async (e) => {
     e.preventDefault();
+    if (!desc || desc.trim() === "") {
+      return;
+    }
+
     let imgUrl = "";
+
     if (file) imgUrl = await upload();
-    mutation.mutate({desc, img: imgUrl })
-    setDesc("")
-    setFile(null)
+    mutation.mutate({ desc, img: imgUrl });
+    setDesc("");
+    setFile(null);
+    
+  const handleEnterKey = (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleClick(e);
+    }
+
   };
   
   return (
@@ -79,9 +94,21 @@ const Upload = () => {
             />
             <span className="file-name">{file.name}</span>
             <button className="clear-file-button" onClick={clearSelectedFile}>
-            <Icon icon="ph:x-bold" color="black" width={15} height={15}/>
+              <Icon icon="ph:x-bold" color="black" width={15} height={15} />
             </button>
           </div>
+        )}
+      </div>
+      <div className="input-post">
+        <textarea
+          type="text"
+          placeholder={`Tuliskan sesuatu ${currentUser.username}`}
+          onChange={(e) => setDesc(e.target.value)}
+          onKeyDown={handleEnterKey}
+          value={desc}
+        />
+        {file && (
+          <img className="file" alt="" src={URL.createObjectURL(file)} />
         )}
       </div>
       <div className="button-upload">
@@ -110,7 +137,7 @@ const Upload = () => {
         id="file"
         ref={fileInputRef}
         onChange={handleFileInputChange}
-        style={{ display:"none" }}
+        style={{ display: "none" }}
       />
     </div>
   );
