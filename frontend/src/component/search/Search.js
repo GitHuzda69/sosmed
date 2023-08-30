@@ -10,8 +10,8 @@ const SearchBar = ({ onSearch }) => {
     setSearchTerm(event.target.value);
   };
 
-  const handleSearch = () => {
-    onSearch(searchTerm);
+  const handleSearch = (searchTerm) => {
+    console.log("Pencarian:", searchTerm);
   };
 
   const handleClearSearch = () => {

@@ -17,56 +17,50 @@ const Posts = () => {
   const posts = [
     {
       id: 1,
-      name: "Jeou",
+      username: "Jeou",
       userId: 1,
-      profilePic: profilimage,
+      profilepic: profilimage,
       img: friend4,
       desc: "Lorem ipsum dolor sit amet asioasdios aosidjas asdpoasd po poadjpoasd ",
+      createdat: "2023-08-30 08:33:34"
     },
     {
       id: 2,
-      name: "Bukan",
+      username: "Bukan",
       userId: 2,
-      profilePic: profilimage,
+      profilepic: profilimage,
       desc: "Lorem ipsum dolor sit amet asioasdios aosidjas asdpoasd po poadjpoasd asdkas a;askjhnd oiasdoiasoa isasdoi asoidh asoidihasoid ",
       img: "",
+      createdat: "2023-08-30 08:00:34"
     },
     {
       id: 3,
-      name: "Orang",
+      username: "Orang",
       userId: 3,
-      profilePic: profilimage,
+      profilepic: profilimage,
       desc: "Lorem ipsum dolor sit amet asioasdios aosidjas asdpoasd po poadjpoasd asdkas Lorem ipsum dolor sit amet asioasdios aosidjas asdpoasd po poadjpoasd asdkas Lorem ipsum dolor sit amet asioasdios aosidjas asdpoasd po poadjpoasd asdkas Lorem ipsum dolor sit amet asioasdios aosidjas asdpoasd po poadjpoasd asdkas a;askjhnd oiasdoiasoa isasdoi asoidh asoidihasoid ",
       img: "",
+      createdat: "2023-08-28 08:33:34"
     },
     {
       id: 4,
-      name: "Biasa",
+      username: "Biasa",
       userId: 4,
-      profilePic: profilimage,
+      profilepic: profilimage,
       desc: "Lorem ipsum dolor sit amet asioasdiLorem ipsum dolor sit amet asioasdios aosidjas asdpoasd po poadjpoasd lala asdkas Lorem ipsum dolor sit amet asioasdios aosidjas asdpoasd po poadjpods lala asdkas Lorem ipsum dolor sit amet asioasdios aosidjas asdpoasd po poadjpoasd lala asdkas os aosidjas asdpoasd po poadjpoasd asdkas a;askjhnd oiasdoiasoa isasdoi Lorem ipsum dolor sit amet asioasdiLorem ipsum dolor sit amet asioasdios aosidjas asdpoasd po poadjpoasd lala asdkas Lorem ipsum dolor sit amet asioasdios aosidjas asdpoasd po poadjpods lala asdkas Lorem ipsum dolor sit amet asioasdios aosidjas asdpoasd po poadjpoasd lala asdkas os aosidjas asdpoasd po poadjpoasd asdkas a;askjhnd oiasdoiasoa isas Lorem ipsum dolor sit amet asioasdiLorem ipsum dolor sit amet asioasdios aosidjas asdpoasd po poadjpoasd lala asdkas Lorem ipsum dolor sit amet asioasdios aosidjas asdpoasd po poadjpods lala asdkas Lorem ipsum dolor sit amet asioasdios aosidjas asdpoasd po poadjpoasd lala asdkas os aosidjas asdpoasd po poadjpoasd asdkas a;askjhnd oiasdoiasoa isas Lorem ipsum dolor sit amet asioasdiLorem ipsum dolor sit amet asioasdios aosidjas asdpoasd po poadjpoasd lala asdkas Lorem ipsum dolor sit amet asioasdios aosidjas asdpoasd po poadjpods lala asdkas Lorem ipsum dolor sit amet asioasdios aosidjas asdpoasd po poadjpoasd lala asdkas os aosidjas asdpoasd po poadjpoasd asdkas a;askjhnd oiasdoiasoa isasasoidh asoidihasoid ",
       img: friend3,
+      createdat: "2023-08-27 08:33:34"
     },
   ];
 
   return (
-    <div
-      className="posts"
-      style={{
-        width: "920px",
-      }}
-    >
-      {posts.map((post) => (
-        <Post post={post} key={[post.id]} />
-      ))}
+
+    <div className="posts" style={{width: "920px"}}>
+      {posts.map((post) =>
+        <Post post={post} key={post.id} />
+      )}
     </div>
   );
 };
 
 export default Posts;
-
-/* JANGAN DIHAPOS
-{error ? "Something went wrong!" : isLoading ? "loading" : posts.map((post) =>
-        <Post post={post} key={post.id} />
-      )}
-*/
