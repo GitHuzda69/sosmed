@@ -45,13 +45,13 @@ const Sidebar = () => {
           />
         </button>
       </Link>
-      <Link to="/login">
+      <Link to="/logout">
         <button>
           <Icon icon="material-symbols:logout" width="40" height="40" />
         </button>
       </Link>
       <Link
-        to={"/profile/${post.userId}"}
+        to={'/profile/${post.userid}'}
         style={{ textDecoration: "none", color: "inherit" }}
         className="profileavatar"
       >

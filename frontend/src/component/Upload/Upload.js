@@ -9,7 +9,7 @@ import { useNavigate } from "react-router";
 const Upload = () => {
   const navigate = useNavigate();
   const [file, setFile] = useState(null);
-  const [desc, setDesc] = useState(null);
+  const [desc, setDesc] = useState(undefined);
   const fileInputRef = useRef(null);
   const [showFileInput, setShowFileInput] = useState(false);
 
@@ -65,16 +65,26 @@ const Upload = () => {
     mutation.mutate({ desc, img: imgUrl });
     setDesc("");
     setFile(null);
-  };
+    
   const handleEnterKey = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleClick(e);
     }
+
   };
+  
   return (
     <div className="upload">
       <div className="selected-file-container">
+      </div>
+      <div className="input-post">
+        <textarea
+          type="text"
+          placeholder={`Tuliskan sesuatu ${currentUser.username}`}
+          onChange={(e) => setDesc(e.target.value)}
+          value={desc}
+        />
         {file && (
           <div className="selected-file-info">
             <img
