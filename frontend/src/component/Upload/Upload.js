@@ -1,17 +1,30 @@
 import "./Upload.css";
-import { useContext, useState } from "react";
+import { useContext, useState, useRef } from "react";
 import AuthContext from "../../context/authContext.js";
 import { Icon } from "@iconify/react";
 
 const Upload = () => {
   const [file, setFile] = useState(null);
   const [desc, setDesc] = useState(null);
+  const fileInputRef = useRef(null);
   const [showFileInput, setShowFileInput] = useState(false);
 
   const { currentUser } = useContext(AuthContext);
 
+  const handleFileInputChange = (e) => {
+    const selectedFile = e.target.files[0];
+    setFile(selectedFile);
+  };
+
+  const clearSelectedFile = () => {
+    setFile(null);
+  };
+
   const handleMediaButtonClick = () => {
     setShowFileInput(!showFileInput);
+    if (!showFileInput && fileInputRef.current) {
+      fileInputRef.current.click();
+    }
   };
 
   const handleClick = (e) => {
@@ -19,6 +32,21 @@ const Upload = () => {
   };
   return (
     <div className="upload">
+      <div className="selected-file-container">
+        {file && (
+          <div className="selected-file-info">
+            <img
+              className="selected-image"
+              src={URL.createObjectURL(file)}
+              alt="Selected"
+            />
+            <span className="file-name">{file.name}</span>
+            <button className="clear-file-button" onClick={clearSelectedFile}>
+            <Icon icon="ph:x-bold" color="black" width={15} height={15}/>
+            </button>
+          </div>
+        )}
+      </div>
       <div className="input-post">
         <textarea
           type="text"
@@ -46,14 +74,14 @@ const Upload = () => {
           Post
         </button>
       </div>
-      {showFileInput && (
-        <input
-          className="uploadItem-popup"
-          type="file"
-          id="file"
-          onChange={(e) => setFile(e.target.files[0])}
-        />
-      )}
+      <input
+        className="uploadItem-popup"
+        type="file"
+        id="file"
+        ref={fileInputRef}
+        onChange={handleFileInputChange}
+        style={{ display:"none" }}
+      />
     </div>
   );
 };

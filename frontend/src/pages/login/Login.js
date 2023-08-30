@@ -43,6 +43,7 @@ const Login = () => {
 
   return (
     <div className="login-containers">
+      <h1>Selamat Datang, silahkan masukkan pilih metode Log in Anda</h1>
       <div className="login-forms">
         <h3>Log in</h3>
         <form action="">
@@ -115,10 +116,7 @@ const Login = () => {
                 <h4>Remember Me</h4>
               </label>
             </div>
-            <button
-              type="button"
-              className="forgot-password-button"
-            >
+            <button type="button" className="forgot-password-button">
               Forgot Password
             </button>
             <span className="loginError">{err && err}</span>
