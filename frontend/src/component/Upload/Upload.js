@@ -65,6 +65,7 @@ const Upload = () => {
     mutation.mutate({ desc, img: imgUrl });
     setDesc("");
     setFile(null);
+  }
     
   const handleEnterKey = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
@@ -97,18 +98,6 @@ const Upload = () => {
               <Icon icon="ph:x-bold" color="black" width={15} height={15} />
             </button>
           </div>
-        )}
-      </div>
-      <div className="input-post">
-        <textarea
-          type="text"
-          placeholder={`Tuliskan sesuatu ${currentUser.username}`}
-          onChange={(e) => setDesc(e.target.value)}
-          onKeyDown={handleEnterKey}
-          value={desc}
-        />
-        {file && (
-          <img className="file" alt="" src={URL.createObjectURL(file)} />
         )}
       </div>
       <div className="button-upload">
