@@ -55,37 +55,27 @@ const Upload = () => {
   };
   const handleClick = async (e) => {
     e.preventDefault();
-    if (!desc || desc.trim() === "") {
+    if (!desc && !file) {
       return;
     }
 
     let imgUrl = "";
-
     if (file) imgUrl = await upload();
     mutation.mutate({ desc, img: imgUrl });
     setDesc("");
     setFile(null);
-  }
-    
+  };
+
   const handleEnterKey = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleClick(e);
     }
-
   };
-  
+
   return (
     <div className="upload">
       <div className="selected-file-container">
-      </div>
-      <div className="input-post">
-        <textarea
-          type="text"
-          placeholder={`Tuliskan sesuatu ${currentUser.username}`}
-          onChange={(e) => setDesc(e.target.value)}
-          value={desc}
-        />
         {file && (
           <div className="selected-file-info">
             <img
@@ -99,6 +89,15 @@ const Upload = () => {
             </button>
           </div>
         )}
+      </div>
+      <div className="input-post">
+        <textarea
+          type="text"
+          placeholder={`Tuliskan sesuatu ${currentUser.username}`}
+          onChange={(e) => setDesc(e.target.value)}
+          onKeyDown={handleEnterKey}
+          value={desc}
+        />
       </div>
       <div className="button-upload">
         <div className="uploadItem-row">
