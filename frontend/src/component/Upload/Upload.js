@@ -58,7 +58,9 @@ const Upload = () => {
     if (!desc || desc.trim() === "") {
       return;
     }
+
     let imgUrl = "";
+
     if (file) imgUrl = await upload();
     mutation.mutate({ desc, img: imgUrl });
     setDesc("");
