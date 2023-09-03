@@ -55,10 +55,6 @@ const Upload = () => {
   };
   const handleClick = async (e) => {
     e.preventDefault();
-    if (!desc && !file) {
-      return;
-    }
-
     let imgUrl = "";
     if (file) imgUrl = await upload();
     mutation.mutate({ desc, img: imgUrl });
