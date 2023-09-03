@@ -1,5 +1,6 @@
 import { db } from "../connect.js";
 import jwt from "jsonwebtoken"
+import moment from "moment"
 
 export const getComments = (req, res)  => {
     
@@ -19,11 +20,10 @@ export const addComments = (req, res)=> {
         if (err) return res.status(403).json("Token not valid");
     
     
-    const q = 'INSERT INTO `comments` (`desc`, `createdat`, `userid` `postid`) VALUES (?)';
+    const q = 'INSERT INTO `comments` (`desc`, `createdat`, `userid`, `postid`) VALUES (?)';
 
     const values = [
-        req.body.decs,
-        req.body.img,
+        req.body.desc,
         moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"),
         userInfo.id,
         req.body.postid

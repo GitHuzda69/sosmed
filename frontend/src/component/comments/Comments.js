@@ -1,8 +1,4 @@
 import "./Comments.css";
-import avatar1 from "../../assets/profil.jpg";
-import friend1 from "../../assets/friend/friend1.jpg";
-import friend5 from "../../assets/friend/friend5.jpeg";
-import friend2 from "../../assets/friend/friend2.jpg";
 import { useContext, useState } from "react";
 import AuthContext from "../../context/authContext.js";
 import { Icon } from "@iconify/react";
@@ -10,43 +6,12 @@ import { useQuery,useQueryClient, useMutation } from "@tanstack/react-query";
 import { makeRequest } from "../../axios";
 import moment from "moment";
 
-const Comments = ({postid}) => {
+const Comments = ({ postid }) => {
   const { currentUser } = useContext(AuthContext);
-  const [desc, setDesc] = useState('');
-  // DATA DUMMY
-  const comment = [
-    {
-      id: 1,
-      desc: "Lorem ipsum dolor sit amet conseceru adipiscing elist",
-      name: "User 1",
-      userId: "1",
-      profilePic: friend1,
-    },
-    {
-      id: 2,
-      desc: "Lorem ipsum dolor sit amet conseceru adipiscing elist",
-      name: "User 2",
-      userId: "2",
-      profilePic: friend2,
-    },
-    {
-      id: 3,
-      desc: "Lorem ipsum dolor sit amet conseceru adipiscing elist",
-      name: "User 3",
-      userId: "3",
-      profilePic: friend5,
-    },
-    {
-      id: 4,
-      desc: "Lorem ipsum dolor sit amet conseceru adipiscing elisLorem ipsum dolor sit amet conseceru adipiscing elisLorem ipsum dolor sit amet conseceru adipiscing elisLorem ipsum dolor sit amet conseceru adipiscing elisLorem ipsum dolor sit amet conseceru adipiscing elisLorem ipsum dolor sit amet conseceru adipiscing elisLorem ipsum dolor sit amet conseceru adipiscing elisLorem ipsum dolor sit amet conseceru adipiscing elisLorem ipsum dolor sit amet conseceru adipiscing elisLorem ipsum dolor sit amet conseceru adipiscing elisLorem ipsum dolor sit amet conseceru adipiscing elist",
-      name: "User 3",
-      userId: "3",
-      profilePic: friend5,
-    },
-  ];
+  const [desc, setDesc] = useState(undefined);
 
   const { isLoading, error, data } = useQuery(["comments"], () =>
-    makeRequest.get("/comments?postId="+postid).then((res) => {
+    makeRequest.get("/comments?postid="+postid).then((res) => {
       return res.data;
     }))
 
@@ -56,7 +21,7 @@ const Comments = ({postid}) => {
       return makeRequest.post("/comments", newComment);
     },{
       onSuccess: () => {
-        queryClient.invalidateQueries(["[comments]"])
+        queryClient.invalidateQueries(["comments"])
       }
     })
     
