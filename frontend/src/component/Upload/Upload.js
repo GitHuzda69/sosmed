@@ -53,6 +53,7 @@ const Upload = () => {
       fileInputRef.current.click();
     }
   };
+
   const handleClick = async (e) => {
     e.preventDefault();
     let imgUrl = "";
@@ -67,6 +68,7 @@ const Upload = () => {
       e.preventDefault();
       handleClick(e);
     }
+
   };
 
   return (
@@ -85,6 +87,7 @@ const Upload = () => {
             </button>
           </div>
         )}
+
       </div>
       <div className="input-post">
         <textarea
@@ -94,6 +97,19 @@ const Upload = () => {
           onKeyDown={handleEnterKey}
           value={desc}
         />
+        {file && (
+          <div className="selected-file-info">
+            <img
+              className="selected-image"
+              src={URL.createObjectURL(file)}
+              alt="Selected"
+            />
+            <span className="file-name">{file.name}</span>
+            <button className="clear-file-button" onClick={clearSelectedFile}>
+            <Icon icon="ph:x-bold" color="black" width={15} height={15}/>
+            </button>
+          </div>
+        )}
       </div>
       <div className="button-upload">
         <div className="uploadItem-row">
@@ -122,6 +138,7 @@ const Upload = () => {
         ref={fileInputRef}
         onChange={handleFileInputChange}
         style={{ display: "none" }}
+
       />
     </div>
   );
