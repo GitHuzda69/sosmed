@@ -15,25 +15,21 @@
 
 ## Post Database
 
-``` CREATE TABLE `sosmed`.`posts` (`id` INT NOT NULL AUTO_INCREMENT, `decs` VARCHAR(200) NULL, `img` VARCHAR(200) NULL, `userid` INT NULL, PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC), INDEX `userid_idx` (`userid` ASC), CONSTRAINT `userid` FOREIGN KEY (`userid`) REFERENCES `social`.`users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE); ```
-
-``` ALTER TABLE `sosmed`.`posts`  DROP FOREIGN KEY `userid`; ```
-``` ALTER TABLE `sosmed`.`posts` ADD COLUMN `createdat` DATETIME NULL AFTER `userid`, CHANGE COLUMN `userid` `userid` INT NOT NULL; ```
-``` ALTER TABLE `sosmed`.`posts` ADD CONSTRAINT `userid` FOREIGN KEY (`userid`) REFERENCES `sosmed`.`users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE; ```
+```CREATE TABLE `sosmed`.`posts` (`id` INT NOT NULL AUTO_INCREMENT, `desc` VARCHAR(200) NULL, `img` VARCHAR(200) NULL, `userid` INT NOT NULL, `createdat` DATETIME NULL, PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC), INDEX `userid_idx` (`userid` ASC), CONSTRAINT `userid` FOREIGN KEY (`userid`) REFERENCES `sosmed`.`users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE); ```
 
 ## Comments Database
 
-``` CREATE TABLE `sosmed`.`comments` (`id` INT NOT NULL AUTO_INCREMENT, `decs` VARCHAR(255) NOT NULL, `date` DATETIME NULL, `userid` INT NOT NULL, `postid` INT NOT NULL, PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC), INDEX `postid_idx` (`postid` ASC), INDEX `commentsuserid_idx` (`userid` ASC), CONSTRAINT `comments_userid` FOREIGN KEY (`userid`) REFERENCES `sosmed`.`users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, CONSTRAINT `comments_postid` FOREIGN KEY (`postid`) REFERENCES `sosmed`.`posts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE); ```
+```CREATE TABLE `sosmed`.`comments` (`id` INT NOT NULL AUTO_INCREMENT, `desc` VARCHAR(255) NOT NULL, `createdat` DATETIME NULL, `userid` INT NOT NULL, `postid` INT NOT NULL, PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC), INDEX `postid_idx` (`postid` ASC), INDEX `commentsuserid_idx` (`userid` ASC), CONSTRAINT `comments_userid` FOREIGN KEY (`userid`) REFERENCES `sosmed`.`users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, CONSTRAINT `comments_postid` FOREIGN KEY (`postid`) REFERENCES `sosmed`.`posts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE); ```
 
 ## Relationship Database
 
-``` CREATE TABLE `sosmed`.`relationship` (`id` INT NOT NULL AUTO_INCREMENT, `followeruserid` INT NOT NULL, `followeduserid` INT NOT NULL, PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC), INDEX `followeruser_idx` (`followeruserid` ASC), INDEX `followeduser_idx` (`followeduserid` ASC), CONSTRAINT `followeruser` FOREIGN KEY (`followeruserid`) REFERENCES `sosmed`.`users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, CONSTRAINT `followeduser` FOREIGN KEY (`followeduserid`) REFERENCES `sosmed`.`users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE); ```
+```CREATE TABLE `sosmed`.`relationship` (`id` INT NOT NULL AUTO_INCREMENT, `followeruserid` INT NOT NULL, `followeduserid` INT NOT NULL, PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC), INDEX `followeruser_idx` (`followeruserid` ASC), INDEX `followeduser_idx` (`followeduserid` ASC), CONSTRAINT `followeruser` FOREIGN KEY (`followeruserid`) REFERENCES `sosmed`.`users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, CONSTRAINT `followeduser` FOREIGN KEY (`followeduserid`) REFERENCES `sosmed`.`users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE); ```
 
 ## Likes Database
 
 ```CREATE TABLE `sosmed`.`likes` (`id` INT NOT NULL AUTO_INCREMENT, `userid` INT NOT NULL, `postid` INT NOT NULL, PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC), INDEX `likesuserid_idx` (`userid` ASC), INDEX `likespostid_idx` (`postid` ASC), CONSTRAINT `likesuserid` FOREIGN KEY (`userid`) REFERENCES `sosmed`.`users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, CONSTRAINT `likespostid` FOREIGN KEY (`postid`) REFERENCES `sosmed`.`posts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE); ```
 
-## Dokumentasi
+# Dokumentasi
 
 [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started)
 

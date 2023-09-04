@@ -1,8 +1,4 @@
 import React from "react";
-import profilimage from "../../assets/profil.jpg";
-import friend3 from "../../assets/friend/friend3.jpg";
-import friend4 from "../../assets/friend/friend4.jpg";
-import "./Posts.css";
 import Post from "../post/Post.js";
 import { useQuery } from "@tanstack/react-query";
 import { makeRequest } from "../../axios";
@@ -56,7 +52,7 @@ const Posts = () => {
   return (
 
     <div className="posts" style={{width: "920px"}}>
-      {posts.map((post) =>
+      {error ? "Something went wrong!" : isLoading ? "loading" : data.map((post) =>
         <Post post={post} key={post.id} />
       )}
     </div>

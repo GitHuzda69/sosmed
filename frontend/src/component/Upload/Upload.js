@@ -9,19 +9,20 @@ import { useNavigate } from "react-router";
 const Upload = () => {
   const navigate = useNavigate();
   const [file, setFile] = useState(null);
-  const [desc, setDesc] = useState(null);
+  const [desc, setDesc] = useState(undefined);
   const fileInputRef = useRef(null);
   const [showFileInput, setShowFileInput] = useState(false);
 
-  const upload = async ()=>{
-    try{
+  const upload = async () => {
+    try {
       const formData = new FormData();
-      formData.append("file", file)
-      const res = await makeRequest.post('/upload', formData)
-      return res.data
-  }catch(err){
-    console.log(err)
-  }}
+      formData.append("file", file);
+      const res = await makeRequest.post("/upload", formData);
+      return res.data;
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const { currentUser } = useContext(AuthContext);
   const handleFileInputChange = (e) => {
@@ -32,16 +33,19 @@ const Upload = () => {
   const clearSelectedFile = () => {
     setFile(null);
   };
-  
+
   const queryClient = useQueryClient();
 
-  const mutation = useMutation((newPost) =>{
-    return makeRequest.post("/posts", newPost);
-  },{
-    onSuccess: () => {
-      queryClient.invalidateQueries(["posts"])
+  const mutation = useMutation(
+    (newPost) => {
+      return makeRequest.post("/posts", newPost);
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["posts"]);
+      },
     }
-  })
+  );
 
   const handleMediaButtonClick = () => {
     setShowFileInput(!showFileInput);
@@ -54,19 +58,43 @@ const Upload = () => {
     e.preventDefault();
     let imgUrl = "";
     if (file) imgUrl = await upload();
-    mutation.mutate({desc, img: imgUrl })
-    setDesc("")
-    setFile(null)
+    mutation.mutate({ desc, img: imgUrl });
+    setDesc("");
+    setFile(null);
   };
+
+  const handleEnterKey = (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleClick(e);
+    }
+
+  };
+
   return (
     <div className="upload">
       <div className="selected-file-container">
+        {file && (
+          <div className="selected-file-info">
+            <img
+              className="selected-image"
+              src={URL.createObjectURL(file)}
+              alt="Selected"
+            />
+            <span className="file-name">{file.name}</span>
+            <button className="clear-file-button" onClick={clearSelectedFile}>
+              <Icon icon="ph:x-bold" color="black" width={15} height={15} />
+            </button>
+          </div>
+        )}
+
       </div>
       <div className="input-post">
         <textarea
           type="text"
-          placeholder={`Tuliskan sesuatu user`}
+          placeholder={`Tuliskan sesuatu ${currentUser.username}`}
           onChange={(e) => setDesc(e.target.value)}
+          onKeyDown={handleEnterKey}
           value={desc}
         />
         {file && (
@@ -109,7 +137,8 @@ const Upload = () => {
         id="file"
         ref={fileInputRef}
         onChange={handleFileInputChange}
-        style={{ display:"none" }}
+        style={{ display: "none" }}
+
       />
     </div>
   );

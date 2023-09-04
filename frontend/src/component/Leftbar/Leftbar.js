@@ -6,11 +6,8 @@ import { Link } from "react-router-dom";
 import AuthContext from "../../context/authContext";
 import Settings from "../Settings/Settings";
 
-const Sidebar = () => {
+const Sidebar = ({ toggleSettings }) => {
   const { currentUser } = useContext(AuthContext);
-
-  const [settingOpen, setSettingOpen] = useState(false);
-
   return (
     <div className="sidebar">
       <Link to="/">
@@ -18,10 +15,9 @@ const Sidebar = () => {
           <Icon icon="ic:round-home" width="40" height="40" />
         </button>
       </Link>
-      <button onClick={() => setSettingOpen(!settingOpen)}>
+      <button onClick={toggleSettings}>
         <Icon icon="clarity:settings-solid" width="40" height="40" />
       </button>
-      {settingOpen && <Settings />}
       <button>
         <Icon icon="bi:instagram" width="40" height="40" />
       </button>
@@ -51,15 +47,17 @@ const Sidebar = () => {
         </button>
       </Link>
       <Link
-        to={'/profile/${post.userid}'}
+        to={"/profile/${post.userid}"}
+
         style={{ textDecoration: "none", color: "inherit" }}
         className="profileavatar"
       >
         <div className="leftBarUser">
-          <img className="profile2" src={avatar} alt="" />
+          <img className="profile2" src={currentUser.profilepic} alt="" />
         </div>
       </Link>
-      <span>User</span>
+      <span>{currentUser.username}</span>
+
     </div>
   );
 };

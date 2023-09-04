@@ -13,9 +13,6 @@ const Profile = () => {
   const [imagePopupOpen, setImagePopupOpen] = useState(false);
   const [imagePopupOpenbanner, setImagePopupOpenBanner] = useState(false);
   const [imagePopupOpenprofile, setImagePopupOpenProfile] = useState(false);
-
-
-
   const friend = [
     {
       id: 1,
@@ -87,59 +84,54 @@ const Profile = () => {
       <div className="profil">
         <div className="profil-container">
           <div className="cover-img">
-          <div className="post-img-banner">
-                    <button
-                      className="img-button"
-                      onClick={() => setImagePopupOpenBanner(true)}
-                    >
-            <img src={banner} />
-            </button>
+            <div className="post-img-banner">
+              <button
+                className="img-button"
+                onClick={() => setImagePopupOpenBanner(true)}
+              >
+                <img src={banner} alt="banner" />
+              </button>
             </div>
           </div>
           {imagePopupOpenbanner && (
-                  <div className="image-popup-profil">
-                    <button
-                      className="close-button"
-                      onClick={() => setImagePopupOpenBanner(false)}
-                    >
-                      <Icon
-                        icon="ph:x-bold"
-                        color="black"
-                        width={40}
-                        height={40}
-                      />
-                    </button>
-                    <img className="popup-img" src={banner} alt="" />
-                  </div>
-                )}
+            <div className="image-popup-profil">
+              <button
+                className="close-button"
+                onClick={() => setImagePopupOpenBanner(false)}
+              >
+                <Icon icon="ph:x-bold" color="black" width={40} height={40} />
+              </button>
+              <img className="popup-img" src={banner} alt="" />
+            </div>
+          )}
           <div className="profil-user">
             <div className="profil-info">
               <div className="profilePic">
-              <div className="post-img-profile">
-                    <button
-                      className="img-button-profile"
-                      onClick={() => setImagePopupOpenProfile(true)}
-                    >
-                <img src={profileimg} />
-                </button>
+                <div className="post-img-profile">
+                  <button
+                    className="img-button-profile"
+                    onClick={() => setImagePopupOpenProfile(true)}
+                  >
+                    <img src={profileimg} alt="post-profile" />
+                  </button>
                 </div>
               </div>
               {imagePopupOpenprofile && (
-                  <div className="image-popup-profil">
-                    <button
-                      className="close-button"
-                      onClick={() => setImagePopupOpenProfile(false)}
-                    >
-                      <Icon
-                        icon="ph:x-bold"
-                        color="black"
-                        width={40}
-                        height={40}
-                      />
-                    </button>
-                    <img className="popup-img" src={profileimg} alt="" />
-                  </div>
-                )}
+                <div className="image-popup-profil">
+                  <button
+                    className="close-button"
+                    onClick={() => setImagePopupOpenProfile(false)}
+                  >
+                    <Icon
+                      icon="ph:x-bold"
+                      color="black"
+                      width={40}
+                      height={40}
+                    />
+                  </button>
+                  <img className="popup-img" src={profileimg} alt="" />
+                </div>
+              )}
               <div className="profil-bio">
                 <h2>Jeou Balaraja</h2>
                 <h4>300 friends (90 mutual) </h4>
