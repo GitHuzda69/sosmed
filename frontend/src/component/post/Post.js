@@ -3,15 +3,22 @@ import Comments from "../comments/Comments.js";
 import "./Post.css";
 import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
+import { useQuery } from "@tanstack/react-query";
+import { makeRequest } from "../../axios.js";
 import moment from "moment"
 import AuthContext from "../../context/authContext.js";
 
 const Post = ({ post }) => {
-  //SEMENTARA
-  const liked = true;
+  const { currentUser } = useContext(AuthContext)
   const [commentOpen, setCommentOpen] = useState(false);
   const [imagePopupOpen, setImagePopupOpen] = useState(false);
 
+  const { isLoading, error, data} = useQuery(["likes", post.id], () =>
+    makeRequest.get("/likes?postid=" + post.id).then((res) => {
+      return res.data;
+    })
+  );
+console.log(data)
   return (
     <div className="post-container">
       <div className="post">
@@ -44,7 +51,7 @@ const Post = ({ post }) => {
         </div>
         <div className="info">
           <div className="item">
-            {liked ? (
+            {/* {liked ? (
               <Icon
                 className="icon"
                 icon="mdi:heart-outline"
@@ -54,8 +61,9 @@ const Post = ({ post }) => {
               />
             ) : (
               <Icon icon="mdi:heart" width={25} height={25} color={"red"} />
-            )}
-            <h3>12 Likes</h3>
+            )} */}
+            {data.length}
+            <h3>Likes</h3>
           </div>
           <div className="item" onClick={() => setCommentOpen(!commentOpen)}>
             <Icon
