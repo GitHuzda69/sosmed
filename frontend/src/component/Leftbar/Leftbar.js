@@ -48,6 +48,7 @@ const Sidebar = ({ toggleSettings }) => {
       </Link>
       <Link
         to={"/profile/${post.userid}"}
+
         style={{ textDecoration: "none", color: "inherit" }}
         className="profileavatar"
       >
@@ -56,6 +57,7 @@ const Sidebar = ({ toggleSettings }) => {
         </div>
       </Link>
       <span>{currentUser.username}</span>
+
     </div>
   );
 };

@@ -13,7 +13,6 @@ const Profile = () => {
   const [imagePopupOpen, setImagePopupOpen] = useState(false);
   const [imagePopupOpenbanner, setImagePopupOpenBanner] = useState(false);
   const [imagePopupOpenprofile, setImagePopupOpenProfile] = useState(false);
-
   const friend = [
     {
       id: 1,
@@ -301,7 +300,7 @@ const Profile = () => {
                 <div className="friend-info-profil">
                   <h3>{friend.name}</h3>
                   <h4>{friend.mutual}</h4>
-                  <button className="button-add">
+                  <button className="button-add" >
                     <Icon
                       icon="ic:baseline-person-add"
                       width={22}
