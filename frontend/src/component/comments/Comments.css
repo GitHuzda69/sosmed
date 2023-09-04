@@ -1,10 +1,11 @@
 .comments{
-  height: 600px;
+  height: auto;
   width: 880px;
+  max-height: 600px;
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: #aaa #ddd; 
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 .comments::-webkit-scrollbar {
@@ -90,4 +91,6 @@
   flex: 1;
   color: gray;
   font-size: 12px;
+  font-family: "Inter", sans-serif;
+  font-weight: bold;
 }

@@ -13,6 +13,7 @@
   border: 1px black solid;
   background-color: #f0f0f0;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 100;
 }
 
 .input-post {
@@ -139,10 +140,27 @@
   border-bottom: 1px black solid;
 }
 .file-name{
+  max-width: 260px; 
   margin-left: 5px;
   margin-right: 30px;
   padding: 2px;
-  overflow: hidden;
+  word-wrap: break-word;
+}
+.file-name::-webkit-scrollbar {
+  height: 8px;
+  margin-bottom: 10px;
+}
+
+.file-name::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
+
+.file-name::-webkit-scrollbar-thumb {
+  background-color: gray;
+  border-radius: 5px;
+}
+.file-name::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
 }
 .clear-file-button{
   display: flex;
