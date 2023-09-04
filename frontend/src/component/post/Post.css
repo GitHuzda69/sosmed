@@ -77,14 +77,16 @@
   border-radius: 10px;
   margin-top: 5px;
   margin-left: -8px;
+  margin-bottom: -10px;
   height: auto;
+  border: 1px black solid;
 }
 .post-img:hover {
   border-radius: 15px;
 }
 
 .post-desc {
-  font-size: 12px;
+  font-size: 14px;
   font-family: "Inter", sans-serif;
   margin-top: 4px;
   margin-left: 8px;
@@ -116,9 +118,11 @@
 
 .img-button {
   padding: 0;
+  z-index: 1;
 }
 .img-button:hover img {
-  filter: brightness(0.7);
+  filter: brightness(0.5);
+  z-index: 0;
 }
 .image-popup {
   position: fixed;
