@@ -4,13 +4,34 @@ import "./Post.css";
 import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import moment from "moment"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { makeRequest } from "../../axios.js";
 import AuthContext from "../../context/authContext.js";
 
 const Post = ({ post }) => {
-  //SEMENTARA
-  const liked = true;
   const [commentOpen, setCommentOpen] = useState(false);
   const [imagePopupOpen, setImagePopupOpen] = useState(false);
+  const { currentUser } = useContext(AuthContext);
+  const { isLoading, error, data } = useQuery(["likes"], (und) =>
+    makeRequest.get("/likes?postid=" + post.id).then((res) => {
+      return res.data;
+    })
+  );
+  
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation((liked) =>{
+    if(liked) return makeRequest.delete("/likes?postid=" + post.id);
+    return makeRequest.post("/likes", {postid: post.id});
+  },{
+    onSuccess: () => {
+      queryClient.invalidateQueries(["likes"]);
+    }
+  })
+
+  const handleLike = () => {
+    mutation.mutate(data.includes(currentUser.id))
+  }
 
   return (
     <div className="post-container">
@@ -47,20 +68,30 @@ const Post = ({ post }) => {
           )}
         </div>
         <div className="info">
-          <div className="item">
-            {liked ? (
+        <div className="item">
+          {isLoading ? ("loading") : data && data.includes(currentUser.id) ? (
+            <>
               <Icon
                 className="icon"
-                icon="mdi:heart-outline"
+                icon="mdi:heart"
                 width={25}
                 height={25}
-                color={"black"}
+                color={"red"}
+                onClick={handleLike}
               />
-            ) : (
-              <Icon icon="mdi:heart" width={25} height={25} color={"red"} />
-            )}
-            <h3>12 Likes</h3>
-          </div>
+              <h3>{data.length} Likes</h3>
+            </>
+          ) : (
+            <Icon
+              className="icon"
+              icon="mdi:heart-outline"
+              width={25}
+              height={25}
+              color={"black"}
+              onClick={handleLike}
+            />
+          )}
+        </div>
           <div
             className="item"
             onClick={() => setCommentOpen(!commentOpen)}
