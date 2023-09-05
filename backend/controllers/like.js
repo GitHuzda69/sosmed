@@ -1,6 +1,7 @@
 import { db } from "../connect.js"
 import jwt from "jsonwebtoken";
 
+<<<<<<< HEAD
 
 export const getLikes = (req,res) => {
 const q = 'SELECT userid FROM likes WHERE postid = ?';
@@ -46,4 +47,13 @@ export const deleteLikes = (req, res)=> {
         if (err) return res.status(500).json(err);
         return res.status(200).json("Post has been disliked")
     })})
+=======
+export const getLikes = (req,res)=>{
+    const q =  'SELECT userid FROM likes WHERE postid = ?';
+
+    db.query(q, [req.query.postid], (err,data) => {
+        if (err) return res.status(500).json(err);
+        return res.status(200).json(data.map(like=>like.userid));
+    })
+>>>>>>> 60cb372fcf86a8f5ac9fd912b2d7b23c0f301748
 }

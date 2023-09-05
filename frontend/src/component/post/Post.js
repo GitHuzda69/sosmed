@@ -3,6 +3,8 @@ import Comments from "../comments/Comments.js";
 import "./Post.css";
 import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
+import { useQuery } from "@tanstack/react-query";
+import { makeRequest } from "../../axios.js";
 import moment from "moment"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { makeRequest } from "../../axios.js";
@@ -12,12 +14,6 @@ const Post = ({ post }) => {
   const [commentOpen, setCommentOpen] = useState(false);
   const [imagePopupOpen, setImagePopupOpen] = useState(false);
   const { currentUser } = useContext(AuthContext);
-  const { isLoading, error, data } = useQuery(["likes"], (und) =>
-    makeRequest.get("/likes?postid=" + post.id).then((res) => {
-      return res.data;
-    })
-  );
-  
   const queryClient = useQueryClient();
 
   const mutation = useMutation((liked) =>{
@@ -33,6 +29,11 @@ const Post = ({ post }) => {
     mutation.mutate(data.includes(currentUser.id))
   }
 
+  const { isLoading, error, data} = useQuery(["likes", post.id], () =>
+    makeRequest.get("/likes?postid=" + post.id).then((res) => {
+      return res.data;
+    })
+  );
   return (
     <div className="post-container">
       <div className="post">
