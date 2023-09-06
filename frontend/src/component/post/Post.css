@@ -4,7 +4,7 @@
   margin-top: 20px;
   margin-left: 3px;
   margin-bottom: 5px;
-  width: 900px;
+  width: 895px;
 }
 .post {
   border-radius: 20px;
@@ -157,3 +157,82 @@
   border-radius: 50%;
   background-color: white;
 }
+
+
+  /*code buat responsive*/
+
+  @media screen and (max-width: 1340px) {
+    .post {
+      width: 850px; 
+    }
+  }
+  @media screen and (max-width: 1320px) {
+    .post {
+      width: 830px; 
+    }
+  }
+  @media screen and (max-width: 1290px) {
+    .post {
+      width: 800px; 
+    }
+  }
+  @media screen and (max-width: 1260px) {
+    .post {
+      width: 780px; 
+    }
+  }
+  @media screen and (max-width: 1245px) {
+    .post {
+      width: 760px; 
+    }
+  }
+  @media screen and (max-width: 1220px) {
+    .post {
+      width: 740px; 
+    }
+  }
+  @media screen and (max-width: 1200px) {
+    .post {
+      width: 720px; 
+    }
+  }
+  @media screen and (max-width: 1185px) {
+    .post {
+      width: 700px; 
+    }
+  }
+  @media screen and (max-width: 1160px) {
+    .post {
+      width: 680px; 
+    }
+  }
+  @media screen and (max-width: 1145px) {
+    .post {
+      width: 660px; 
+    }
+  }
+  @media screen and (max-width: 1125px) {
+    .post {
+      width: 640px; 
+    }
+  }
+  @media screen and (max-width: 1105px) {
+    .post {
+      width: 620px; 
+    }
+  }
+  @media screen and (max-width: 1085px) {
+    .post {
+      width: 600px; 
+    }
+  }
+  @media screen and (max-width: 1065px) {
+    .post {
+      width: 580px; 
+    }
+  }
+  @media screen and (max-width: 1045px) {
+    .post {
+      width: 560px; 
+    }
+  }

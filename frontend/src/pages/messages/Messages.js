@@ -1,25 +1,28 @@
 import React, { useState, useRef, useEffect } from "react";
 import profilimage from "../../assets/profil.jpg";
-import { Icon } from "@iconify/react";
 import "./Messages.css";
+import Sidebar from "../../component/Leftbar/Leftbar";
+import Settings from "../../component/Settings/Settings";
 import { Link } from "react-router-dom";
+import { Icon } from "@iconify/react";
 
 const messages = [
   {
-    sender: 'John Doe',
-    content: 'Hello there!',
-    timestamp: '2023-08-05 12:30',
+    sender: "John Doe",
+    content: "Hello there!",
+    timestamp: "2023-08-05 12:30",
   },
   {
-    sender: 'Jane Smith',
-    content: 'Hi John! How are you?',
-    timestamp: '2023-08-05 12:35',
+    sender: "Jane Smith",
+    content: "Hi John! How are you?",
+    timestamp: "2023-08-05 12:35",
   },
   // Add more messages here
 ];
 
 function Friendslist() {
   const [posts, setPosts] = useState([]);
+  const [settingOpen, setSettingOpen] = useState(false);
 
   const [newPost, setNewPost] = useState({ author: "", content: "" });
   const [textareaHeight] = useState("auto");
@@ -31,8 +34,6 @@ function Friendslist() {
     setNewPost({ ...newPost, [name]: value });
   };
 
-
-  
   const handleSubmit = (event) => {
     event.preventDefault();
     if (newPost.author && newPost.content) {
@@ -63,6 +64,10 @@ function Friendslist() {
     textarea.style.width = "1000px";
     textarea.style.width = textarea.scrollWidth + "px";
   }, [newPost.content]);
+
+  const toggleSettings = () => {
+    setSettingOpen(!settingOpen);
+  };
 
   return (
     <div>
@@ -110,6 +115,15 @@ function Friendslist() {
           ))}
         </div>
       </main>
+      <Sidebar toggleSettings={toggleSettings} />
+      {settingOpen && (
+        <>
+          <div className="settings-overlay" />
+          <div className="settings-container">
+            <Settings onClose={toggleSettings} />
+          </div>
+        </>
+      )}
     </div>
   );
 }
@@ -117,35 +131,35 @@ function Friendslist() {
 export default Friendslist;
 
 //<div style={{ paddingLeft: "10px" }}>
-   //   <div>
-   //     <button>
-    //      <Link
-     //       to="/home"
-    //        style={{
-     //         display: "flex",
-      //        justifyContent: "center",
-       //       alignItems: "center",
-        //    }}
-        //  >
-        //    <Icon
-         //     icon="mingcute:back-2-fill"
-          //    width={29}
-           //   height={29}
-          //   color="black"
+//   <div>
+//     <button>
+//      <Link
+//       to="/home"
+//        style={{
+//         display: "flex",
+//        justifyContent: "center",
+//       alignItems: "center",
+//    }}
+//  >
+//    <Icon
+//     icon="mingcute:back-2-fill"
+//    width={29}
+//   height={29}
+//   color="black"
 //            />
- //         </Link>
- //       </button>
- //     </div>
- //     <div className="messages-container">
- //             <h1>Messages</h1>
-  //            <div className="message-list">
- //               {messages.map((message, index) => (
-  //                <div className="message" key={index}>
-  ///                 <div className="message-sender">{message.sender}</div>
-   //                 <div className="message-content">{message.content}</div>
-   //                 <div className="message-timestamp">{message.timestamp}</div>
-  //                </div>
-   //             ))}
-  //            </div>
-   //         </div>
-  //  </div>
+//         </Link>
+//       </button>
+//     </div>
+//     <div className="messages-container">
+//             <h1>Messages</h1>
+//            <div className="message-list">
+//               {messages.map((message, index) => (
+//                <div className="message" key={index}>
+///                 <div className="message-sender">{message.sender}</div>
+//                 <div className="message-content">{message.content}</div>
+//                 <div className="message-timestamp">{message.timestamp}</div>
+//                </div>
+//             ))}
+//            </div>
+//         </div>
+//  </div>

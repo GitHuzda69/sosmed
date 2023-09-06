@@ -21,6 +21,7 @@
   font-weight: bold;
   font-size: 40px;
   margin-top: 10px;
+  margin-left: 100px;
   display: flex;
   flex-direction: column;
   align-items: flex-start; 
@@ -28,7 +29,7 @@
   border: 1px whitesmoke solid;
   padding: 10px;
   padding-bottom: 30px;
-  width: 800px;
+  width: 900px;
   margin-bottom: 100px;
   overflow-y: hidden;
 }

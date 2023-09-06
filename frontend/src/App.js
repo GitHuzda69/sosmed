@@ -10,6 +10,7 @@ import {
   Navigate,
   Outlet,
 } from "react-router-dom";
+import "./pages/home/Home.css";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import Sidebar from "./component/Leftbar/Leftbar.js";
 import AuthContext from "./context/authContext.js";
@@ -76,7 +77,7 @@ function App() {
   ]);
 
   return (
-    <div>
+    <div className="app">
       <RouterProvider router={router} />
     </div>
   );

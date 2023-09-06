@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Icon } from "@iconify/react";
 import "./FriendsList.css";
+import Sidebar from "../../component/Leftbar/Leftbar";
+import Settings from "../../component/Settings/Settings";
 import avatar1 from "../../assets/friend/friend1.jpg";
 import avatar2 from "../../assets/friend/friend2.jpg";
 import avatar3 from "../../assets/friend/friend3.jpg";
@@ -120,8 +122,8 @@ const FriendList = () => {
     newPopupVisibility[index] = !newPopupVisibility[index];
     setPopupVisibility(newPopupVisibility);
     const buttonRect = event.target.getBoundingClientRect();
-    const popupTop = buttonRect.top + window.scrollY;
-    const popupLeft = buttonRect.right + window.scrollX;
+    const popupTop = buttonRect.top - 5;
+    const popupLeft = buttonRect.left - 153;
 
     setPopupPosition({
       visible: !popupPosition.visible,
@@ -130,62 +132,79 @@ const FriendList = () => {
     });
   };
 
+  const [settingOpen, setSettingOpen] = useState(false);
+
+  const toggleSettings = () => {
+    setSettingOpen(!settingOpen);
+  };
+
   return (
-    <div className="friendlist-container">
-      <div className="friendlist-header">
-        <h2>Friendlist</h2>
-        <button className="button-info">
-          <Icon
-            icon="fluent:person-info-20-filled"
-            color="black"
-            width={25}
-            height={25}
-          />
-        </button>
-      </div>
-      <div className="friendlist">
-        {friends.map((friend, index) => (
-          <div className="friend" key={friend.id}>
-            <div className="friend-avatar">
-              <img src={friend.avatar} alt={friend.name} className="avatar" />
-            </div>
-            <div className="friend-info-details">
-              <h3>{friend.name}</h3>
-              <h4>{friend.mutual}</h4>
-              <button
-                className="button-popup"
-                onClick={(event) => togglePopup(index, event)}
-              >
-                <Icon icon="tabler:dots" width={20} height={20} />
-              </button>
-            </div>
-            <div className="friend-desc">
-              <p>{friend.description}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-      {popupPosition.visible && (
-        <div
-          className="popup"
-          style={{
-            top: `${popupPosition.top}px`,
-            left: `${popupPosition.left}px`,
-          }}
-        >
-          <button className="icon-button">
-            <Icon icon="heroicons-solid:chat" width={25} height={25} />
-            Messages
-          </button>
-          <button className="icon-button">
-            <Icon icon="bi:person-dash-fill" width={20} height={20} />
-            Unfriend
-          </button>
-          <button className="icon-button" style={{ color: "red" }}>
-            <Icon icon="bi:person-x-fill" width={20} height={20} />
-            Block
+    <div>
+      <div className="friendlist-container">
+        <div className="friendlist-header">
+          <h2>Friendlist</h2>
+          <button className="button-info">
+            <Icon
+              icon="fluent:person-alert-20-filled"
+              color="black"
+              width={25}
+              height={25}
+            />
           </button>
         </div>
+        <div className="friendlist">
+          {friends.map((friend, index) => (
+            <div className="friend" key={friend.id}>
+              <div className="friend-avatar">
+                <img src={friend.avatar} alt={friend.name} className="avatar" />
+              </div>
+              <div className="friend-info-details">
+                <h3>{friend.name}</h3>
+                <h4>{friend.mutual}</h4>
+                <button
+                  className="button-popup"
+                  onClick={(event) => togglePopup(index, event)}
+                >
+                  <Icon icon="tabler:dots" width={20} height={20} />
+                </button>
+              </div>
+              <div className="friend-desc">
+                <p>{friend.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+        {popupPosition.visible && (
+          <div
+            className="popup"
+            style={{
+              top: `${popupPosition.top}px`,
+              left: `${popupPosition.left}px`,
+            }}
+          >
+            <button className="icon-button">
+              <Icon icon="heroicons-solid:chat" width={25} height={25} />
+              Messages
+            </button>
+            <button className="icon-button">
+              <Icon icon="bi:person-dash-fill" width={20} height={20} />
+              Unfriend
+            </button>
+            <button className="icon-button" style={{ color: "red" }}>
+              <Icon icon="bi:person-x-fill" width={20} height={20} />
+              Block
+            </button>
+          </div>
+        )}
+      </div>
+      <Sidebar toggleSettings={toggleSettings} />
+      {settingOpen && (
+        <>
+          <div className="settings-overlay" />
+          <div className="settings-container">
+            <Settings onClose={toggleSettings} />
+          </div>
+        </>
       )}
     </div>
   );
