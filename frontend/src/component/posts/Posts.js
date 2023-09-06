@@ -13,7 +13,7 @@ const Posts = () => {
   return (
 
     <div className="posts" style={{width: "920px", marginLeft:"100px", marginBottom:"150px"}}>
-      {error ? "Something went wrong!" : isLoading ? "loading" : data.map((post) =>
+      {error ? "Something went wrong" : isLoading ? "loading" : data.map((post) =>
         <Post post={post} key={post.id} />
       )}
     </div>

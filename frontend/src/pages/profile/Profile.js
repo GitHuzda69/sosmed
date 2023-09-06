@@ -1,6 +1,8 @@
 import "./Profile.css";
 import { Icon } from "@iconify/react";
 import React, { useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { makeRequest } from "../../axios.js";
 import profileimg from "../../assets/profil.jpg";
 import banner from "../../assets/banner.jpg";
 import avatar1 from "../../assets/friend/friend1.jpg";
@@ -8,11 +10,20 @@ import avatar2 from "../../assets/friend/friend2.jpg";
 import avatar3 from "../../assets/friend/friend3.jpg";
 import avatar4 from "../../assets/friend/friend4.jpg";
 import avatar5 from "../../assets/friend/friend5.jpeg";
+import { useLocation } from "react-router-dom";
 
 const Profile = () => {
   const [imagePopupOpen, setImagePopupOpen] = useState(false);
   const [imagePopupOpenbanner, setImagePopupOpenBanner] = useState(false);
   const [imagePopupOpenprofile, setImagePopupOpenProfile] = useState(false);
+
+  const userId = useLocation().pathname.split("/")[2]
+
+  const { isLoading, error, data} = useQuery(["user"], () =>
+    makeRequest.get("/users/find/" + userId).then((res) => {
+      return res.data;
+    })
+  );
   const friend = [
     {
       id: 1,
@@ -81,7 +92,7 @@ const Profile = () => {
 
   return (
     <div>
-      <div className="profil">
+      <div className="profil"> 
         <div className="profil-container">
           <div className="cover-img">
             <div className="post-img-banner">
@@ -89,7 +100,7 @@ const Profile = () => {
                 className="img-button"
                 onClick={() => setImagePopupOpenBanner(true)}
               >
-                <img src={banner} alt="banner" />
+                <img src={data.coverpic} alt="banner" />
               </button>
             </div>
           </div>
@@ -101,7 +112,7 @@ const Profile = () => {
               >
                 <Icon icon="ph:x-bold" color="black" width={40} height={40} />
               </button>
-              <img className="popup-img" src={banner} alt="" />
+              <img className="popup-img" src={data.coverpic} alt="" />
             </div>
           )}
           <div className="profil-user">
@@ -112,7 +123,7 @@ const Profile = () => {
                     className="img-button-profile"
                     onClick={() => setImagePopupOpenProfile(true)}
                   >
-                    <img src={profileimg} alt="post-profile" />
+                    <img src={data.profilepic} alt="post-profile" />
                   </button>
                 </div>
               </div>
@@ -129,11 +140,11 @@ const Profile = () => {
                       height={40}
                     />
                   </button>
-                  <img className="popup-img" src={profileimg} alt="" />
+                  <img className="popup-img" src={data.profilepic} alt="" />
                 </div>
               )}
               <div className="profil-bio">
-                <h2>Jeou Balaraja</h2>
+                <h2>{data.username}</h2>
                 <h4>300 friends (90 mutual) </h4>
               </div>
             </div>

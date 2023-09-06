@@ -3,9 +3,7 @@ import Comments from "../comments/Comments.js";
 import "./Post.css";
 import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
-import { useQuery } from "@tanstack/react-query";
-import { makeRequest } from "../../axios.js";
-import moment from "moment"
+import moment from "moment";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { makeRequest } from "../../axios.js";
 import AuthContext from "../../context/authContext.js";

@@ -1,7 +1,6 @@
 import { db } from "../connect.js"
 import jwt from "jsonwebtoken";
 
-<<<<<<< HEAD
 
 export const getLikes = (req,res) => {
 const q = 'SELECT userid FROM likes WHERE postid = ?';
@@ -20,7 +19,7 @@ export const addLike = (req, res)=> {
         if (err) return res.status(403).json("Token not valid");
     
     
-    const q = 'INSTER INTO likes (`userid1, `postid`) VALUES (?)';
+    const q = 'INSERT INTO likes (`userid`, `postid`) VALUES (?)';
 
     const values = [
         userInfo.id,
@@ -43,17 +42,8 @@ export const deleteLikes = (req, res)=> {
     
     const q = 'DELETE FROM likes WHERE `userid` = ? AND `postid` = ?';
 
-    db.query(q, [userInfo.id, req.params.postid], (err, data)=>{
+    db.query(q, [userInfo.id, req.query.postid], (err, data)=>{
         if (err) return res.status(500).json(err);
         return res.status(200).json("Post has been disliked")
     })})
-=======
-export const getLikes = (req,res)=>{
-    const q =  'SELECT userid FROM likes WHERE postid = ?';
-
-    db.query(q, [req.query.postid], (err,data) => {
-        if (err) return res.status(500).json(err);
-        return res.status(200).json(data.map(like=>like.userid));
-    })
->>>>>>> 60cb372fcf86a8f5ac9fd912b2d7b23c0f301748
 }
