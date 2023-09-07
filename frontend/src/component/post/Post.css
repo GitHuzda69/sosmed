@@ -40,7 +40,7 @@
 .details {
   display: flex;
   flex-direction: column;
-  margin-top: -56px;
+  margin-top: -60px;
   margin-left: 70px;
 }
 .name {
@@ -64,6 +64,7 @@
   padding-left: 15px;
   padding-bottom: 5px;
   padding-right: 10px;
+  margin-top: 10px;
   scrollbar-width: thin;
   scrollbar-color: gray transparent;
 }

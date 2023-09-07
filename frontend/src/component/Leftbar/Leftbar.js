@@ -10,54 +10,60 @@ const Sidebar = ({ toggleSettings }) => {
   const { currentUser } = useContext(AuthContext);
   return (
     <div className="sidebar">
-      <Link to="/">
-        <button>
-          <Icon icon="ic:round-home" width="40" height="40" />
+      <div className="content-sidebar">
+        <Link to="/">
+          <button>
+            <Icon icon="ic:round-home" width="40" height="40" />
+          </button>
+        </Link>
+        <button onClick={toggleSettings}>
+          <Icon icon="clarity:settings-solid" width="40" height="40" />
         </button>
-      </Link>
-      <button onClick={toggleSettings}>
-        <Icon icon="clarity:settings-solid" width="40" height="40" />
-      </button>
-      <button>
-        <Icon icon="bi:instagram" width="40" height="40" />
-      </button>
-      <button>
-        <Icon icon="ic:baseline-facebook" width="40" height="40" />
-      </button>
-      <button>
-        <Icon icon="mdi:twitter" width="40" height="40" />
-      </button>
-      <Link to="/messages">
         <button>
-          <Icon icon="ant-design:message-filled" width="40" height="40" />
+          <Icon icon="bi:instagram" width="40" height="40" />
         </button>
-      </Link>
-      <Link to="/friend">
         <button>
-          <Icon
-            icon="fluent:people-community-20-filled"
-            width="40"
-            height="40"
-          />
+          <Icon icon="ic:baseline-facebook" width="40" height="40" />
         </button>
-      </Link>
-      <Link to="/logout">
         <button>
-          <Icon icon="material-symbols:logout" width="40" height="40" />
+          <Icon icon="mdi:twitter" width="40" height="40" />
         </button>
-      </Link>
-      <Link
-        to={"/profile/${post.userid}"}
-
-        style={{ textDecoration: "none", color: "inherit" }}
-        className="profileavatar"
-      >
-        <div className="leftBarUser">
-          <img className="profile2" src={currentUser.profilepic} alt="" />
-        </div>
-      </Link>
-      <span>{currentUser.username}</span>
-
+        <Link to="/messages">
+          <button>
+            <Icon icon="ant-design:message-filled" width="40" height="40" />
+          </button>
+        </Link>
+        <Link to="/friend">
+          <button>
+            <Icon
+              icon="fluent:people-community-20-filled"
+              width="40"
+              height="40"
+            />
+          </button>
+        </Link>
+        <Link to="/login">
+          <button>
+            <Icon icon="material-symbols:logout" width="40" height="40" />
+          </button>
+        </Link>
+      </div>
+      <div className="sidebar-user">
+        <Link
+          to={"/profile/${post.userid}"}
+          style={{ textDecoration: "none", color: "inherit" }}
+          className="profileavatar"
+        >
+          <div className="leftBarUser">
+            <img
+              className="profile2"
+              src={currentUser.profilepic}
+              alt="keren"
+            />
+          </div>
+        </Link>
+        <span>{currentUser.username}</span>
+      </div>
     </div>
   );
 };

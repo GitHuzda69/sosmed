@@ -41,8 +41,11 @@
   }
 
   .input-signup{
+    width: 300px;
+    height: 15px;
     border-radius: 8px;
     border: 1px black solid;
+    padding: 10px;
   }
   .show-password-signup-button {
     margin-top: -30px;
@@ -58,7 +61,8 @@
   
   .checkbox-container-signup {
     margin-right: 43px;
-    margin-top: -20px;
+    margin-top: -25px;
+    margin-bottom: 10px;
     display: flex;
     align-items: center;
   }
@@ -66,8 +70,8 @@
   .checkbox-input-signup {
     border: 1px black solid;
     appearance: none;
-    width: 19px;
-    height: 19px;
+    width: 20px;
+    height: 20px;
     border-radius: 5px;
     margin-top: -10px;
     margin-right: 8px;
@@ -81,8 +85,8 @@
   .checkbox-input-signup:checked::before {
     content: '\2713'; 
     position: fixed;
-    margin-top: -12px;
-    margin-left: -6px;
+    margin-top: -4px;
+    margin-left: 1px;
     font-size: 18px;
     font-weight: bold;
     color: rgb(0, 0, 0);
