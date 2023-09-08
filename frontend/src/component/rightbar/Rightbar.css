@@ -122,3 +122,28 @@
 .rightBarButton:hover{
     border-radius: 12px;
 }
+
+
+/*code buat responsive*/
+
+@media screen and (max-width: 1340px) {
+  .rightBar {
+    padding: 8px;
+  }
+}
+@media screen and (max-width: 1320px) {
+  .rightBar {
+    padding: 5px;
+  }
+}
+@media screen and (max-width: 1300px) {
+  .rightBar {
+    padding: 5px;
+    width: 270px;
+  }
+}
+@media screen and (max-width: 1250px) {
+  .rightBar {
+    width: 260px;
+  }
+}

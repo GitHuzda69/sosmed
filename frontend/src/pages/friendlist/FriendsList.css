@@ -16,19 +16,22 @@
 .button-info {
   color: white;
   border: 1px black solid;
-  border-radius: 50%;
+  border-radius: 10px;
   padding: 3px 6px;
-  margin-right: 220px;
+  margin-top: 40px;
+  margin-right: 10px;
   cursor: pointer;
 }
 .button-info:hover{
-  border-radius: 50%;
+  border-radius: 12px;
 }
 
 .friendlist {
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
   margin-left: 115px;
+  margin-bottom: 20px;
   overflow-y: auto;
 }
 .friendlist::-webkit-scrollbar {
@@ -47,7 +50,7 @@
   background-color: #555;
 }
 .friend {
-  width: 500px;
+  width: 1200px;
   display: flex;
   flex-direction: column;
   margin-bottom: 15px;
@@ -55,7 +58,7 @@
   margin-left: 10px;
   border: 1px black solid;
   border-radius: 8px;
-  box-shadow: 0px 4px 0px rgb(182, 182, 182);
+  box-shadow: 2px 4px 6px 1px rgb(182, 182, 182);
 }
 
 .friend-avatar{
@@ -84,11 +87,10 @@
   margin-top: 8px;
 }
 .button-popup{
-  display: flex;
   justify-content: flex-end;
   width: 30px;
-  margin-left: 395px;
   margin-top: -60px;
+  margin-left: 1090px;
 }
 .button-popup:hover{
   border-radius: 15px;
@@ -101,9 +103,9 @@
   align-items: start;
   position: absolute;
   background-color: white;
-  border: 1px gray solid;
+  border: 1px black solid;
   border-radius: 10px;
-  padding: 5px;
+  padding: 10px;
   margin-left: 20px;
 }
 
@@ -129,9 +131,9 @@
 
 .friend-desc {
   flex: 1;
-  margin-top: 25px;
+  margin-top: 15px;
   margin-left: 20px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   margin-right: 10px;
   font-family: "Inter", sans-serif;
   font-size: 12px;

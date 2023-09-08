@@ -20,7 +20,7 @@ function Home() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="app">
+      <div className="home">
         <Sidebar toggleSettings={toggleSettings} />
         <SearchBar />
         <Rightbar />

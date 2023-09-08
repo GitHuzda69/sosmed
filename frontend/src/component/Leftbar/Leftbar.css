@@ -4,6 +4,7 @@
     background-color: #ffffff;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     padding: 10px;
     top: 0;
     position: fixed;
@@ -22,18 +23,27 @@
     border-radius: 15%;
     transition: all 0.3s ease;
   }
-
-.profileavatar{
-  margin-top: 60px;
-  margin-left: -10px;
-}
+  .sidebar-user{
+    margin-left: 5px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+  .sidebar-user span {
+    display: flex;
+    align-items: center;
+    margin-top: 3px;
+    font-size: 16px;
+    font-family: "Inter", sans-serif;
+  }
 .profile2{
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  
+  border: 2px black solid;
+  object-fit: cover;
 }
- 
   .leftBarUser{
     width: 60px;
     display: flex;
@@ -43,6 +53,5 @@
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    object-fit: cover;
   }
 

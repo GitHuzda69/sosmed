@@ -71,9 +71,12 @@
   background-color: transparent;
 }
 
-.input{
+.input-login{
+  width: 300px;
+  height: 15px;
   border-radius: 8px;
   border: 1px black solid;
+  padding: 10px;
 }
 
 .checkbox-container {
@@ -92,6 +95,9 @@
   margin-right: 8px;
   cursor: pointer;
 }
+.checkbox-container h4{
+  cursor: auto;
+}
 
 .checkbox-input:checked {
   background-color: #ffffff;
@@ -100,8 +106,8 @@
 .checkbox-input:checked::before {
   content: '\2713'; 
   position: fixed;
-  margin-top: -12px;
-  margin-left: -6px;
+  margin-top: -4px;
+  margin-left: 2px;
   font-size: 18px;
   font-weight: bold;
   color: rgb(0, 0, 0);

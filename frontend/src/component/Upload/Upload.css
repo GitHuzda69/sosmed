@@ -183,3 +183,81 @@
   object-fit: cover;
   border-radius: 0px;
 }
+
+/*code buat responsive*/
+
+@media screen and (max-width: 1340px) {
+  .upload {
+    width: 875px; 
+  }
+}
+@media screen and (max-width: 1320px) {
+  .upload {
+    width: 855px; 
+  }
+}
+@media screen and (max-width: 1290px) {
+  .upload {
+    width: 825px; 
+  }
+}
+@media screen and (max-width: 1260px) {
+  .upload {
+    width: 805px; 
+  }
+}
+@media screen and (max-width: 1245px) {
+  .upload {
+    width: 785px; 
+  }
+}
+@media screen and (max-width: 1220px) {
+  .upload {
+    width: 765px; 
+  }
+}
+@media screen and (max-width: 1200px) {
+  .upload {
+    width: 745px; 
+  }
+}
+@media screen and (max-width: 1185px) {
+  .upload {
+    width: 725px; 
+  }
+}
+@media screen and (max-width: 1160px) {
+  .upload {
+    width: 705px; 
+  }
+}
+@media screen and (max-width: 1145px) {
+  .upload {
+    width: 685px; 
+  }
+}
+@media screen and (max-width: 1125px) {
+  .upload {
+    width: 665px; 
+  }
+}
+@media screen and (max-width: 1105px) {
+  .upload {
+    width: 645px; 
+  }
+}
+@media screen and (max-width: 1085px) {
+  .upload {
+    width: 625px; 
+  }
+}
+@media screen and (max-width: 1065px) {
+  .upload {
+    width: 605px; 
+  }
+}
+@media screen and (max-width: 1045px) {
+  .upload {
+    width: 585px; 
+  }
+}

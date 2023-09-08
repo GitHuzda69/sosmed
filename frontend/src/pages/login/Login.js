@@ -59,7 +59,7 @@ const Login = () => {
               <label>Username</label>
             </strong>
             <input
-              className="input"
+              className="input-login"
               type="username"
               placeholder="Enter Username"
               onChange={handleChange}
@@ -78,7 +78,7 @@ const Login = () => {
               <label>Password</label>
             </strong>
             <input
-              className="input"
+              className="input-login"
               type={showPassword ? "text" : "password"}
               placeholder="Enter Password"
               onChange={handleChange}
