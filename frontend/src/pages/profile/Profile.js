@@ -3,13 +3,13 @@ import { Icon } from "@iconify/react";
 import React, { useContext, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { makeRequest } from "../../axios.js";
-import profileimg from "../../assets/profil.jpg";
 import avatar1 from "../../assets/friend/friend1.jpg";
 import avatar2 from "../../assets/friend/friend2.jpg";
 import avatar3 from "../../assets/friend/friend3.jpg";
 import avatar4 from "../../assets/friend/friend4.jpg";
 import avatar5 from "../../assets/friend/friend5.jpeg";
 import { useLocation } from "react-router-dom";
+import Posts from "../../component/posts/Posts.js"
 import {AuthContext} from "../../context/authContext.js"
 
 const Profile = () => {
@@ -18,12 +18,31 @@ const Profile = () => {
   const [imagePopupOpenprofile, setImagePopupOpenProfile] = useState(false);
   const { currentUser } = useContext(AuthContext);
   const userid = parseInt(useLocation().pathname.split("/")[2])
-
   const { isLoading, error, data} = useQuery(["user"], () =>
     makeRequest.get("/users/find/" + userid).then((res) => {
       return res.data;
     })
   );
+  const { isLoading: rIsLoading ,data: relationshipData } = useQuery(["relationship"], () =>
+    makeRequest.get("/relationships?followeduserid=" + userid).then((res) => {
+      return res.data;
+    })
+  );
+
+  const queryClient = useQueryClient();
+  const mutation = useMutation(
+    (following) => {
+      if (following) return makeRequest.delete('/relationships?userid=' + userid);
+      return makeRequest.post("/relatonships", {userid})
+    },{
+      onSuccess: () => {
+        queryClient.invalidateQueries(["relationship"]);
+      }
+    }
+  )
+  const handleFollow = () => {
+    mutation.mutate(relationshipData.includes(currentUser.id));
+  }
   const friend = [
     {
       id: 1,
@@ -54,39 +73,6 @@ const Profile = () => {
       name: "John Doel",
       mutual: "90 Mutual friends",
       avatar: avatar1,
-    },
-  ];
-
-  const posts = [
-    {
-      id: 1,
-      name: "Jeou",
-      date: "12 hours ago",
-      userId: 1,
-      profilePic: profileimg,
-      pinned: 1,
-      img: "",
-      desc: "Lorem ipsum dolor sit amet asioasdios aosidjas asdpoasd po poadjpoasd ",
-    },
-    {
-      id: 2,
-      name: "Bukan",
-      date: "2 days ago",
-      userId: 2,
-      profilePic: profileimg,
-      pinned: 0,
-      desc: "Lorem ipsum dolor sit amet asioasdios aosidjas asdpoasd po poadjpoasd asdkas a;askjhnd oiasdoiasoa isasdoi asoidh asoidihasoid ",
-      img: "",
-    },
-    {
-      id: 3,
-      name: "Orang",
-      date: "4 days ago",
-      userId: 3,
-      profilePic: profileimg,
-      pinned: 0,
-      desc: "Lorem ipsum dolor sit amet asioasdios aosidjas asdpoasd po poadjpoasd asdkas Lorem ipsum dolor sit amet asioasdios aosidjas asdpoasd po poadjpoasd asdkas Lorem ipsum dolor sit amet asioasdios aosidjas asdpoasd po poadjpoasd asdkas Lorem ipsum dolor sit amet asioasdios aosidjas asdpoasd po poadjpoasd asdkas a;askjhnd oiasdoiasoa isasdoi asoidh asoidihasoid ",
-      img: avatar2,
     },
   ];
 
@@ -149,7 +135,7 @@ const Profile = () => {
               </div>
             </div>
             <div className="profiluser-button">
-            {userid === currentUser.id ? <></> : (<button className="add-button">
+            {rIsLoading? ("Loading") : userid === currentUser.id ? <></> : (<button className="add-button" onClick={handleFollow}>{relationshipData && relationshipData.includes(currentUser.id) ? "Following" : "Follow"}
                 <Icon
                   icon="ic:sharp-person-add"
                   color="black"
@@ -177,101 +163,7 @@ const Profile = () => {
               </button>
             </div>
           </div>
-          {posts.map((posts) => (
-            <div className="post-profil">
-              <div className="post-avatar-profil">
-                <img
-                  src={posts.profilePic}
-                  alt={posts.name}
-                  className="avatar-post"
-                />
-                <div className="post-profil-info">
-                  <h2>{posts.name}</h2>
-                  <h3>{posts.date}</h3>
-                </div>
-                {posts.pinned === 1 ? (
-                  <>
-                    <button className="button-post-profil-pinned">
-                      <Icon icon="tabler:dots" width={22} height={22} />
-                    </button>
-                    <div className="pinned-post">
-                      <Icon icon="typcn:pin" width={25} height={25} />
-                      <h5>Pinned post</h5>
-                    </div>
-                  </>
-                ) : (
-                  <button className="button-post-profil">
-                    <Icon icon="tabler:dots" width={22} height={22} />
-                  </button>
-                )}
-              </div>
-              <div className="posts-profil-content">
-                <h4>{posts.desc}</h4>
-                {/* css e ini sama bawah e sebagian ada di post */}
-                {posts.img && (
-                  <div className="post-img-container">
-                    <button
-                      className="img-button"
-                      onClick={() => setImagePopupOpen(true)}
-                    >
-                      <img
-                        className="posts-profil-img"
-                        src={posts.img}
-                        alt="posts-img"
-                      />
-                    </button>
-                  </div>
-                )}
-                {imagePopupOpen && (
-                  <div className="image-popup-profil">
-                    <button
-                      className="close-button"
-                      onClick={() => setImagePopupOpen(false)}
-                    >
-                      <Icon
-                        icon="ph:x-bold"
-                        color="black"
-                        width={40}
-                        height={40}
-                      />
-                    </button>
-                    <img className="popup-img" src={posts.img} alt="" />
-                  </div>
-                )}
-              </div>
-              <div className="button-posts-profil">
-                <div className="button-posts">
-                  <Icon
-                    className="icon"
-                    icon="mdi:heart-outline"
-                    width={20}
-                    height={20}
-                    color={"black"}
-                  />
-
-                  <h3>12 Likes</h3>
-                </div>
-                <div className="button-posts">
-                  <Icon
-                    className="icon"
-                    icon="ant-design:message-filled"
-                    width={20}
-                    height={20}
-                  />
-                  <h3>12 Comments</h3>
-                </div>
-                <div className="button-posts">
-                  <Icon
-                    className="icon"
-                    icon="mdi:share"
-                    width={20}
-                    height={20}
-                  />
-                  <h3>449 Share</h3>
-                </div>
-              </div>
-            </div>
-          ))}
+          <Posts userid={userid}/>
         </div>
         <div className="rightProfileBar">
           <div className="search-profile">

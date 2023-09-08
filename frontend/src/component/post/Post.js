@@ -35,6 +35,7 @@ const Post = ({ post }) => {
       return res.data;
     })
   );
+
   return (
     <div className="post-container">
       <div className="post">
@@ -101,7 +102,7 @@ const Post = ({ post }) => {
               width={25}
               height={25}
             />
-            <h3>12 Comments</h3>
+            <h3>Comments</h3>
           </div>
           <div className="item">
             <Icon className="icon" icon="mdi:share" width={30} height={30} />
