@@ -41,7 +41,6 @@
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  border: 2px black solid;
   object-fit: cover;
 }
   .leftBarUser{
@@ -55,3 +54,10 @@
     border-radius: 50%;
   }
 
+
+/*code buat responsive*/
+
+@media screen and (max-height: 560px) {
+  .profile2 {
+  }
+}

@@ -48,10 +48,11 @@
     height: 120px;
     border-radius: 50%;
     border: 2px solid black;
+    object-fit: cover;
   }
   .profil-bio{
-    height: 90px;
-    margin-top: -100px;
+    height: 110px;
+    margin-top: -120px;
     margin-left: 170px;
   }
   .profil-bio h2 {
