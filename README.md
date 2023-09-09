@@ -21,9 +21,9 @@
 
 ```CREATE TABLE `sosmed`.`comments` (`id` INT NOT NULL AUTO_INCREMENT, `desc` VARCHAR(255) NOT NULL, `createdat` DATETIME NULL, `userid` INT NOT NULL, `postid` INT NOT NULL, PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC), INDEX `postid_idx` (`postid` ASC), INDEX `commentsuserid_idx` (`userid` ASC), CONSTRAINT `comments_userid` FOREIGN KEY (`userid`) REFERENCES `sosmed`.`users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, CONSTRAINT `comments_postid` FOREIGN KEY (`postid`) REFERENCES `sosmed`.`posts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE); ```
 
-## Relationship Database
+## Relationships Database
 
-```CREATE TABLE `sosmed`.`relationship` (`id` INT NOT NULL AUTO_INCREMENT, `followeruserid` INT NOT NULL, `followeduserid` INT NOT NULL, PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC), INDEX `followeruser_idx` (`followeruserid` ASC), INDEX `followeduser_idx` (`followeduserid` ASC), CONSTRAINT `followeruser` FOREIGN KEY (`followeruserid`) REFERENCES `sosmed`.`users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, CONSTRAINT `followeduser` FOREIGN KEY (`followeduserid`) REFERENCES `sosmed`.`users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE); ```
+```CREATE TABLE `sosmed`.`relationships` (`id` INT NOT NULL AUTO_INCREMENT, `followeruserid` INT NOT NULL, `followeduserid` INT NOT NULL, PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC), INDEX `followeruser_idx` (`followeruserid` ASC), INDEX `followeduser_idx` (`followeduserid` ASC), CONSTRAINT `followeruser` FOREIGN KEY (`followeruserid`) REFERENCES `sosmed`.`users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, CONSTRAINT `followeduser` FOREIGN KEY (`followeduserid`) REFERENCES `sosmed`.`users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE); ```
 
 ## Likes Database
 

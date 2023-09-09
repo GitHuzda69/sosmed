@@ -17,14 +17,14 @@ const Profile = () => {
   const [imagePopupOpenbanner, setImagePopupOpenBanner] = useState(false);
   const [imagePopupOpenprofile, setImagePopupOpenProfile] = useState(false);
   const { currentUser } = useContext(AuthContext);
-  const userid = parseInt(useLocation().pathname.split("/")[2])
+  const userId = parseInt(useLocation().pathname.split("/")[2])
   const { isLoading, error, data} = useQuery(["user"], () =>
-    makeRequest.get("/users/find/" + userid).then((res) => {
+    makeRequest.get("/users/find/" + userId).then((res) => {
       return res.data;
     })
   );
   const { isLoading: rIsLoading ,data: relationshipData } = useQuery(["relationship"], () =>
-    makeRequest.get("/relationships?followeduserid=" + userid).then((res) => {
+    makeRequest.get("/relationships?followeduserId=" + userId).then((res) => {
       return res.data;
     })
   );
@@ -32,8 +32,8 @@ const Profile = () => {
   const queryClient = useQueryClient();
   const mutation = useMutation(
     (following) => {
-      if (following) return makeRequest.delete('/relationships?userid=' + userid);
-      return makeRequest.post("/relatonships", {userid})
+      if (following) return makeRequest.delete('/relationships?userId=' + userId);
+      return makeRequest.post("/relationships", {userId})
     },{
       onSuccess: () => {
         queryClient.invalidateQueries(["relationship"]);
@@ -75,7 +75,6 @@ const Profile = () => {
       avatar: avatar1,
     },
   ];
-
   return (
     <div>
       {isLoading ? "loading" : <div className="profil"> 
@@ -135,14 +134,7 @@ const Profile = () => {
               </div>
             </div>
             <div className="profiluser-button">
-            {rIsLoading? ("Loading") : userid === currentUser.id ? <></> : (<button className="add-button" onClick={handleFollow}>{relationshipData && relationshipData.includes(currentUser.id) ? "Following" : "Follow"}
-                <Icon
-                  icon="ic:sharp-person-add"
-                  color="black"
-                  width={20}
-                  height={20}
-                />
-                <span>Follow</span>
+            {rIsLoading? ("Loading") : userId === currentUser.id ? <></> : (<button className="add-button" onClick={handleFollow}>{relationshipData && relationshipData.includes(currentUser.id) ? "Following" : "Follow"}
               </button>)}
               
               <button className="message-user-button">
@@ -163,7 +155,7 @@ const Profile = () => {
               </button>
             </div>
           </div>
-          <Posts userid={userid}/>
+          <Posts userId={userId}/>
         </div>
         <div className="rightProfileBar">
           <div className="search-profile">

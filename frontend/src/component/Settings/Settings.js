@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./Settings.css";
 import { Icon } from "@iconify/react";
+import { Link } from "react-router-dom";
 
 const Settings = ({ onClose }) => {
   const [isSliderOn, setIsSliderOn] = useState(false);
@@ -40,7 +41,7 @@ const Settings = ({ onClose }) => {
           Connect to Twitter
           <Icon icon="mdi:twitter" width="20" height="20" />
         </button>
-        <button>Edit Profile</button>
+        <Link to="/update"><button>Edit Profile</button></Link>
       </div>
     </div>
   );

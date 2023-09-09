@@ -50,7 +50,7 @@ const Sidebar = ({ toggleSettings }) => {
       </div>
       <div className="sidebar-user">
         <Link
-          to={"/profile/${post.userid}"}
+          to={`/profile/${currentUser.id}`}
           style={{ textDecoration: "none", color: "inherit" }}
           className="profileavatar"
         >
