@@ -3,6 +3,7 @@ import profilimage from "../../assets/profil.jpg";
 import "./Messages.css";
 import Sidebar from "../../component/Leftbar/Leftbar";
 import Settings from "../../component/Settings/Settings";
+import Logout from "../../component/Logout/Logout";
 import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
 
@@ -23,6 +24,7 @@ const messages = [
 function Friendslist() {
   const [posts, setPosts] = useState([]);
   const [settingOpen, setSettingOpen] = useState(false);
+  const [logoutOpen, setLogoutOpen] = useState(false);
 
   const [newPost, setNewPost] = useState({ author: "", content: "" });
   const [textareaHeight] = useState("auto");
@@ -67,6 +69,10 @@ function Friendslist() {
 
   const toggleSettings = () => {
     setSettingOpen(!settingOpen);
+  };
+
+  const toggleLogout = () => {
+    setLogoutOpen(!logoutOpen);
   };
 
   return (
@@ -115,12 +121,20 @@ function Friendslist() {
           ))}
         </div>
       </main>
-      <Sidebar toggleSettings={toggleSettings} />
+      <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} />
       {settingOpen && (
         <>
           <div className="settings-overlay" />
           <div className="settings-container">
             <Settings onClose={toggleSettings} />
+          </div>
+        </>
+      )}
+      {logoutOpen && (
+        <>
+          <div className="popup-logout-container" />
+          <div className="popup-logout">
+            <Logout onClose={toggleLogout} />
           </div>
         </>
       )}

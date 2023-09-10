@@ -4,15 +4,15 @@ import "./Posts.css";
 import { useQuery } from "@tanstack/react-query";
 import { makeRequest } from "../../axios";
 
-const Posts = () => {
+const Posts = ({ userId, className }) => {
   const { isLoading, error, data } = useQuery(["posts"], () =>
-    makeRequest.get("/posts").then((res) => {
+    makeRequest.get("/posts?userid=" + userId).then((res) => {
       return res.data;
     })
   );
 
   return (
-    <div className="posts">
+    <div className={`posts ${className}`}>
       {error
         ? "Something went wrong"
         : isLoading

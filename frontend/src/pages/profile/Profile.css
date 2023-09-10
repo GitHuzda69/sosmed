@@ -10,7 +10,6 @@
   .profil-container {
     width: 900px;
     position: relative;
-    border: 1px black solid;
     border-bottom: none;
     border-left: none;
   }
@@ -30,7 +29,9 @@
     display: flex;
     flex-direction: row;
     align-items: start;
+    margin-right: -1px;
     border-left: 1px black solid;
+    border-right: 1px black solid;
   }
   .profil-info{
     width: 70%;
@@ -330,4 +331,38 @@
   .button-add:hover{
     border-radius: 50%;
     background-color: lightgray;
+  }
+
+  /*css posts profile*/
+
+  .posts-profile{
+    width: 879px;
+    margin-top: 0px;
+    margin-left: 0px;
+    padding-bottom: 0px;
+    border-top: 1px black solid;
+    border-left: 1px black solid;
+    border-right: 1px black solid;
+    overflow-x: hidden;
+  }
+  .posts-profile .post-container{
+    margin-top: -22px;
+    margin-bottom: 0px;
+    border-bottom: 1px black solid;
+    margin-left: -32px;
+    width: 1000px;
+  }
+  .posts-profile .post{
+    width: 848px;
+    border: none;
+    margin-left: 25px;
+  }
+  .posts-profile .container{
+  }
+  .posts-profile .user{
+    margin-top: 0px;
+    margin-left: 0px;
+  }
+  .posts-profile .post-img-container{
+    border: 2px red solid;
   }
