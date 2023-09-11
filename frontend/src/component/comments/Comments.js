@@ -67,14 +67,14 @@ const Comments = ({ postid }) => {
           value={desc}
           onChange={(e) => setDesc(e.target.value)}
         />
-        <div className="uploadItem-row">
-          <button className="uploadItem">
+        <div className="uploadItem-comment-row">
+          <button className="uploadItem-comment">
             <Icon icon="ic:outline-poll" width={25} height={25}></Icon>
           </button>
-          <button className="uploadItem">
+          <button className="uploadItem-comment">
             <Icon icon="fluent:gif-16-regular" width={25} height={25}></Icon>
           </button>
-          <button className="uploadItem">
+          <button className="uploadItem-comment">
             <Icon
               icon="material-symbols:perm-media-outline"
               width={25}

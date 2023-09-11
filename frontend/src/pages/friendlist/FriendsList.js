@@ -3,6 +3,8 @@ import { Icon } from "@iconify/react";
 import "./FriendsList.css";
 import Sidebar from "../../component/Leftbar/Leftbar";
 import Settings from "../../component/Settings/Settings";
+import Logout from "../../component/Logout/Logout";
+
 import avatar1 from "../../assets/friend/friend1.jpg";
 import avatar2 from "../../assets/friend/friend2.jpg";
 import avatar3 from "../../assets/friend/friend3.jpg";
@@ -133,9 +135,13 @@ const FriendList = () => {
   };
 
   const [settingOpen, setSettingOpen] = useState(false);
+  const [logoutOpen, setLogoutOpen] = useState(false);
 
   const toggleSettings = () => {
     setSettingOpen(!settingOpen);
+  };
+  const toggleLogout = () => {
+    setLogoutOpen(!logoutOpen);
   };
 
   return (
@@ -197,12 +203,20 @@ const FriendList = () => {
           </div>
         )}
       </div>
-      <Sidebar toggleSettings={toggleSettings} />
+      <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} />
       {settingOpen && (
         <>
           <div className="settings-overlay" />
           <div className="settings-container">
             <Settings onClose={toggleSettings} />
+          </div>
+        </>
+      )}
+      {logoutOpen && (
+        <>
+          <div className="popup-logout-container" />
+          <div className="popup-logout">
+            <Logout onClose={toggleLogout} />
           </div>
         </>
       )}

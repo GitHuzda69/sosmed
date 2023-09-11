@@ -41,7 +41,9 @@ const Settings = ({ onClose }) => {
           Connect to Twitter
           <Icon icon="mdi:twitter" width="20" height="20" />
         </button>
-        <Link to="/update"><button>Edit Profile</button></Link>
+        <Link to="/update">
+          <button>Edit Profile</button>
+        </Link>
       </div>
     </div>
   );

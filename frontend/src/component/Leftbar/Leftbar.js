@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import AuthContext from "../../context/authContext";
 import Settings from "../Settings/Settings";
 
-const Sidebar = ({ toggleSettings }) => {
+const Sidebar = ({ toggleSettings, toggleLogout }) => {
   const { currentUser } = useContext(AuthContext);
   return (
     <div className="sidebar">
@@ -42,11 +42,9 @@ const Sidebar = ({ toggleSettings }) => {
             />
           </button>
         </Link>
-        <Link to="/login">
-          <button>
-            <Icon icon="material-symbols:logout" width="40" height="40" />
-          </button>
-        </Link>
+        <button onClick={toggleLogout}>
+          <Icon icon="material-symbols:logout" width="40" height="40" />
+        </button>
       </div>
       <div className="sidebar-user">
         <Link
