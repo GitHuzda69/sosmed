@@ -2,7 +2,7 @@ import { Icon } from "@iconify/react";
 import React, { useContext, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { makeRequest } from "../../axios.js";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { AuthContext } from "../../context/authContext.js";
 
 import "./Profile.css";
@@ -165,7 +165,9 @@ const Profile = () => {
                 {rIsLoading ? (
                   "Loading"
                 ) : userId === currentUser.id ? (
-                  <></>
+                  <Link to="/Update">
+                    <button>Edit Profile</button>
+                  </Link>
                 ) : (
                   <button className="add-button" onClick={handleFollow}>
                     {relationshipData.includes(currentUser.id)
@@ -252,7 +254,7 @@ const Profile = () => {
         <>
           <div className="settings-overlay" />
           <div className="settings-container">
-            <Settings onClose={toggleSettings} userdata={data}/>
+            <Settings onClose={toggleSettings} userdata={data} />
           </div>
         </>
       )}
