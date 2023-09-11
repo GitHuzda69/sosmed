@@ -1,4 +1,5 @@
 import { useContext, useState, useRef } from "react";
+import { Icon } from "@iconify/react";
 import "./Update.css";
 import { makeRequest } from "../../axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -112,7 +113,7 @@ const Update = (userdata) => {
           <form className="edit-content">
             <h4>Edit Cover Image</h4>
             <label htmlFor="coverInput" className="file-label">
-              {"Choosed" || "Choose File"}
+              {selectedCoverFileName ? "Choosed" : "Choose File"}
             </label>
             <input
               type="file"
@@ -123,7 +124,7 @@ const Update = (userdata) => {
             />
             <h4>Edit Profile Image</h4>
             <label htmlFor="profileInput" className="file-label">
-              {"Choosed" || "Choose File"}
+              {selectedProfileFileName ? "Choosed" : "Choose File"}
             </label>
             <input
               type="file"
@@ -133,9 +134,19 @@ const Update = (userdata) => {
               style={{ display: "none" }}
             />
             <h4>Edit Your Name</h4>
-            <input type="text" name="name" onChange={handleChange} />
+            <input
+              className="input-edit"
+              type="text"
+              name="name"
+              onChange={handleChange}
+            />
             <h4>Edit Your City</h4>
-            <input type="text" name="city" onChange={handleChange} />
+            <input
+              className="input-edit"
+              type="text"
+              name="city"
+              onChange={handleChange}
+            />
           </form>
           <button onClick={handleSubmit}>Save</button>
         </div>
@@ -144,7 +155,9 @@ const Update = (userdata) => {
         {selectedCoverImage && (
           <div className="popup-edit">
             <h2>Cover Image</h2>
-            <button onClick={resetInputCover}>close</button>
+            <button onClick={resetInputCover} className="close-popup">
+              <Icon icon="ph:x-bold" color="black" width={25} height={25} />
+            </button>
             <img
               src={selectedCoverImage}
               alt="Selected Cover Image"
@@ -156,7 +169,9 @@ const Update = (userdata) => {
         {selectedProfileImage && (
           <div className="popup-edit">
             <h2>Profile Image</h2>
-            <button onClick={resetInputProfile}>close</button>
+            <button onClick={resetInputProfile} className="close-popup">
+              <Icon icon="ph:x-bold" color="black" width={25} height={25} />
+            </button>
             <img
               src={selectedProfileImage}
               alt="Selected Cover Image"
