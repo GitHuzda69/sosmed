@@ -168,8 +168,7 @@ const Profile = () => {
                   <></>
                 ) : (
                   <button className="add-button" onClick={handleFollow}>
-                    {relationshipData &&
-                    relationshipData.includes(currentUser.id)
+                    {relationshipData.includes(currentUser.id)
                       ? "Following"
                       : "Follow"}
                   </button>
@@ -253,7 +252,7 @@ const Profile = () => {
         <>
           <div className="settings-overlay" />
           <div className="settings-container">
-            <Settings onClose={toggleSettings} />
+            <Settings onClose={toggleSettings} userdata={data}/>
           </div>
         </>
       )}

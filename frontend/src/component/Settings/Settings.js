@@ -3,7 +3,7 @@ import "./Settings.css";
 import { Icon } from "@iconify/react";
 import { Link } from "react-router-dom";
 
-const Settings = ({ onClose }) => {
+const Settings = ({ onClose, userdata }) => {
   const [isSliderOn, setIsSliderOn] = useState(false);
 
   const handleSliderChange = () => {
@@ -41,7 +41,7 @@ const Settings = ({ onClose }) => {
           Connect to Twitter
           <Icon icon="mdi:twitter" width="20" height="20" />
         </button>
-        <Link to="/update">
+        <Link to="/update" userdata={userdata}>
           <button>Edit Profile</button>
         </Link>
       </div>

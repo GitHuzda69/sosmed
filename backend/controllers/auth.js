@@ -1,6 +1,7 @@
 import { db } from "../connect.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import moment from "moment";
 
 export const register = (req,res)=> {
     //mengecek user jika ada
@@ -15,9 +16,9 @@ export const register = (req,res)=> {
             const salt = bcrypt.genSaltSync(10);
             const hashedPassword = bcrypt.hashSync(req.body.password, salt);
 
-            const q = "INSERT INTO users (`username`, `email`, `password`) VALUES (?)";
+            const q = "INSERT INTO users (`username`, `email`, `password`, `joinat`) VALUES (?)";
 
-            db.query(q, [[req.body.username, req.body.email, hashedPassword]], (err, data) => {
+            db.query(q, [[req.body.username, req.body.email, hashedPassword, moment(Date.now()).format("YYYY-MM-DD HH:mm:ss")]], (err, data) => {
                 if (err) return res.status(500).json(err);
                 return res.status(200).json("User has been created");
             })

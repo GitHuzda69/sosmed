@@ -122,16 +122,7 @@ const Comments = ({ postid }) => {
                       />
                     )}
                   </div>
-                  <div className="item-comment">
-                    <Icon
-                      className="icon"
-                      icon="ant-design:message-filled"
-                      width={25}
-                      height={25}
-                    />
-                    <h3>12 Comments</h3>
-                  </div>
-                  <div className="item-comment">
+                 <div className="item-comment">
                     <Icon
                       className="icon"
                       icon="mdi:share"
