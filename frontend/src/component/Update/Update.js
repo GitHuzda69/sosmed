@@ -3,12 +3,9 @@ import { Icon } from "@iconify/react";
 import "./Update.css";
 import { makeRequest } from "../../axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Link, useNavigate } from "react-router-dom";
 import AuthContext from "../../context/authContext";
 
-const Update = (userdata) => {
-  const navigate = useNavigate();
-  const { currentUser } = useContext(AuthContext);
+const Update = ({setUpdateOpen, user}) => {
   const { currnrUser } = useContext(AuthContext);
   const [cover, setCover] = useState(null);
   const [profile, setProfile] = useState(null);
@@ -48,13 +45,12 @@ const Update = (userdata) => {
     let coverUrl;
     let profileUrl;
 
-    coverUrl = cover ? await upload(cover) : userdata.coverpic;
-    profileUrl = profile ? await upload(profile) : userdata.profilepic;
+    coverUrl = cover ? await upload(cover) : user.coverpic;
+    profileUrl = profile ? await upload(profile) : user.profilepic;
 
     mutation.mutate({ ...texts, coverpic: coverUrl, profilepic: profileUrl });
-    navigate(`/profile/${currnrUser.id}`);
+    setUpdateOpen(false)
   };
-
   const coverInputRef = useRef(null);
   const profileInputRef = useRef(null);
   const [selectedCoverFileName, setSelectedCoverFileName] = useState("");
@@ -101,12 +97,9 @@ const Update = (userdata) => {
     setSelectedProfileFileName("");
     setSelectedProfileImage(null);
   };
-
   return (
     <div className="edit">
-      <Link to={`/profile/${currentUser.id}`}>
-        <button>Back</button>
-      </Link>
+        <button onClick={()=>setUpdateOpen(false)}>X</button>
       <div className="edit-profile-container">
         <div className="edit-profile">
           <h2>Edit Your Profile</h2>
@@ -137,7 +130,7 @@ const Update = (userdata) => {
             <input
               className="input-edit"
               type="text"
-              name="name"
+              name="username"
               onChange={handleChange}
             />
             <h4>Edit Your City</h4>

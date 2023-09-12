@@ -1,4 +1,17 @@
 .edit{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0; 
+    margin: auto;
+    background-color: white;
+    padding: 50px;
+    width: 230px;
+    height: 470px;
+}
+
+.BUKANedit{
     display: flex;
     flex-direction: row;
     margin-left: 100px;

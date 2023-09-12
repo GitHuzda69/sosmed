@@ -65,10 +65,6 @@ function App() {
           path: "/friend",
           element: <Friends />,
         },
-        {
-          path: "/update",
-          element: <Update />,
-        },
       ],
     },
     {

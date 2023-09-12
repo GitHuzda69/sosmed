@@ -2,7 +2,7 @@ import { Icon } from "@iconify/react";
 import React, { useContext, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { makeRequest } from "../../axios.js";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { AuthContext } from "../../context/authContext.js";
 
 import "./Profile.css";
@@ -16,6 +16,7 @@ import avatar2 from "../../assets/friend/friend2.jpg";
 import avatar3 from "../../assets/friend/friend3.jpg";
 import avatar4 from "../../assets/friend/friend4.jpg";
 import avatar5 from "../../assets/friend/friend5.jpeg";
+import Update from "../../component/Update/Update.js";
 
 const Profile = () => {
   const [imagePopupOpen, setImagePopupOpen] = useState(false);
@@ -25,24 +26,21 @@ const Profile = () => {
   const userId = parseInt(useLocation().pathname.split("/")[2]);
   const [settingOpen, setSettingOpen] = useState(false);
   const [logoutOpen, setLogoutOpen] = useState(false);
-
+  const [updateOpen, setUpdateOpen] = useState(false);
+  const queryClient = useQueryClient();
   const { isLoading, error, data } = useQuery(["user"], () =>
     makeRequest.get("/users/find/" + userId).then((res) => {
       return res.data;
     })
   );
-  const { isLoading: rIsLoading, data: relationshipData } = useQuery(
-    ["relationship"],
-    () =>
+  const { isLoading: rIsLoading, data: relationshipData } = useQuery(["relationship"], () =>
       makeRequest.get("/relationships?followeduserId=" + userId).then((res) => {
         return res.data;
       })
   );
-
-  const queryClient = useQueryClient();
   const mutation = useMutation(
-    (following) => {
-      if (following)
+    (Following) => {
+      if (Following)
         return makeRequest.delete("/relationships?userId=" + userId);
       return makeRequest.post("/relationships", { userId });
     },
@@ -63,7 +61,6 @@ const Profile = () => {
   const toggleLogout = () => {
     setLogoutOpen(!logoutOpen);
   };
-
   const friend = [
     {
       id: 1,
@@ -109,7 +106,7 @@ const Profile = () => {
                   className="img-button"
                   onClick={() => setImagePopupOpenBanner(true)}
                 >
-                  <img src={data && data.coverpic} alt="banner" />
+                  <img src={"/data/" + data.coverpic} alt="banner" />
                 </button>
               </div>
             </div>
@@ -121,7 +118,7 @@ const Profile = () => {
                 >
                   <Icon icon="ph:x-bold" color="black" width={40} height={40} />
                 </button>
-                <img className="popup-img" src={data && data.coverpic} alt="" />
+                <img className="popup-img" src={"/data/" + data.coverpic} alt="" />
               </div>
             )}
             <div className="profil-user">
@@ -132,7 +129,7 @@ const Profile = () => {
                       className="img-button-profile"
                       onClick={() => setImagePopupOpenProfile(true)}
                     >
-                      <img src={data && data.profilepic} alt="post-profile" />
+                      <img src={"/data/" + data.profilepic} alt="post-profile" />
                     </button>
                   </div>
                 </div>
@@ -151,7 +148,7 @@ const Profile = () => {
                     </button>
                     <img
                       className="popup-img"
-                      src={data && data.profilepic}
+                      src={"/data/" + data.profilepic}
                       alt=""
                     />
                   </div>
@@ -165,9 +162,7 @@ const Profile = () => {
                 {rIsLoading ? (
                   "Loading"
                 ) : userId === currentUser.id ? (
-                  <Link to="/Update">
-                    <button>Edit Profile</button>
-                  </Link>
+                  <button onClick={()=>setUpdateOpen(true)}>Edit Profile</button>
                 ) : (
                   <button className="add-button" onClick={handleFollow}>
                     {relationshipData.includes(currentUser.id)
@@ -214,7 +209,7 @@ const Profile = () => {
               <h3>
                 <Icon icon="fluent:location-16-filled" width={25} height={25} />
                 From
-                <span>Sleman, Yogyakarta</span>
+                <span>{data && data.city}</span>
               </h3>
               <h4>
                 Etiam libero dui, varius tempor malesuada, convallis in tellus.
@@ -254,7 +249,7 @@ const Profile = () => {
         <>
           <div className="settings-overlay" />
           <div className="settings-container">
-            <Settings onClose={toggleSettings} userdata={data} />
+            <Settings onClose={toggleSettings}/>
           </div>
         </>
       )}
@@ -266,6 +261,7 @@ const Profile = () => {
           </div>
         </>
       )}
+        {updateOpen && <Update setUpdateOpen={setUpdateOpen} user={data}/>}
     </div>
   );
 };
