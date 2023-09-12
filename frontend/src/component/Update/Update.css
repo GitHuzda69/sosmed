@@ -1,17 +1,22 @@
 .edit{
+    position: fixed;
     display: flex;
     flex-direction: row;
-    margin-left: 100px;
+    z-index: 1000;
+    top: 50%;
+    left: 40%;
+    transform: translate(-50%, -50%);
 }
 .edit-profile-container{
     display: flex;
     align-items: center;
-    width: 230px;
+    width: 240px;
     height: 470px;
     border: 1px black solid;
     border-radius: 10px;
     padding: 5px;
-    font-family: "Inter", sans-serif;
+    font-family: "Inter", sans-serif;    
+    background-color: white;
 }
 .edit-profile{
     display: flex;
@@ -19,6 +24,20 @@
     align-items: center;
     justify-content: center;
     padding: 5px 20px 10px 20px ;
+}
+.edit-profile h2{
+    font-size: 25px;
+}
+.edit-save{
+    margin-top: 10px;   
+    border: 1px black solid;
+    border-radius: 6px;
+}
+.edit-close{
+    margin-top: 5px;
+    margin-bottom: 10px;   
+    border: 1px black solid;
+    border-radius: 6px;
 }
 .edit-content{
     display: flex;
@@ -47,15 +66,33 @@
     font-family: "Inter", sans-serif;
 }
 .popup-edit{
+    position: fixed;
     display: flex;
     flex-direction: column;
     gap: 10px;
     padding: 5px;
     border: 1px black solid;
     border-radius: 10px;
+    background-color: white;
+    top: 30%;
+    left: 90%;
+    transform: translate(7%, -50%);
 }
 .popup-edit h2{
     font-size: 20px;
+}
+.popup-edit-profile{
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 5px;
+    border: 1px black solid;
+    border-radius: 10px;
+    background-color: white;
+    top: 85%;
+    left: 90%;
+    transform: translate(7%, -50%);
 }
 .close-popup{
     width: 40px;

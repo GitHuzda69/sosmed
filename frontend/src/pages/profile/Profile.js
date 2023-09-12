@@ -10,6 +10,7 @@ import Posts from "../../component/posts/Posts.js";
 import Sidebar from "../../component/Leftbar/Leftbar";
 import Settings from "../../component/Settings/Settings";
 import Logout from "../../component/Logout/Logout";
+import Update from "../../component/Update/Update.js";
 
 import avatar1 from "../../assets/friend/friend1.jpg";
 import avatar2 from "../../assets/friend/friend2.jpg";
@@ -25,6 +26,7 @@ const Profile = () => {
   const userId = parseInt(useLocation().pathname.split("/")[2]);
   const [settingOpen, setSettingOpen] = useState(false);
   const [logoutOpen, setLogoutOpen] = useState(false);
+  const [editOpen, setEditOpen] = useState(false);
 
   const { isLoading, error, data } = useQuery(["user"], () =>
     makeRequest.get("/users/find/" + userId).then((res) => {
@@ -62,6 +64,19 @@ const Profile = () => {
 
   const toggleLogout = () => {
     setLogoutOpen(!logoutOpen);
+  };
+  const toggleEdit = () => {
+    setEditOpen(!editOpen);
+  };
+
+  const [isUpdateOpen, setIsUpdateOpen] = useState(false);
+
+  const openUpdateModal = () => {
+    setIsUpdateOpen(true);
+  };
+
+  const closeUpdateModal = () => {
+    setIsUpdateOpen(false);
   };
 
   const friend = [
@@ -158,15 +173,21 @@ const Profile = () => {
                 )}
                 <div className="profil-bio">
                   <h2>{data && data.username}</h2>
-                  <h4>300 friends (90 mutual) </h4>
+                  <h4>300 follower</h4>
                 </div>
               </div>
               <div className="profiluser-button">
                 {rIsLoading ? (
                   "Loading"
                 ) : userId === currentUser.id ? (
-                  <Link to="/Update">
-                    <button>Edit Profile</button>
+                  <Link>
+                    <button
+                      className="edit-profile-button"
+                      onClick={openUpdateModal}
+                    >
+                      <Icon icon="bxs:edit" width={20} height={20} />
+                      Edit Profile
+                    </button>
                   </Link>
                 ) : (
                   <button className="add-button" onClick={handleFollow}>
@@ -175,23 +196,6 @@ const Profile = () => {
                       : "Follow"}
                   </button>
                 )}
-
-                <button className="message-user-button">
-                  <Icon
-                    icon="ion:chatbox-ellipses-outline"
-                    color="black"
-                    width={20}
-                    height={20}
-                  />
-                </button>
-                <button className="share-user-button">
-                  <Icon
-                    icon="basil:share-outline"
-                    color="black"
-                    width={20}
-                    height={20}
-                  />
-                </button>
               </div>
             </div>
             <Posts userId={userId} className="posts-profile" />
@@ -201,7 +205,7 @@ const Profile = () => {
               <input
                 className="input-profile"
                 type="text"
-                placeholder="Search on profile"
+                placeholder="Search on Your profile"
               />
             </div>
             <div className="intro">
@@ -237,7 +241,7 @@ const Profile = () => {
                     <h4>{friend.mutual}</h4>
                     <button className="button-add">
                       <Icon
-                        icon="ic:baseline-person-add"
+                        icon="ion:chatbox-ellipses-outline"
                         width={22}
                         height={22}
                       />
@@ -265,6 +269,12 @@ const Profile = () => {
             <Logout onClose={toggleLogout} />
           </div>
         </>
+      )}
+      {isUpdateOpen && (
+        <div>
+          <div className="settings-overlay" />
+          <Update onClose={closeUpdateModal} />
+        </div>
       )}
     </div>
   );

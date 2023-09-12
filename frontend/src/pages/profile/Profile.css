@@ -70,12 +70,27 @@
   }
   .profiluser-button {
     margin-top: 5px;
-    margin-left: 65px;
+    margin-left: 135px;
     display: flex;
     flex-direction: row;
     align-items: end;
     text-align: center;
+    text-decoration: none;
     gap: 5px;
+  }
+  .edit-profile-button{
+    border: 1px black solid;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    padding: 8px 15px;
+    color: black;
+    cursor: pointer;
+    gap: 8px;
+  }
+  .edit-profile-button:hover{
+    border-radius: 11px;
+    background-color: lightgray;
   }
   .add-button{
     padding: 5px 12px;
@@ -94,32 +109,7 @@
     font-family: "Inter", sans-serif;
     font-size: 15px;
   }
-  .message-user-button{
-    border: 1px black solid;
-    border-radius: 50px;
-    display: flex;
-    align-items: center;
-    padding: 5px 5px;
-    color: black;
-    cursor: pointer;
-  }
-  .message-user-button:hover{
-    border-radius: 50px;
-    background-color: lightgray;
-  }
-  .share-user-button{
-    border: 1px black solid;
-    border-radius: 50px;
-    display: flex;
-    align-items: center;
-    padding: 5px 5px;
-    color: black;
-    cursor: pointer;
-  }
-  .share-user-button:hover{
-    border-radius: 50px;
-    background-color: lightgray;
-  }
+  
   .post-profil {
     border: 1px black solid;
     margin-right: -1px;

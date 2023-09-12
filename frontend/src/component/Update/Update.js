@@ -6,7 +6,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Link, useNavigate } from "react-router-dom";
 import AuthContext from "../../context/authContext";
 
-const Update = (userdata) => {
+const Update = ({ userdata, onClose }) => {
   const navigate = useNavigate();
   const { currentUser } = useContext(AuthContext);
   const { currnrUser } = useContext(AuthContext);
@@ -102,11 +102,12 @@ const Update = (userdata) => {
     setSelectedProfileImage(null);
   };
 
+  const handleBackClick = () => {
+    onClose();
+  };
+
   return (
     <div className="edit">
-      <Link to={`/profile/${currentUser.id}`}>
-        <button>Back</button>
-      </Link>
       <div className="edit-profile-container">
         <div className="edit-profile">
           <h2>Edit Your Profile</h2>
@@ -148,7 +149,12 @@ const Update = (userdata) => {
               onChange={handleChange}
             />
           </form>
-          <button onClick={handleSubmit}>Save</button>
+          <button className="edit-save" onClick={handleSubmit}>
+            Save
+          </button>
+          <button className="edit-close" onClick={handleBackClick}>
+            Cancel
+          </button>
         </div>
       </div>
       <div className="popup-edit-container">
@@ -167,7 +173,7 @@ const Update = (userdata) => {
           </div>
         )}
         {selectedProfileImage && (
-          <div className="popup-edit">
+          <div className="popup-edit-profile">
             <h2>Profile Image</h2>
             <button onClick={resetInputProfile} className="close-popup">
               <Icon icon="ph:x-bold" color="black" width={25} height={25} />
