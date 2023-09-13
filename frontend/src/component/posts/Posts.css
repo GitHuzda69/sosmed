@@ -121,13 +121,11 @@
   font-size: 30px;
   font-family: "Inter", sans-serif;
   font-weight: bold;
-  text-decoration: underline;
 }
 .posts-content p{
   margin-top: -15px;
   font-size: 20px;
   font-weight: normal;
-  text-decoration: underline;
   font-family: "Inter", sans-serif;
 }
 .posts-content p.medium-font {
@@ -330,7 +328,6 @@
     font-size: 20px;
     font-family: "Inter", sans-serif;
     font-weight: bold;
-    text-decoration: underline;
   }
   .comment-content p{
     margin-top: -35px;
@@ -338,7 +335,6 @@
     font-size: 15px;
     font-family: "Inter", sans-serif;
     font-weight: 500;
-    text-decoration: underline;
   }
 
   .comment-form {

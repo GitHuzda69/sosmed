@@ -34,6 +34,7 @@
   flex-direction: row;
   align-items: center;
   background-color: whitesmoke;
+  border-right: 2px lightgray solid;
   border-bottom: 2px lightgray solid;
 }
 .write img {

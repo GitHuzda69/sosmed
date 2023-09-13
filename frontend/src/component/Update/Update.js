@@ -5,7 +5,9 @@ import { makeRequest } from "../../axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import AuthContext from "../../context/authContext";
 
-const Update = ({setUpdateOpen, user}) => {
+const Update = ({ userdata, onClose }) => {
+  const navigate = useNavigate();
+  const { currentUser } = useContext(AuthContext);
   const { currnrUser } = useContext(AuthContext);
   const [cover, setCover] = useState(null);
   const [profile, setProfile] = useState(null);
@@ -97,9 +99,14 @@ const Update = ({setUpdateOpen, user}) => {
     setSelectedProfileFileName("");
     setSelectedProfileImage(null);
   };
+
+  const handleBackClick = () => {
+    onClose();
+  };
+
   return (
     <div className="edit">
-        <button onClick={()=>setUpdateOpen(false)}>X</button>
+
       <div className="edit-profile-container">
         <div className="edit-profile">
           <h2>Edit Your Profile</h2>
@@ -141,7 +148,12 @@ const Update = ({setUpdateOpen, user}) => {
               onChange={handleChange}
             />
           </form>
-          <button onClick={handleSubmit}>Save</button>
+          <button className="edit-save" onClick={handleSubmit}>
+            Save
+          </button>
+          <button className="edit-close" onClick={handleBackClick}>
+            Cancel
+          </button>
         </div>
       </div>
       <div className="popup-edit-container">
@@ -160,7 +172,7 @@ const Update = ({setUpdateOpen, user}) => {
           </div>
         )}
         {selectedProfileImage && (
-          <div className="popup-edit">
+          <div className="popup-edit-profile">
             <h2>Profile Image</h2>
             <button onClick={resetInputProfile} className="close-popup">
               <Icon icon="ph:x-bold" color="black" width={25} height={25} />

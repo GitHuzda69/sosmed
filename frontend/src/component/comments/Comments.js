@@ -122,7 +122,7 @@ const Comments = ({ postid }) => {
                       />
                     )}
                   </div>
-                 <div className="item-comment">
+                  <div className="item-comment">
                     <Icon
                       className="icon"
                       icon="mdi:share"

@@ -8,6 +8,7 @@
     padding: 10px;
     top: 0;
     position: fixed;
+    border-right: 2px lightgray solid;
   }
   
   button {
@@ -29,6 +30,7 @@
     display: flex;
     align-items: center;
     flex-direction: column;
+    margin-right: 10px;
   }
   .sidebar-user span {
     display: flex;
