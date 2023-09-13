@@ -4,12 +4,12 @@
   justify-content: center;
   align-items: center;
   bottom: 0;
-  margin-left: 90px;
+  margin-left: 81px;
   padding: 10px;
   height: auto;
-  width: 900px;
+  width: 885px;
   max-height: 490px;
-  border-radius: 20px 20px 0px 0px;
+  border-radius: 10px 10px 0px 0px;
   border: 1px black solid;
   background-color: #f0f0f0;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -187,77 +187,77 @@
 /*code buat responsive*/
 
 @media screen and (max-width: 1340px) {
-  .upload {
-    width: 875px; 
+  .upload{
+    width: 868px;
   }
 }
 @media screen and (max-width: 1320px) {
-  .upload {
-    width: 855px; 
+  .upload{
+    width: 858px;
   }
 }
-@media screen and (max-width: 1290px) {
-  .upload {
-    width: 825px; 
+@media screen and (max-width: 1300px) {
+  .upload{
+    width: 838px;
   }
 }
 @media screen and (max-width: 1260px) {
-  .upload {
-    width: 805px; 
+  .upload{
+    width: 818px;
   }
 }
 @media screen and (max-width: 1245px) {
-  .upload {
-    width: 785px; 
+  .upload{
+    width: 798px;
   }
 }
 @media screen and (max-width: 1220px) {
-  .upload {
-    width: 765px; 
+  .upload{
+    width: 777px;
   }
 }
 @media screen and (max-width: 1200px) {
-  .upload {
-    width: 745px; 
+  .upload{
+    width: 768px;
   }
 }
 @media screen and (max-width: 1185px) {
-  .upload {
-    width: 725px; 
+  .upload{
+    width: 738px;
   }
 }
 @media screen and (max-width: 1160px) {
-  .upload {
-    width: 705px; 
+  .upload{
+    width: 723px;
   }
 }
 @media screen and (max-width: 1145px) {
-  .upload {
-    width: 685px; 
+  .upload{
+    width: 703px;
   }
 }
 @media screen and (max-width: 1125px) {
-  .upload {
-    width: 665px; 
+  .upload{
+    width: 683px;
   }
 }
 @media screen and (max-width: 1105px) {
-  .upload {
-    width: 645px; 
+  .upload{
+    width: 663px;
   }
 }
 @media screen and (max-width: 1085px) {
-  .upload {
-    width: 625px; 
+  .upload{
+    width: 642px;
   }
 }
 @media screen and (max-width: 1065px) {
-  .upload {
-    width: 605px; 
+  .upload{
+    width: 622px;
   }
 }
 @media screen and (max-width: 1045px) {
-  .upload {
-    width: 585px; 
+  .upload{
+    width: 588px;
   }
 }

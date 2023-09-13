@@ -150,7 +150,6 @@
     padding: 6px 12px;
     border-radius: 4px;
     text-align: center;
-    text-decoration: none;
     display: inline-block;
     cursor: pointer;
     font-size: 14px;
@@ -264,11 +263,9 @@
     margin-top: 0px;
     font-family: "Inter", sans-serif;
     font-weight: bold;
-    text-decoration: underline;
   }
   .post-content p{
     margin-top: -10px;
-    text-decoration: underline;
     font-family: "Inter", sans-serif;
   }
   .content-form{
@@ -354,7 +351,6 @@
     margin-bottom: -5px;
     font-family: "Inter", sans-serif;
     font-weight: bold;
-    text-decoration: underline;
   }
   .comment-avatar {
     width: 50px;
@@ -385,13 +381,11 @@
     margin-bottom: -35px;
     font-family: "Inter", sans-serif;
     font-weight: bold;
-    text-decoration: underline;
   }
   
   .comment p {
     margin-top: 40px;
     font-family: "Inter", sans-serif;
-    text-decoration: underline;
   }
   
   

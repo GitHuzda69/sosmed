@@ -8,7 +8,7 @@
     padding: 10px;
     top: 0;
     position: fixed;
-    border-right: 2px lightgray solid;
+    border-right: 1px black solid;
   }
   
   button {
@@ -23,6 +23,12 @@
     background-color: #f1f1f1;
     border-radius: 15%;
     transition: all 0.3s ease;
+  }
+
+  .content-sidebar{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
   .sidebar-user{
     margin-left: 5px;

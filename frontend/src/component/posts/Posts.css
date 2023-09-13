@@ -16,17 +16,15 @@
   }
 
 .posts{
-  margin-left: 90px;
   font-family: "Inter", sans-serif;
   font-weight: bold;
   font-size: 40px;
-  margin-top: 10px;
-  margin-left: 100px;
+  margin-top: -5px;
+  margin-left: 80px;
   display: flex;
   flex-direction: column;
   align-items: flex-start; 
   border-radius: 0;
-  border: 1px whitesmoke solid;
   padding: 10px;
   padding-bottom: 30px;
   width: 900px;
@@ -58,6 +56,16 @@
   outline: none; 
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
 }
+.userinfo{
+  display: flex;
+  flex-direction: row;
+}
+.details{
+  margin-top: 3px;
+  margin-left: 15px;
+  gap: 5px;
+}
+
 .content{
   height: 40px;
   margin-left: 100px;
