@@ -3,7 +3,6 @@ import { Icon } from "@iconify/react";
 import "./Update.css";
 import { makeRequest } from "../../axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Link, useNavigate } from "react-router-dom";
 import AuthContext from "../../context/authContext";
 
 const Update = ({ userdata, onClose }) => {
@@ -48,13 +47,12 @@ const Update = ({ userdata, onClose }) => {
     let coverUrl;
     let profileUrl;
 
-    coverUrl = cover ? await upload(cover) : userdata.coverpic;
-    profileUrl = profile ? await upload(profile) : userdata.profilepic;
+    coverUrl = cover ? await upload(cover) : user.coverpic;
+    profileUrl = profile ? await upload(profile) : user.profilepic;
 
     mutation.mutate({ ...texts, coverpic: coverUrl, profilepic: profileUrl });
-    navigate(`/profile/${currnrUser.id}`);
+    setUpdateOpen(false)
   };
-
   const coverInputRef = useRef(null);
   const profileInputRef = useRef(null);
   const [selectedCoverFileName, setSelectedCoverFileName] = useState("");
@@ -108,6 +106,7 @@ const Update = ({ userdata, onClose }) => {
 
   return (
     <div className="edit">
+
       <div className="edit-profile-container">
         <div className="edit-profile">
           <h2>Edit Your Profile</h2>
@@ -138,7 +137,7 @@ const Update = ({ userdata, onClose }) => {
             <input
               className="input-edit"
               type="text"
-              name="name"
+              name="username"
               onChange={handleChange}
             />
             <h4>Edit Your City</h4>
