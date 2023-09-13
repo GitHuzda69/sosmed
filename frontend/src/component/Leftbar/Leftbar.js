@@ -60,7 +60,7 @@ const Sidebar = ({ toggleSettings, toggleLogout }) => {
             />
           </div>
         </Link>
-        <span>{currentUser.username}</span>
+        <span>{currentUser.displayname}</span>
       </div>
     </div>
   );

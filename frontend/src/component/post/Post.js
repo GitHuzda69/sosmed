@@ -59,7 +59,7 @@ const Post = ({ post }) => {
                 <img className="profile" src={"/data/" + post.profilepic} alt="" />
               </Link>
               <div className="details">
-                <span className="name">{post.username}</span>
+                <span className="name">{post.displayname}</span>
                 <span className="date">{moment(post.createdat).fromNow()}</span>
               </div>
             </div>

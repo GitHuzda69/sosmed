@@ -14,28 +14,38 @@ export const getUser = (req, res) => {
 
 export const updateUser = (req, res) => {
   const token = req.cookies.accessToken;
-  if (!token) return res.status(402).json("Not logged in");
+  if (!token) return res.status(401).json("Not Authenticated!");
 
   jwt.verify(token, "secretkey", (err, userInfo) => {
-    if (err) return res.status(403).json("Token not valid");
+    if (err) {
+      return res.status(403).json("Token not valid");
+    }
+
+    if (!userInfo || !userInfo.id) {
+      return res.status(403).json("User information not found in token");
+    }
 
     const q =
-      "UPDATE users SET `username`=?, `city`=?, `profilepic`=?, `coverpic`=?, WHERE id=?";
+      'UPDATE users SET `username`=?, `city`=?, `profilepic`=?, `coverpic`=? WHERE id=(?)';
 
     db.query(
-      q,
-      [
+      q, [
         req.body.username,
         req.body.city,
-        req.body.coverpic,
         req.body.profilepic,
+        req.body.coverpic,
         userInfo.id,
       ],
       (err, data) => {
-        if (err) res.status(500).json(err);
-        if (data.affectedRows > 0) return res.json("Updated");
+        if (err) {
+          return res.status(500).json(err);
+        }
+        if (data.affectedRows > 0) {
+          return res.json("Updated");
+        }
         return res.status(403).json("You can only update your profile");
       }
     );
   });
 };
+

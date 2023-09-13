@@ -4,21 +4,19 @@ import jwt from "jsonwebtoken";
 import moment from "moment";
 
 export const register = (req,res)=> {
-    //mengecek user jika ada
-
+    
     const q = "SELECT * FROM users WHERE username = ?"
 
     db.query(q, [req.body.username], (err, data) => {
         if(err) return res.status(500).json(err)
         if (data.length) return res.status(409).json("User already exists!");
-        //buat user baru
-            //hash password
+
             const salt = bcrypt.genSaltSync(10);
             const hashedPassword = bcrypt.hashSync(req.body.password, salt);
 
-            const q = "INSERT INTO users (`username`, `email`, `password`, `joinat`) VALUES (?)";
+            const q = "INSERT INTO users (`username`, `email`, `password`, `displayname`, `joinat`) VALUES (?)";
 
-            db.query(q, [[req.body.username, req.body.email, hashedPassword, moment(Date.now()).format("YYYY-MM-DD HH:mm:ss")]], (err, data) => {
+            db.query(q, [[req.body.username, req.body.email, hashedPassword, req.body.displayname ,moment().format("MMMM Do YYYY")]], (err, data) => {
                 if (err) return res.status(500).json(err);
                 return res.status(200).json("User has been created");
             })

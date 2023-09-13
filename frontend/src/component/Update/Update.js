@@ -5,8 +5,7 @@ import { makeRequest } from "../../axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import AuthContext from "../../context/authContext";
 
-const Update = ({ userdata, onClose }) => {
-  const navigate = useNavigate();
+const Update = ({ user, onClose }) => {
   const { currentUser } = useContext(AuthContext);
   const { currnrUser } = useContext(AuthContext);
   const [cover, setCover] = useState(null);
@@ -51,7 +50,7 @@ const Update = ({ userdata, onClose }) => {
     profileUrl = profile ? await upload(profile) : user.profilepic;
 
     mutation.mutate({ ...texts, coverpic: coverUrl, profilepic: profileUrl });
-    setUpdateOpen(false)
+    onClose();
   };
   const coverInputRef = useRef(null);
   const profileInputRef = useRef(null);
@@ -137,7 +136,7 @@ const Update = ({ userdata, onClose }) => {
             <input
               className="input-edit"
               type="text"
-              name="username"
+              name="displayname"
               onChange={handleChange}
             />
             <h4>Edit Your City</h4>

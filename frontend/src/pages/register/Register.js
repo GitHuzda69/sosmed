@@ -12,6 +12,7 @@ const Register = () => {
   const [inputs, setInputs] = useState({
     username: "",
     email: "",
+    displayname: "",
     password: "",
   });
   const navigate = useNavigate();
@@ -82,6 +83,25 @@ const Register = () => {
               type="email"
               placeholder="Enter Your Active Email "
               name="email"
+              onChange={handleChange}
+            />
+          </div>
+          <div
+            className="form-group"
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <strong style={{ paddingBottom: "5px" }}>
+              <label>Display Name</label>
+            </strong>
+            <input
+              className="input-signup"
+              type="username"
+              placeholder="Enter Your Display Name "
+              name="displayname"
               onChange={handleChange}
             />
           </div>

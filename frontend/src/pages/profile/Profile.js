@@ -2,7 +2,7 @@ import { Icon } from "@iconify/react";
 import React, { useContext, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { makeRequest } from "../../axios.js";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import { AuthContext } from "../../context/authContext.js";
 
 import "./Profile.css";
@@ -17,7 +17,6 @@ import avatar2 from "../../assets/friend/friend2.jpg";
 import avatar3 from "../../assets/friend/friend3.jpg";
 import avatar4 from "../../assets/friend/friend4.jpg";
 import avatar5 from "../../assets/friend/friend5.jpeg";
-import Update from "../../component/Update/Update.js";
 
 const Profile = () => {
   const [imagePopupOpen, setImagePopupOpen] = useState(false);
@@ -33,16 +32,17 @@ const Profile = () => {
       return res.data;
     })
   );
+  const queryClient = useQueryClient();
   const { isLoading: rIsLoading, data: relationshipData } = useQuery(["relationship"], () =>
       makeRequest.get("/relationships?followeduserId=" + userId).then((res) => {
         return res.data;
       })
   );
   const mutation = useMutation(
-    (Following) => {
-      if (Following)
+    (following) => {
+      if (following)
         return makeRequest.delete("/relationships?userId=" + userId);
-      return makeRequest.post("/relationships", { userId });
+      return makeRequest.post("/relationships", { userId});
     },
     {
       onSuccess: () => {
@@ -60,9 +60,6 @@ const Profile = () => {
 
   const toggleLogout = () => {
     setLogoutOpen(!logoutOpen);
-  };
-  const toggleEdit = () => {
-    setEditOpen(!editOpen);
   };
 
   const [isUpdateOpen, setIsUpdateOpen] = useState(false);
@@ -106,6 +103,7 @@ const Profile = () => {
       avatar: avatar1,
     },
   ];
+  console.log(relationshipData)
   return (
     <div>
       {isLoading ? (
@@ -167,7 +165,7 @@ const Profile = () => {
                   </div>
                 )}
                 <div className="profil-bio">
-                  <h2>{data && data.username}</h2>
+                  <h2>{data && data.displayname}</h2>
                   <h4>300 follower</h4>
                 </div>
               </div>
@@ -209,7 +207,7 @@ const Profile = () => {
               <h3>
                 <Icon icon="ep:info-filled" width={25} height={25} />
                 Joined
-                <span>32 Agustus 2032</span>
+                <span>{data && data.joinat}</span>
               </h3>
               <h3>
                 <Icon icon="fluent:location-16-filled" width={25} height={25} />
@@ -269,7 +267,7 @@ const Profile = () => {
       {isUpdateOpen && (
         <div>
           <div className="settings-overlay" />
-          <Update onClose={closeUpdateModal} />
+          <Update onClose={closeUpdateModal} user={data}/>
         </div>
       )}
     </div>

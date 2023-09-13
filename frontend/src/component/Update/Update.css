@@ -1,16 +1,5 @@
 .edit{
     position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0; 
-    margin: auto;
-    background-color: white;
-    padding: 50px;
-    width: 230px;
-    height: 470px;
-}
-
     display: flex;
     flex-direction: row;
     z-index: 1000;
