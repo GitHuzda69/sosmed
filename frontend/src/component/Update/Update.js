@@ -11,8 +11,8 @@ const Update = ({ user, onClose }) => {
   const [cover, setCover] = useState(null);
   const [profile, setProfile] = useState(null);
   const [texts, setTexts] = useState({
-    name: "",
-    city: "",
+    displayname: (user.displayname),
+    city: (user.city),
   });
 
   const upload = async (file) => {

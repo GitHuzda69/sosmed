@@ -1,12 +1,12 @@
-import { useContext, useState } from "react";
-import Comments from "../comments/Comments.js";
 import "./Post.css";
-import { Link } from "react-router-dom";
-import { Icon } from "@iconify/react";
-import moment from "moment";
+import React, { useContext, useState } from "react";
+import { useLocation, Link } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { makeRequest } from "../../axios.js";
-import AuthContext from "../../context/authContext.js";
+import {AuthContext} from "../../context/authContext.js";
+import { Icon } from "@iconify/react";
+import moment from "moment";
+import Comments from "../comments/Comments.js";
 
 const Post = ({ post }) => {
   const [commentOpen, setCommentOpen] = useState(false);
@@ -15,8 +15,8 @@ const Post = ({ post }) => {
   const [postOptionButtonPosition, setPostOptionButtonPosition] =
     useState(null);
   const { currentUser } = useContext(AuthContext);
+  const userId = parseInt(useLocation().pathname.split("/")[2]);
   const queryClient = useQueryClient();
-
   const mutation = useMutation(
     (liked) => {
       if (liked) return makeRequest.delete("/likes?postid=" + post.id);
@@ -50,6 +50,26 @@ const Post = ({ post }) => {
       return res.data;
     })
   );
+  const { isLoading: rIsLoading, data: relationshipData } = useQuery(["relationship"], () =>
+      makeRequest.get("/relationships?followeduserid=" + userId).then((res) => {
+        return res.data;
+      })
+  );
+  const followMutation = useMutation(
+    (following) => {
+      if (following)
+        return makeRequest.delete("/relationships?userId=" + userId);
+      return makeRequest.post("/relationships", { userId});
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["relationship"]);
+      },
+    }
+  );
+  const handleFollow = () => {
+    followMutation.mutate(relationshipData.includes(currentUser.id));
+  };
 
   return (
     <div className="post-container">
@@ -80,15 +100,17 @@ const Post = ({ post }) => {
               >
                 <Icon icon="tabler:dots" width={20} height={20} />
               </button>
-              {postOptionOpen && post.userid === currentUser.id && (
+              {postOptionOpen && post.userid === currentUser.id ? (
                 <div
-                  className="post-option-popup"
-                  style={{
-                    left: `${postOptionButtonPosition.left}px`,
-                    top: `${postOptionButtonPosition.bottom}px`,
-                  }}
-                >
+                  className="post-option-popup">
                   <button onClick={handleDelete}>Delete This Post</button>
+                  <button>Edit Post</button>
+                </div>
+              ) : (
+                <div
+                  className="post-option-popup">
+                  <button>Message</button>
+                  <button>Follow</button>
                 </div>
               )}
             </div>

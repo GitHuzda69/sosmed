@@ -1,9 +1,9 @@
-import { Icon } from "@iconify/react";
 import React, { useContext, useState } from "react";
+import { useLocation, Link } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { makeRequest } from "../../axios.js";
-import { useLocation, Link } from "react-router-dom";
 import { AuthContext } from "../../context/authContext.js";
+import { Icon } from "@iconify/react";
 
 import "./Profile.css";
 import Posts from "../../component/posts/Posts.js";
@@ -19,14 +19,12 @@ import avatar4 from "../../assets/friend/friend4.jpg";
 import avatar5 from "../../assets/friend/friend5.jpeg";
 
 const Profile = () => {
-  const [imagePopupOpen, setImagePopupOpen] = useState(false);
   const [imagePopupOpenbanner, setImagePopupOpenBanner] = useState(false);
   const [imagePopupOpenprofile, setImagePopupOpenProfile] = useState(false);
   const { currentUser } = useContext(AuthContext);
   const userId = parseInt(useLocation().pathname.split("/")[2]);
   const [settingOpen, setSettingOpen] = useState(false);
   const [logoutOpen, setLogoutOpen] = useState(false);
-  const [editOpen, setEditOpen] = useState(false);
   const { isLoading, error, data } = useQuery(["user"], () =>
     makeRequest.get("/users/find/" + userId).then((res) => {
       return res.data;
@@ -34,7 +32,7 @@ const Profile = () => {
   );
   const queryClient = useQueryClient();
   const { isLoading: rIsLoading, data: relationshipData } = useQuery(["relationship"], () =>
-      makeRequest.get("/relationships?followeduserId=" + userId).then((res) => {
+      makeRequest.get("/relationships?followeduserid=" + userId).then((res) => {
         return res.data;
       })
   );
@@ -103,7 +101,6 @@ const Profile = () => {
       avatar: avatar1,
     },
   ];
-  console.log(relationshipData)
   return (
     <div>
       {isLoading ? (
