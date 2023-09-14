@@ -5,7 +5,7 @@ import moment from "moment";
 
 export const register = (req,res)=> {
     
-    const q = "SELECT * FROM users WHERE username = ?"
+    const q = 'SELECT * FROM users WHERE username = ?'
 
     db.query(q, [req.body.username], (err, data) => {
         if(err) return res.status(500).json(err)
@@ -14,7 +14,7 @@ export const register = (req,res)=> {
             const salt = bcrypt.genSaltSync(10);
             const hashedPassword = bcrypt.hashSync(req.body.password, salt);
 
-            const q = "INSERT INTO users (`username`, `email`, `password`, `displayname`, `joinat`) VALUES (?)";
+            const q = 'INSERT INTO users (`username`, `email`, `password`, `displayname`, `joinat`) VALUES (?)';
 
             db.query(q, [[req.body.username, req.body.email, hashedPassword, req.body.displayname ,moment().format("MMMM Do YYYY")]], (err, data) => {
                 if (err) return res.status(500).json(err);
@@ -25,7 +25,7 @@ export const register = (req,res)=> {
 
 export const login = (req,res)=> {
 
-    const q = "SELECT * FROM users WHERE username = ?";
+    const q = 'SELECT * FROM users WHERE username = ?';
 
     db.query(q, [req.body.username], (err,data)=>{
         if (err) return res.status(500).json(err);

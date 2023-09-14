@@ -12,6 +12,8 @@ const Post = ({ post }) => {
   const [commentOpen, setCommentOpen] = useState(false);
   const [imagePopupOpen, setImagePopupOpen] = useState(false);
   const [postOptionOpen, setpostOptionOpen] = useState(false);
+  const [postOptionButtonPosition, setPostOptionButtonPosition] =
+    useState(null);
   const { currentUser } = useContext(AuthContext);
   const queryClient = useQueryClient();
 
@@ -30,16 +32,19 @@ const Post = ({ post }) => {
   const handleLike = () => {
     mutation.mutate(data.includes(currentUser.id));
   };
-  const deleteMutation = useMutation((postid) => {
-    return makeRequest.delete("/posts/" + postid)
-  },{
-    onSuccess: () => {
-      queryClient.invalidateQueries(["posts"])
+  const deleteMutation = useMutation(
+    (postid) => {
+      return makeRequest.delete("/posts/" + postid);
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["posts"]);
+      },
     }
-  })
+  );
   const handleDelete = () => {
-    deleteMutation.mutate(post.id)
-  }
+    deleteMutation.mutate(post.id);
+  };
   const { isLoading, error, data } = useQuery(["likes", post.id], () =>
     makeRequest.get("/likes?postid=" + post.id).then((res) => {
       return res.data;
@@ -56,12 +61,36 @@ const Post = ({ post }) => {
                 to={`/profile/${post.userid}`}
                 style={{ textDecoration: "none", color: "inherit" }}
               >
-                <img className="profile" src={"/data/" + post.profilepic} alt="" />
+                <img
+                  className="profile"
+                  src={"/data/" + post.profilepic}
+                  alt=""
+                />
               </Link>
               <div className="details">
                 <span className="name">{post.displayname}</span>
                 <span className="date">{moment(post.createdat).fromNow()}</span>
               </div>
+              <button
+                className="opsi-post-button"
+                onClick={(e) => {
+                  setPostOptionButtonPosition(e.target.getBoundingClientRect());
+                  setpostOptionOpen(!postOptionOpen);
+                }}
+              >
+                <Icon icon="tabler:dots" width={20} height={20} />
+              </button>
+              {postOptionOpen && post.userid === currentUser.id && (
+                <div
+                  className="post-option-popup"
+                  style={{
+                    left: `${postOptionButtonPosition.left}px`,
+                    top: `${postOptionButtonPosition.bottom}px`,
+                  }}
+                >
+                  <button onClick={handleDelete}>Delete This Post</button>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -79,8 +108,6 @@ const Post = ({ post }) => {
           )}
         </div>
         <div className="info">
-          <button onClick={()=>setpostOptionOpen(!postOptionOpen)}>TIGA DOT</button>
-          {postOptionOpen && post.userid === currentUser.id && (<button onClick={handleDelete}>Delete</button>)}
           <div className="item">
             {isLoading ? (
               "loading"

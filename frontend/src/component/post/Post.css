@@ -2,14 +2,18 @@
   display: flex;
   flex-direction: column;
   margin-top: 20px;
-  margin-left: 3px;
+  margin-left: -20px;
   margin-bottom: 5px;
-  width: 895px;
+  width: 895px; 
 }
 .post {
-  border-radius: 20px;
+  width: 875px;
+  border-radius: 10px;
   flex-direction: column;
   display: flex;
+  margin-left: 15px;
+  margin-top: -15px;
+  border: 1px black solid;
 }
 .container {
   padding: 20px;
@@ -53,6 +57,33 @@
   font-family: "Inter", sans-serif;
   font-weight: 600; 
 }
+.opsi-post-button{
+  width: 30px;
+  height: 30px;
+  margin-top: 5px;
+  margin-left: 610px;
+}
+.opsi-post-button:hover{
+  background-color: lightgray;
+  border-radius: 10px;
+}
+.delete-post-button{
+
+}
+.post-option-popup {
+  top: 0;
+  width: 80px;
+  height: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  background-color: white;
+  border: 1px black solid;
+  border-radius: 8px;
+  padding: 5px;
+  margin-top: 5px;
+  margin-left: -125px;
+}
 
 .post-content {
   display: flex;
@@ -64,7 +95,7 @@
   padding-left: 15px;
   padding-bottom: 5px;
   padding-right: 10px;
-  margin-top: 10px;
+  margin-top: -15px;
   scrollbar-width: thin;
   scrollbar-color: gray transparent;
 }
@@ -164,76 +195,118 @@
 
   @media screen and (max-width: 1340px) {
     .post {
-      width: 850px; 
+      width: 860px; 
     }
   }
   @media screen and (max-width: 1320px) {
     .post {
-      width: 830px; 
+      width: 850px; 
+    }
+    .opsi-post-button{
+      margin-left: 600px;
     }
   }
-  @media screen and (max-width: 1290px) {
+  @media screen and (max-width: 1300px) {
     .post {
-      width: 800px; 
+      width: 830px; 
+    }
+    .opsi-post-button{
+      margin-left: 575px;
     }
   }
   @media screen and (max-width: 1260px) {
     .post {
-      width: 780px; 
+      width: 810px; 
+    }
+    .opsi-post-button{
+      margin-left: 560px;
     }
   }
   @media screen and (max-width: 1245px) {
     .post {
-      width: 760px; 
+      width: 790px; 
+    }
+    .opsi-post-button{
+      margin-left: 535px;
     }
   }
   @media screen and (max-width: 1220px) {
     .post {
-      width: 740px; 
+      width: 770px; 
+    }
+    .opsi-post-button{
+      margin-left: 525px;
     }
   }
   @media screen and (max-width: 1200px) {
     .post {
-      width: 720px; 
+      width: 760px; 
+    }
+    .opsi-post-button{
+      margin-left: 510px;
     }
   }
   @media screen and (max-width: 1185px) {
     .post {
-      width: 700px; 
+      width: 730px; 
+    }
+    .opsi-post-button{
+      margin-left: 480px;
     }
   }
   @media screen and (max-width: 1160px) {
     .post {
-      width: 680px; 
+      width: 715px; 
+    }
+    .opsi-post-button{
+      margin-left: 465px;
     }
   }
   @media screen and (max-width: 1145px) {
     .post {
-      width: 660px; 
+      width: 695px; 
+    }
+    .opsi-post-button{
+      margin-left: 445px;
     }
   }
   @media screen and (max-width: 1125px) {
     .post {
-      width: 640px; 
+      width: 675px; 
+    }
+    .opsi-post-button{
+      margin-left: 420px;
     }
   }
   @media screen and (max-width: 1105px) {
     .post {
-      width: 620px; 
+      width: 655px; 
+    }
+    .opsi-post-button{
+      margin-left: 400px;
     }
   }
   @media screen and (max-width: 1085px) {
     .post {
-      width: 600px; 
+      width: 635px; 
+    }
+    .opsi-post-button{
+      margin-left: 385px;
     }
   }
   @media screen and (max-width: 1065px) {
     .post {
-      width: 580px; 
+      width: 615px; 
+    }
+    .opsi-post-button{
+      margin-left: 360px;
     }
   }
   @media screen and (max-width: 1045px) {
     .post {
-      width: 560px; 
+      width: 580px; 
+    }
+    .opsi-post-button{
+      margin-left: 330px;
     }
   }

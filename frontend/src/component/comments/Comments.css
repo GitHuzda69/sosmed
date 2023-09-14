@@ -3,14 +3,14 @@
   flex-direction: column;
   overflow-y: auto;
   height: auto;
-  width: 893px;
+  width: 896px;
   max-height: 600px;
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: #aaa #ddd; 
   margin-left: -10px;
   margin-bottom: 15px;
-  border-top: 2px lightgray solid;
+  border-top: 1px black solid;
 }
 
 .comments::-webkit-scrollbar {
@@ -33,9 +33,11 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+  margin-left: -1px;
   background-color: whitesmoke;
-  border-right: 2px lightgray solid;
-  border-bottom: 2px lightgray solid;
+  border-left: 1px black solid;
+  border-right: 1px black solid;
+  border-bottom: 1px black solid;
 }
 .write img {
   margin-right: 10px; 
@@ -51,10 +53,10 @@
 }
 .input-comment{
   display: flex;
-  width: 70%;
+  width: 69%;
   height: 15px;
   padding: 15px;
-  border: 1px gray solid;
+  border: 1px black solid;
   border-radius: 10px;
 }
 .input-comment::placeholder{
@@ -90,8 +92,8 @@
   display: flex;
   justify-content: space-between;
   gap: 20px;
-  border-top: 2px lightgray solid;
-  border-bottom: 2px lightgray solid;
+  border-top: 1px black solid;
+  border-bottom: none;
   width: 100%;
 }
 .comments-pic {
@@ -118,7 +120,7 @@
   margin-left: -5px;
 }
 .comment-info p{
-  margin-top: 25px;
+  margin-top: 45px;
   margin-left: -65px;
   margin-right: 20px;
   margin-bottom: 20px;
@@ -138,7 +140,7 @@
 .button-comment-desc{
   width: 30px;
   height: 30px;
-  margin-top: -60px;
+  margin-top: -50px;
   margin-left: 720px;
 }
 .button-comment-desc:hover{
@@ -174,7 +176,8 @@
 
 @media screen and (max-width: 1340px) {
   .comments {
-    width: 870px; 
+    width: 881px; 
+    margin-left: -9px;
   }
   .button-comment-desc{
     margin-left: 700px;
@@ -182,15 +185,15 @@
 }
 @media screen and (max-width: 1320px) {
   .comments {
-    width: 850px; 
+    width: 871px; 
   }
   .button-comment-desc{
     margin-left: 680px;
   }
 }
-@media screen and (max-width: 1290px) {
+@media screen and (max-width: 1300px) {
   .comments {
-    width: 820px; 
+    width: 851px; 
   }
   .button-comment-desc{
     margin-left: 660px;
@@ -198,7 +201,7 @@
 }
 @media screen and (max-width: 1260px) {
   .comments {
-    width: 800px; 
+    width: 831px; 
   }
   .button-comment-desc{
     margin-left: 640px;
@@ -206,7 +209,7 @@
 }
 @media screen and (max-width: 1245px) {
   .comments {
-    width: 780px; 
+    width: 811px; 
   }
   .button-comment-desc{
     margin-left: 620px;
@@ -217,7 +220,7 @@
 }
 @media screen and (max-width: 1220px) {
   .comments {
-    width: 760px; 
+    width: 791px; 
   }
   .button-comment-desc{
     margin-left: 600px;
@@ -225,7 +228,7 @@
 }
 @media screen and (max-width: 1200px) {
   .comments {
-    width: 740px; 
+    width: 781px; 
   }
   .button-comment-desc{
     margin-left: 580px;
@@ -236,7 +239,7 @@
 }
 @media screen and (max-width: 1185px) {
   .comments {
-    width: 720px; 
+    width: 751px; 
   }
   .button-comment-desc{
     margin-left: 560px;
@@ -247,7 +250,7 @@
 }
 @media screen and (max-width: 1160px) {
   .comments {
-    width: 700px; 
+    width: 736px; 
   }
   .button-comment-desc{
     margin-left: 540px;
@@ -258,7 +261,7 @@
 }
 @media screen and (max-width: 1145px) {
   .comments {
-    width: 680px; 
+    width: 716px; 
   }
   .button-comment-desc{
     margin-left: 520px;
@@ -269,7 +272,7 @@
 }
 @media screen and (max-width: 1125px) {
   .comments {
-    width: 660px; 
+    width: 696px; 
   }
   .button-comment-desc{
     margin-left: 500px;
@@ -280,7 +283,7 @@
 }
 @media screen and (max-width: 1105px) {
   .comments {
-    width: 640px; 
+    width: 676px; 
   }
   .button-comment-desc{
     margin-left: 480px;
@@ -291,7 +294,7 @@
 }
 @media screen and (max-width: 1085px) {
   .comments {
-    width: 620px; 
+    width: 656px; 
   }
   .button-comment-desc{
     margin-left: 460px;
@@ -302,7 +305,7 @@
 }
 @media screen and (max-width: 1065px) {
   .comments {
-    width: 600px; 
+    width: 636px; 
   }
   .button-comment-desc{
     margin-left: 440px;
@@ -313,7 +316,7 @@
 }
 @media screen and (max-width: 1045px) {
   .comments {
-    width: 580px; 
+    width: 601px; 
   }
   .button-comment-desc{
     margin-left: 420px;

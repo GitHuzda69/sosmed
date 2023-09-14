@@ -13,24 +13,12 @@ const Sidebar = ({ toggleSettings, toggleLogout }) => {
       <div className="content-sidebar">
         <Link to="/">
           <button>
-            <Icon icon="ic:round-home" width="40" height="40" />
+            <Icon icon="octicon:home-fill-24" width="40" height="40" />
           </button>
         </Link>
-        <button onClick={toggleSettings}>
-          <Icon icon="clarity:settings-solid" width="40" height="40" />
-        </button>
-        <button>
-          <Icon icon="bi:instagram" width="40" height="40" />
-        </button>
-        <button>
-          <Icon icon="ic:baseline-facebook" width="40" height="40" />
-        </button>
-        <button>
-          <Icon icon="mdi:twitter" width="40" height="40" />
-        </button>
         <Link to="/messages">
           <button>
-            <Icon icon="ant-design:message-filled" width="40" height="40" />
+            <Icon icon="jam:messages-f" width="40" height="40" />
           </button>
         </Link>
         <Link to="/friend">
@@ -42,8 +30,20 @@ const Sidebar = ({ toggleSettings, toggleLogout }) => {
             />
           </button>
         </Link>
+        <button>
+          <Icon icon="brandico:facebook-rect" width="38" height="38" />
+        </button>
+        <button>
+          <Icon icon="ri:instagram-fill" width="42" height="42" />
+        </button>
+        <button>
+          <Icon icon="mdi:twitter" width="40" height="40" />
+        </button>
+        <button onClick={toggleSettings}>
+          <Icon icon="solar:settings-bold" width="40" height="40" />
+        </button>
         <button onClick={toggleLogout}>
-          <Icon icon="material-symbols:logout" width="40" height="40" />
+          <Icon icon="tabler:logout" width="40" height="40" />
         </button>
       </div>
       <div className="sidebar-user">
