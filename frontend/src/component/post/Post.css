@@ -31,7 +31,7 @@
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
 }
 
-.user-info {
+.userinfo {
   flex-direction: row;
   display: flex;
 }
@@ -58,10 +58,11 @@
   font-weight: 600; 
 }
 .opsi-post-button{
+  position: absolute;
   width: 30px;
   height: 30px;
   margin-top: 5px;
-  margin-left: 610px;
+  margin-left: 835px;
 }
 .opsi-post-button:hover{
   background-color: lightgray;
@@ -70,19 +71,43 @@
 .delete-post-button{
 
 }
-.post-option-popup {
+.post-option-popup-other {
   top: 0;
-  width: 80px;
-  height: 40px;
+  width: 130px;
+  height: 50px;
   display: flex;
   flex-direction: column;
   align-items: start;
   background-color: white;
   border: 1px black solid;
+  z-index: 1;
   border-radius: 8px;
   padding: 5px;
-  margin-top: 5px;
-  margin-left: -125px;
+  padding-top: 2px;
+  margin-right: 20px;
+}
+.post-option-popup-other button:hover{
+  background-color: lightgray;
+  border-radius: 5px;
+}
+.post-option-popup-self {
+  top: 0;
+  width: 130px;
+  height: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  background-color: white;
+  border: 1px black solid;
+  z-index: 1;
+  border-radius: 8px;
+  padding: 5px;
+  padding-top: 2px;
+  margin-right: 20px;
+}
+.post-option-popup-self button:hover{
+  background-color: lightgray;
+  border-radius: 5px;
 }
 
 .post-content {
@@ -197,13 +222,16 @@
     .post {
       width: 860px; 
     }
+    .opsi-post-button{
+      margin-left: 820px;
+    }
   }
   @media screen and (max-width: 1320px) {
     .post {
       width: 850px; 
     }
     .opsi-post-button{
-      margin-left: 600px;
+      margin-left: 810px;
     }
   }
   @media screen and (max-width: 1300px) {
@@ -211,7 +239,7 @@
       width: 830px; 
     }
     .opsi-post-button{
-      margin-left: 575px;
+      margin-left: 790px;
     }
   }
   @media screen and (max-width: 1260px) {
@@ -219,7 +247,7 @@
       width: 810px; 
     }
     .opsi-post-button{
-      margin-left: 560px;
+      margin-left: 770px;
     }
   }
   @media screen and (max-width: 1245px) {
@@ -227,7 +255,7 @@
       width: 790px; 
     }
     .opsi-post-button{
-      margin-left: 535px;
+      margin-left: 750px;
     }
   }
   @media screen and (max-width: 1220px) {
@@ -235,7 +263,7 @@
       width: 770px; 
     }
     .opsi-post-button{
-      margin-left: 525px;
+      margin-left: 730px;
     }
   }
   @media screen and (max-width: 1200px) {
@@ -243,7 +271,7 @@
       width: 760px; 
     }
     .opsi-post-button{
-      margin-left: 510px;
+      margin-left: 720px;
     }
   }
   @media screen and (max-width: 1185px) {
@@ -251,7 +279,7 @@
       width: 730px; 
     }
     .opsi-post-button{
-      margin-left: 480px;
+      margin-left: 690px;
     }
   }
   @media screen and (max-width: 1160px) {
@@ -259,7 +287,7 @@
       width: 715px; 
     }
     .opsi-post-button{
-      margin-left: 465px;
+      margin-left: 675px;
     }
   }
   @media screen and (max-width: 1145px) {
@@ -267,7 +295,7 @@
       width: 695px; 
     }
     .opsi-post-button{
-      margin-left: 445px;
+      margin-left: 655px;
     }
   }
   @media screen and (max-width: 1125px) {
@@ -275,7 +303,7 @@
       width: 675px; 
     }
     .opsi-post-button{
-      margin-left: 420px;
+      margin-left: 635px;
     }
   }
   @media screen and (max-width: 1105px) {
@@ -283,7 +311,7 @@
       width: 655px; 
     }
     .opsi-post-button{
-      margin-left: 400px;
+      margin-left: 615px;
     }
   }
   @media screen and (max-width: 1085px) {
@@ -291,7 +319,7 @@
       width: 635px; 
     }
     .opsi-post-button{
-      margin-left: 385px;
+      margin-left: 595px;
     }
   }
   @media screen and (max-width: 1065px) {
@@ -299,7 +327,7 @@
       width: 615px; 
     }
     .opsi-post-button{
-      margin-left: 360px;
+      margin-left: 575px;
     }
   }
   @media screen and (max-width: 1045px) {
@@ -307,6 +335,6 @@
       width: 580px; 
     }
     .opsi-post-button{
-      margin-left: 330px;
+      margin-left: 540px;
     }
   }

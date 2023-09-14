@@ -2,8 +2,9 @@ import { useContext, useState, useRef } from "react";
 import { Icon } from "@iconify/react";
 import "./Update.css";
 import { makeRequest } from "../../axios";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import AuthContext from "../../context/authContext";
+import { useLocation, Link } from "react-router-dom";
 
 const Update = ({ user, onClose }) => {
   const { currentUser } = useContext(AuthContext);
@@ -11,8 +12,8 @@ const Update = ({ user, onClose }) => {
   const [cover, setCover] = useState(null);
   const [profile, setProfile] = useState(null);
   const [texts, setTexts] = useState({
-    displayname: (user.displayname),
-    city: (user.city),
+    displayname: user.displayname,
+    city: user.city,
   });
 
   const upload = async (file) => {
@@ -58,6 +59,7 @@ const Update = ({ user, onClose }) => {
   const [selectedProfileFileName, setSelectedProfileFileName] = useState("");
   const [selectedCoverImage, setSelectedCoverImage] = useState(null);
   const [selectedProfileImage, setSelectedProfileImage] = useState(null);
+  const userId = parseInt(useLocation().pathname.split("/")[2]);
 
   const handleCoverFileChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -88,6 +90,7 @@ const Update = ({ user, onClose }) => {
       setSelectedProfileImage(null);
     }
   };
+
   const resetInputCover = () => {
     setCover(null);
     setSelectedCoverFileName("");
@@ -100,91 +103,128 @@ const Update = ({ user, onClose }) => {
   };
 
   const handleBackClick = () => {
-    onClose();
+    resetInputCover();
+    resetInputProfile();
   };
+
+  const resetProfileImage = () => {
+    setProfile(null);
+    setSelectedProfileFileName("");
+    setSelectedProfileImage(null);
+  };
+
+  const resetCoverImage = () => {
+    setCover(null);
+    setSelectedCoverFileName("");
+    setSelectedCoverImage(null);
+  };
+
+  const { isLoading, error, data } = useQuery(["user"], () =>
+    makeRequest.get("/users/find/" + userId).then((res) => {
+      return res.data;
+    })
+  );
 
   return (
     <div className="edit">
-
+      <button className="clear-image-edit" onClick={handleBackClick}>
+        <Icon icon="mingcute:delete-line" height={25} width={25} color="red" />
+      </button>
       <div className="edit-profile-container">
         <div className="edit-profile">
-          <h2>Edit Your Profile</h2>
+          <h2>Edit Profile</h2>
           <form className="edit-content">
-            <h4>Edit Cover Image</h4>
-            <label htmlFor="coverInput" className="file-label">
-              {selectedCoverFileName ? "Choosed" : "Choose File"}
-            </label>
-            <input
-              type="file"
-              id="coverInput"
-              ref={coverInputRef}
-              onChange={handleCoverFileChange}
-              style={{ display: "none" }}
-            />
-            <h4>Edit Profile Image</h4>
-            <label htmlFor="profileInput" className="file-label">
-              {selectedProfileFileName ? "Choosed" : "Choose File"}
-            </label>
-            <input
-              type="file"
-              id="profileInput"
-              ref={profileInputRef}
-              onChange={handleProfileFileChange}
-              style={{ display: "none" }}
-            />
-            <h4>Edit Your Name</h4>
-            <input
-              className="input-edit"
-              type="text"
-              name="displayname"
-              onChange={handleChange}
-            />
-            <h4>Edit Your City</h4>
-            <input
-              className="input-edit"
-              type="text"
-              name="city"
-              onChange={handleChange}
-            />
+            <button className="edit-close" onClick={handleBackClick}>
+              <Icon icon="ph:x-bold" color="black" width={30} height={30} />
+            </button>
+            <div className="edit-image">
+              <div className="edit-image-profile">
+                <img
+                  src={selectedProfileImage || "/data/" + data.profilepic}
+                  alt="Selected Profile Image"
+                  className="selected-image-edit-profile"
+                />
+                <div className="button-profile">
+                  <label htmlFor="profileInput" className="file-label">
+                    <Icon
+                      icon="material-symbols:add-a-photo-outline"
+                      width={25}
+                      height={25}
+                    />
+                  </label>
+                </div>
+                <input
+                  type="file"
+                  id="profileInput"
+                  ref={profileInputRef}
+                  onChange={handleProfileFileChange}
+                  style={{ display: "none" }}
+                />
+              </div>
+              <div className="edit-image-cover">
+                <img
+                  src={selectedCoverImage || "/data/" + data.coverpic}
+                  alt="Selected Cover Image"
+                  className="selected-image-edit-cover"
+                />
+                <div className="button-cover">
+                  <label htmlFor="coverInput" className="file-label">
+                    <Icon
+                      icon="material-symbols:add-a-photo-outline"
+                      color="black"
+                      width={25}
+                      height={25}
+                    />
+                  </label>
+                </div>
+                <input
+                  type="file"
+                  id="coverInput"
+                  ref={coverInputRef}
+                  onChange={handleCoverFileChange}
+                  style={{ display: "none" }}
+                />
+              </div>
+            </div>
+            <div className="edit-bio">
+              <div className="edit-name">
+                <h4>Name</h4>
+                <input
+                  className="input-edit-name"
+                  type="text"
+                  name="displayname"
+                  placeholder="Your Name"
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="edit-city">
+                <h4>City</h4>
+                <Icon
+                  icon="fluent:location-16-filled"
+                  height={25}
+                  width={25}
+                  className="city-icon"
+                />
+                <input
+                  className="input-edit-city"
+                  type="text"
+                  name="city"
+                  placeholder="Your Location"
+                  onChange={handleChange}
+                ></input>
+              </div>
+            </div>
+            <div className="edit-desc">
+              <h4>Edit Your desc</h4>
+              <textarea className="input-edit-desc" type="text" name="city" />
+            </div>
           </form>
           <button className="edit-save" onClick={handleSubmit}>
             Save
           </button>
-          <button className="edit-close" onClick={handleBackClick}>
-            Cancel
-          </button>
         </div>
       </div>
-      <div className="popup-edit-container">
-        {selectedCoverImage && (
-          <div className="popup-edit">
-            <h2>Cover Image</h2>
-            <button onClick={resetInputCover} className="close-popup">
-              <Icon icon="ph:x-bold" color="black" width={25} height={25} />
-            </button>
-            <img
-              src={selectedCoverImage}
-              alt="Selected Cover Image"
-              className="selected-image-edit-cover"
-            />
-            <span>{selectedCoverFileName}</span>
-          </div>
-        )}
-        {selectedProfileImage && (
-          <div className="popup-edit-profile">
-            <h2>Profile Image</h2>
-            <button onClick={resetInputProfile} className="close-popup">
-              <Icon icon="ph:x-bold" color="black" width={25} height={25} />
-            </button>
-            <img
-              src={selectedProfileImage}
-              alt="Selected Cover Image"
-              className="selected-image-edit-profile"
-            />
-            <span>{selectedProfileFileName}</span>
-          </div>
-        )}
-      </div>
+      <div className="popup-edit-container"></div>
     </div>
   );
 };

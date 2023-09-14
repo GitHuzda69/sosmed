@@ -1,7 +1,7 @@
 .search-bar-container {
     display: flex;
     align-items: center;
-    width: 500px; 
+    width: 650px; 
     height: 40px;
     border-radius: 8px;
     border: 1px black solid;

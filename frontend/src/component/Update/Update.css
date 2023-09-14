@@ -4,14 +4,25 @@
     flex-direction: row;
     z-index: 1000;
     top: 50%;
-    left: 40%;
+    left: 50%;
     transform: translate(-50%, -50%);
+}
+.clear-image-edit{
+    position: fixed;
+    top: 212px;
+    right: 78px;
+    width: 38px;
+    height: 38px;
+    z-index: 999;
+    border: 1px red solid;
+    border-radius: 10px;
 }
 .edit-profile-container{
     display: flex;
     align-items: center;
-    width: 240px;
-    height: 470px;
+    justify-content: center;
+    width: 720px;
+    height: 525px;
     border: 1px black solid;
     border-radius: 10px;
     padding: 5px;
@@ -26,35 +37,60 @@
     padding: 5px 20px 10px 20px ;
 }
 .edit-profile h2{
-    font-size: 25px;
-}
-.edit-save{
-    margin-top: 10px;   
-    border: 1px black solid;
-    border-radius: 6px;
+    position: fixed;
+    top: 0px;
+    font-size: 30px;
+    font-weight: bold;
 }
 .edit-close{
-    margin-top: 5px;
-    margin-bottom: 10px;   
-    border: 1px black solid;
+    position: fixed;
+    top: 15px;
+    right: 20px;
     border-radius: 6px;
+}
+.edit-close:hover{
+    background-color: lightgray;
+    border-radius: 10px;
 }
 .edit-content{
     display: flex;
     flex-direction: column;
     align-items: center;
 }
+.edit-image{
+    position: fixed;
+    display: flex;
+    flex-direction: row;
+    top: 65px;
+    left: 60px;
+    margin-top: 30px;
+}
+.button-profile{
+    position: fixed;
+    top: 212px;
+    left: 175px;
+}
+.button-cover{
+    position: fixed;
+    display: flex;
+    flex-direction: row;
+    top: 212px;
+    right: 123px;
+    gap: 5px;
+}
 .file-label{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+    width: 30px;
+    padding: 3px;
     font-family: "Inter", sans-serif;
     font-size: 18px;
     cursor: pointer;
-}
-.input-edit{
-    width: 180px;
-    height: 20px;
     border: 1px black solid;
-    border-radius: 5px;
-    margin-top: -6px;
+    border-radius: 10px;
+    background-color: white;
 }
 
 .popup-edit-container{
@@ -65,54 +101,121 @@
     margin-left: 10px;
     font-family: "Inter", sans-serif;
 }
-.popup-edit{
-    position: fixed;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding: 5px;
-    border: 1px black solid;
-    border-radius: 10px;
-    background-color: white;
-    top: 30%;
-    left: 90%;
-    transform: translate(7%, -50%);
-}
 .popup-edit h2{
     font-size: 20px;
 }
 .popup-edit-profile{
-    position: fixed;
     display: flex;
     flex-direction: column;
     gap: 10px;
     padding: 5px;
-    border: 1px black solid;
-    border-radius: 10px;
-    background-color: white;
-    top: 85%;
-    left: 90%;
-    transform: translate(7%, -50%);
+    margin-left: 80px;
 }
 .close-popup{
-    width: 40px;
-    height: 40px;
-    margin-top: -60px;
-    margin-left: 340px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 37px;
+    height: 37px;
+    padding: 2px;
+    border: 1px red solid;
+    border-radius: 10px;
+    background-color: white;
+}
+.close-popup:hover{
+    border-radius: 12px;
 }
 .selected-image-edit-cover{
     width: auto;
     height: auto;
-    max-width: 400px;
-    max-height: 200px;
+    width: 450px;
+    max-height: 160px;
     object-fit: contain;
     border: 1px black solid;
-    border-radius: 8px;
+    border-radius: 0px 10px 10px 0px;
+    margin-left: -1px;
+    background-color: white;
 }
 .selected-image-edit-profile{
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
+    width: 160px;
+    height: 160px;
+    border-radius: 10px 0px 0px 10px;
     object-fit: cover;
     border: 1px black solid;
+}
+
+.edit-bio{
+    position: fixed;
+    bottom: 190px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+.edit-name{
+    position: fixed;
+    left: 25px;
+    bottom: 190px;
+}
+.input-edit-name{
+    width: 340px;
+    height: 35px;
+    border: 1px black solid;
+    border-radius: 10px;
+    margin-top: -16px;
+    padding-left: 15px;
+}
+.input-edit-name::placeholder{
+    font-size: 18px;
+}
+
+.edit-city{
+    position: fixed;
+    bottom: 190px;
+    right: 30px;
+}
+.input-edit-city{
+    width: 285px;
+    height: 35px;
+    border: 1px black solid;
+    border-radius: 10px;
+    margin-top: -16px;
+    padding-left: 30px;
+}
+.input-edit-city::placeholder{
+    font-size: 18px;
+}
+.city-icon{
+    position: fixed;
+    bottom: 198px;
+    right: 320px;
+}
+
+.edit-desc{
+    position: fixed;
+    bottom: 70px;
+    left: 25px;
+}
+.input-edit-desc{
+    width: 665px;
+    height: 55px;
+    border: 1px black solid;
+    border-radius: 10px;
+    margin-top: -10px;
+    padding: 10px;
+    resize: none;
+}
+.edit-save{
+    position: fixed;
+    bottom: 15px;
+    left: 25px;
+    width: 685px;
+    padding: 12px;
+    margin-top: 10px;   
+    border-radius: 10px;
+    color: white;
+    background-color: black;
+}
+.edit-save:hover{
+    background-color: gray;
+    border-radius: 13px;
 }

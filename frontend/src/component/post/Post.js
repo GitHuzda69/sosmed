@@ -3,7 +3,7 @@ import React, { useContext, useState } from "react";
 import { useLocation, Link } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { makeRequest } from "../../axios.js";
-import {AuthContext} from "../../context/authContext.js";
+import { AuthContext } from "../../context/authContext.js";
 import { Icon } from "@iconify/react";
 import moment from "moment";
 import Comments from "../comments/Comments.js";
@@ -50,7 +50,9 @@ const Post = ({ post }) => {
       return res.data;
     })
   );
-  const { isLoading: rIsLoading, data: relationshipData } = useQuery(["relationship"], () =>
+  const { isLoading: rIsLoading, data: relationshipData } = useQuery(
+    ["relationship"],
+    () =>
       makeRequest.get("/relationships?followeduserid=" + userId).then((res) => {
         return res.data;
       })
@@ -59,7 +61,7 @@ const Post = ({ post }) => {
     (following) => {
       if (following)
         return makeRequest.delete("/relationships?userId=" + userId);
-      return makeRequest.post("/relationships", { userId});
+      return makeRequest.post("/relationships", { userId });
     },
     {
       onSuccess: () => {
@@ -100,20 +102,79 @@ const Post = ({ post }) => {
               >
                 <Icon icon="tabler:dots" width={20} height={20} />
               </button>
-              {postOptionOpen && post.userid === currentUser.id ? (
-                <div
-                  className="post-option-popup">
-                  <button onClick={handleDelete}>Delete This Post</button>
-                  <button>Edit Post</button>
-                </div>
-              ) : (
-                <div
-                  className="post-option-popup">
-                  <button>Message</button>
-                  <button>Follow</button>
-                </div>
-              )}
             </div>
+            {postOptionOpen ? (
+              <div>
+                {post.userid !== currentUser.id ? (
+                  <div className="post-option-popup-other">
+                    <button
+                      style={{
+                        height: "24px",
+                        display: "flex",
+                        alignItems: "center",
+                        marginTop: "2px",
+                        gap: "5px",
+                      }}
+                    >
+                      <Icon
+                        icon="ion:chatbox-ellipses-outline"
+                        width={20}
+                        height={20}
+                      />
+                      Message
+                    </button>
+                    <button
+                      onClick={handleFollow}
+                      style={{
+                        height: "24px",
+                        display: "flex",
+                        alignItems: "center",
+                        marginTop: "-3px",
+                        gap: "5px",
+                      }}
+                    >
+                      <Icon
+                        icon="ic:round-person-add"
+                        hFlip={true}
+                        width={20}
+                        height={20}
+                      />
+                      Follow
+                    </button>
+                  </div>
+                ) : (
+                  <div className="post-option-popup-self">
+                    <button
+                      onClick={handleDelete}
+                      style={{
+                        color: "red",
+                        height: "24px",
+                        display: "flex",
+                        alignItems: "center",
+                        marginTop: "2px",
+                        gap: "2px",
+                      }}
+                    >
+                      <Icon icon="mdi:delete" height={20} width={20} />
+                      Delete This Post
+                    </button>
+                    <button
+                      style={{
+                        height: "24px",
+                        display: "flex",
+                        alignItems: "center",
+                        marginTop: "-3px",
+                        gap: "5px",
+                      }}
+                    >
+                      {" "}
+                      <Icon icon="tabler:edit" height={20} width={20} />
+                      Edit Post
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : null}
           </div>
         </div>
         <div className="post-content">
