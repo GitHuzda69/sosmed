@@ -30,14 +30,20 @@
 .write{
   position: sticky;
   top: -1px;
+  border-right: 1px black solid;
+  border-bottom: 1px black solid;
+  background-color: white;
+}
+.write-1{
   display: flex;
   flex-direction: row;
   align-items: center;
   margin-left: -1px;
   background-color: whitesmoke;
   border-left: 1px black solid;
-  border-right: 1px black solid;
-  border-bottom: 1px black solid;
+}
+.write-pic{
+  width: 800px;
 }
 .write img {
   margin-right: 10px; 
@@ -77,6 +83,60 @@
   background-color: lightgray;
   border-radius: 10px;
 }
+.selected-file-comment{
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 10px;
+  margin-left: 100px;
+  font-weight: bold;
+  font-size: 15px;
+  font-family: "Inter", sans-serif;
+}
+.selected-image-comment{
+  max-width: 150px;
+  max-height: 100px;
+  border-radius: 9px 9px 5px 5px;
+  border: 1px black solid;
+  object-fit: contain;
+}
+.file-name-comment{
+  margin-left: 5px;
+  margin-right: 30px;
+  margin-bottom: 8px;
+  padding: 2px;
+  word-wrap: break-word;
+}
+.file-name-comment::-webkit-scrollbar {
+  height: 8px;
+  margin-bottom: 10px;
+}
+
+.file-name-comment::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
+
+.file-name-comment::-webkit-scrollbar-thumb {
+  background-color: gray;
+  border-radius: 5px;
+}
+.file-name-comment::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+.clear-file-button-comment{
+  display: flex;
+  position: absolute;
+  left: 260px;
+  border-radius: 50%;
+  padding: 3px 4px;
+  background-color: rgb(0, 0, 0, 0.5);
+}
+.clear-file-button-comment:hover{  
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 50%;
+  transform: translate(0, -1px) scale(1.0);
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+}
 .button-comment{
   border: none;
   background-color: whitesmoke;
@@ -88,7 +148,7 @@
   margin-right: 20px;
 }
 .comment{
-  margin-top: -2px;
+  margin-top: -1px;
   display: flex;
   justify-content: space-between;
   gap: 20px;
@@ -120,7 +180,7 @@
   margin-left: -5px;
 }
 .comment-info p{
-  margin-top: 45px;
+  margin-top: 15px;
   margin-left: -65px;
   margin-right: 20px;
   margin-bottom: 20px;
@@ -146,6 +206,62 @@
 .button-comment-desc:hover{
   border-radius: 10px;
   background-color: lightgray;
+}
+/* Comments.css */
+.comment-info {
+  position: relative;
+}
+
+.post-option-popup-other-comment,
+.post-option-popup-self-comment {
+  position: absolute;
+  left: 570px; 
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 5px;
+  margin-top: 25px;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.post-option-popup-other-comment {
+  top: 0;
+  width: 130px;
+  height: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  background-color: white;
+  border: 1px black solid;
+  z-index: 1;
+  border-radius: 8px;
+  padding: 5px;
+  padding-top: 2px;
+  margin-right: 20px;
+}
+.post-option-popup-other-comment button:hover{
+  background-color: lightgray;
+  border-radius: 5px;
+}
+.post-option-popup-self-comment {
+  top: 0;
+  width: 130px;
+  height: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  background-color: white;
+  border: 1px black solid;
+  z-index: 1;
+  border-radius: 8px;
+  padding: 5px;
+  padding-top: 2px;
+  margin-right: 20px;
+}
+.post-option-popup-self-comment button:hover{
+  background-color: lightgray;
+  border-radius: 5px;
 }
 
 .info-comment{
@@ -219,6 +335,9 @@
   }
 }
 @media screen and (max-width: 1220px) {
+  .write-pic{
+    width: 700px;
+  }
   .comments {
     width: 791px; 
   }
@@ -271,6 +390,9 @@
   }
 }
 @media screen and (max-width: 1125px) {
+  .write-pic{
+  width: 600px;
+}
   .comments {
     width: 696px; 
   }
@@ -282,6 +404,7 @@
   }
 }
 @media screen and (max-width: 1105px) {
+  
   .comments {
     width: 676px; 
   }
@@ -315,6 +438,9 @@
   }
 }
 @media screen and (max-width: 1045px) {
+  .write-pic{
+    width: 550px;
+  }
   .comments {
     width: 601px; 
   }
