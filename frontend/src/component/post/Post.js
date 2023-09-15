@@ -185,7 +185,7 @@ const Post = ({ post }) => {
                 className="img-button"
                 onClick={() => setImagePopupOpen(true)}
               >
-                <img className="post-img" src={"./data/" + post.img} alt="" />
+                <img className="post-img" src={"/data/" + post.img} alt="" />
               </button>
             </div>
           )}

@@ -55,7 +55,7 @@ const Sidebar = ({ toggleSettings, toggleLogout }) => {
           <div className="leftBarUser">
             <img
               className="profile2"
-              src={currentUser.profilepic}
+              src={"/data/" + currentUser.profilepic}
               alt="keren"
             />
           </div>

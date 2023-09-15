@@ -57,7 +57,7 @@ const Comments = ({ postid }) => {
       <div className="write">
         <img
           className="comments-pic-write"
-          src={currentUser.profilepic}
+          src={"/data/" + currentUser.profilepic}
           alt=""
         />
         <input
@@ -89,7 +89,7 @@ const Comments = ({ postid }) => {
         ? "loading"
         : data.map((comments) => (
             <div className="comment">
-              <img className="comments-pic" src={comments.profilepic} alt="" />
+              <img className="comments-pic" src={"/data/" + comments.profilepic} alt="" />
               <div className="comment-info">
                 <span>{comments.username}</span>
                 <h3>{moment(comments.createdat).fromNow()}</h3>

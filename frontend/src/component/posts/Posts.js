@@ -10,11 +10,10 @@ const Posts = ({ userId, className }) => {
       return res.data;
     })
   );
-
   return (
     <div className={`posts ${className}`}>
       {error
-        ? `Something went wrong`
+        ? `Please login again to continue`
         : isLoading
         ? "loading"
         : data.map((post) => <Post post={post} key={post.id} />)}
