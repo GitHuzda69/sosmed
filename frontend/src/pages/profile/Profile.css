@@ -92,6 +92,22 @@
     border-radius: 11px;
     background-color: lightgray;
   }
+  .follow-button{
+    border: 1px black solid;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    padding: 8px 15px;
+    color: black;
+    cursor: pointer;
+    gap: 8px;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  .follow-button:hover{
+    border-radius: 11px;
+    background-color: lightgray;
+  }
   .add-button{
     padding: 5px 12px;
     border: 1px black solid;

@@ -31,7 +31,9 @@ const Profile = () => {
     })
   );
   const queryClient = useQueryClient();
-  const { isLoading: rIsLoading, data: relationshipData } = useQuery(["relationship"], () =>
+  const { isLoading: rIsLoading, data: relationshipData } = useQuery(
+    ["relationship"],
+    () =>
       makeRequest.get("/relationships?followeduserid=" + userId).then((res) => {
         return res.data;
       })
@@ -40,7 +42,7 @@ const Profile = () => {
     (following) => {
       if (following)
         return makeRequest.delete("/relationships?userId=" + userId);
-      return makeRequest.post("/relationships", { userId});
+      return makeRequest.post("/relationships", { userId });
     },
     {
       onSuccess: () => {
@@ -126,7 +128,11 @@ const Profile = () => {
                 >
                   <Icon icon="ph:x-bold" color="black" width={40} height={40} />
                 </button>
-                <img className="popup-img" src={"/data/" + data.coverpic} alt="" />
+                <img
+                  className="popup-img"
+                  src={"/data/" + data.coverpic}
+                  alt=""
+                />
               </div>
             )}
             <div className="profil-user">
@@ -137,7 +143,10 @@ const Profile = () => {
                       className="img-button-profile"
                       onClick={() => setImagePopupOpenProfile(true)}
                     >
-                      <img src={"/data/" + data.profilepic} alt="post-profile" />
+                      <img
+                        src={"/data/" + data.profilepic}
+                        alt="post-profile"
+                      />
                     </button>
                   </div>
                 </div>
@@ -179,9 +188,8 @@ const Profile = () => {
                       Edit Profile
                     </button>
                   </Link>
-
                 ) : (
-                  <button className="add-button" onClick={handleFollow}>
+                  <button className="follow-button" onClick={handleFollow}>
                     {relationshipData.includes(currentUser.id)
                       ? "Following"
                       : "Follow"}
@@ -249,7 +257,7 @@ const Profile = () => {
         <>
           <div className="settings-overlay" />
           <div className="settings-container">
-            <Settings onClose={toggleSettings}/>
+            <Settings onClose={toggleSettings} />
           </div>
         </>
       )}
@@ -264,7 +272,7 @@ const Profile = () => {
       {isUpdateOpen && (
         <div>
           <div className="settings-overlay" />
-          <Update onClose={closeUpdateModal} user={data}/>
+          <Update onClose={closeUpdateModal} user={data} />
         </div>
       )}
     </div>

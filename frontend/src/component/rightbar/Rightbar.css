@@ -145,10 +145,16 @@
     padding: 5px;
     width: 290px;
   }
+  .rightBarButton{
+    margin-left: 15px;
+  }
 }
 @media screen and (max-width: 1250px) {
   .rightBar {
     width: 280px;
+  }
+  .rightBarButton{
+    margin-left: 5px;
   }
 }
 

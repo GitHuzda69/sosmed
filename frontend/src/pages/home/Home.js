@@ -10,6 +10,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Posts from "../../component/posts/Posts";
 import Upload from "../../component/Upload/Upload.js";
 import Logout from "../../component/Logout/Logout.js";
+import Sort from "../../component/sort/Sort.js";
+import SettingPost from "../../component/setting-post/Setting-post.js";
 
 const queryClient = new QueryClient();
 
@@ -29,7 +31,11 @@ function Home() {
     <QueryClientProvider client={queryClient}>
       <div className="home">
         <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} />
-        <SearchBar />
+        <div className="topbar">
+          <SearchBar />
+          <Sort />
+          <SettingPost />
+        </div>
         <Rightbar />
         <Upload />
         <Posts />
