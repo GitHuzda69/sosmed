@@ -1,6 +1,5 @@
 import React, { useState, useContext } from "react";
 import "./Leftbar.css";
-import avatar from "../../assets/profil.jpg";
 import { Icon } from "@iconify/react";
 import { Link } from "react-router-dom";
 import AuthContext from "../../context/authContext";

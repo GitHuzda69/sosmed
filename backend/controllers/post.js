@@ -14,10 +14,8 @@ export const getPosts = (req, res)=> {
     const q = userId !== "undefined"
     ? 'SELECT p.*, u.id AS userid, displayname, profilepic FROM posts AS p JOIN users AS u ON (u.id = p.userid) WHERE p.userid = ? ORDER BY p.createdat DESC' 
     : 'SELECT p.*, u.id AS userid, displayname, profilepic FROM posts AS p JOIN users AS u ON (u.id = p.userid) LEFT JOIN relationships AS r ON (p.userid = r.followeduserid) WHERE r.followeruserid= ? OR p.userid = ? ORDER BY p.createdat DESC';
-    const q1 = 'SELECT p.*, u.id AS userid, displayname, profilepic FROM posts AS p JOIN users AS u ON (u.id = p.userid) LEFT JOIN relationships AS r ON (p.userid = r.followeduserid) WHERE r.followeruserid= ? OR p.userid = ? ORDER BY p.createdat DESC';
 
     const values = userId !== "undefined" ? [userId] : [userInfo.id, userInfo.id];
-    const values1 = [userInfo.id, userInfo.id];
 
     db.query(q, values, (err, data)=>{
         if (err) return res.status(500).json(err);
@@ -48,6 +46,7 @@ export const addPost = (req, res)=> {
     });
   });
 };
+
 export const deletePost = (req, res)=> {
     const token = req.cookies.accessToken;
     if(!token) return res.status(402).json("Not logged in")
@@ -67,3 +66,37 @@ export const deletePost = (req, res)=> {
   });
 };
 
+export const updatePost = (req, res) => {
+    const token = req.cookies.accessToken;
+    if (!token) return res.status(401).json("Not Authenticated!");
+  
+    jwt.verify(token, "secretkey", (err, userInfo) => {
+      if (err) {
+        return res.status(403).json("Token not valid");
+      }
+  
+      if (!userInfo || !userInfo.id) {
+        return res.status(403).json("User information not found in token");
+      }
+  
+      const q =
+        'UPDATE users SET `desc`=?, `img`=? WHERE id=(?)';
+  
+      db.query(
+        q, [
+          req.body.desc,
+          req.body.img,
+          userInfo.id,
+        ],
+        (err, data) => {
+          if (err) {
+            return res.status(500).json(err);
+          }
+          if (data.affectedRows > 0) {
+            return res.json("Updated");
+          }
+          return res.status(403).json("You can only update your post");
+        }
+      );
+    });
+  };

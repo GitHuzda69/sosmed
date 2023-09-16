@@ -7,7 +7,7 @@ import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import { makeRequest } from "../../axios";
 import moment from "moment";
 
-const Comments = ({ postid, comment }) => {
+const Comments = ({ postid, comment, commentid }) => {
   const { currentUser } = useContext(AuthContext);
   const [desc, setDesc] = useState(undefined);
   const [file, setFile] = useState(null);
@@ -19,8 +19,13 @@ const Comments = ({ postid, comment }) => {
   const [commentOptionButtonPosition, setCommentOptionButtonPosition] =
     useState(null);
 
-  const { isLoading, error, data } = useQuery(["comments"], () =>
+  const { isLoading, error ,data } = useQuery(["comments"], () =>
     makeRequest.get("/comments?postid=" + postid).then((res) => {
+      return res.data;
+    })
+  );
+    const { isLoading: cIsLoading, data: commentsData } = useQuery(["comments"], () =>
+    makeRequest.get("/comments?id" + commentid).then((res) => {
       return res.data;
     })
   );
@@ -83,6 +88,20 @@ const Comments = ({ postid, comment }) => {
         return res.data;
       })
   );
+
+  const deleteMutation = useMutation(
+    (commentid) => {
+      return makeRequest.delete("/comments" + commentid);
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["posts"]);
+      },
+    }
+  );
+  const handleDelete = () => {
+    deleteMutation.mutate(commentid);
+  };
 
   const toggleCommentOptions = (commentId) => {
     setCommentOptionButtonPosition(commentId);
@@ -181,7 +200,7 @@ const Comments = ({ postid, comment }) => {
                 alt=""
               />
               <div className="comment-info">
-                <span>{comment.username}</span>
+                <span>{comment.displayname}</span>
                 <h3>{moment(comment.createdat).fromNow()}</h3>
                 <button
                   className="button-comment-desc"
@@ -239,6 +258,7 @@ const Comments = ({ postid, comment }) => {
                             marginTop: "2px",
                             gap: "2px",
                           }}
+                        onClick={handleDelete}
                         >
                           <Icon icon="mdi:delete" height={20} width={20} />
                           Delete This Comment

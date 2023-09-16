@@ -179,7 +179,6 @@ const Profile = () => {
                 {rIsLoading ? (
                   "Loading"
                 ) : userId === currentUser.id ? (
-                  <Link>
                     <button
                       className="edit-profile-button"
                       onClick={openUpdateModal}
@@ -187,7 +186,6 @@ const Profile = () => {
                       <Icon icon="bxs:edit" width={20} height={20} />
                       Edit Profile
                     </button>
-                  </Link>
                 ) : (
                   <button className="follow-button" onClick={handleFollow}>
                     {relationshipData.includes(currentUser.id)

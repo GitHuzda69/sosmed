@@ -5,6 +5,6 @@ const router = express.Router()
 
 router.get("/", getLikes)
 router.post("/", addLike)
-router.delete("/", deleteLikes)
+router.delete("/:id", deleteLikes)
 
 export default router

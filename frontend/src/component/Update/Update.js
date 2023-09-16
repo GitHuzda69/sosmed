@@ -8,7 +8,6 @@ import { useLocation, Link } from "react-router-dom";
 
 const Update = ({ user, onClose }) => {
   const { currentUser } = useContext(AuthContext);
-  const { currnrUser } = useContext(AuthContext);
   const [cover, setCover] = useState(null);
   const [profile, setProfile] = useState(null);
   const [texts, setTexts] = useState({

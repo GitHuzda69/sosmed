@@ -12,10 +12,14 @@ const Post = ({ post }) => {
   const [commentOpen, setCommentOpen] = useState(false);
   const [imagePopupOpen, setImagePopupOpen] = useState(false);
   const [postOptionOpen, setpostOptionOpen] = useState(false);
-  const [postOptionButtonPosition, setPostOptionButtonPosition] =
-    useState(null);
+  const [postEditOpen, setPostEditOpen] = useState(false);
+  const [postOptionButtonPosition, setPostOptionButtonPosition] = useState(null);
+  const [img, setImg] = useState(null);
   const { currentUser } = useContext(AuthContext);
   const userId = parseInt(useLocation().pathname.split("/")[2]);
+  const [texts, setTexts] = useState({
+    desc: post.desc,
+  });
   const queryClient = useQueryClient();
   const mutation = useMutation(
     (liked) => {
@@ -28,7 +32,16 @@ const Post = ({ post }) => {
       },
     }
   );
-
+  const upload = async (file) => {
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      const res = await makeRequest.post("/upload", formData);
+      return res.data;
+    } catch (err) {
+      console.log(err);
+    }
+  };
   const handleLike = () => {
     mutation.mutate(data.includes(currentUser.id));
   };
@@ -50,13 +63,22 @@ const Post = ({ post }) => {
       return res.data;
     })
   );
-  const { isLoading: rIsLoading, data: relationshipData } = useQuery(
+  const {data: relationshipData } = useQuery(
     ["relationship"],
     () =>
       makeRequest.get("/relationships?followeduserid=" + userId).then((res) => {
         return res.data;
       })
   );
+  const handleEdit = async (e) => {
+    e.preventDefault();
+    let imgUrl;
+
+    imgUrl = img ? await upload(img) : post.img;
+
+    mutation.mutate({ ...texts, img: imgUrl });
+    postEditOpen(false);
+  };
   const followMutation = useMutation(
     (following) => {
       if (following)
@@ -167,8 +189,15 @@ const Post = ({ post }) => {
                         gap: "5px",
                       }}
                     >
-                      <Icon icon="tabler:edit" height={20} width={20} />
-                      Edit Post
+                    <button onClick={()=>{setPostEditOpen(!postEditOpen)}}>
+                      <Icon icon="tabler:edit" height={20} width={20} />Edit Post</button>
+                      { postEditOpen &&
+                      (<div className="">
+                      <form className="">
+                        <input type="desc" name="desc"/>
+                        <input type="file" name="img" />
+                        <button onClick={handleEdit}>Post</button>
+                      </form> </div>)}
                     </button>
                   </div>
                 )}
