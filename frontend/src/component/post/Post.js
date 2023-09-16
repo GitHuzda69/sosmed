@@ -167,7 +167,6 @@ const Post = ({ post }) => {
                         gap: "5px",
                       }}
                     >
-                      {" "}
                       <Icon icon="tabler:edit" height={20} width={20} />
                       Edit Post
                     </button>
