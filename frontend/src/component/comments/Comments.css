@@ -3,7 +3,7 @@
   flex-direction: column;
   overflow-y: auto;
   height: auto;
-  width: 896px;
+  width: 895px;
   max-height: 600px;
   overflow-y: auto;
   scrollbar-width: thin;
@@ -29,18 +29,17 @@
 
 .write{
   position: sticky;
-  top: -1px;
-  border-right: 1px black solid;
-  border-bottom: 1px black solid;
+  top: 0px;
   background-color: white;
+  z-index: 200;
+  border-bottom: 1px black solid;
 }
-.write-1{
+.write1{
+  position: sticky;
+  background-color: white;
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-left: -1px;
-  background-color: whitesmoke;
-  border-left: 1px black solid;
 }
 .write-pic{
   width: 800px;
@@ -62,8 +61,8 @@
   width: 69%;
   height: 15px;
   padding: 15px;
-  border: 1px black solid;
   border-radius: 10px;
+  border: 1px black solid;
 }
 .input-comment::placeholder{
   font-size: 15px;
@@ -97,7 +96,6 @@
   max-width: 150px;
   max-height: 100px;
   border-radius: 9px 9px 5px 5px;
-  border: 1px black solid;
   object-fit: contain;
 }
 .file-name-comment{
@@ -148,13 +146,12 @@
   margin-right: 20px;
 }
 .comment{
-  margin-top: -1px;
+  margin-top: 1px;
   display: flex;
   justify-content: space-between;
   gap: 20px;
-  border-top: 1px black solid;
-  border-bottom: none;
   width: 100%;
+  border-bottom: 1px black solid;
 }
 .comments-pic {
   width: 50px;
@@ -180,7 +177,7 @@
   margin-left: -5px;
 }
 .comment-info p{
-  margin-top: 15px;
+  margin-top: 30px;
   margin-left: -65px;
   margin-right: 20px;
   margin-bottom: 20px;
@@ -200,8 +197,8 @@
 .button-comment-desc{
   width: 30px;
   height: 30px;
-  margin-top: -50px;
-  margin-left: 720px;
+  margin-top: -70px;
+  margin-left: 730px;
 }
 .button-comment-desc:hover{
   border-radius: 10px;
@@ -219,7 +216,7 @@
   background-color: white;
   border: 1px solid #ccc;
   padding: 5px;
-  margin-top: 25px;
+  margin-top: 5px;
   z-index: 1;
   display: flex;
   flex-direction: column;
@@ -292,16 +289,18 @@
 
 @media screen and (max-width: 1340px) {
   .comments {
-    width: 881px; 
-    margin-left: -9px;
+    width: 881px;
+    margin-left: -10px;
   }
   .button-comment-desc{
     margin-left: 700px;
   }
 }
 @media screen and (max-width: 1320px) {
-  .comments {
-    width: 871px; 
+  .comments {   
+    width: 870px; 
+    margin-left: -9px;
+
   }
   .button-comment-desc{
     margin-left: 680px;
@@ -309,7 +308,7 @@
 }
 @media screen and (max-width: 1300px) {
   .comments {
-    width: 851px; 
+    width: 850px; 
   }
   .button-comment-desc{
     margin-left: 660px;
@@ -317,7 +316,7 @@
 }
 @media screen and (max-width: 1260px) {
   .comments {
-    width: 831px; 
+    width: 830px; 
   }
   .button-comment-desc{
     margin-left: 640px;
@@ -325,7 +324,7 @@
 }
 @media screen and (max-width: 1245px) {
   .comments {
-    width: 811px; 
+    width: 810px; 
   }
   .button-comment-desc{
     margin-left: 620px;
@@ -339,7 +338,7 @@
     width: 700px;
   }
   .comments {
-    width: 791px; 
+    width: 790px; 
   }
   .button-comment-desc{
     margin-left: 600px;
@@ -347,7 +346,7 @@
 }
 @media screen and (max-width: 1200px) {
   .comments {
-    width: 781px; 
+    width: 780px; 
   }
   .button-comment-desc{
     margin-left: 580px;
@@ -358,7 +357,7 @@
 }
 @media screen and (max-width: 1185px) {
   .comments {
-    width: 751px; 
+    width: 750px; 
   }
   .button-comment-desc{
     margin-left: 560px;
@@ -369,7 +368,7 @@
 }
 @media screen and (max-width: 1160px) {
   .comments {
-    width: 736px; 
+    width: 735px; 
   }
   .button-comment-desc{
     margin-left: 540px;
@@ -380,7 +379,7 @@
 }
 @media screen and (max-width: 1145px) {
   .comments {
-    width: 716px; 
+    width: 715px; 
   }
   .button-comment-desc{
     margin-left: 520px;
@@ -394,7 +393,7 @@
   width: 600px;
 }
   .comments {
-    width: 696px; 
+    width: 695px; 
   }
   .button-comment-desc{
     margin-left: 500px;
@@ -406,7 +405,7 @@
 @media screen and (max-width: 1105px) {
   
   .comments {
-    width: 676px; 
+    width: 675px; 
   }
   .button-comment-desc{
     margin-left: 480px;
@@ -417,7 +416,7 @@
 }
 @media screen and (max-width: 1085px) {
   .comments {
-    width: 656px; 
+    width: 655px; 
   }
   .button-comment-desc{
     margin-left: 460px;
@@ -428,7 +427,7 @@
 }
 @media screen and (max-width: 1065px) {
   .comments {
-    width: 636px; 
+    width: 635px; 
   }
   .button-comment-desc{
     margin-left: 440px;
@@ -442,7 +441,7 @@
     width: 550px;
   }
   .comments {
-    width: 601px; 
+    width: 600px; 
   }
   .button-comment-desc{
     margin-left: 420px;

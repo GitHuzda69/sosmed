@@ -14,7 +14,8 @@ const Post = ({ post }) => {
   const [imagePopupOpen, setImagePopupOpen] = useState(false);
   const [postOptionOpen, setpostOptionOpen] = useState(false);
   const [postEditOpen, setPostEditOpen] = useState(false);
-  const [postOptionButtonPosition, setPostOptionButtonPosition] = useState(null);
+  const [postOptionButtonPosition, setPostOptionButtonPosition] =
+    useState(null);
   const [img, setImg] = useState(null);
   const { currentUser } = useContext(AuthContext);
   const userId = parseInt(useLocation().pathname.split("/")[2]);
@@ -22,17 +23,15 @@ const Post = ({ post }) => {
     desc: post.desc,
   });
   const { isLoading, data } = useQuery(["likes", post.id], () =>
-  makeRequest.get("/likes?postid=" + post.id).then((res) => {
-    return res.data;
-  })
+    makeRequest.get("/likes?postid=" + post.id).then((res) => {
+      return res.data;
+    })
   );
-  const {data: relationshipData } = useQuery(
-    ["relationship"],
-    () =>
+  const { data: relationshipData } = useQuery(["relationship"], () =>
     makeRequest.get("/relationships?followeduserid=" + userId).then((res) => {
       return res.data;
     })
-    );
+  );
   const queryClient = useQueryClient();
   const likeMutation = useMutation(
     (liked) => {
@@ -44,39 +43,39 @@ const Post = ({ post }) => {
         queryClient.invalidateQueries(["likes"]);
       },
     }
-    );
+  );
   const deleteMutation = useMutation(
-      (postid) => {
-        return makeRequest.delete("/posts/" + postid);
+    (postid) => {
+      return makeRequest.delete("/posts/" + postid);
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["posts"]);
       },
-      {
-        onSuccess: () => {
-          queryClient.invalidateQueries(["posts"]);
-        },
-      }
-    );
+    }
+  );
   const editMutation = useMutation(
-      (user) => {
-        return makeRequest.put("/users", user);
+    (user) => {
+      return makeRequest.put("/users", user);
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["user"]);
       },
-      {
-        onSuccess: () => {
-          queryClient.invalidateQueries(["user"]);
-        },
-      }
-    );
+    }
+  );
   const followMutation = useMutation(
-      (following) => {
-        if (following)
-          return makeRequest.delete("/relationships?userId=" + userId);
-        return makeRequest.post("/relationships", { userId });
+    (following) => {
+      if (following)
+        return makeRequest.delete("/relationships?userId=" + userId);
+      return makeRequest.post("/relationships", { userId });
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["relationship"]);
       },
-      {
-        onSuccess: () => {
-          queryClient.invalidateQueries(["relationship"]);
-        },
-      }
-    );
+    }
+  );
   const upload = async (file) => {
     try {
       const formData = new FormData();
@@ -192,23 +191,40 @@ const Post = ({ post }) => {
                       Delete This Post
                     </button>
                     <button
+                      className="edit-post1"
                       style={{
                         height: "24px",
                         display: "flex",
                         alignItems: "center",
-                        marginTop: "-3px",
+                        marginTop: "-4px",
                         gap: "5px",
                       }}
                     >
-                    <button onClick={()=>{setPostEditOpen(!postEditOpen)}}>
-                      <Icon icon="tabler:edit" height={20} width={20} />Edit Post</button>
-                      { postEditOpen &&
-                      (<div className="">
-                      <form className="">
-                        <input type="desc" name="desc"/>
-                        <input type="file" name="img" />
-                        <button onClick={handleEdit}>Post</button>
-                      </form> </div>)}
+                      <button
+                        className="edit-post2"
+                        style={{
+                          height: "14px",
+                          display: "flex",
+                          alignItems: "center",
+                          marginTop: "5px",
+                          gap: "5px",
+                        }}
+                        onClick={() => {
+                          setPostEditOpen(!postEditOpen);
+                        }}
+                      >
+                        <Icon icon="tabler:edit" height={20} width={20} />
+                        Edit Post
+                      </button>
+                      {postEditOpen && (
+                        <div className="edit-post">
+                          <form className="edit-post-content">
+                            <input type="desc" name="desc" />
+                            <input type="file" name="img" />
+                            <button onClick={handleEdit}>Post</button>
+                          </form>{" "}
+                        </div>
+                      )}
                     </button>
                   </div>
                 )}
@@ -270,16 +286,10 @@ const Post = ({ post }) => {
             <h3>Share</h3>
           </div>
         </div>
-        {commentOpen && <Commento postid={post.id} />}
+        {commentOpen && <Comments postid={post.id} />}
       </div>
       {imagePopupOpen && (
-        <div className="image-popup">
-          <button
-            className="close-button"
-            onClick={() => setImagePopupOpen(false)}
-          >
-            <Icon icon="ph:x-bold" color="black" width={40} height={40} />
-          </button>
+        <div className="image-popup" onClick={() => setImagePopupOpen(false)}>
           <img className="popup-img" src={"./data/" + post.img} alt="" />
         </div>
       )}

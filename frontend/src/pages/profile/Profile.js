@@ -18,6 +18,9 @@ import avatar3 from "../../assets/friend/friend3.jpg";
 import avatar4 from "../../assets/friend/friend4.jpg";
 import avatar5 from "../../assets/friend/friend5.jpeg";
 
+import defaultprofile from "../../assets/profile/default_avatar.png";
+import defaultcover from "../../assets/profile/default_banner.jpg";
+
 const Profile = () => {
   const [imagePopupOpenbanner, setImagePopupOpenBanner] = useState(false);
   const [imagePopupOpenprofile, setImagePopupOpenProfile] = useState(false);
@@ -116,21 +119,29 @@ const Profile = () => {
                   className="img-button"
                   onClick={() => setImagePopupOpenBanner(true)}
                 >
-                  <img src={"/data/" + data.coverpic} alt="banner" />
+                  <img
+                    src={
+                      data && data.coverpic
+                        ? "/data/" + data.coverpic
+                        : defaultcover
+                    }
+                    alt="banner"
+                  />
                 </button>
               </div>
             </div>
             {imagePopupOpenbanner && (
-              <div className="image-popup-profil">
-                <button
-                  className="close-button"
-                  onClick={() => setImagePopupOpenBanner(false)}
-                >
-                  <Icon icon="ph:x-bold" color="black" width={40} height={40} />
-                </button>
+              <div
+                className="image-popup-profil"
+                onClick={() => setImagePopupOpenBanner(false)}
+              >
                 <img
                   className="popup-img"
-                  src={"/data/" + data.coverpic}
+                  src={
+                    data && data.coverpic
+                      ? "/data/" + data.coverpic
+                      : defaultcover
+                  }
                   alt=""
                 />
               </div>
@@ -144,28 +155,28 @@ const Profile = () => {
                       onClick={() => setImagePopupOpenProfile(true)}
                     >
                       <img
-                        src={"/data/" + data.profilepic}
+                        src={
+                          data && data.profilepic
+                            ? "/data/" + data.profilepic
+                            : defaultprofile
+                        }
                         alt="post-profile"
                       />
                     </button>
                   </div>
                 </div>
                 {imagePopupOpenprofile && (
-                  <div className="image-popup-profil">
-                    <button
-                      className="close-button"
-                      onClick={() => setImagePopupOpenProfile(false)}
-                    >
-                      <Icon
-                        icon="ph:x-bold"
-                        color="black"
-                        width={40}
-                        height={40}
-                      />
-                    </button>
+                  <div
+                    className="image-popup-profil"
+                    onClick={() => setImagePopupOpenProfile(false)}
+                  >
                     <img
                       className="popup-img"
-                      src={"/data/" + data.profilepic}
+                      src={
+                        data && data.profilepic
+                          ? "/data/" + data.profilepic
+                          : defaultprofile
+                      }
                       alt=""
                     />
                   </div>
@@ -179,13 +190,13 @@ const Profile = () => {
                 {rIsLoading ? (
                   "Loading"
                 ) : userId === currentUser.id ? (
-                    <button
-                      className="edit-profile-button"
-                      onClick={openUpdateModal}
-                    >
-                      <Icon icon="bxs:edit" width={20} height={20} />
-                      Edit Profile
-                    </button>
+                  <button
+                    className="edit-profile-button"
+                    onClick={openUpdateModal}
+                  >
+                    <Icon icon="bxs:edit" width={20} height={20} />
+                    Edit Profile
+                  </button>
                 ) : (
                   <button className="follow-button" onClick={handleFollow}>
                     {relationshipData.includes(currentUser.id)

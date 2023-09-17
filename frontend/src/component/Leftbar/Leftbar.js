@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import AuthContext from "../../context/authContext";
 import Settings from "../Settings/Settings";
 
+import defaultprofile from "../../assets/profile/default_avatar.png";
+
 const Sidebar = ({ toggleSettings, toggleLogout }) => {
   const { currentUser } = useContext(AuthContext);
   return (
@@ -54,7 +56,11 @@ const Sidebar = ({ toggleSettings, toggleLogout }) => {
           <div className="leftBarUser">
             <img
               className="profile2"
-              src={"/data/" + currentUser.profilepic}
+              src={
+                currentUser && currentUser.profilepic
+                  ? "/data/" + currentUser.profilepic
+                  : defaultprofile
+              }
               alt="keren"
             />
           </div>

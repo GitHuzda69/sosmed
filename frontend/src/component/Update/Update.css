@@ -92,6 +92,9 @@
     border-radius: 10px;
     background-color: white;
 }
+.file-label:hover{
+    background-color: lightgray;
+}
 
 .popup-edit-container{
     display: flex;
@@ -129,7 +132,7 @@
     width: auto;
     height: auto;
     width: 450px;
-    max-height: 160px;
+    height: 160px;
     object-fit: contain;
     border: 1px black solid;
     border-radius: 0px 10px 10px 0px;

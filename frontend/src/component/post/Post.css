@@ -109,6 +109,26 @@
   background-color: lightgray;
   border-radius: 5px;
 }
+.edit-post1{
+  z-index: 200;
+}
+.edit-post2{
+  z-index: 100;
+}
+
+.edit-post{
+  position: absolute;
+  left: 38%;
+  padding: 10px;
+  background-color: white;
+  border: 1px black solid;
+  border-radius: 10px;
+}
+.edit-post-content{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 
 .post-content {
   display: flex;

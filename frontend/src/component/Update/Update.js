@@ -6,6 +6,9 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import AuthContext from "../../context/authContext";
 import { useLocation, Link } from "react-router-dom";
 
+import defaultprofile from "../../assets/profile/default_avatar.png";
+import defaultcover from "../../assets/profile/default_banner.jpg";
+
 const Update = ({ user, onClose }) => {
   const { currentUser } = useContext(AuthContext);
   const [cover, setCover] = useState(null);
@@ -139,7 +142,12 @@ const Update = ({ user, onClose }) => {
             <div className="edit-image">
               <div className="edit-image-profile">
                 <img
-                  src={selectedProfileImage || "/data/" + data.profilepic}
+                  src={
+                    selectedProfileImage ||
+                    (data.profilepic
+                      ? `/data/${data.profilepic}`
+                      : defaultprofile)
+                  }
                   alt="Selected Profile Image"
                   className="selected-image-edit-profile"
                 />
@@ -162,7 +170,10 @@ const Update = ({ user, onClose }) => {
               </div>
               <div className="edit-image-cover">
                 <img
-                  src={selectedCoverImage || "/data/" + data.coverpic}
+                  src={
+                    selectedCoverImage ||
+                    (data.coverpic ? `/data/${data.coverpic}` : defaultcover)
+                  }
                   alt="Selected Cover Image"
                   className="selected-image-edit-cover"
                 />
