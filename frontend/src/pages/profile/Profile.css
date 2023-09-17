@@ -370,7 +370,7 @@
     margin-left: 0px;
   }
   .posts-profile .post-img-container{
-    border: 2px red solid;
+    margin-top: -10px;
   }
   .posts-profile .post-content{
     margin-top: -15px;
