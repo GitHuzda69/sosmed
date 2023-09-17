@@ -4,7 +4,7 @@ import moment from "moment"
 
 export const getComments = (req, res)  => {
     
-    const q = 'SELECT c.*, u.id AS userid, displayname, profilepic FROM comments AS c JOIN users AS u ON (u.id = c.userid) WHERE c.postid = ? ORDER BY c.createdat DESC';
+    const q = 'SELECT c.*, u.id AS userid, displayname, img, profilepic FROM comments AS c JOIN users AS u ON (u.id = c.userid) WHERE c.postid = ? ORDER BY c.createdat DESC';
 
     db.query(q, [req.query.postid], (err, data)=>{
         if (err) return res.status(500).json(err);
@@ -20,7 +20,7 @@ export const addComments = (req, res)=> {
         if (err) return res.status(403).json("Token not valid");
     
     
-    const q = 'INSERT INTO `comments` (`desc`, `createdat`, `userid`, `postid`) VALUES (?)';
+    const q = 'INSERT INTO `comments` (`desc`, `img`, `createdat`, `userid`, `postid`) VALUES (?)';
 
     const values = [
         req.body.desc,

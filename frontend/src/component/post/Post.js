@@ -6,6 +6,7 @@ import { makeRequest } from "../../axios.js";
 import { AuthContext } from "../../context/authContext.js";
 import { Icon } from "@iconify/react";
 import moment from "moment";
+import Commento from "../Commento/Commento.js";
 import Comments from "../comments/Comments.js";
 
 const Post = ({ post }) => {
@@ -20,8 +21,20 @@ const Post = ({ post }) => {
   const [texts, setTexts] = useState({
     desc: post.desc,
   });
+  const { isLoading, data } = useQuery(["likes", post.id], () =>
+  makeRequest.get("/likes?postid=" + post.id).then((res) => {
+    return res.data;
+  })
+  );
+  const {data: relationshipData } = useQuery(
+    ["relationship"],
+    () =>
+    makeRequest.get("/relationships?followeduserid=" + userId).then((res) => {
+      return res.data;
+    })
+    );
   const queryClient = useQueryClient();
-  const mutation = useMutation(
+  const likeMutation = useMutation(
     (liked) => {
       if (liked) return makeRequest.delete("/likes?postid=" + post.id);
       return makeRequest.post("/likes", { postid: post.id });
@@ -31,7 +44,39 @@ const Post = ({ post }) => {
         queryClient.invalidateQueries(["likes"]);
       },
     }
-  );
+    );
+  const deleteMutation = useMutation(
+      (postid) => {
+        return makeRequest.delete("/posts/" + postid);
+      },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries(["posts"]);
+        },
+      }
+    );
+  const editMutation = useMutation(
+      (user) => {
+        return makeRequest.put("/users", user);
+      },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries(["user"]);
+        },
+      }
+    );
+  const followMutation = useMutation(
+      (following) => {
+        if (following)
+          return makeRequest.delete("/relationships?userId=" + userId);
+        return makeRequest.post("/relationships", { userId });
+      },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries(["relationship"]);
+        },
+      }
+    );
   const upload = async (file) => {
     try {
       const formData = new FormData();
@@ -43,54 +88,20 @@ const Post = ({ post }) => {
     }
   };
   const handleLike = () => {
-    mutation.mutate(data.includes(currentUser.id));
+    likeMutation.mutate(data.includes(currentUser.id));
   };
-  const deleteMutation = useMutation(
-    (postid) => {
-      return makeRequest.delete("/posts/" + postid);
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["posts"]);
-      },
-    }
-  );
   const handleDelete = () => {
     deleteMutation.mutate(post.id);
   };
-  const { isLoading, error, data } = useQuery(["likes", post.id], () =>
-    makeRequest.get("/likes?postid=" + post.id).then((res) => {
-      return res.data;
-    })
-  );
-  const {data: relationshipData } = useQuery(
-    ["relationship"],
-    () =>
-      makeRequest.get("/relationships?followeduserid=" + userId).then((res) => {
-        return res.data;
-      })
-  );
   const handleEdit = async (e) => {
     e.preventDefault();
     let imgUrl;
 
     imgUrl = img ? await upload(img) : post.img;
 
-    mutation.mutate({ ...texts, img: imgUrl });
+    editMutation.mutate({ ...texts, img: imgUrl });
     postEditOpen(false);
   };
-  const followMutation = useMutation(
-    (following) => {
-      if (following)
-        return makeRequest.delete("/relationships?userId=" + userId);
-      return makeRequest.post("/relationships", { userId });
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["relationship"]);
-      },
-    }
-  );
   const handleFollow = () => {
     followMutation.mutate(relationshipData.includes(currentUser.id));
   };
@@ -232,7 +243,7 @@ const Post = ({ post }) => {
                   color={"red"}
                   onClick={handleLike}
                 />
-                <h3>{data.length} Likes</h3>
+                <h3>{data && data.length} Likes</h3>
               </>
             ) : (
               <Icon
@@ -259,7 +270,7 @@ const Post = ({ post }) => {
             <h3>Share</h3>
           </div>
         </div>
-        {commentOpen && <Comments postid={post.id} />}
+        {commentOpen && <Commento postid={post.id} />}
       </div>
       {imagePopupOpen && (
         <div className="image-popup">

@@ -40,7 +40,7 @@ export const deleteLikes = (req, res)=> {
         if (err) return res.status(403).json("Token not valid");
     
     
-    const q = 'DELETE FROM likes WHERE `userid` = ? AND `postid` = ?';
+    const q = "DELETE FROM likes WHERE `userid` = ? AND `postid` = ?";
 
     db.query(q, [userInfo.id, req.query.postid], (err, data)=>{
         if (err) return res.status(500).json(err);

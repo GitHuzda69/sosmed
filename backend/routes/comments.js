@@ -4,6 +4,6 @@ const router = express.Router()
 
 router.get("/", getComments)
 router.post("/", addComments)
-router.post("/", deleteComment)
+router.post("/:id", deleteComment)
 
 export default router

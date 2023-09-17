@@ -7,31 +7,33 @@ import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import { makeRequest } from "../../axios";
 import moment from "moment";
 
-const Comments = ({ postid, comment, commentid }) => {
+const Comments = ({ postid, comment}) => {
   const { currentUser } = useContext(AuthContext);
   const [desc, setDesc] = useState(undefined);
   const [file, setFile] = useState(null);
   const fileInputRef = useRef(null);
   const [showFileInput, setShowFileInput] = useState(false);
   const userId = parseInt(useLocation().pathname.split("/")[2]);
-
   const [commentOptionOpen, setCommentOptionOpen] = useState({});
-  const [commentOptionButtonPosition, setCommentOptionButtonPosition] =
-    useState(null);
-
+  const [commentOptionButtonPosition, setCommentOptionButtonPosition] =useState(null);
   const { isLoading, error ,data } = useQuery(["comments"], () =>
     makeRequest.get("/comments?postid=" + postid).then((res) => {
       return res.data;
     })
-  );
-    const { isLoading: cIsLoading, data: commentsData } = useQuery(["comments"], () =>
-    makeRequest.get("/comments?id" + commentid).then((res) => {
+    );
+  const { isLoading: cIsLoading, data: commentsData } = useQuery(["comments"], () =>
+    makeRequest.get("/comments?id=" + comment.id).then((res) => {
       return res.data;
     })
-  );
-
+    );
+  const { isLoading: rIsLoading, data: relationshipData } = useQuery(
+      ["relationship"],
+      () =>
+        makeRequest.get("/relationships?followeduserid=" + userId).then((res) => {
+          return res.data;
+        })
+    );
   const queryClient = useQueryClient();
-
   const mutation = useMutation(
     (newComment) => {
       return makeRequest.post("/comments", newComment);
@@ -42,7 +44,28 @@ const Comments = ({ postid, comment, commentid }) => {
       },
     }
   );
-
+  const followMutation = useMutation(
+    (following) => {
+      if (following)
+        return makeRequest.delete("/relationships?userId=" + userId);
+      return makeRequest.post("/relationships", { userId });
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["relationship"]);
+      },
+    }
+    );
+  const deleteMutation = useMutation(
+      (commentid) => {
+        return makeRequest.delete("/comments/" + { commentid: comment.id});
+      },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries(["posts"]);
+        },
+      }
+    );
   useEffect(() => {
     const handleKeyPress = (e) => {
       if (e.key === "Enter") {
@@ -63,46 +86,12 @@ const Comments = ({ postid, comment, commentid }) => {
       document.removeEventListener("keydown", handleKeyPress);
     };
   }, [desc, mutation, postid]);
-
-  const followMutation = useMutation(
-    (following) => {
-      if (following)
-        return makeRequest.delete("/relationships?userId=" + userId);
-      return makeRequest.post("/relationships", { userId });
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["relationship"]);
-      },
-    }
-  );
-
   const handleFollow = () => {
     followMutation.mutate(relationshipData.includes(currentUser.id));
   };
-
-  const { isLoading: rIsLoading, data: relationshipData } = useQuery(
-    ["relationship"],
-    () =>
-      makeRequest.get("/relationships?followeduserid=" + userId).then((res) => {
-        return res.data;
-      })
-  );
-
-  const deleteMutation = useMutation(
-    (commentid) => {
-      return makeRequest.delete("/comments" + commentid);
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["posts"]);
-      },
-    }
-  );
   const handleDelete = () => {
-    deleteMutation.mutate(commentid);
+    deleteMutation.mutate(comment.id);
   };
-
   const toggleCommentOptions = (commentId) => {
     setCommentOptionButtonPosition(commentId);
     setCommentOptionOpen((prevOptions) => ({
@@ -110,21 +99,22 @@ const Comments = ({ postid, comment, commentid }) => {
       [commentId]: !prevOptions[commentId],
     }));
   };
-
   const handleMediaButtonClick = () => {
     setShowFileInput(!showFileInput);
     if (!showFileInput && fileInputRef.current) {
       fileInputRef.current.click();
     }
   };
-  const handleFileInputChange = (e) => {
+  const handleFileInputChange = async (e) => {
+    e.preventDefault();
+
     const selectedFile = e.target.files[0];
     setFile(selectedFile);
   };
   const clearSelectedFile = () => {
     setFile(null);
   };
-
+  console.log(comment)
   return (
     <div className="comments">
       <div className="write">
@@ -187,12 +177,6 @@ const Comments = ({ postid, comment, commentid }) => {
           )}
         </div>
       </div>
-
-      {error
-        ? "Something went wrong"
-        : isLoading
-        ? "loading"
-        : data.map((comment) => (
             <div className="comment" key={comment.id}>
               <img
                 className="comments-pic"
@@ -317,7 +301,6 @@ const Comments = ({ postid, comment, commentid }) => {
                 </div>
               </div>
             </div>
-          ))}
     </div>
   );
 };
