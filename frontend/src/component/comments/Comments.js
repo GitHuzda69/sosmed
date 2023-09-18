@@ -37,18 +37,31 @@ const Comments = ({ postid, comment }) => {
       },
     }
   );
-
+  const upload = async (file) => {
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      const res = await makeRequest.post("/upload", formData);
+      return res.data;
+    } catch (err) {
+      console.log(err);
+    }
+  };
   useEffect(() => {
-    const handleKeyPress = (e) => {
+    const handleKeyPress = async (e) => {
       if (e.key === "Enter") {
         e.preventDefault();
 
-        if (!desc) {
+        if (!desc && !file) {
           return;
         }
-
-        mutation.mutate({ desc, postid });
+        let imgUrl = "";
+        if (file) {
+          imgUrl = await upload();
+        }
+        mutation.mutate({ desc, file: imgUrl, postid });
         setDesc("");
+        setFile(null);
       }
     };
 
@@ -57,8 +70,8 @@ const Comments = ({ postid, comment }) => {
     return () => {
       document.removeEventListener("keydown", handleKeyPress);
     };
-  }, [desc, mutation, postid]);
-
+  }, [desc, file, mutation, postid]);
+  
   const followMutation = useMutation(
     (following) => {
       if (following)
@@ -182,7 +195,7 @@ const Comments = ({ postid, comment }) => {
               />
               <div className="comment-info">
                 {/*user e bug, ga keluar, jadi ta kasi itu dulu, biar design e ga rusak */}
-                <span>{comment.username}user test</span>
+                <span>{comment.displayname}</span>
                 <h3>{moment(comment.createdat).fromNow()}</h3>
                 <button
                   className="button-comment-desc"

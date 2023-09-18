@@ -18,7 +18,7 @@ const Commento = ({ postid }) => {
         ? "Something went wrong"
         : isLoading
         ? "loading"
-        : data.map((comment) => (<Comments comment={comment} key={comment.id} />
+        : data.map((comments) => (<Comments comment={comments} key={comments.id} />
           ))}
     </div>
   );
