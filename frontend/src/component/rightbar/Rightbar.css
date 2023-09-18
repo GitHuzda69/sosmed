@@ -12,6 +12,7 @@
     border: 1px black solid;
     border-radius: 10px;
     overflow-y: visible;
+    z-index: 99;
 }
 .rightBar h2{
     display: flex;

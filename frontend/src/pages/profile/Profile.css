@@ -246,6 +246,7 @@
     border-left: none;
     width: 100%;
     height: 100%;
+    max-width: 500px;
     margin-left: 12px;
   }
   .search-profile{
@@ -287,6 +288,7 @@
     height: 100%;
     display: flex;
     flex-wrap: wrap;
+    flex-direction: column;
     margin-left: 25px;
     margin-bottom: 20px;
   }
@@ -374,4 +376,9 @@
   }
   .posts-profile .post-content{
     margin-top: -15px;
+  }
+
+  .posts-profile .comments{
+    margin-left: -13px;
+    width: 910px;
   }

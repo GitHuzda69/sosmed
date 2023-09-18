@@ -181,8 +181,7 @@ const Comments = ({ postid, comment }) => {
                 alt=""
               />
               <div className="comment-info">
-                {/*user e bug, ga keluar, jadi ta kasi itu dulu, biar design e ga rusak */}
-                <span>{comment.username}user test</span>
+                <span>{comment.displayname}</span>
                 <h3>{moment(comment.createdat).fromNow()}</h3>
                 <button
                   className="button-comment-desc"
@@ -234,11 +233,10 @@ const Comments = ({ postid, comment }) => {
                         <button
                           style={{
                             color: "red",
-                            height: "24px",
+                            height: "30px",
                             display: "flex",
                             alignItems: "center",
                             marginTop: "2px",
-                            gap: "2px",
                           }}
                         >
                           <Icon icon="mdi:delete" height={20} width={20} />
