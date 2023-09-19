@@ -62,7 +62,11 @@ const Update = ({ user, onClose }) => {
   const [selectedCoverImage, setSelectedCoverImage] = useState(null);
   const [selectedProfileImage, setSelectedProfileImage] = useState(null);
   const userId = parseInt(useLocation().pathname.split("/")[2]);
-
+  const { isLoading, error, data } = useQuery(["user"], () =>
+    makeRequest.get("/users/find/" + userId).then((res) => {
+      return res.data;
+    })
+  );
   const handleCoverFileChange = (e) => {
     const selectedFile = e.target.files[0];
     setCover(selectedFile);
@@ -120,12 +124,6 @@ const Update = ({ user, onClose }) => {
     setSelectedCoverFileName("");
     setSelectedCoverImage(null);
   };
-
-  const { isLoading, error, data } = useQuery(["user"], () =>
-    makeRequest.get("/users/find/" + userId).then((res) => {
-      return res.data;
-    })
-  );
 
   return (
     <div className="edit">

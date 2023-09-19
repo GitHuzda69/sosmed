@@ -7,8 +7,6 @@ import { makeRequest } from "../../axios.js";
 import { useNavigate } from "react-router";
 
 const Upload = () => {
-  
-  const navigate = useNavigate();
   const [file, setFile] = useState(null);
   const [desc, setDesc] = useState(undefined);
   const fileInputRef = useRef(null);

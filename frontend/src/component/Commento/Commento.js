@@ -1,11 +1,9 @@
 import React from "react";
-import { useLocation, Link } from "react-router-dom";
-import AuthContext from "../../context/authContext.js";
-import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { makeRequest } from "../../axios";
 import Comments from "../comments/Comments.js";
 
-const Commento = ({ postid }) => {
+const Commento = ({ postid, className }) => {
     const { isLoading, error ,data } = useQuery(["comments"], () =>
     makeRequest.get("/comments?postid=" + postid).then((res) => {
       return res.data;
@@ -13,7 +11,7 @@ const Commento = ({ postid }) => {
     );
   
   return (
-    <div className="comments">
+    <div className={`comments ${className}`}>
       {error
         ? "Something went wrong"
         : isLoading

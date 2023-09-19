@@ -55,12 +55,12 @@ const Post = ({ post }) => {
     }
   );
   const editMutation = useMutation(
-    (user) => {
-      return makeRequest.put("/users", user);
+    (post) => {
+      return makeRequest.put("/posts/" + post.id);
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(["user"]);
+        queryClient.invalidateQueries(["posts"]);
       },
     }
   );
@@ -99,7 +99,7 @@ const Post = ({ post }) => {
     imgUrl = img ? await upload(img) : post.img;
 
     editMutation.mutate({ ...texts, img: imgUrl });
-    postEditOpen(false);
+    setPostEditOpen(false);
   };
   const handleFollow = () => {
     followMutation.mutate(relationshipData.includes(currentUser.id));

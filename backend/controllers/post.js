@@ -80,7 +80,7 @@ export const updatePost = (req, res) => {
       }
   
       const q =
-        'UPDATE users SET `desc`=?, `img`=? WHERE id=(?)';
+        'UPDATE posts SET `desc`=?, `img`=? WHERE id=(?)';
   
       db.query(
         q, [

@@ -24,6 +24,13 @@ const Comments = ({ postid, comment }) => {
       return res.data;
     })
   );
+  const { isLoading: rIsLoading, data: relationshipData } = useQuery(
+    ["relationship"],
+    () =>
+      makeRequest.get("/relationships?followeduserid=" + userId).then((res) => {
+        return res.data;
+      })
+  );
 
   const queryClient = useQueryClient();
 
@@ -37,18 +44,32 @@ const Comments = ({ postid, comment }) => {
       },
     }
   );
-
+  const upload = async () => {
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      const res = await makeRequest.post("/upload", formData);
+      return res.data;
+    } catch (err) {
+      console.log(err);
+    }
+  };
   useEffect(() => {
-    const handleKeyPress = (e) => {
+    const handleKeyPress = async (e) => {
       if (e.key === "Enter") {
         e.preventDefault();
 
-        if (!desc) {
+        if (!desc && !file) {
           return;
         }
-
-        mutation.mutate({ desc, postid });
+      
+        let imgUrl = "";
+        if (file) {
+          imgUrl = await upload();
+        }
+        mutation.mutate({ desc, img: imgUrl, postid });
         setDesc("");
+        setFile(null);
       }
     };
 
@@ -57,8 +78,17 @@ const Comments = ({ postid, comment }) => {
     return () => {
       document.removeEventListener("keydown", handleKeyPress);
     };
-  }, [desc, mutation, postid]);
-
+  });
+  const deleteMutation = useMutation(
+    (commentId) => {
+      return makeRequest.delete("/comments/comments" + commentId); 
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["comments"]);
+      },
+    }
+  );
   const followMutation = useMutation(
     (following) => {
       if (following)
@@ -76,14 +106,9 @@ const Comments = ({ postid, comment }) => {
     followMutation.mutate(relationshipData.includes(currentUser.id));
   };
 
-  const { isLoading: rIsLoading, data: relationshipData } = useQuery(
-    ["relationship"],
-    () =>
-      makeRequest.get("/relationships?followeduserid=" + userId).then((res) => {
-        return res.data;
-      })
-  );
-
+  const handleDelete = () => {
+    deleteMutation.mutate(comment.id);
+  };
   const toggleCommentOptions = (commentId) => {
     setCommentOptionButtonPosition(commentId);
     setCommentOptionOpen((prevOptions) => ({
@@ -91,7 +116,6 @@ const Comments = ({ postid, comment }) => {
       [commentId]: !prevOptions[commentId],
     }));
   };
-
   const handleMediaButtonClick = () => {
     setShowFileInput(!showFileInput);
     if (!showFileInput && fileInputRef.current) {
@@ -105,7 +129,6 @@ const Comments = ({ postid, comment }) => {
   const clearSelectedFile = () => {
     setFile(null);
   };
-
   return (
     <div className="comments">
       <div className="write">
@@ -238,6 +261,7 @@ const Comments = ({ postid, comment }) => {
                             alignItems: "center",
                             marginTop: "2px",
                           }}
+                          onClick={handleDelete}
                         >
                           <Icon icon="mdi:delete" height={20} width={20} />
                           Delete This Comment
@@ -259,6 +283,9 @@ const Comments = ({ postid, comment }) => {
                   </div>
                 ) : null}
                 <p>{comment.desc}</p>
+                <div className="img-comments">
+                    <img src={"/data/"+ comment.img} />
+                </div>
                 <div className="info-comment">
                   <div className="item-comment">
                     {isLoading ? (
