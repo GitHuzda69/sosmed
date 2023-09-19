@@ -15,6 +15,8 @@ const Comments = ({ postid, comment }) => {
   const [showFileInput, setShowFileInput] = useState(false);
   const userId = parseInt(useLocation().pathname.split("/")[2]);
 
+  const [popupOpen, setPopupOpen] = useState(false);
+  const [selectedCommentImg, setSelectedCommentImg] = useState(null);
   const [commentOptionOpen, setCommentOptionOpen] = useState({});
   const [commentOptionButtonPosition, setCommentOptionButtonPosition] =
     useState(null);
@@ -62,7 +64,7 @@ const Comments = ({ postid, comment }) => {
         if (!desc && !file) {
           return;
         }
-      
+
         let imgUrl = "";
         if (file) {
           imgUrl = await upload();
@@ -81,7 +83,7 @@ const Comments = ({ postid, comment }) => {
   });
   const deleteMutation = useMutation(
     (commentId) => {
-      return makeRequest.delete("/comments/comments" + commentId); 
+      return makeRequest.delete("/comments/comments" + commentId);
     },
     {
       onSuccess: () => {
@@ -129,6 +131,16 @@ const Comments = ({ postid, comment }) => {
   const clearSelectedFile = () => {
     setFile(null);
   };
+
+  const openPopup = (imgUrl) => {
+    setSelectedCommentImg(imgUrl);
+    setPopupOpen(true);
+  };
+  const closePopup = () => {
+    setSelectedCommentImg(null);
+    setPopupOpen(false);
+  };
+
   return (
     <div className="comments">
       <div className="write">
@@ -198,12 +210,12 @@ const Comments = ({ postid, comment }) => {
         ? "loading"
         : data.map((comment) => (
             <div className="comment" key={comment.id}>
-              <img
-                className="comments-pic"
-                src={"/data/" + comment.profilepic}
-                alt=""
-              />
               <div className="comment-info">
+                <img
+                  className="comments-pic"
+                  src={"/data/" + comment.profilepic}
+                  alt=""
+                />
                 <span>{comment.displayname}</span>
                 <h3>{moment(comment.createdat).fromNow()}</h3>
                 <button
@@ -282,46 +294,72 @@ const Comments = ({ postid, comment }) => {
                     )}
                   </div>
                 ) : null}
-                <p>{comment.desc}</p>
-                <div className="img-comments">
-                    <img src={"/data/"+ comment.img} />
+              </div>
+              <div className="comments-content">
+                {comment.desc && <h4>{comment.desc}</h4>}
+                <div className="img-comments-container">
+                  {comment.img && (
+                    <button
+                      className="img-button-comments"
+                      onClick={() => openPopup(`/data/${comment.img}`)}
+                    >
+                      <img
+                        className="comments-image"
+                        src={"/data/" + comment.img}
+                        alt="comment-img"
+                      />
+                    </button>
+                  )}
                 </div>
-                <div className="info-comment">
-                  <div className="item-comment">
-                    {isLoading ? (
-                      "loading"
-                    ) : data && data.includes(currentUser.id) ? (
-                      <>
-                        <Icon
-                          className="icon"
-                          icon="mdi:heart"
-                          width={25}
-                          height={25}
-                          color={"red"}
-                        />
-                        <h3>{data.length} Likes</h3>
-                      </>
-                    ) : (
+              </div>
+              <div className="info-comment">
+                <div className="item-comment">
+                  {isLoading ? (
+                    "loading"
+                  ) : data && data.includes(currentUser.id) ? (
+                    <>
                       <Icon
                         className="icon"
-                        icon="mdi:heart-outline"
+                        icon="mdi:heart"
                         width={25}
                         height={25}
-                        color={"black"}
+                        color={"red"}
+                      />
+                      <h3>{data.length} Likes</h3>
+                    </>
+                  ) : (
+                    <Icon
+                      className="icon"
+                      icon="mdi:heart-outline"
+                      width={25}
+                      height={25}
+                      color={"black"}
+                    />
+                  )}
+                </div>
+                <div className="item-comment">
+                  <Icon
+                    className="icon"
+                    icon="mdi:share"
+                    width={30}
+                    height={30}
+                  />
+                  <h3>Share</h3>
+                </div>
+              </div>
+              {popupOpen && (
+                <div className="popup-overlay-comments" onClick={closePopup}>
+                  <div className="popup-comments">
+                    {selectedCommentImg && (
+                      <img
+                        className="popup-image-comments"
+                        src={selectedCommentImg}
+                        alt="comment-img"
                       />
                     )}
                   </div>
-                  <div className="item-comment">
-                    <Icon
-                      className="icon"
-                      icon="mdi:share"
-                      width={30}
-                      height={30}
-                    />
-                    <h3>Share</h3>
-                  </div>
                 </div>
-              </div>
+              )}
             </div>
           ))}
     </div>

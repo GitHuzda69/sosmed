@@ -155,7 +155,6 @@
   margin-top: 5px;
   margin-left: -8px;
   margin-bottom: -10px;
-  height: auto;
   border: 1px black solid;
 }
 .post-img:hover {
@@ -200,39 +199,36 @@
 .img-button:hover img {
   filter: brightness(0.5);
   z-index: 0;
+  border-radius: 10px;
 }
-.image-popup {
+
+.popup-overlay-post {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(10, 10, 10, 0.7);
+  background-color: rgba(0, 0, 0, 0.8);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
-}
-.popup-img {
-  border-radius: 5px;
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
+  z-index: 999; 
 }
 
-.close-button {
-  position: absolute;
-  top: 10px;
-  right: 5px;
-  padding: 4px 8px;
-  border-radius: 50%;
-  background-color: rgba(220, 220, 220, 0.707);
-  border: none;
-  cursor: pointer;
+.popup-post {
+  max-width: 100%;
+  max-height: 100%;
+  position: relative;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
-.close-button:hover {
-  border-radius: 50%;
-  background-color: white;
+
+.popup-image-post {
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
+  margin: 0 auto;
+  border-radius: 10px;
 }
 
 
