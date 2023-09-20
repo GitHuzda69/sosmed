@@ -13,10 +13,23 @@ const Update = ({ user, onClose }) => {
   const { currentUser } = useContext(AuthContext);
   const [cover, setCover] = useState(null);
   const [profile, setProfile] = useState(null);
+  const coverInputRef = useRef(null);
+  const profileInputRef = useRef(null);
+  const [selectedCoverFileName, setSelectedCoverFileName] = useState("");
+  const [selectedProfileFileName, setSelectedProfileFileName] = useState("");
+  const [selectedCoverImage, setSelectedCoverImage] = useState(null);
+  const [selectedProfileImage, setSelectedProfileImage] = useState(null);
+  const userId = parseInt(useLocation().pathname.split("/")[2]);
+  const queryClient = useQueryClient();
   const [texts, setTexts] = useState({
     displayname: user.displayname,
     city: user.city,
   });
+  const { isLoading, error, data } = useQuery(["user"], () =>
+    makeRequest.get("/users/find/" + userId).then((res) => {
+      return res.data;
+    })
+  );
 
   const upload = async (file) => {
     try {
@@ -28,12 +41,6 @@ const Update = ({ user, onClose }) => {
       console.log(err);
     }
   };
-
-  const handleChange = (e) => {
-    setTexts((prev) => ({ ...prev, [e.target.name]: [e.target.value] }));
-  };
-
-  const queryClient = useQueryClient();
   const mutation = useMutation(
     (user) => {
       return makeRequest.put("/users", user);
@@ -44,6 +51,11 @@ const Update = ({ user, onClose }) => {
       },
     }
   );
+
+  const handleChange = (e) => {
+    setTexts((prev) => ({ ...prev, [e.target.name]: [e.target.value] }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     let coverUrl;
@@ -55,18 +67,6 @@ const Update = ({ user, onClose }) => {
     mutation.mutate({ ...texts, coverpic: coverUrl, profilepic: profileUrl });
     onClose();
   };
-  const coverInputRef = useRef(null);
-  const profileInputRef = useRef(null);
-  const [selectedCoverFileName, setSelectedCoverFileName] = useState("");
-  const [selectedProfileFileName, setSelectedProfileFileName] = useState("");
-  const [selectedCoverImage, setSelectedCoverImage] = useState(null);
-  const [selectedProfileImage, setSelectedProfileImage] = useState(null);
-  const userId = parseInt(useLocation().pathname.split("/")[2]);
-  const { isLoading, error, data } = useQuery(["user"], () =>
-    makeRequest.get("/users/find/" + userId).then((res) => {
-      return res.data;
-    })
-  );
   const handleCoverFileChange = (e) => {
     const selectedFile = e.target.files[0];
     setCover(selectedFile);
@@ -111,18 +111,6 @@ const Update = ({ user, onClose }) => {
   const handleBackClick = () => {
     resetInputCover();
     resetInputProfile();
-  };
-
-  const resetProfileImage = () => {
-    setProfile(null);
-    setSelectedProfileFileName("");
-    setSelectedProfileImage(null);
-  };
-
-  const resetCoverImage = () => {
-    setCover(null);
-    setSelectedCoverFileName("");
-    setSelectedCoverImage(null);
   };
 
   return (

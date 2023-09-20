@@ -9,23 +9,23 @@ import moment from "moment";
 
 const Comments = ({ postid, comment }) => {
   const { currentUser } = useContext(AuthContext);
-  const [desc, setDesc] = useState(undefined);
-  const [file, setFile] = useState(null);
-  const fileInputRef = useRef(null);
-  const [showFileInput, setShowFileInput] = useState(false);
   const userId = parseInt(useLocation().pathname.split("/")[2]);
-
   const [popupOpen, setPopupOpen] = useState(false);
   const [selectedCommentImg, setSelectedCommentImg] = useState(null);
   const [commentOptionOpen, setCommentOptionOpen] = useState({});
-  const [commentOptionButtonPosition, setCommentOptionButtonPosition] =
-    useState(null);
+  const [commentOptionButtonPosition, setCommentOptionButtonPosition] = useState(null);
 
-  const { isLoading, error, data } = useQuery(["comments"], () =>
+  const { isLoading, error ,data } = useQuery(["comments", postid], () =>
     makeRequest.get("/comments?postid=" + postid).then((res) => {
       return res.data;
     })
+    );
+    const { isLoading: lIsLoading , data: likesData } = useQuery(["likes", postid], () =>
+    makeRequest.get("/likes?postid=" + postid).then((res) => {
+      return res.data;
+    })
   );
+
   const { isLoading: rIsLoading, data: relationshipData } = useQuery(
     ["relationship"],
     () =>
@@ -36,51 +36,6 @@ const Comments = ({ postid, comment }) => {
 
   const queryClient = useQueryClient();
 
-  const mutation = useMutation(
-    (newComment) => {
-      return makeRequest.post("/comments", newComment);
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["comments"]);
-      },
-    }
-  );
-  const upload = async () => {
-    try {
-      const formData = new FormData();
-      formData.append("file", file);
-      const res = await makeRequest.post("/upload", formData);
-      return res.data;
-    } catch (err) {
-      console.log(err);
-    }
-  };
-  useEffect(() => {
-    const handleKeyPress = async (e) => {
-      if (e.key === "Enter") {
-        e.preventDefault();
-
-        if (!desc && !file) {
-          return;
-        }
-
-        let imgUrl = "";
-        if (file) {
-          imgUrl = await upload();
-        }
-        mutation.mutate({ desc, img: imgUrl, postid });
-        setDesc("");
-        setFile(null);
-      }
-    };
-
-    document.addEventListener("keydown", handleKeyPress);
-
-    return () => {
-      document.removeEventListener("keydown", handleKeyPress);
-    };
-  });
   const deleteMutation = useMutation(
     (commentId) => {
       return makeRequest.delete("/comments/comments" + commentId);
@@ -118,20 +73,7 @@ const Comments = ({ postid, comment }) => {
       [commentId]: !prevOptions[commentId],
     }));
   };
-  const handleMediaButtonClick = () => {
-    setShowFileInput(!showFileInput);
-    if (!showFileInput && fileInputRef.current) {
-      fileInputRef.current.click();
-    }
-  };
-  const handleFileInputChange = (e) => {
-    const selectedFile = e.target.files[0];
-    setFile(selectedFile);
-  };
-  const clearSelectedFile = () => {
-    setFile(null);
-  };
-
+ 
   const openPopup = (imgUrl) => {
     setSelectedCommentImg(imgUrl);
     setPopupOpen(true);
@@ -143,72 +85,7 @@ const Comments = ({ postid, comment }) => {
 
   return (
     <div className="comments">
-      <div className="write">
-        <div className="write1">
-          <img
-            className="comments-pic-write"
-            src={"/data/" + currentUser.profilepic}
-            alt=""
-          />
-          <input
-            className="input-comment"
-            type="text"
-            placeholder="Write a comment . . . "
-            value={desc}
-            onChange={(e) => setDesc(e.target.value)}
-          />
-          <div className="uploadItem-comment-row">
-            <button className="uploadItem-comment">
-              <Icon icon="ic:outline-poll" width={25} height={25}></Icon>
-            </button>
-            <button className="uploadItem-comment">
-              <Icon icon="fluent:gif-16-regular" width={25} height={25}></Icon>
-            </button>
-            <button
-              className="uploadItem-comment"
-              onClick={handleMediaButtonClick}
-            >
-              <Icon
-                icon="material-symbols:perm-media-outline"
-                width={25}
-                height={25}
-              ></Icon>
-            </button>
-            <input
-              className="uploadItem-popup"
-              type="file"
-              id="file"
-              ref={fileInputRef}
-              onChange={handleFileInputChange}
-              style={{ display: "none" }}
-            />
-          </div>
-        </div>
-        <div className="write-pic">
-          {file && (
-            <div className="selected-file-comment">
-              <img
-                className="selected-image-comment"
-                src={URL.createObjectURL(file)}
-                alt="Selected"
-              />
-              <span className="file-name-comment">{file.name}</span>
-              <button
-                className="clear-file-button-comment"
-                onClick={clearSelectedFile}
-              >
-                <Icon icon="ph:x-bold" color="black" width={15} height={15} />
-              </button>
-            </div>
-          )}
-        </div>
-      </div>
-
-      {error
-        ? "Something went wrong"
-        : isLoading
-        ? "loading"
-        : data.map((comment) => (
+      
             <div className="comment" key={comment.id}>
               <div className="comment-info">
                 <img
@@ -314,9 +191,7 @@ const Comments = ({ postid, comment }) => {
               </div>
               <div className="info-comment">
                 <div className="item-comment">
-                  {isLoading ? (
-                    "loading"
-                  ) : data && data.includes(currentUser.id) ? (
+                {lIsLoading ? ("loading") : likesData.includes(currentUser.id) ? (
                     <>
                       <Icon
                         className="icon"
@@ -325,7 +200,7 @@ const Comments = ({ postid, comment }) => {
                         height={25}
                         color={"red"}
                       />
-                      <h3>{data.length} Likes</h3>
+                      <h3>{comment.length} Likes</h3>
                     </>
                   ) : (
                     <Icon
@@ -361,7 +236,6 @@ const Comments = ({ postid, comment }) => {
                 </div>
               )}
             </div>
-          ))}
     </div>
   );
 };

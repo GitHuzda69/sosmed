@@ -15,14 +15,11 @@ const Post = ({ post }) => {
   const [selectedPostImg, setSelectedPostImg] = useState(null);
   const [postOptionOpen, setpostOptionOpen] = useState(false);
   const [postEditOpen, setPostEditOpen] = useState(false);
-  const [postOptionButtonPosition, setPostOptionButtonPosition] =
-    useState(null);
+  const [postOptionButtonPosition, setPostOptionButtonPosition] =useState(null);
+  const [desc, setDesc] = useState("");
   const [img, setImg] = useState(null);
   const { currentUser } = useContext(AuthContext);
   const userId = parseInt(useLocation().pathname.split("/")[2]);
-  const [texts, setTexts] = useState({
-    desc: post.desc,
-  });
   const { isLoading, data } = useQuery(["likes", post.id], () =>
     makeRequest.get("/likes?postid=" + post.id).then((res) => {
       return res.data;
@@ -47,6 +44,7 @@ const Post = ({ post }) => {
   );
   const deleteMutation = useMutation(
     (postid) => {
+      console.log(postid)
       return makeRequest.delete("/posts/" + postid);
     },
     {
@@ -57,7 +55,8 @@ const Post = ({ post }) => {
   );
   const editMutation = useMutation(
     (post) => {
-      return makeRequest.put("/posts/" + post.id);
+      console.log(post)
+      return makeRequest.put("/posts/" + post.postid, post.postid);
     },
     {
       onSuccess: () => {
@@ -77,10 +76,10 @@ const Post = ({ post }) => {
       },
     }
   );
-  const upload = async (file) => {
+  const upload = async (img) => {
     try {
       const formData = new FormData();
-      formData.append("file", file);
+      formData.append("file", img);
       const res = await makeRequest.post("/upload", formData);
       return res.data;
     } catch (err) {
@@ -95,17 +94,21 @@ const Post = ({ post }) => {
   };
   const handleEdit = async (e) => {
     e.preventDefault();
-    let imgUrl;
-
-    imgUrl = img ? await upload(img) : post.img;
-
-    editMutation.mutate({ ...texts, img: imgUrl });
+    if (!desc && !img) {
+      return;
+    }
+    let imgUrl = "";
+    if (img) {
+      imgUrl = await upload();
+    }
+    editMutation.mutate({ postid: post.postid, desc, img: imgUrl });
+    setDesc("");
+    setImg(null);
     setPostEditOpen(false);
   };
   const handleFollow = () => {
     followMutation.mutate(relationshipData.includes(currentUser.id));
   };
-
   const openPopup = (imgUrl) => {
     setSelectedPostImg(imgUrl);
     setPopupOpen(true);
@@ -173,14 +176,12 @@ const Post = ({ post }) => {
                         alignItems: "center",
                         marginTop: "-3px",
                         gap: "5px",
-                      }}
-                    >
+                      }}>
                       <Icon
                         icon="ic:round-person-add"
                         hFlip={true}
                         width={20}
-                        height={20}
-                      />
+                        height={20}/>
                       Follow
                     </button>
                   </div>
@@ -208,8 +209,7 @@ const Post = ({ post }) => {
                         alignItems: "center",
                         marginTop: "-4px",
                         gap: "5px",
-                      }}
-                    >
+                      }}>
                       <button
                         className="edit-post2"
                         style={{
@@ -221,18 +221,17 @@ const Post = ({ post }) => {
                         }}
                         onClick={() => {
                           setPostEditOpen(!postEditOpen);
-                        }}
-                      >
+                        }}>
                         <Icon icon="tabler:edit" height={20} width={20} />
                         Edit Post
                       </button>
                       {postEditOpen && (
                         <div className="edit-post">
                           <form className="edit-post-content">
-                            <input type="desc" name="desc" />
-                            <input type="file" name="img" />
+                            <input type="text" name="desc" id="desc"/>
+                            <input type="file" name="img" id="img"/>
                             <button onClick={handleEdit}>Post</button>
-                          </form>{" "}
+                          </form>
                         </div>
                       )}
                     </button>
@@ -248,8 +247,7 @@ const Post = ({ post }) => {
             <div className="post-img-container">
               <button
                 className="img-button"
-                onClick={() => openPopup(`/data/${post.img}`)}
-              >
+                onClick={() => openPopup(`/data/${post.img}`)}>
                 <img className="post-img" src={"/data/" + post.img} alt="" />
               </button>
             </div>
@@ -296,7 +294,7 @@ const Post = ({ post }) => {
             <h3>Share</h3>
           </div>
         </div>
-        {commentOpen && <Comments postid={post.id} />}
+        {commentOpen && <Commento postid={post.id} />}
       </div>
       {popupOpen && (
         <div className="popup-overlay-post" onClick={closePopup}>

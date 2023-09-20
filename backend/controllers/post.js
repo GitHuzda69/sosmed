@@ -86,9 +86,12 @@ export const updatePost = (req, res) => {
         q, [
           req.body.desc,
           req.body.img,
-          userInfo.id,
+          req.params.id,
         ],
         (err, data) => {
+          console.log(req.body.desc,
+            req.body.img,
+            req.params.id,)
           if (err) {
             return res.status(500).json(err);
           }
