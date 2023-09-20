@@ -11,7 +11,8 @@ import Comments from "../comments/Comments.js";
 
 const Post = ({ post }) => {
   const [commentOpen, setCommentOpen] = useState(false);
-  const [imagePopupOpen, setImagePopupOpen] = useState(false);
+  const [popupOpen, setPopupOpen] = useState(false);
+  const [selectedPostImg, setSelectedPostImg] = useState(null);
   const [postOptionOpen, setpostOptionOpen] = useState(false);
   const [postEditOpen, setPostEditOpen] = useState(false);
   const [postOptionButtonPosition, setPostOptionButtonPosition] =
@@ -103,6 +104,15 @@ const Post = ({ post }) => {
   };
   const handleFollow = () => {
     followMutation.mutate(relationshipData.includes(currentUser.id));
+  };
+
+  const openPopup = (imgUrl) => {
+    setSelectedPostImg(imgUrl);
+    setPopupOpen(true);
+  };
+  const closePopup = () => {
+    setSelectedPostImg(null);
+    setPopupOpen(false);
   };
 
   return (
@@ -238,7 +248,7 @@ const Post = ({ post }) => {
             <div className="post-img-container">
               <button
                 className="img-button"
-                onClick={() => setImagePopupOpen(true)}
+                onClick={() => openPopup(`/data/${post.img}`)}
               >
                 <img className="post-img" src={"/data/" + post.img} alt="" />
               </button>
@@ -288,9 +298,17 @@ const Post = ({ post }) => {
         </div>
         {commentOpen && <Comments postid={post.id} />}
       </div>
-      {imagePopupOpen && (
-        <div className="image-popup" onClick={() => setImagePopupOpen(false)}>
-          <img className="popup-img" src={"./data/" + post.img} alt="" />
+      {popupOpen && (
+        <div className="popup-overlay-post" onClick={closePopup}>
+          <div className="popup-post">
+            {selectedPostImg && (
+              <img
+                className="popup-image-post"
+                src={selectedPostImg}
+                alt="post-img"
+              />
+            )}
+          </div>
         </div>
       )}
     </div>
