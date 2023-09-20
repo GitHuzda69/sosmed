@@ -15,72 +15,72 @@ const Commento = ({ postid, className }) => {
   const [showFileInput, setShowFileInput] = useState(false);
   const queryClient = useQueryClient();
 
-  const { isLoading, error ,data } = useQuery(["comments"], () =>
+  const { isLoading, error, data } = useQuery(["comments"], () =>
     makeRequest.get("/comments?postid=" + postid).then((res) => {
       return res.data;
     })
-    );
+  );
   const mutation = useMutation(
-      (newComment) => {
-        return makeRequest.post("/comments", newComment);
+    (newComment) => {
+      return makeRequest.post("/comments", newComment);
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["comments"]);
       },
-      {
-        onSuccess: () => {
-          queryClient.invalidateQueries(["comments"]);
-        },
-      }
-    );
+    }
+  );
   const upload = async () => {
-      try {
-        const formData = new FormData();
-        formData.append("file", file);
-        const res = await makeRequest.post("/upload", formData);
-        return res.data;
-      } catch (err) {
-        console.log(err);
-      }
-    };
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      const res = await makeRequest.post("/upload", formData);
+      return res.data;
+    } catch (err) {
+      console.log(err);
+    }
+  };
   useEffect(() => {
-      const handleKeyPress = async (e) => {
-        if (e.key === "Enter") {
-          e.preventDefault();
-  
-          if (!desc && !file) {
-            return;
-          }
-  
-          let imgUrl = "";
-          if (file) {
-            imgUrl = await upload();
-          }
-          mutation.mutate({ desc, img: imgUrl, postid });
-          setDesc("");
-          setFile(null);
+    const handleKeyPress = async (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+
+        if (!desc && !file) {
+          return;
         }
-      };
-  
-      document.addEventListener("keydown", handleKeyPress);
-  
-      return () => {
-        document.removeEventListener("keydown", handleKeyPress);
-      };
-    });
-    const handleMediaButtonClick = () => {
-      setShowFileInput(!showFileInput);
-      if (!showFileInput && fileInputRef.current) {
-        fileInputRef.current.click();
+
+        let imgUrl = "";
+        if (file) {
+          imgUrl = await upload();
+        }
+        mutation.mutate({ desc, img: imgUrl, postid });
+        setDesc("");
+        setFile(null);
       }
     };
-    const handleFileInputChange = (e) => {
-      const selectedFile = e.target.files[0];
-      setFile(selectedFile);
+
+    document.addEventListener("keydown", handleKeyPress);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyPress);
     };
-    const clearSelectedFile = () => {
-      setFile(null);
-    };
-  
+  });
+  const handleMediaButtonClick = () => {
+    setShowFileInput(!showFileInput);
+    if (!showFileInput && fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+  const handleFileInputChange = (e) => {
+    const selectedFile = e.target.files[0];
+    setFile(selectedFile);
+  };
+  const clearSelectedFile = () => {
+    setFile(null);
+  };
+
   return (
-    <div className={`comments ${className}`}>
+    <div className={`commento ${className}`}>
       <div className="write">
         <div className="write1">
           <img
@@ -118,7 +118,8 @@ const Commento = ({ postid, className }) => {
               id="file"
               ref={fileInputRef}
               onChange={handleFileInputChange}
-              style={{ display: "none" }}/>
+              style={{ display: "none" }}
+            />
           </div>
         </div>
         <div className="write-pic">
@@ -144,7 +145,8 @@ const Commento = ({ postid, className }) => {
         ? "Something went wrong"
         : isLoading
         ? "loading"
-        : data.map((comment) => (<Comments comment={comment} postid={postid} key={comment.id} />
+        : data.map((comment) => (
+            <Comments comment={comment} postid={postid} key={comment.id} />
           ))}
     </div>
   );

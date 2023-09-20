@@ -1,32 +1,6 @@
 .comments{
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-  height: auto;
-  width: 895px;
-  max-height: 600px;
-  overflow-y: auto;
-  scrollbar-width: thin;
-  scrollbar-color: #aaa #ddd; 
-  margin-left: -10px;
-  margin-bottom: 15px;
-  border-top: 1px black solid;
+  margin-bottom: 10px;
 }
-
-.comments::-webkit-scrollbar {
-  width: 8px; 
-}
-
-.comments::-webkit-scrollbar-thumb {
-  background-color: #aaa; 
-  border-radius: 10px;
-}
-
-.comments::-webkit-scrollbar-track {
-  background-color: #ddd;
-  border-radius: 10px;
-}
-
 .write{
   position: sticky;
   top: 0px;
@@ -256,8 +230,6 @@
   border-radius: 10px;
 }
 
-
-/* Comments.css */
 .comment-info {
   position: relative;
 }
@@ -265,7 +237,7 @@
 .post-option-popup-other-comment,
 .post-option-popup-self-comment {
   position: absolute;
-  left: 570px; 
+  left: 700px; 
   background-color: white;
   border: 1px solid #ccc;
   padding: 5px;
@@ -339,19 +311,59 @@
   margin: 0;
 }
 
+
+/*Commento.css*/
+
+.commento{
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  height: auto;
+  width: 895px;
+  max-height: 600px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #aaa #ddd; 
+  margin-left: -10px;
+  margin-bottom: 10px;
+  border-top: 1px black solid;
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.commento::-webkit-scrollbar {
+  width: 8px; 
+}
+
+.commento::-webkit-scrollbar-thumb {
+  background-color: #aaa; 
+  border-radius: 10px;
+}
+
+.commento::-webkit-scrollbar-track {
+  background-color: #ddd;
+  border-radius: 10px;
+}
+
 /*code buat responsive*/
 
 @media screen and (max-width: 1340px) {
-  .comments {
+  .write {
     width: 881px;
     margin-left: -10px;
   }
   .button-comment-desc{
     margin-left: 830px;
   }
+  .commento{
+    width: 881px;
+  }
+  .post-option-popup-other-comment,
+  .post-option-popup-self-comment {
+    left: 680px;
+  }
 }
 @media screen and (max-width: 1320px) {
-  .comments {   
+  .write {   
     width: 870px; 
     margin-left: -9px;
 
@@ -359,25 +371,46 @@
   .button-comment-desc{
     margin-left: 810px;
   }
+  .commento{
+    width: 870px;
+  }
+  .post-option-popup-other-comment,
+  .post-option-popup-self-comment {
+    left: 660px;
+  }
 }
 @media screen and (max-width: 1300px) {
-  .comments {
+  .write {
     width: 850px; 
   }
   .button-comment-desc{
     margin-left: 800px;
   }
+  .commento{
+    width: 850px;
+  }
+  .post-option-popup-other-comment,
+  .post-option-popup-self-comment {
+    left: 650px;
+  }
 }
 @media screen and (max-width: 1260px) {
-  .comments {
+  .write {
     width: 830px; 
   }
   .button-comment-desc{
     margin-left: 780px;
   }
+  .commento{
+    width: 830px;
+  }
+  .post-option-popup-other-comment,
+  .post-option-popup-self-comment {
+    left: 630px;
+  }
 }
 @media screen and (max-width: 1245px) {
-  .comments {
+  .write {
     width: 810px; 
   }
   .button-comment-desc{
@@ -386,20 +419,34 @@
   .info-comment{
     gap: 80px;
   }
+  .commento{
+    width: 810px;
+  }
+  .post-option-popup-other-comment,
+  .post-option-popup-self-comment {
+    left: 610px;
+  }
 }
 @media screen and (max-width: 1220px) {
   .write-pic{
     width: 700px;
   }
-  .comments {
+  .write {
     width: 790px; 
   }
   .button-comment-desc{
     margin-left: 740px;
   }
+  .commento{
+    width: 790px;
+  }
+  .post-option-popup-other-comment,
+  .post-option-popup-self-comment {
+    left: 590px;
+  }
 }
 @media screen and (max-width: 1200px) {
-  .comments {
+  .write {
     width: 780px; 
   }
   .button-comment-desc{
@@ -408,9 +455,16 @@
   .info-comment{
     gap: 75px;
   }
+  .commento{
+    width: 780px;
+  }
+  .post-option-popup-other-comment,
+  .post-option-popup-self-comment {
+    left: 580px;
+  }
 }
 @media screen and (max-width: 1185px) {
-  .comments {
+  .write {
     width: 750px; 
   }
   .button-comment-desc{
@@ -419,9 +473,16 @@
   .info-comment{
     gap: 70px;
   }
+  .commento{
+    width: 750px;
+  }
+  .post-option-popup-other-comment,
+  .post-option-popup-self-comment {
+    left: 550px;
+  }
 }
 @media screen and (max-width: 1160px) {
-  .comments {
+  .write {
     width: 735px; 
   }
   .button-comment-desc{
@@ -430,9 +491,16 @@
   .info-comment{
     gap: 65px;
   }
+  .commento{
+    width: 735px;
+  }
+  .post-option-popup-other-comment,
+  .post-option-popup-self-comment {
+    left: 535px;
+  }
 }
 @media screen and (max-width: 1145px) {
-  .comments {
+  .write {
     width: 715px; 
   }
   .button-comment-desc{
@@ -441,12 +509,19 @@
   .info-comment{
     gap: 60px;
   }
+  .commento{
+    width: 715px;
+  }
+  .post-option-popup-other-comment,
+  .post-option-popup-self-comment {
+    left: 515px;
+  }
 }
 @media screen and (max-width: 1125px) {
   .write-pic{
   width: 600px;
 }
-  .comments {
+  .write {
     width: 695px; 
   }
   .button-comment-desc{
@@ -455,10 +530,17 @@
   .info-comment{
     gap: 55px;
   }
+  .commento{
+    width: 695px;
+  }
+  .post-option-popup-other-comment,
+  .post-option-popup-self-comment {
+    left: 495px;
+  }
 }
 @media screen and (max-width: 1105px) {
   
-  .comments {
+  .write {
     width: 675px; 
   }
   .button-comment-desc{
@@ -467,9 +549,16 @@
   .info-comment{
     gap: 50px;
   }
+  .commento{
+    width: 675px;
+  }
+  .post-option-popup-other-comment,
+  .post-option-popup-self-comment {
+    left: 475px;
+  }
 }
 @media screen and (max-width: 1085px) {
-  .comments {
+  .write {
     width: 655px; 
   }
   .button-comment-desc{
@@ -478,9 +567,16 @@
   .info-comment{
     gap: 45px;
   }
+  .commento{
+    width: 655px;
+  }
+  .post-option-popup-other-comment,
+  .post-option-popup-self-comment {
+    left: 455px;
+  }
 }
 @media screen and (max-width: 1065px) {
-  .comments {
+  .write {
     width: 635px; 
   }
   .button-comment-desc{
@@ -489,12 +585,19 @@
   .info-comment{
     gap: 40px;
   }
+  .commento{
+    width: 635px;
+  }
+  .post-option-popup-other-comment,
+  .post-option-popup-self-comment {
+    left: 435px;
+  }
 }
 @media screen and (max-width: 1045px) {
   .write-pic{
     width: 550px;
   }
-  .comments {
+  .write {
     width: 600px; 
   }
   .button-comment-desc{
@@ -503,4 +606,14 @@
   .info-comment{
     gap: 35px;
   }
+  .commento{
+    width: 600px;
+  }
+  .post-option-popup-other-comment,
+  .post-option-popup-self-comment {
+    left: 400px;
+  }
 }
+
+
+
