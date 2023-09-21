@@ -1,5 +1,4 @@
 .comments{
-  margin-bottom: 10px;
 }
 .write{
   position: sticky;
@@ -122,6 +121,7 @@
 }
 .comment{
   margin-top: 1px;
+  padding-bottom: 15px;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
@@ -285,6 +285,47 @@
   background-color: lightgray;
   border-radius: 5px;
 }
+
+.edit-comment{
+  position: absolute;
+  left: -290px;
+  margin-top: -10px;
+  padding: 10px;
+  background-color: white;
+  border: 1px black solid;
+  border-radius: 10px;
+}
+.edit-comment-content{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.edit-comment-warn{
+  position: absolute;
+  padding: 10px;
+  border: 1px black solid;
+  border-radius: 10px;
+  background-color: white;
+}
+.edit-comment-warn p{
+  font-size: 12px;
+  margin-top: 10px;
+  margin-right: 20px;
+}
+.close-warn-comment{
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  margin-top: -8px;
+  margin-left: 172px;
+  background-color: transparent;
+}
+.close-warn-comment:hover{
+  width: 25px;
+  height: 25px;
+}
+
 
 .info-comment{
   display: flex;

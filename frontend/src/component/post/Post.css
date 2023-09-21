@@ -113,21 +113,46 @@
   z-index: 200;
 }
 .edit-post2{
-  z-index: 100;
+  z-index: 10;
 }
 
 .edit-post{
   position: absolute;
-  left: 38%;
+  left: 510px;
   padding: 10px;
   background-color: white;
   border: 1px black solid;
   border-radius: 10px;
+  z-index: 30;
 }
 .edit-post-content{
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 10px; 
+  z-index: 30;
+}
+.edit-post-warn{
+  position: absolute;
+  padding: 10px;
+  border: 1px black solid;
+  border-radius: 10px;
+  background-color: white;
+}
+.edit-post-warn p{
+  margin-top: 10px;
+  margin-right: 20px;
+}
+.close-warn-post{
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  margin-top: -8px;
+  margin-left: 80px;
+  background-color: transparent;
+}
+.close-warn-post:hover{
+  width: 25px;
+  height: 25px;
 }
 
 .post-content {
@@ -243,6 +268,9 @@
     .opsi-post-button{
       margin-left: 820px;
     }
+    .edit-post{
+      left: 495px;
+    }
   }
   @media screen and (max-width: 1320px) {
     .post {
@@ -250,6 +278,9 @@
     }
     .opsi-post-button{
       margin-left: 810px;
+    }
+    .edit-post{
+      left: 485px;
     }
   }
   @media screen and (max-width: 1300px) {
@@ -259,6 +290,9 @@
     .opsi-post-button{
       margin-left: 790px;
     }
+    .edit-post{
+      left: 470px;
+    }
   }
   @media screen and (max-width: 1260px) {
     .post {
@@ -266,6 +300,9 @@
     }
     .opsi-post-button{
       margin-left: 770px;
+    }
+    .edit-post{
+      left: 450px;
     }
   }
   @media screen and (max-width: 1245px) {
@@ -275,6 +312,9 @@
     .opsi-post-button{
       margin-left: 750px;
     }
+    .edit-post{
+      left: 430px;
+    }
   }
   @media screen and (max-width: 1220px) {
     .post {
@@ -282,6 +322,9 @@
     }
     .opsi-post-button{
       margin-left: 730px;
+    }
+    .edit-post{
+      left: 410px;
     }
   }
   @media screen and (max-width: 1200px) {
@@ -291,6 +334,9 @@
     .opsi-post-button{
       margin-left: 720px;
     }
+    .edit-post{
+      left: 400px;
+    }
   }
   @media screen and (max-width: 1185px) {
     .post {
@@ -298,6 +344,9 @@
     }
     .opsi-post-button{
       margin-left: 690px;
+    }
+    .edit-post{
+      left: 370px;
     }
   }
   @media screen and (max-width: 1160px) {
@@ -307,6 +356,9 @@
     .opsi-post-button{
       margin-left: 675px;
     }
+    .edit-post{
+      left: 355px;
+    }
   }
   @media screen and (max-width: 1145px) {
     .post {
@@ -314,6 +366,9 @@
     }
     .opsi-post-button{
       margin-left: 655px;
+    }
+    .edit-post{
+      left: 335px;
     }
   }
   @media screen and (max-width: 1125px) {
@@ -323,6 +378,9 @@
     .opsi-post-button{
       margin-left: 635px;
     }
+    .edit-post{
+      left: 315px;
+    }
   }
   @media screen and (max-width: 1105px) {
     .post {
@@ -330,6 +388,9 @@
     }
     .opsi-post-button{
       margin-left: 615px;
+    }
+    .edit-post{
+      left: 295px;
     }
   }
   @media screen and (max-width: 1085px) {
@@ -339,6 +400,9 @@
     .opsi-post-button{
       margin-left: 595px;
     }
+    .edit-post{
+      left: 275px;
+    }
   }
   @media screen and (max-width: 1065px) {
     .post {
@@ -347,6 +411,9 @@
     .opsi-post-button{
       margin-left: 575px;
     }
+    .edit-post{
+      left: 255px;
+    }
   }
   @media screen and (max-width: 1045px) {
     .post {
@@ -354,5 +421,8 @@
     }
     .opsi-post-button{
       margin-left: 540px;
+    }
+    .edit-post{
+      left: 220px;
     }
   }

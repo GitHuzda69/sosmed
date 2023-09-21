@@ -1,5 +1,5 @@
 import "./Post.css";
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useRef, useEffect } from "react";
 import { useLocation, Link } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { makeRequest } from "../../axios.js";
@@ -18,12 +18,14 @@ const Post = ({ post }) => {
   const [editedDesc, setEditedDesc] = useState(post.desc);
   const [editedImg, setEditedImg] = useState(null);
   const [isDescEmpty, setIsDescEmpty] = useState(false);
+  const descInputRef = useRef(null);
   const [originalDesc, setOriginalDesc] = useState(post.desc);
-  const [postOptionButtonPosition, setPostOptionButtonPosition] = useState(null);
+  const [postOptionButtonPosition, setPostOptionButtonPosition] =
+    useState(null);
   const queryClient = useQueryClient();
   const { currentUser } = useContext(AuthContext);
   const userId = parseInt(useLocation().pathname.split("/")[2]);
- 
+
   const { isLoading, data } = useQuery(["likes", post.id], () =>
     makeRequest.get("/likes?postid=" + post.id).then((res) => {
       return res.data;
@@ -115,6 +117,27 @@ const Post = ({ post }) => {
     }
   };
 
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+  };
+
+  useEffect(() => {
+    const handleEnterKey = (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        if (descInputRef.current) {
+          descInputRef.current.focus();
+        }
+      }
+    };
+
+    document.addEventListener("keydown", handleEnterKey);
+
+    return () => {
+      document.removeEventListener("keydown", handleEnterKey);
+    };
+  }, []);
+
   const handleFollow = () => {
     followMutation.mutate(relationshipData.includes(currentUser.id));
   };
@@ -168,6 +191,7 @@ const Post = ({ post }) => {
                 onClick={(e) => {
                   setPostOptionButtonPosition(e.target.getBoundingClientRect());
                   setpostOptionOpen(!postOptionOpen);
+                  setPostEditOpen(false);
                 }}
               >
                 <Icon icon="tabler:dots" width={20} height={20} />
@@ -257,18 +281,17 @@ const Post = ({ post }) => {
                       {postEditOpen && (
                         <div className="edit-post">
                           {isDescEmpty && (
-                            <div>
-                              <p className="warning">
-                                Deskripsi tidak boleh kosong.
-                              </p>
+                            <div className="edit-post-warn">
                               <button
+                                className="close-warn-post"
                                 onClick={() => {
                                   setEditedDesc(originalDesc);
                                   setIsDescEmpty(false);
                                 }}
                               >
-                                Batal
+                                <Icon icon="ph:x-bold" width={15} height={15} />
                               </button>
+                              <p>Deskripsi tidak boleh kosong.</p>
                             </div>
                           )}
                           <form className="edit-post-content">
@@ -277,6 +300,7 @@ const Post = ({ post }) => {
                               name="desc"
                               value={editedDesc}
                               onChange={(e) => setEditedDesc(e.target.value)}
+                              ref={descInputRef}
                             />
                             <input
                               type="file"
