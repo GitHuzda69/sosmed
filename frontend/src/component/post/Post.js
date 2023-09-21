@@ -15,22 +15,32 @@ const Post = ({ post }) => {
   const [selectedPostImg, setSelectedPostImg] = useState(null);
   const [postOptionOpen, setpostOptionOpen] = useState(false);
   const [postEditOpen, setPostEditOpen] = useState(false);
-  const [postOptionButtonPosition, setPostOptionButtonPosition] =useState(null);
-  const [desc, setDesc] = useState("");
+  const [editedDesc, setEditedDesc] = useState(post.desc);
+  const [editedImg, setEditedImg] = useState(null);
+  const [isDescEmpty, setIsDescEmpty] = useState(false);
+  const [originalDesc, setOriginalDesc] = useState(post.desc);
+  const [postOptionButtonPosition, setPostOptionButtonPosition] =
+    useState(null);
   const [img, setImg] = useState(null);
+  const queryClient = useQueryClient();
   const { currentUser } = useContext(AuthContext);
   const userId = parseInt(useLocation().pathname.split("/")[2]);
+  const [texts, setTexts] = useState({
+    desc: post.desc,
+  });
+
   const { isLoading, data } = useQuery(["likes", post.id], () =>
     makeRequest.get("/likes?postid=" + post.id).then((res) => {
       return res.data;
     })
   );
+
   const { data: relationshipData } = useQuery(["relationship"], () =>
     makeRequest.get("/relationships?followeduserid=" + userId).then((res) => {
       return res.data;
     })
   );
-  const queryClient = useQueryClient();
+
   const likeMutation = useMutation(
     (liked) => {
       if (liked) return makeRequest.delete("/likes?postid=" + post.id);
@@ -42,9 +52,9 @@ const Post = ({ post }) => {
       },
     }
   );
+
   const deleteMutation = useMutation(
     (postid) => {
-      console.log(postid)
       return makeRequest.delete("/posts/" + postid);
     },
     {
@@ -53,10 +63,10 @@ const Post = ({ post }) => {
       },
     }
   );
+
   const editMutation = useMutation(
     (post) => {
-      console.log(post)
-      return makeRequest.put("/posts/" + post.postid, post.postid);
+      return makeRequest.put("/posts/" + post.id);
     },
     {
       onSuccess: () => {
@@ -64,6 +74,7 @@ const Post = ({ post }) => {
       },
     }
   );
+
   const followMutation = useMutation(
     (following) => {
       if (following)
@@ -76,46 +87,84 @@ const Post = ({ post }) => {
       },
     }
   );
-  const upload = async (img) => {
+
+  const upload = async (file) => {
     try {
       const formData = new FormData();
-      formData.append("file", img);
+      formData.append("file", file);
       const res = await makeRequest.post("/upload", formData);
       return res.data;
     } catch (err) {
       console.log(err);
     }
   };
+
   const handleLike = () => {
     likeMutation.mutate(data.includes(currentUser.id));
   };
+
   const handleDelete = () => {
     deleteMutation.mutate(post.id);
   };
+
   const handleEdit = async (e) => {
     e.preventDefault();
-    if (!desc && !img) {
+
+    if (!post.img && editedDesc.trim() === "") {
+      setIsDescEmpty(true);
       return;
     }
-    let imgUrl = "";
-    if (img) {
-      imgUrl = await upload();
+
+    const editedPost = {
+      ...post,
+      desc: editedDesc,
+      img: editedImg ? await upload(editedImg) : post.img,
+    };
+
+    try {
+      await makeRequest.put("/posts/" + editedPost.id, editedPost);
+      setPostEditOpen(false);
+
+      window.location.reload();
+    } catch (error) {
+      console.error(error);
     }
-    editMutation.mutate({ postid: post.postid, desc, img: imgUrl });
-    setDesc("");
-    setImg(null);
-    setPostEditOpen(false);
   };
+
   const handleFollow = () => {
     followMutation.mutate(relationshipData.includes(currentUser.id));
   };
+
   const openPopup = (imgUrl) => {
     setSelectedPostImg(imgUrl);
     setPopupOpen(true);
   };
+
   const closePopup = () => {
     setSelectedPostImg(null);
     setPopupOpen(false);
+  };
+
+  const updateDesc = (newDesc) => {
+    setEditedDesc(newDesc);
+  };
+
+  const updateImg = (newImg) => {
+    setEditedImg(newImg);
+  };
+
+  const handleRemoveImg = async () => {
+    try {
+      const updatedPost = {
+        ...post,
+        img: null,
+      };
+
+      await makeRequest.put(`/posts/${post.id}`, updatedPost);
+      setEditedImg(null);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -176,12 +225,14 @@ const Post = ({ post }) => {
                         alignItems: "center",
                         marginTop: "-3px",
                         gap: "5px",
-                      }}>
+                      }}
+                    >
                       <Icon
                         icon="ic:round-person-add"
                         hFlip={true}
                         width={20}
-                        height={20}/>
+                        height={20}
+                      />
                       Follow
                     </button>
                   </div>
@@ -209,7 +260,8 @@ const Post = ({ post }) => {
                         alignItems: "center",
                         marginTop: "-4px",
                         gap: "5px",
-                      }}>
+                      }}
+                    >
                       <button
                         className="edit-post2"
                         style={{
@@ -221,16 +273,50 @@ const Post = ({ post }) => {
                         }}
                         onClick={() => {
                           setPostEditOpen(!postEditOpen);
-                        }}>
+                        }}
+                      >
                         <Icon icon="tabler:edit" height={20} width={20} />
                         Edit Post
                       </button>
                       {postEditOpen && (
                         <div className="edit-post">
+                          {isDescEmpty && (
+                            <div>
+                              <p className="warning">
+                                Deskripsi tidak boleh kosong.
+                              </p>
+                              <button
+                                onClick={() => {
+                                  setEditedDesc(originalDesc);
+                                  setIsDescEmpty(false);
+                                }}
+                              >
+                                Batal
+                              </button>
+                            </div>
+                          )}
                           <form className="edit-post-content">
-                            <input type="text" name="desc" id="desc"/>
-                            <input type="file" name="img" id="img"/>
-                            <button onClick={handleEdit}>Post</button>
+                            <input
+                              type="text"
+                              name="desc"
+                              value={editedDesc}
+                              onChange={(e) => setEditedDesc(e.target.value)}
+                            />
+                            <input
+                              type="file"
+                              name="img"
+                              onChange={(e) => setEditedImg(e.target.files[0])}
+                            />
+                            {post.img && post.desc && (
+                              <div className="add-empty-desc-button">
+                                <button onClick={handleRemoveImg}>
+                                  Hapus Gambar
+                                </button>
+                              </div>
+                            )}
+                            <button onClick={handleEdit} disabled={isDescEmpty}>
+                              Post
+                            </button>
                           </form>
                         </div>
                       )}
@@ -242,13 +328,14 @@ const Post = ({ post }) => {
           </div>
         </div>
         <div className="post-content">
-          {post.desc && <p className="post-desc">{post.desc}</p>}
+          {post.desc && <p className="post-desc">{editedDesc}</p>}
           {post.img && (
             <div className="post-img-container">
               <button
                 className="img-button"
-                onClick={() => openPopup(`/data/${post.img}`)}>
-                <img className="post-img" src={"/data/" + post.img} alt="" />
+                onClick={() => openPopup(`/data/${editedImg || post.img}`)}
+              >
+                <img className="post-img" src={`/data/${post.img}`} alt="" />
               </button>
             </div>
           )}
