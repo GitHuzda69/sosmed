@@ -24,6 +24,7 @@ import defaultcover from "../../assets/profile/default_banner.jpg";
 const Profile = () => {
   const [imagePopupOpenbanner, setImagePopupOpenBanner] = useState(false);
   const [imagePopupOpenprofile, setImagePopupOpenProfile] = useState(false);
+  const [isUpdateOpen, setIsUpdateOpen] = useState(false);
   const { currentUser } = useContext(AuthContext);
   const userId = parseInt(useLocation().pathname.split("/")[2]);
   const [settingOpen, setSettingOpen] = useState(false);
@@ -64,8 +65,6 @@ const Profile = () => {
   const toggleLogout = () => {
     setLogoutOpen(!logoutOpen);
   };
-
-  const [isUpdateOpen, setIsUpdateOpen] = useState(false);
 
   const openUpdateModal = () => {
     setIsUpdateOpen(true);

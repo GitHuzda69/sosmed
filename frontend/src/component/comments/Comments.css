@@ -1,37 +1,11 @@
 .comments{
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-  height: auto;
-  width: 895px;
-  max-height: 600px;
-  overflow-y: auto;
-  scrollbar-width: thin;
-  scrollbar-color: #aaa #ddd; 
-  margin-left: -10px;
-  margin-bottom: 15px;
-  border-top: 1px black solid;
+  margin-bottom: 10px;
 }
-
-.comments::-webkit-scrollbar {
-  width: 8px; 
-}
-
-.comments::-webkit-scrollbar-thumb {
-  background-color: #aaa; 
-  border-radius: 10px;
-}
-
-.comments::-webkit-scrollbar-track {
-  background-color: #ddd;
-  border-radius: 10px;
-}
-
 .write{
   position: sticky;
   top: 0px;
   background-color: white;
-  z-index: 200;
+  z-index: 10;
   border-bottom: 1px black solid;
 }
 .write1{
@@ -96,7 +70,8 @@
   max-width: 150px;
   max-height: 100px;
   border-radius: 9px 9px 5px 5px;
-  object-fit: contain;
+  object-fit: contain; 
+  border: 1px black solid;
 }
 .file-name-comment{
   margin-left: 5px;
@@ -149,6 +124,7 @@
   margin-top: 1px;
   display: flex;
   justify-content: space-between;
+  flex-direction: column;
   gap: 20px;
   width: 100%;
   border-bottom: 1px black solid;
@@ -158,7 +134,7 @@
   height: 50px;
   border-radius: 50%;
   object-fit: cover;
-  margin-top: 20px;
+  margin-top: 10px;
   margin-left: 40px;
 }
 .comment-info{
@@ -173,38 +149,87 @@
   font-size: 20px;
   font-weight: bold;
   font-family: "Inter", sans-serif;
-  margin-top: 13px;
-  margin-left: -5px;
+  margin-top: -53px;
+  margin-left: 100px;
 }
-.comment-info p{
-  margin-top: 30px;
-  margin-left: -65px;
-  margin-right: 20px;
-  margin-bottom: 20px;
-  font-size: 15px;
-  font-weight: normal;
-  font-family: "Inter", sans-serif;
-  text-decoration: none;
-}
+
 .comment-info h3{
   flex: 1;
   font-size: 15px;
   font-family: "Inter", sans-serif;
   font-weight: 400;
   margin-top: 1px;
-  margin-left: -5px;
+  margin-left: 100px;
 }
 .button-comment-desc{
   width: 30px;
   height: 30px;
   margin-top: -70px;
-  margin-left: 730px;
+  margin-left: 850px;
 }
 .button-comment-desc:hover{
   border-radius: 10px;
   background-color: lightgray;
 }
-/* Comments.css */
+.comments-content{
+  margin-top: 25px;
+  margin-left: 50px;
+}
+.comments-content h4{
+  font-size: 15px;
+  font-weight: normal;
+  font-family: "Inter", sans-serif;
+  text-decoration: none;
+  margin-top: -5px;
+  margin-bottom: 10px;
+}
+.comments-image {
+  width: 100%;
+  height: 100%;
+  max-width: 200px;
+  max-height: 200px;
+  object-fit: contain;
+  border-radius: 10px;
+  border: 1px black solid;
+}
+.img-button-comments {
+  padding: 0;
+  z-index: 1;
+}
+.img-button-comments:hover img {
+  filter: brightness(0.7);
+  z-index: 0;
+}  
+
+.popup-overlay-comments {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999; 
+}
+
+.popup-comments {
+  max-width: 100%;
+  max-height: 100%;
+  position: relative;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.popup-image-comments {
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
+  margin: 0 auto;
+  border-radius: 10px;
+}
+
 .comment-info {
   position: relative;
 }
@@ -212,7 +237,7 @@
 .post-option-popup-other-comment,
 .post-option-popup-self-comment {
   position: absolute;
-  left: 570px; 
+  left: 700px; 
   background-color: white;
   border: 1px solid #ccc;
   padding: 5px;
@@ -244,7 +269,7 @@
 .post-option-popup-self-comment {
   top: 0;
   width: 130px;
-  height: 50px;
+  height: 60px;
   display: flex;
   flex-direction: column;
   align-items: start;
@@ -266,8 +291,9 @@
   flex-direction: row;
   align-items: center;
   font-size: 14px;
+  margin-top: -10px;
   margin-bottom: 15px;
-  margin-left: -70px;
+  margin-left: 40px;
   gap: 90px;
 }
 .item-comment{
@@ -285,168 +311,309 @@
   margin: 0;
 }
 
+
+/*Commento.css*/
+
+.commento{
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  height: auto;
+  width: 895px;
+  max-height: 600px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #aaa #ddd; 
+  margin-left: -10px;
+  margin-bottom: 10px;
+  border-top: 1px black solid;
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.commento::-webkit-scrollbar {
+  width: 8px; 
+}
+
+.commento::-webkit-scrollbar-thumb {
+  background-color: #aaa; 
+  border-radius: 10px;
+}
+
+.commento::-webkit-scrollbar-track {
+  background-color: #ddd;
+  border-radius: 10px;
+}
+
 /*code buat responsive*/
 
 @media screen and (max-width: 1340px) {
-  .comments {
+  .write {
     width: 881px;
     margin-left: -10px;
   }
   .button-comment-desc{
-    margin-left: 700px;
+    margin-left: 830px;
+  }
+  .commento{
+    width: 881px;
+  }
+  .post-option-popup-other-comment,
+  .post-option-popup-self-comment {
+    left: 680px;
   }
 }
 @media screen and (max-width: 1320px) {
-  .comments {   
+  .write {   
     width: 870px; 
     margin-left: -9px;
 
   }
   .button-comment-desc{
-    margin-left: 680px;
+    margin-left: 810px;
+  }
+  .commento{
+    width: 870px;
+  }
+  .post-option-popup-other-comment,
+  .post-option-popup-self-comment {
+    left: 660px;
   }
 }
 @media screen and (max-width: 1300px) {
-  .comments {
+  .write {
     width: 850px; 
   }
   .button-comment-desc{
-    margin-left: 660px;
+    margin-left: 800px;
+  }
+  .commento{
+    width: 850px;
+  }
+  .post-option-popup-other-comment,
+  .post-option-popup-self-comment {
+    left: 650px;
   }
 }
 @media screen and (max-width: 1260px) {
-  .comments {
+  .write {
     width: 830px; 
   }
   .button-comment-desc{
-    margin-left: 640px;
+    margin-left: 780px;
+  }
+  .commento{
+    width: 830px;
+  }
+  .post-option-popup-other-comment,
+  .post-option-popup-self-comment {
+    left: 630px;
   }
 }
 @media screen and (max-width: 1245px) {
-  .comments {
+  .write {
     width: 810px; 
   }
   .button-comment-desc{
-    margin-left: 620px;
+    margin-left: 760px;
   }
   .info-comment{
     gap: 80px;
+  }
+  .commento{
+    width: 810px;
+  }
+  .post-option-popup-other-comment,
+  .post-option-popup-self-comment {
+    left: 610px;
   }
 }
 @media screen and (max-width: 1220px) {
   .write-pic{
     width: 700px;
   }
-  .comments {
+  .write {
     width: 790px; 
   }
   .button-comment-desc{
-    margin-left: 600px;
+    margin-left: 740px;
+  }
+  .commento{
+    width: 790px;
+  }
+  .post-option-popup-other-comment,
+  .post-option-popup-self-comment {
+    left: 590px;
   }
 }
 @media screen and (max-width: 1200px) {
-  .comments {
+  .write {
     width: 780px; 
   }
   .button-comment-desc{
-    margin-left: 580px;
+    margin-left: 730px;
   }
   .info-comment{
     gap: 75px;
   }
+  .commento{
+    width: 780px;
+  }
+  .post-option-popup-other-comment,
+  .post-option-popup-self-comment {
+    left: 580px;
+  }
 }
 @media screen and (max-width: 1185px) {
-  .comments {
+  .write {
     width: 750px; 
   }
   .button-comment-desc{
-    margin-left: 560px;
+    margin-left: 700px;
   }
   .info-comment{
     gap: 70px;
   }
+  .commento{
+    width: 750px;
+  }
+  .post-option-popup-other-comment,
+  .post-option-popup-self-comment {
+    left: 550px;
+  }
 }
 @media screen and (max-width: 1160px) {
-  .comments {
+  .write {
     width: 735px; 
   }
   .button-comment-desc{
-    margin-left: 540px;
+    margin-left: 685px;
   }
   .info-comment{
     gap: 65px;
   }
+  .commento{
+    width: 735px;
+  }
+  .post-option-popup-other-comment,
+  .post-option-popup-self-comment {
+    left: 535px;
+  }
 }
 @media screen and (max-width: 1145px) {
-  .comments {
+  .write {
     width: 715px; 
   }
   .button-comment-desc{
-    margin-left: 520px;
+    margin-left: 665px;
   }
   .info-comment{
     gap: 60px;
+  }
+  .commento{
+    width: 715px;
+  }
+  .post-option-popup-other-comment,
+  .post-option-popup-self-comment {
+    left: 515px;
   }
 }
 @media screen and (max-width: 1125px) {
   .write-pic{
   width: 600px;
 }
-  .comments {
+  .write {
     width: 695px; 
   }
   .button-comment-desc{
-    margin-left: 500px;
+    margin-left: 645px;
   }
   .info-comment{
     gap: 55px;
   }
+  .commento{
+    width: 695px;
+  }
+  .post-option-popup-other-comment,
+  .post-option-popup-self-comment {
+    left: 495px;
+  }
 }
 @media screen and (max-width: 1105px) {
   
-  .comments {
+  .write {
     width: 675px; 
   }
   .button-comment-desc{
-    margin-left: 480px;
+    margin-left: 625px;
   }
   .info-comment{
     gap: 50px;
   }
+  .commento{
+    width: 675px;
+  }
+  .post-option-popup-other-comment,
+  .post-option-popup-self-comment {
+    left: 475px;
+  }
 }
 @media screen and (max-width: 1085px) {
-  .comments {
+  .write {
     width: 655px; 
   }
   .button-comment-desc{
-    margin-left: 460px;
+    margin-left: 605px;
   }
   .info-comment{
     gap: 45px;
   }
+  .commento{
+    width: 655px;
+  }
+  .post-option-popup-other-comment,
+  .post-option-popup-self-comment {
+    left: 455px;
+  }
 }
 @media screen and (max-width: 1065px) {
-  .comments {
+  .write {
     width: 635px; 
   }
   .button-comment-desc{
-    margin-left: 440px;
+    margin-left: 585px;
   }
   .info-comment{
     gap: 40px;
+  }
+  .commento{
+    width: 635px;
+  }
+  .post-option-popup-other-comment,
+  .post-option-popup-self-comment {
+    left: 435px;
   }
 }
 @media screen and (max-width: 1045px) {
   .write-pic{
     width: 550px;
   }
-  .comments {
+  .write {
     width: 600px; 
   }
   .button-comment-desc{
-    margin-left: 420px;
+    margin-left: 550px;
   }
   .info-comment{
     gap: 35px;
   }
+  .commento{
+    width: 600px;
+  }
+  .post-option-popup-other-comment,
+  .post-option-popup-self-comment {
+    left: 400px;
+  }
 }
+
+
+

@@ -7,8 +7,6 @@ import { makeRequest } from "../../axios.js";
 import { useNavigate } from "react-router";
 
 const Upload = () => {
-  
-  const navigate = useNavigate();
   const [file, setFile] = useState(null);
   const [desc, setDesc] = useState(undefined);
   const fileInputRef = useRef(null);
@@ -77,7 +75,6 @@ const Upload = () => {
       e.preventDefault();
       handleClick(e);
     }
-
   };
 
   return (
@@ -88,20 +85,18 @@ const Upload = () => {
             <img
               className="selected-image"
               src={URL.createObjectURL(file)}
-              alt="Selected"
-            />
+              alt="Selected"/>
             <span className="file-name">{file.name}</span>
             <button className="clear-file-button" onClick={clearSelectedFile}>
               <Icon icon="ph:x-bold" color="black" width={15} height={15} />
             </button>
           </div>
         )}
-
       </div>
       <div className="input-post">
         <textarea
           type="text"
-          placeholder={`Tuliskan sesuatu ${currentUser.displayname}`}
+          placeholder={`Tuliskan sesuatu ${currentUser.username}`}
           onChange={(e) => setDesc(e.target.value)}
           onKeyDown={handleEnterKey}
           value={desc}
@@ -134,7 +129,6 @@ const Upload = () => {
         ref={fileInputRef}
         onChange={handleFileInputChange}
         style={{ display: "none" }}
-
       />
     </div>
   );
