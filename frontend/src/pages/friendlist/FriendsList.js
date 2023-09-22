@@ -11,7 +11,7 @@ import avatar3 from "../../assets/friend/friend3.jpg";
 import avatar4 from "../../assets/friend/friend4.jpg";
 import avatar5 from "../../assets/friend/friend5.jpeg";
 
-const FriendList = () => {
+const FriendList = ({ relationships }) => {
   const friends = [
     {
       id: 1,

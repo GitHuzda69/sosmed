@@ -13,10 +13,15 @@ const Comments = ({ postid, comment }) => {
   const [popupOpen, setPopupOpen] = useState(false);
   const [selectedCommentImg, setSelectedCommentImg] = useState(null);
   const [img, setImg] = useState(null);
-  const [texts, setTexts] = useState({desc: comment.desc})
+  const [texts, setTexts] = useState({ desc: comment.desc });
   const [commentEditOpen, setCommentEditOpen] = useState(null);
   const [commentOptionOpen, setCommentOptionOpen] = useState({});
-  const [commentOptionButtonPosition, setCommentOptionButtonPosition] = useState(null);
+  const [editedDescComment, setEditedDescComment] = useState(comment.desc);
+  const [editedImgComment, setEditedImgComment] = useState(null);
+  const [isDescCommentEmpty, setIsDescCommentEmpty] = useState(false);
+  const [originalDescComment, setOriginalDescComment] = useState(comment.desc);
+  const [commentOptionButtonPosition, setCommentOptionButtonPosition] =
+    useState(null);
 
   const { isLoading: rIsLoading, data: relationshipData } = useQuery(
     ["relationship"],
@@ -27,7 +32,7 @@ const Comments = ({ postid, comment }) => {
   );
 
   const queryClient = useQueryClient();
-  const CommentID = comment.id
+  const CommentID = comment.id;
   const deleteMutation = useMutation(
     (CommentID) => {
       return makeRequest.delete("/comments/" + CommentID);
@@ -62,13 +67,14 @@ const Comments = ({ postid, comment }) => {
   };
   const editMutation = useMutation(
     (comment) => {
-     return makeRequest.put("/comments/" + comment.id, comment.id);
-    },{
+      return makeRequest.put("/comments/" + comment.id, comment.id);
+    },
+    {
       onSuccess: () => {
         queryClient.invalidateQueries(["comments"]);
-      }
+      },
     }
-  )
+  );
 
   const handleFollow = () => {
     followMutation.mutate(relationshipData.includes(currentUser.id));
@@ -87,12 +93,26 @@ const Comments = ({ postid, comment }) => {
 
   const handleEdit = async (e) => {
     e.preventDefault();
-    let imgUrl;
 
-    imgUrl = img ? await upload(img) : comment.img;
+    if (!comment.img && editedDescComment.trim() === "") {
+      setIsDescCommentEmpty(true);
+      return;
+    }
 
-    editMutation.mutate({ ...texts, img: imgUrl });
-    setCommentEditOpen(false);
+    const editedComment = {
+      ...comment,
+      desc: editedDescComment,
+      img: editedImgComment ? await upload(editedImgComment) : comment.img,
+    };
+
+    try {
+      await makeRequest.put("/comments/" + editedComment.id, editedComment);
+      setCommentEditOpen(false);
+
+      window.location.reload();
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const openPopup = (imgUrl) => {
@@ -103,6 +123,21 @@ const Comments = ({ postid, comment }) => {
     setSelectedCommentImg(null);
     setPopupOpen(false);
   };
+
+  const handleRemoveImgComment = async () => {
+    try {
+      const updatedComment = {
+        ...comment,
+        img: null,
+      };
+
+      await makeRequest.put(`/comments/${comment.id}`, updatedComment);
+      setEditedImgComment(null);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className="comments">
       <div className="comment" key={comment.id}>
@@ -110,12 +145,16 @@ const Comments = ({ postid, comment }) => {
           <img
             className="comments-pic"
             src={"/data/" + comment.profilepic}
-            alt="" />
+            alt=""
+          />
           <span>{comment.displayname}</span>
           <h3>{moment(comment.createdat).fromNow()}</h3>
           <button
             className="button-comment-desc"
-            onClick={() => toggleCommentOptions(comment.id)}
+            onClick={() => {
+              toggleCommentOptions(comment.id);
+              setCommentEditOpen(false);
+            }}
           >
             <Icon icon="tabler:dots" width={20} height={20} />
           </button>
@@ -182,44 +221,72 @@ const Comments = ({ postid, comment }) => {
                       gap: "5px",
                     }}
                     onClick={() => {
-                      setCommentEditOpen(!commentEditOpen)
+                      setCommentEditOpen(!commentEditOpen);
                     }}
-                    >
+                  >
                     <Icon icon="tabler:edit" height={20} width={20} />
                     Edit Comment
                   </button>
                   {commentEditOpen && (
-                        <div className="edit-comment">
-                          <form className="edit-post-content">
-                            <input
-                              type="text"
-                              name="desc"
-                              value={comment.desc}
-                              onChange={(e) => setTexts(e.target.value)}
-                            />
-                            <input
-                              type="file"
-                              name="img"
-                              onChange={(e) => setImg(e.target.files[0])}
-                            />
-                            <button onClick={handleEdit}>
-                              Save
-                            </button>
-                          </form>
+                    <div className="edit-comment">
+                      {isDescCommentEmpty && (
+                        <div className="edit-comment-warn">
+                          <button
+                            className="close-warn-comment"
+                            onClick={() => {
+                              setEditedDescComment(originalDescComment);
+                              setIsDescCommentEmpty(false);
+                            }}
+                          >
+                            <Icon icon="ph:x-bold" width={15} height={15} />
+                          </button>
+                          <p>Deskripsi tidak boleh kosong.</p>
                         </div>
                       )}
+                      <form className="edit-comment-content">
+                        <input
+                          type="text"
+                          name="desc"
+                          value={editedDescComment}
+                          onChange={(e) => setEditedDescComment(e.target.value)}
+                        />
+                        <input
+                          type="file"
+                          name="img"
+                          onChange={(e) =>
+                            setEditedImgComment(e.target.files[0])
+                          }
+                        />
+                        {comment.img && comment.desc && (
+                          <div className="add-empty-desc-button">
+                            <button onClick={handleRemoveImgComment}>
+                              Hapus Gambar
+                            </button>
+                          </div>
+                        )}
+                        <button
+                          onClick={handleEdit}
+                          disabled={isDescCommentEmpty}
+                        >
+                          Post
+                        </button>
+                      </form>
+                    </div>
+                  )}
                 </div>
               )}
             </div>
           ) : null}
         </div>
         <div className="comments-content">
-          {comment.desc && <h4>{comment.desc}</h4>}
+          {comment.desc && <h4>{editedDescComment}</h4>}
           <div className="img-comments-container">
             {comment.img && (
               <button
                 className="img-button-comments"
-                onClick={() => openPopup(`/data/${comment.img}`)}
+                onClick={() =>
+                  openPopup(`/data/${editedImgComment || comment.img}`)
+                }
               >
                 <img
                   className="comments-image"
