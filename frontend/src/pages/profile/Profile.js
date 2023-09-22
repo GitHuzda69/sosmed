@@ -134,15 +134,17 @@ const Profile = () => {
                 className="image-popup-profil"
                 onClick={() => setImagePopupOpenBanner(false)}
               >
-                <img
-                  className="popup-img"
-                  src={
-                    data && data.coverpic
-                      ? "/data/" + data.coverpic
-                      : defaultcover
-                  }
-                  alt=""
-                />
+                <div className="popup-banner">
+                  <img
+                    className="popup-img-banner"
+                    src={
+                      data && data.coverpic
+                        ? "/data/" + data.coverpic
+                        : defaultcover
+                    }
+                    alt=""
+                  />
+                </div>
               </div>
             )}
             <div className="profil-user">
@@ -169,15 +171,17 @@ const Profile = () => {
                     className="image-popup-profil"
                     onClick={() => setImagePopupOpenProfile(false)}
                   >
-                    <img
-                      className="popup-img"
-                      src={
-                        data && data.profilepic
-                          ? "/data/" + data.profilepic
-                          : defaultprofile
-                      }
-                      alt=""
-                    />
+                    <div className="popup-profil">
+                      <img
+                        className="popup-img-profil"
+                        src={
+                          data && data.profilepic
+                            ? "/data/" + data.profilepic
+                            : defaultprofile
+                        }
+                        alt=""
+                      />
+                    </div>
                   </div>
                 )}
                 <div className="profil-bio">

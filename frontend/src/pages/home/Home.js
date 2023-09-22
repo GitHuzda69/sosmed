@@ -30,32 +30,43 @@ function Home() {
   return (
     <QueryClientProvider client={queryClient}>
       <div className="home">
-        <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} />
-        <div className="topbar">
-          <SearchBar />
-          <Sort />
-          <SettingPost />
+        <div className="leftbar">
+          <Sidebar
+            toggleSettings={toggleSettings}
+            toggleLogout={toggleLogout}
+          />
         </div>
-        <Rightbar />
-        <Upload />
-        <Posts />
-        {settingOpen && (
-          <>
-            <div className="settings-overlay" />
-            <div className="settings-container">
-              <Settings onClose={toggleSettings} />
-            </div>
-          </>
-        )}
-        {logoutOpen && (
-          <>
-            <div className="popup-logout-container" />
-            <div className="popup-logout">
-              <Logout onClose={toggleLogout} />
-            </div>
-          </>
-        )}
+        <div className="main-content">
+          <div className="topbar">
+            <SearchBar />
+            <Sort />
+            <SettingPost />
+          </div>
+          <div className="home-content">
+            <Posts />
+            <Upload />
+          </div>
+          <div className="side-content">
+            <Rightbar />
+          </div>
+        </div>
       </div>
+      {settingOpen && (
+        <>
+          <div className="settings-overlay" />
+          <div className="settings-container">
+            <Settings onClose={toggleSettings} />
+          </div>
+        </>
+      )}
+      {logoutOpen && (
+        <>
+          <div className="popup-logout-container" />
+          <div className="popup-logout">
+            <Logout onClose={toggleLogout} />
+          </div>
+        </>
+      )}
     </QueryClientProvider>
   );
 }

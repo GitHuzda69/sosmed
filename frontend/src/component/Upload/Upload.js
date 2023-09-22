@@ -55,16 +55,16 @@ const Upload = () => {
 
   const handleClick = async (e) => {
     e.preventDefault();
-  
+
     if (!desc && !file) {
       return;
     }
-  
+
     let imgUrl = "";
     if (file) {
       imgUrl = await upload();
     }
-  
+
     mutation.mutate({ desc, img: imgUrl });
     setDesc("");
     setFile(null);
@@ -85,7 +85,8 @@ const Upload = () => {
             <img
               className="selected-image"
               src={URL.createObjectURL(file)}
-              alt="Selected"/>
+              alt="Selected"
+            />
             <span className="file-name">{file.name}</span>
             <button className="clear-file-button" onClick={clearSelectedFile}>
               <Icon icon="ph:x-bold" color="black" width={15} height={15} />

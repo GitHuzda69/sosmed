@@ -332,7 +332,7 @@ const Post = ({ post }) => {
           {post.img && (
             <div className="post-img-container">
               <button
-                className="img-button"
+                className="img-button-post"
                 onClick={() => openPopup(`/data/${editedImg || post.img}`)}
               >
                 <img className="post-img" src={`/data/${post.img}`} alt="" />
