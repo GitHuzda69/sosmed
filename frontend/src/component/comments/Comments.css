@@ -207,7 +207,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.8);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -215,19 +215,25 @@
 }
 
 .popup-comments {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
   max-width: 100%;
   max-height: 100%;
   position: relative;
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
 .popup-image-comments {
+  height: auto;
+  width: auto;
   max-width: 100%;
   max-height: 100%;
   display: block;
   margin: 0 auto;
   border-radius: 10px;
+  object-fit: contain;
 }
 
 .comment-info {
@@ -325,8 +331,6 @@
   width: 25px;
   height: 25px;
 }
-
-
 .info-comment{
   display: flex;
   flex-direction: row;

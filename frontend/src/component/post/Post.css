@@ -217,11 +217,11 @@
   margin-left: 10px;
 }
 
-.img-button {
+.img-button-post {
   padding: 0;
   z-index: 1;
 }
-.img-button:hover img {
+.img-button-post:hover img {
   filter: brightness(0.5);
   z-index: 0;
   border-radius: 10px;
@@ -241,21 +241,25 @@
 }
 
 .popup-post {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
   max-width: 100%;
   max-height: 100%;
   position: relative;
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
 .popup-image-post {
   height: auto;
   width: auto;
-  max-width: 1000px;
-  max-height: 600px;
+  max-width: 100%;
+  max-height: 100%;
   display: block;
   margin: 0 auto;
   border-radius: 10px;
+  object-fit: contain;
 }
 
 

@@ -97,6 +97,7 @@
   display: flex;
   align-items: center;
   border-radius: 4px;
+  border: none;
 }
 .uploadItem:hover{
   background-color: lightgray;
