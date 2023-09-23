@@ -1,0 +1,48 @@
+.home{
+    display: grid;
+    grid-template-columns: auto 1fr; 
+    grid-gap: 5px;
+  }
+  
+  .topbar{
+      display: flex;
+      flex-direction: row;
+      gap: 10px;
+  }
+  
+  .leftbar .sidebar{
+      width: 50px;
+  }
+  
+  .main-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    }
+  
+  .home-content{
+      width: 100%;
+      flex-grow: 1;
+  }
+  .home-content .posts{
+      border: 1px red solid;
+  }
+  .home-content .post{
+      width: 98%;
+  }
+  .home-content .upload{
+      width: 66%;
+      margin-left: 75px;
+  }
+  
+  .side-content{
+      max-width: 250px;
+      border: 1px blue solid;
+  }
+  .side-content .rightBar{
+      height: 94%;
+  }
+  .side-content .rightBarContainer{
+      height: 87%;
+  }

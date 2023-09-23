@@ -4,7 +4,7 @@ import Home from "./pages/home/Home.js";
 import Message from "./pages/messages/Messages.js";
 import Friends from "./pages/friendlist/FriendsList.js";
 import Profile from "./pages/profile/Profile.js";
-import Update from "./component/Update/Update.js";
+import Fyp from "./pages/Fyp/Fyp.js"
 import {
   RouterProvider,
   createBrowserRouter,
@@ -64,6 +64,10 @@ function App() {
         {
           path: "/friend",
           element: <Friends />,
+        },
+        {
+          path: "/fyp",
+          element: <Fyp />,
         },
       ],
     },

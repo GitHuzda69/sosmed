@@ -24,14 +24,12 @@ const Post = ({ post }) => {
     useState(null);
   const queryClient = useQueryClient();
   const { currentUser } = useContext(AuthContext);
-  const userId = parseInt(useLocation().pathname.split("/")[2]);
-
   const { isLoading, data } = useQuery(["likes", post.id], () =>
     makeRequest.get("/likes?postid=" + post.id).then((res) => {
       return res.data;
     })
   );
-
+  const userId = post.userid;
   const { data: relationshipData } = useQuery(["relationship"], () =>
     makeRequest.get("/relationships?followeduserid=" + userId).then((res) => {
       return res.data;
@@ -116,11 +114,6 @@ const Post = ({ post }) => {
       console.error(error);
     }
   };
-
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-  };
-
   useEffect(() => {
     const handleEnterKey = (e) => {
       if (e.key === "Enter") {
@@ -354,7 +347,7 @@ const Post = ({ post }) => {
                   color={"red"}
                   onClick={handleLike}
                 />
-                <h3>{data && data.length} Likes</h3>
+                <h3>{data.length} Likes</h3>
               </>
             ) : (
               <Icon

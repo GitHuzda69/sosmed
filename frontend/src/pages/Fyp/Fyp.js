@@ -1,0 +1,89 @@
+import React, { useState } from "react";
+import Sidebar from "../../component/Leftbar/Leftbar.js";
+import Rightbar from "../../component/rightbar/Rightbar.js";
+import SearchBar from "../../component/search/Search";
+import Settings from "../../component/Settings/Settings.js";
+import "./Fyp.css";
+import "../../component/Settings/Settings.css";
+import "../../component/Logout/Logout.css";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import Post from "../../component/post/Post.js";
+import Upload from "../../component/Upload/Upload.js";
+import Logout from "../../component/Logout/Logout.js";
+import Sort from "../../component/sort/Sort.js";
+import SettingPost from "../../component/setting-post/Setting-post.js";
+import { useQuery } from "@tanstack/react-query";
+import { makeRequest } from "../../axios.js";
+
+const queryClient = new QueryClient();
+
+
+const Fyp = (post, className) => {
+  const { isLoading, error, data } = useQuery(["posts"], () =>
+    makeRequest.get("/posts/fyp?userid=" + userId).then((res) => {
+      return res.data;
+    })
+  );
+  const userId = post.userid
+  const [settingOpen, setSettingOpen] = useState(false);
+  const [logoutOpen, setLogoutOpen] = useState(false);
+
+  const toggleSettings = () => {
+    setSettingOpen(!settingOpen);
+  };
+
+  const toggleLogout = () => {
+    setLogoutOpen(!logoutOpen);
+  };
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <div className="home">
+        <div className="leftbar">
+          <Sidebar
+            toggleSettings={toggleSettings}
+            toggleLogout={toggleLogout}
+          />
+        </div>
+        <div className="main-content">
+          <div className="topbar">
+            <SearchBar />
+            <Sort />
+            <SettingPost />
+          </div>
+          <div className="home-content">
+          <div className={`posts ${className}`}>
+            {error
+                ? `Please login again to continue`
+                : isLoading
+                ? "loading"
+                : data.map((post) => <Post post={post} key={post.id} />)}
+            </div>
+            <Upload />
+          </div>
+          <div className="side-content">
+            <Rightbar />
+          </div>
+        </div>
+      </div>
+      {settingOpen && (
+        <>
+          <div className="settings-overlay" />
+          <div className="settings-container">
+            <Settings onClose={toggleSettings} />
+          </div>
+        </>
+      )}
+      {logoutOpen && (
+        <>
+          <div className="popup-logout-container" />
+          <div className="popup-logout">
+            <Logout onClose={toggleLogout} />
+          </div>
+        </>
+      )}
+    </QueryClientProvider>
+  );
+}
+
+export default Fyp;
