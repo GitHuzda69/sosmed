@@ -226,7 +226,9 @@ const Post = ({ post }) => {
                         width={20}
                         height={20}
                       />
-                      Follow
+                      {relationshipData.includes(currentUser.id)
+                      ? "Following"
+                      : "Follow"}
                     </button>
                   </div>
                 ) : (
