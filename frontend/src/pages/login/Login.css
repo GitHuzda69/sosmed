@@ -1,3 +1,6 @@
+.login-pages{
+  background-color: #ffffff;
+}
 .login-containers {
   display: flex;
   justify-content: flex-end; 

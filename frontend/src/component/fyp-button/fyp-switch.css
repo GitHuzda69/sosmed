@@ -1,0 +1,35 @@
+.fyp-switch{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: -7px;
+    margin-left: 85px;
+}
+
+.link-fyp{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    width: 110px;
+    padding: 8px 8px;
+    border-radius: 8px 0px 0px 8px;
+    color: black;
+    font-family: "Inter", sans-serif;
+    font-size: 15px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.link-following{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    width: 110px;
+    padding: 8px 8px;
+    border-radius: 0px 8px 8px 0px;
+    color: black;
+    font-family: "Inter", sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
+} 

@@ -4,12 +4,21 @@
     grid-gap: 5px;
   }
   
-  .topbar{
-      display: flex;
-      flex-direction: row;
-      gap: 10px;
-  }
-  
+.topbar-fyp{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    margin-top: 10px;
+}
+.topbar-fyp .link-fyp{
+    background-color: black;
+    color: white;
+}
+.topbar-fyp .link-following{
+    background-color: white;
+    color: black;
+}
+
   .leftbar .sidebar{
       width: 50px;
   }
@@ -26,7 +35,6 @@
       flex-grow: 1;
   }
   .home-content .posts{
-      border: 1px red solid;
   }
   .home-content .post{
       width: 98%;
@@ -38,11 +46,10 @@
   
   .side-content{
       max-width: 250px;
-      border: 1px blue solid;
   }
   .side-content .rightBar{
       height: 94%;
   }
   .side-content .rightBarContainer{
       height: 87%;
-  }
+  } 
