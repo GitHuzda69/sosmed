@@ -4,6 +4,8 @@ import "./FriendsList.css";
 import Sidebar from "../../component/Leftbar/Leftbar";
 import Settings from "../../component/Settings/Settings";
 import Logout from "../../component/Logout/Logout";
+import { useQuery } from "@tanstack/react-query";
+import { makeRequest } from "../../axios.js";
 
 import avatar1 from "../../assets/friend/friend1.jpg";
 import avatar2 from "../../assets/friend/friend2.jpg";
@@ -134,6 +136,16 @@ const FriendList = ({ relationships }) => {
     });
   };
 
+  const {
+    isLoading,
+    error,
+    data: friendData,
+  } = useQuery(["friend"], () =>
+    makeRequest.get("/friends").then((res) => {
+      return res.data;
+    })
+  );
+
   const [settingOpen, setSettingOpen] = useState(false);
   const [logoutOpen, setLogoutOpen] = useState(false);
 
@@ -159,26 +171,30 @@ const FriendList = ({ relationships }) => {
           </button>
         </div>
         <div className="friendlist">
-          {friends.map((friend, index) => (
-            <div className="friend" key={friend.id}>
-              <div className="friend-avatar">
-                <img src={friend.avatar} alt={friend.name} className="avatar" />
-              </div>
-              <div className="friend-info-details">
-                <h3>{friend.name}</h3>
-                <h4>{friend.mutual}</h4>
-                <button
-                  className="button-popup"
-                  onClick={(event) => togglePopup(index, event)}
-                >
-                  <Icon icon="tabler:dots" width={20} height={20} />
-                </button>
-              </div>
-              <div className="friend-desc">
-                <p>{friend.description}</p>
-              </div>
-            </div>
-          ))}
+          {error
+            ? `Something went wrong`
+            : isLoading
+            ? "loading"
+            : friendData.map((friend) => (
+                <div className="friend" key={friend.id}>
+                  <div className="friend-avatar">
+                    <img
+                      src={"./data/" + friend.profilepic}
+                      alt={friend.displayname}
+                      className="avatar"
+                    />
+                  </div>
+                  <div className="friend-info-details">
+                    <h3>{friend.displayname}</h3>
+                    <button className="button-popup">
+                      <Icon icon="tabler:dots" width={20} height={20} />
+                    </button>
+                  </div>
+                  <div className="friend-desc">
+                    <p>{friend.description}</p>
+                  </div>
+                </div>
+              ))}
         </div>
         {popupPosition.visible && (
           <div

@@ -6,66 +6,48 @@ import AuthContext from "../../context/authContext";
 import Settings from "../Settings/Settings";
 
 import defaultprofile from "../../assets/profile/default_avatar.png";
+import logo from "../../assets/Logo_BNW.jpg";
 
 const Sidebar = ({ toggleSettings, toggleLogout }) => {
   const { currentUser } = useContext(AuthContext);
   return (
     <div className="sidebar">
       <div className="content-sidebar">
+        <img className="sidebar-logo" src={logo} alt="BNW logo" />
         <Link to="/">
           <button>
-            <Icon icon="octicon:home-fill-24" width="40" height="40" />
+            <Icon
+              icon="octicon:home-fill-24"
+              width="35"
+              height="35"
+              color="white"
+            />
           </button>
         </Link>
+        <button>
+          <Icon icon="cil:bell" width="35" height="35" color="white" />
+        </button>
         <Link to="/messages">
           <button>
-            <Icon icon="jam:messages-f" width="40" height="40" />
+            <Icon icon="bx:chat" width="35" height="35" color="white" />
           </button>
         </Link>
         <Link to="/friend">
           <button>
-            <Icon
-              icon="fluent:people-community-20-filled"
-              width="40"
-              height="40"
-            />
+            <Icon icon="ic:round-people" width="35" height="35" color="white" />
           </button>
         </Link>
-        <button>
-          <Icon icon="brandico:facebook-rect" width="38" height="38" />
-        </button>
-        <button>
-          <Icon icon="ri:instagram-fill" width="42" height="42" />
-        </button>
-        <button>
-          <Icon icon="mdi:twitter" width="40" height="40" />
-        </button>
         <button onClick={toggleSettings}>
-          <Icon icon="solar:settings-bold" width="40" height="40" />
+          <Icon
+            icon="solar:settings-outline"
+            width="35"
+            height="35"
+            color="white"
+          />
         </button>
         <button onClick={toggleLogout}>
-          <Icon icon="tabler:logout" width="40" height="40" />
+          <Icon icon="tabler:logout" width="35" height="35" color="white" />
         </button>
-      </div>
-      <div className="sidebar-user">
-        <Link
-          to={`/profile/${currentUser.id}`}
-          style={{ textDecoration: "none", color: "inherit" }}
-          className="profileavatar"
-        >
-          <div className="leftBarUser">
-            <img
-              className="profile2"
-              src={
-                currentUser && currentUser.profilepic
-                  ? "/data/" + currentUser.profilepic
-                  : defaultprofile
-              }
-              alt="keren"
-            />
-          </div>
-        </Link>
-        <span>{currentUser.displayname}</span>
       </div>
     </div>
   );

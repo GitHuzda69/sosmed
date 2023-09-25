@@ -227,8 +227,8 @@ const Post = ({ post }) => {
                         height={20}
                       />
                       {relationshipData.includes(currentUser.id)
-                      ? "Following"
-                      : "Follow"}
+                        ? "Following"
+                        : "Follow"}
                     </button>
                   </div>
                 ) : (
@@ -343,10 +343,10 @@ const Post = ({ post }) => {
               <>
                 <Icon
                   className="icon"
-                  icon="mdi:heart"
+                  icon="iconamoon:like-fill"
                   width={25}
                   height={25}
-                  color={"red"}
+                  color={"black"}
                   onClick={handleLike}
                 />
                 <h3>{data.length} Likes</h3>
@@ -354,7 +354,7 @@ const Post = ({ post }) => {
             ) : (
               <Icon
                 className="icon"
-                icon="mdi:heart-outline"
+                icon="iconamoon:like-light"
                 width={25}
                 height={25}
                 color={"black"}
@@ -365,15 +365,20 @@ const Post = ({ post }) => {
           <div className="item" onClick={() => setCommentOpen(!commentOpen)}>
             <Icon
               className="icon"
-              icon="ant-design:message-filled"
+              icon="majesticons:comment-text-line"
               width={25}
               height={25}
             />
-            <h3>Comments</h3>
+            <h3>49</h3>
           </div>
           <div className="item">
-            <Icon className="icon" icon="mdi:share" width={30} height={30} />
-            <h3>Share</h3>
+            <Icon
+              className="icon"
+              icon="fluent:share-24-regular"
+              width={30}
+              height={30}
+            />
+            <h3>67</h3>
           </div>
         </div>
         {commentOpen && <Commento postid={post.id} />}

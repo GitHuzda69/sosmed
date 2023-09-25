@@ -13,6 +13,7 @@ import Logout from "../../component/Logout/Logout.js";
 import { useQuery } from "@tanstack/react-query";
 import { makeRequest } from "../../axios.js";
 import FypSwitch from "../../component/fyp-button/fyp-switch.js";
+import HomeProfile from "../../component/home-profile/home-profile.js";
 
 const queryClient = new QueryClient();
 
@@ -49,6 +50,7 @@ const Fyp = (post, className) => {
             <SearchBar />
           </div>
           <div className="home-content">
+            <Upload />
             <div className={`posts ${className}`}>
               {error
                 ? `Please login again to continue`
@@ -56,10 +58,13 @@ const Fyp = (post, className) => {
                 ? "loading"
                 : data.map((post) => <Post post={post} key={post.id} />)}
             </div>
-            <Upload />
           </div>
           <div className="side-content">
+            <HomeProfile />
             <Rightbar />
+            <h5>
+              Terms of Service Privacy Policy © 2023 Nama All rights reserved.
+            </h5>
           </div>
         </div>
       </div>

@@ -1,36 +1,39 @@
-.upload {
-  position: fixed;
+.upload { 
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   bottom: 0;
-  margin-left: 81px;
+  margin-top: 10px;
+  margin-left: 85px;
   padding: 10px;
-  height: auto;
-  width: 885px;
+  height: 55px;
+  width: 879px;
   max-height: 490px;
-  border-radius: 10px 10px 0px 0px;
-  border: 1px black solid;
-  background-color: #f0f0f0;
+  border-radius: 10px ; 
+  background-color: white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   z-index: 299;
 }
 
-.input-post {
-  flex: 1;
-  padding-right: 10px;
+.input-post { 
+  padding-right: 10px; 
+  width: 630px;
 }
 
 .input-post textarea {
-  height: 60px;
-  width: 96%;
+  width: 98%;
+  height: 25px; 
   resize: none;
   margin-top: 5px;
-  margin-left: 10px;
-  border: 1px black solid ;
+  margin-left: 8px; 
+  background-color: #E4E4E4;
+  border: none;
   border-radius: 10px;
   padding: 10px;
   font-size: 14px;
+} 
+.input-post textarea:focus{  
+  outline: 2px lightgray solid;
 }
 .input-post textarea::-webkit-scrollbar {
   width: 8px;
@@ -66,26 +69,29 @@
 .button-upload {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  margin-right: 10px;
+  align-items: center; 
+  margin-left: 30px;
+  margin-right: 15px;
 }
 
 .uploadItem-row {
   display: flex;
   flex-direction: row;
+  margin-left: -20px;
 }
 
 .uploadButton {
   width: 85%;
   border: none;
-  border-radius: 7px;
-  margin-top: -5px;
-  padding: 8px 16px;
+  border-radius: 7px; 
+  margin-left: 20px;  
+  padding: 5px 30px;
   cursor: pointer;
   transition: background-color 0.2s;
   background-color: black;
   color: white;
   font-family: "Inter", sans-serif;
+  font-size: 13px;
 }
 
 .uploadButton:hover {
@@ -120,9 +126,9 @@
 }
 
 .selected-file-container{
-  position: absolute;
-  bottom: 115px;
-  right: 20px;
+  position: absolute; 
+  top: 140px;
+  right: 450px; 
 }
 .selected-file-info{
   display: flex;
