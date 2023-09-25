@@ -1,13 +1,13 @@
 .search-bar-container {
     display: flex;
     align-items: center;
-    width: 650px; 
+    width: 610px; 
     height: 40px;
     border-radius: 8px;
     border: 1px black solid;
     overflow: hidden;
     background-color: white;
-    margin-left: 85px;
+    margin-left: 15px;
   }
   
   .search-bar-input {

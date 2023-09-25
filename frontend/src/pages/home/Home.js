@@ -10,8 +10,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Posts from "../../component/posts/Posts";
 import Upload from "../../component/Upload/Upload.js";
 import Logout from "../../component/Logout/Logout.js";
-import Sort from "../../component/sort/Sort.js";
-import SettingPost from "../../component/setting-post/Setting-post.js";
+import FypSwitch from "../../component/fyp-button/fyp-switch.js";
 
 const queryClient = new QueryClient();
 
@@ -38,9 +37,8 @@ function Home() {
         </div>
         <div className="main-content">
           <div className="topbar">
+            <FypSwitch />
             <SearchBar />
-            <Sort />
-            <SettingPost />
           </div>
           <div className="home-content">
             <Posts />

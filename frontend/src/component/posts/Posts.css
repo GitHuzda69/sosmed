@@ -25,6 +25,7 @@
   flex-direction: column;
   align-items: flex-start; 
   border-radius: 0;
+  border: none;
   padding: 10px;
   padding-bottom: 30px;
   width: 900px;

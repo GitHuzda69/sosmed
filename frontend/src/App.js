@@ -4,7 +4,7 @@ import Home from "./pages/home/Home.js";
 import Message from "./pages/messages/Messages.js";
 import Friends from "./pages/friendlist/FriendsList.js";
 import Profile from "./pages/profile/Profile.js";
-import Fyp from "./pages/Fyp/Fyp.js"
+import Fyp from "./pages/Fyp/Fyp.js";
 import {
   RouterProvider,
   createBrowserRouter,

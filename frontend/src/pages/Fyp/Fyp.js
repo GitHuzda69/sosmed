@@ -10,13 +10,11 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Post from "../../component/post/Post.js";
 import Upload from "../../component/Upload/Upload.js";
 import Logout from "../../component/Logout/Logout.js";
-import Sort from "../../component/sort/Sort.js";
-import SettingPost from "../../component/setting-post/Setting-post.js";
 import { useQuery } from "@tanstack/react-query";
 import { makeRequest } from "../../axios.js";
+import FypSwitch from "../../component/fyp-button/fyp-switch.js";
 
 const queryClient = new QueryClient();
-
 
 const Fyp = (post, className) => {
   const { isLoading, error, data } = useQuery(["posts"], () =>
@@ -24,7 +22,7 @@ const Fyp = (post, className) => {
       return res.data;
     })
   );
-  const userId = post.userid
+  const userId = post.userid;
   const [settingOpen, setSettingOpen] = useState(false);
   const [logoutOpen, setLogoutOpen] = useState(false);
 
@@ -46,14 +44,13 @@ const Fyp = (post, className) => {
           />
         </div>
         <div className="main-content">
-          <div className="topbar">
+          <div className="topbar-fyp">
+            <FypSwitch />
             <SearchBar />
-            <Sort />
-            <SettingPost />
           </div>
           <div className="home-content">
-          <div className={`posts ${className}`}>
-            {error
+            <div className={`posts ${className}`}>
+              {error
                 ? `Please login again to continue`
                 : isLoading
                 ? "loading"
@@ -84,6 +81,6 @@ const Fyp = (post, className) => {
       )}
     </QueryClientProvider>
   );
-}
+};
 
 export default Fyp;
