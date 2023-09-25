@@ -6,6 +6,7 @@ import postRoutes from "./routes/posts.js";
 import commentRoutes from "./routes/comments.js";
 import likeRoutes from "./routes/likes.js";
 import RelationshipRoutes from "./routes/relationships.js";
+import friendsRoutes from "./routes/friends.js";
 import cookieParser from "cookie-parser";
 import cors from "cors"
 import multer from "multer";
@@ -44,6 +45,7 @@ app.use('/api/posts', postRoutes)
 app.use('/api/comments', commentRoutes)
 app.use('/api/likes', likeRoutes)
 app.use('/api/relationships', RelationshipRoutes)
+app.use('/api/friends', friendsRoutes)
 
 const db = mysql.createConnection({
     host: "localhost",
