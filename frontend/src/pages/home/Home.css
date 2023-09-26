@@ -64,17 +64,19 @@
 .home-content .post{
     width: 98%;
 }
-.home-content .upload{
-    width: 66%;
-    margin-left: 75px;
+.home-content .upload{ 
 }
 
 .side-content{
     max-width: 250px;
 }
-.side-content .rightBar{
-    height: 94%;
-}
-.side-content .rightBarContainer{
-    height: 87%;
+.side-content h5{
+  position: fixed; 
+  text-align: center;
+  width: 230px;
+  right: 60px;
+  bottom: -15px;
+  font-size: 12px;
+  font-family: "Inter", sans-serif;
+  font-weight: bold;
 }

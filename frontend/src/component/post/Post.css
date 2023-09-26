@@ -12,8 +12,8 @@
   flex-direction: column;
   display: flex;
   margin-left: 15px;
-  margin-top: -15px;
-  border: 1px black solid;
+  margin-top: -15px; 
+  border: none;
   background-color: white;
 }
 .container {
@@ -39,8 +39,10 @@
 .profile {
   width: 60px;
   height: 60px;
-  border-radius: 50%;
+  border-radius: 10px;
   object-fit: cover;
+  margin-top: 5px;
+  margin-left: 5px;
 }
 .details {
   display: flex;
@@ -52,6 +54,7 @@
   font-size: 25px;
   font-family: "Inter", sans-serif;
   font-weight: bold;
+  margin-top: 5px;
 }
 .date {
   font-size: 12px;
@@ -180,8 +183,7 @@
   border-radius: 10px;
   margin-top: 5px;
   margin-left: -8px;
-  margin-bottom: -10px;
-  border: 1px black solid;
+  margin-bottom: -10px; 
 }
 .post-img:hover {
   border-radius: 15px;

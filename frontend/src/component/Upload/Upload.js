@@ -89,7 +89,7 @@ const Upload = () => {
             />
             <span className="file-name">{file.name}</span>
             <button className="clear-file-button" onClick={clearSelectedFile}>
-              <Icon icon="ph:x-bold" color="black" width={15} height={15} />
+              <Icon icon="ph:x-bold" color="white" width={15} height={15} />
             </button>
           </div>
         )}
@@ -118,10 +118,10 @@ const Upload = () => {
               height={25}
             ></Icon>
           </button>
+          <button className="uploadButton" onClick={handleClick}>
+            Post
+          </button>
         </div>
-        <button className="uploadButton" onClick={handleClick}>
-          Post
-        </button>
       </div>
       <input
         className="uploadItem-popup"

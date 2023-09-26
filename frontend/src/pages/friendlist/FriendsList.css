@@ -30,8 +30,8 @@
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  margin-left: 115px;
-  margin-bottom: 20px;
+  margin-left: 95px;
+  margin-bottom: 10px;
   overflow-y: auto;
 }
 .friendlist::-webkit-scrollbar {
@@ -51,6 +51,7 @@
 }
 .friend {
   width: 1200px;
+  height: 70px;
   display: flex;
   flex-direction: column;
   margin-bottom: 15px;
@@ -88,9 +89,10 @@
 }
 .button-popup{
   justify-content: flex-end;
-  width: 30px;
-  margin-top: -60px;
+  width: 30px; 
+  margin-top: -20px;
   margin-left: 1090px;
+  background-color: transparent;
 }
 .button-popup:hover{
   border-radius: 15px;

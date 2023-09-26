@@ -11,6 +11,7 @@ import Posts from "../../component/posts/Posts";
 import Upload from "../../component/Upload/Upload.js";
 import Logout from "../../component/Logout/Logout.js";
 import FypSwitch from "../../component/fyp-button/fyp-switch.js";
+import HomeProfile from "../../component/home-profile/home-profile.js";
 
 const queryClient = new QueryClient();
 
@@ -41,11 +42,15 @@ function Home() {
             <SearchBar />
           </div>
           <div className="home-content">
-            <Posts />
             <Upload />
+            <Posts />
           </div>
           <div className="side-content">
+            <HomeProfile />
             <Rightbar />
+            <h5>
+              Terms of Service Privacy Policy © 2023 Nama All rights reserved.
+            </h5>
           </div>
         </div>
       </div>
