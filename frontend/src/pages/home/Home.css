@@ -1,8 +1,9 @@
-.app{
+.app{   
     margin-top: -10px;
     background-color: #DDDDDD;
     scrollbar-width: thin;
     scrollbar-color: #999999 #ffffff;
+    overflow-x: hidden;
   }
   
   .app::-webkit-scrollbar {
@@ -27,16 +28,97 @@
   display: grid;
   grid-template-columns: auto 1fr; 
   grid-gap: 5px;
+} 
+  
+.leftbar .home-button-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 60px;
+  background-color: #DDDDDD;
+  border-radius: 35px 0px 0px 35px;
+  margin-left: 50px;
 }
-.home .app{
-    background-color: #DDDDDD;
+.leftbar .home-button-container2{
+  display: flex; 
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+  background-color: black;  
+  border-radius: 50%;
+  margin-left: 10px;
 }
+
+.leftbar .home-button{  
+  margin-top: 5px;
+  margin-left: 2px;
+  color: gold;
+}
+.leftbar .home-button:hover{
+  background-color: transparent;
+}
+
+.leftbar .notif-button-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 60px;
+}
+.leftbar .notif-button-container{
+  display: flex; 
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+}
+.leftbar .notif-button{
+  color: white;
+}
+
+.leftbar .messages-button-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 60px;
+}
+.leftbar .messages-button-container{
+  display: flex; 
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+}
+.leftbar .messages-button{
+  color: white;
+}
+
+.leftbar .friends-button-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 60px;
+}
+.leftbar .friends-button-container{
+  display: flex; 
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+}
+.leftbar .friends-button{
+  color: white;
+} 
 
 .topbar{
     display: flex;
     flex-direction: row;
     gap: 10px;
-    margin-top: 10px;
+    margin-top: 20px;
 }
 .topbar .link-fyp{
     background-color: white;
@@ -47,9 +129,6 @@
     color: white;
 }
 
-.leftbar .sidebar{
-    width: 50px;
-}
 
 .main-content {
   display: flex;
@@ -64,7 +143,7 @@
 .home-content .post{
     width: 98%;
 }
-.home-content .upload{ 
+.home-content .upload{  
 }
 
 .side-content{

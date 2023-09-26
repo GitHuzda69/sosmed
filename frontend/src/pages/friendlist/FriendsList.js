@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { AuthContext } from "../../context/authContext.js";
 import { Icon } from "@iconify/react";
 import "./FriendsList.css";
 import Sidebar from "../../component/Leftbar/Leftbar";
@@ -6,135 +7,18 @@ import Settings from "../../component/Settings/Settings";
 import Logout from "../../component/Logout/Logout";
 import { useQuery } from "@tanstack/react-query";
 import { makeRequest } from "../../axios.js";
+import { useLocation, Link } from "react-router-dom";
 
-import avatar1 from "../../assets/friend/friend1.jpg";
-import avatar2 from "../../assets/friend/friend2.jpg";
-import avatar3 from "../../assets/friend/friend3.jpg";
-import avatar4 from "../../assets/friend/friend4.jpg";
-import avatar5 from "../../assets/friend/friend5.jpeg";
+import defaultprofile from "../../assets/profile/default_avatar.png";
+import defaultcover from "../../assets/profile/default_banner.jpg";
 
 const FriendList = ({ relationships }) => {
-  const friends = [
-    {
-      id: 1,
-      name: "John Doe",
-      mutual: "19 Mutual friends",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      avatar: avatar1,
-    },
-    {
-      id: 2,
-      name: "Jane Smith",
-      mutual: "10 Mutual friends",
-      description: "Pellentesque ac ligula in tellus feugiat placerat.",
-      avatar: avatar2,
-    },
-    {
-      id: 3,
-      name: "Michael Johnson",
-      mutual: "12 Mutual friends",
-      description:
-        "Vivamus euismod, purus eu placerat pellentesque, quam libero consectetur purus.",
-
-      avatar: avatar3,
-    },
-    {
-      id: 4,
-      name: "Emily Williams",
-      mutual: "9 Mutual friends",
-      description:
-        "Sed finibus lectus auctor, bibendum justo vel, congue eros.",
-      avatar: avatar4,
-    },
-    {
-      id: 5,
-      name: "Daniel Brown",
-      mutual: "9 Mutual friends",
-      description:
-        "Fusce interdum lorem vel neque suscipit, sit amet dignissim ex auctor.",
-      avatar: avatar5,
-    },
-    {
-      id: 6,
-      name: "Michael Johnson",
-      mutual: "12 Mutual friends",
-      description:
-        "Vivamus euismod, purus eu placerat pellentesque, quam libero consectetur purus.",
-      avatar: avatar3,
-    },
-    {
-      id: 7,
-      name: "Emily Williams",
-      mutual: "17 Mutual friends",
-      description:
-        "Sed finibus lectus auctor, bibendum justo vel, congue eros.",
-      avatar: avatar4,
-    },
-    {
-      id: 8,
-      name: "Daniel Brown",
-      mutual: "6 Mutual friends",
-      description:
-        "Fusce interdum lorem vel neque suscipit, sit amet dignissim ex auctor.",
-      avatar: avatar5,
-    },
-    {
-      id: 9,
-      name: "Daniel Brown",
-      mutual: "12 Mutual friends",
-      description:
-        "Fusce interdum lorem vel neque suscipit, sit amet dignissim ex auctor.",
-      avatar: avatar5,
-    },
-    {
-      id: 10,
-      name: "Michael Johnson",
-      mutual: "25 Mutual friends",
-      description:
-        "Vivamus euismod, purus eu placerat pellentesque, quam libero consectetur purus.",
-      avatar: avatar3,
-    },
-    {
-      id: 11,
-      name: "Emily Williams",
-      mutual: "29 Mutual friends",
-      description:
-        "Sed finibus lectus auctor, bibendum justo vel, congue eros.",
-      avatar: avatar4,
-    },
-    {
-      id: 12,
-      name: "Daniel Brown",
-      mutual: "29 Mutual friends",
-      description:
-        "Fusce interdum lorem vel neque suscipit, sit amet dignissim ex , sit amet dignissim ex , sit amet dignissim ex , sit amet dignissim ex auctor.",
-      avatar: avatar5,
-    },
-  ];
+  const { currentUser } = useContext(AuthContext);
   const [popupPosition, setPopupPosition] = useState({
     visible: false,
     top: 0,
     left: 0,
   });
-
-  const [popupVisibility, setPopupVisibility] = useState(
-    new Array(friends.length).fill(false)
-  );
-
-  const togglePopup = (index, event) => {
-    const newPopupVisibility = [...popupVisibility];
-    newPopupVisibility[index] = !newPopupVisibility[index];
-    setPopupVisibility(newPopupVisibility);
-    const buttonRect = event.target.getBoundingClientRect();
-    const popupTop = buttonRect.top - 5;
-    const popupLeft = buttonRect.left - 153;
-
-    setPopupPosition({
-      visible: !popupPosition.visible,
-      top: popupTop,
-      left: popupLeft,
-    });
-  };
 
   const {
     isLoading,
@@ -157,10 +41,10 @@ const FriendList = ({ relationships }) => {
   };
 
   return (
-    <div>
+    <div className="friendlist-main">
       <div className="friendlist-container">
         <div className="friendlist-header">
-          <h2>Friendlist</h2>
+          <h2>Following Lists</h2>
           <button className="button-info">
             <Icon
               icon="fluent:person-alert-20-filled"
@@ -177,21 +61,56 @@ const FriendList = ({ relationships }) => {
             ? "loading"
             : friendData.map((friend) => (
                 <div className="friend" key={friend.id}>
-                  <div className="friend-avatar">
+                  <Link
+                    to={`/profile/${currentUser.id}`}
+                    style={{ textDecoration: "none", color: "inherit" }}
+                    className="profileavatar"
+                  >
                     <img
-                      src={"./data/" + friend.profilepic}
+                      className="friend-cover"
+                      src={
+                        friend && friend.coverpic
+                          ? "/data/" + friend.coverpic
+                          : defaultcover
+                      }
                       alt={friend.displayname}
-                      className="avatar"
                     />
-                  </div>
+                    <div className="friend-avatar">
+                      <img
+                        src={
+                          friend && friend.profilepic
+                            ? "/data/" + friend.profilepic
+                            : defaultprofile
+                        }
+                        alt={friend.displayname}
+                        className="avatar"
+                      />
+                    </div>
+                  </Link>
                   <div className="friend-info-details">
                     <h3>{friend.displayname}</h3>
                     <button className="button-popup">
                       <Icon icon="tabler:dots" width={20} height={20} />
                     </button>
+                    <div className="friend-follower">
+                      <h3>234</h3>
+                      <h4>Following</h4>
+                      <h3>4334</h3>
+                      <h4>Followers</h4>
+                    </div>
                   </div>
                   <div className="friend-desc">
-                    <p>{friend.description}</p>
+                    <p>
+                      {friend.description} Lorem ipsum dolor sit amet,
+                      consectetur adipiscing elit. In dolor nisl, commodo et
+                      vehicula eget, vehicula ac erat. Aliquam vulputate erat
+                      arcu, ut viverra nibh aliquam et. Aenean lorem quam,
+                      iaculis id varius at, rhoncus sit amet eros. Nam vitae
+                      quam convallis, placerat libero sit amet, dapibus dui. Ut
+                      finibus est ut tincidunt rutrum. Duis magna risus,
+                      ultricies eget suscipit vel, aliquet a lorem. Aliquam
+                      vulputate erat arcu.
+                    </p>
                   </div>
                 </div>
               ))}

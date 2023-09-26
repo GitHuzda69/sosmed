@@ -1,4 +1,9 @@
-
+.friendlist-main{
+  margin-bottom: 405px;
+  background-color: white;
+}
+.friendlist-container{ 
+}
 .friendlist-container h2{
   font-size: 40px;
   font-family: "Inter", sans-serif;
@@ -19,7 +24,7 @@
   border-radius: 10px;
   padding: 3px 6px;
   margin-top: 40px;
-  margin-right: 10px;
+  margin-right: 100px;
   cursor: pointer;
 }
 .button-info:hover{
@@ -27,10 +32,14 @@
 }
 
 .friendlist {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); 
+  gap: 20px;
   flex-direction: column;
   flex-wrap: wrap;
+  justify-content: space-between;
   margin-left: 95px;
+  margin-right: 90px;
   margin-bottom: 10px;
   overflow-y: auto;
 }
@@ -50,48 +59,86 @@
   background-color: #555;
 }
 .friend {
-  width: 1200px;
-  height: 70px;
+  width: 550px; 
   display: flex;
   flex-direction: column;
-  margin-bottom: 15px;
+  margin-bottom: 5px;
   margin-right: 10px;
   margin-left: 10px;
   border: 1px black solid;
   border-radius: 8px;
-  box-shadow: 2px 4px 6px 1px rgb(182, 182, 182);
+  box-shadow: 2px 4px 6px 1px rgb(182, 182, 182); 
 }
 
+.friend-cover{
+  width: 550px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 10px 10px 0px 0px;
+}
+.friend-cover:hover{
+  filter: brightness(0.7); 
+  cursor: pointer;
+}
 .friend-avatar{
-  margin-top: 15px;
-  margin-left: 15px;
+  position: absolute;
+  margin-top: -40px;
+  margin-left: 20px;
+}
+.friend-avatar:hover{
+  filter: brightness(0.7); 
+  cursor: pointer;
 }
 
 .friend-info-details {
   display: flex;
   flex-direction: column;
   align-items: top;
-  margin-top: -46px;
-  margin-left: 65px;
+  margin-top: 30px;
+  margin-left: 20px;
 }
 .friend-info-details h3{
   font-family: "Inter", sans-serif;
-  font-size: 12px;
+  font-size: 20px;
   font-size: bold;
   margin-top: 8px;
   margin-bottom: -8px;
+} 
+.friend-follower{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px; 
+  margin-top: -20px;
 }
-.friend-info-details h4{
+.friend-follower h3{
   font-family: "Inter", sans-serif;
-  font-size: 12px;
-  font-weight: normal;
-  margin-top: 8px;
+  font-size: 15px;
+  font-weight: bold;
+  margin: 0;
 }
+.friend-follower h4{
+  font-family: "Inter", sans-serif;
+  font-size: 15px; 
+  font-weight: normal;
+  margin-right: 10px;
+}
+.friend-desc {
+  flex: 1; 
+  margin-top: -20px;
+  margin-left: 20px;
+  margin-bottom: 5px;
+  margin-right: 10px;
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  font-weight: normal;
+}
+
 .button-popup{
   justify-content: flex-end;
   width: 30px; 
   margin-top: -20px;
-  margin-left: 1090px;
+  margin-left: 190px;
   background-color: transparent;
 }
 .button-popup:hover{
@@ -125,20 +172,95 @@
 }
 
 .avatar {
-  width: 40px;
-  height: 40px;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
   margin-right: 10px;
 }
 
-.friend-desc {
-  flex: 1;
-  margin-top: 15px;
-  margin-left: 20px;
-  margin-bottom: 5px;
-  margin-right: 10px;
-  font-family: "Inter", sans-serif;
-  font-size: 12px;
-  font-weight: normal;
+
+/*buat leftbar*/
+
+.friendlist-main .home-button-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 60px;
+}
+.friendlist-main .home-button-container2{
+  display: flex; 
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
 }
 
+.friendlist-main .home-button{  
+  color: white;
+}
+
+.friendlist-main .notif-button-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 60px;
+}
+.friendlist-main .notif-button-container{
+  display: flex; 
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+}
+.friendlist-main .notif-button{
+  color: white;
+}
+
+.friendlist-main .messages-button-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 60px;
+}
+.friendlist-main .messages-button-container{
+  display: flex; 
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+}
+.friendlist-main .messages-button{
+  color: white;
+}
+
+.friendlist-main .friends-button-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 60px;
+  background-color: white;
+  border-radius: 35px 0px 0px 35px;
+  margin-left: 50px;
+}
+.friendlist-main .friends-button-container2{
+  display: flex; 
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+  background-color: black;  
+  border-radius: 50%;
+  margin-left: 10px;
+}
+.friendlist-main .friends-button{
+  margin-top: 5px;
+  margin-left: 2px;
+  color: gold;
+}
+.friendlist-main .friends-button:hover{
+  background-color: transparent;
+} 

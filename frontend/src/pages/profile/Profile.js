@@ -106,7 +106,7 @@ const Profile = () => {
     },
   ];
   return (
-    <div>
+    <div className="profile-main">
       {isLoading ? (
         "loading"
       ) : (
@@ -244,7 +244,7 @@ const Profile = () => {
                     <img
                       src={friend.avatar}
                       alt={friend.name}
-                      className="avatar"
+                      className="avatar-rightBarprofile"
                     />
                   </div>
                   <div className="friend-info-profil">
