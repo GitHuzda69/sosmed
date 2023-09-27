@@ -7,6 +7,8 @@ import AuthContext from "../../context/authContext.js";
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import { Icon } from "@iconify/react";
 
+import defaultprofile from "../../assets/profile/default_avatar.png";
+
 const Commento = ({ postid, className }) => {
   const { currentUser } = useContext(AuthContext);
   const fileInputRef = useRef(null);
@@ -85,8 +87,12 @@ const Commento = ({ postid, className }) => {
         <div className="write1">
           <img
             className="comments-pic-write"
-            src={"/data/" + currentUser.profilepic}
-            alt=""
+            src={
+              currentUser && currentUser.profilepic
+                ? "/data/" + currentUser.profilepic
+                : defaultprofile
+            }
+            alt={currentUser.displayname}
           />
           <input
             className="input-comment"

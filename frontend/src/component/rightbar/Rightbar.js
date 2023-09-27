@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { makeRequest } from "../../axios.js";
 
+import defaultprofile from "../../assets/profile/default_avatar.png";
+
 const Rightbar = () => {
   const {
     isLoading,
@@ -28,7 +30,11 @@ const Rightbar = () => {
                   <div className="rightBarUserInfo">
                     <img
                       className="rightBarImg"
-                      src={"./data/" + friend.profilepic}
+                      src={
+                        friend && friend.profilepic
+                          ? "/data/" + friend.profilepic
+                          : defaultprofile
+                      }
                       alt={friend.displayname}
                     />
                     <div className={`statusDot ${"grayDot"}`} />

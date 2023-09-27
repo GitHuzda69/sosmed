@@ -14,29 +14,40 @@ const Sidebar = ({ toggleSettings, toggleLogout }) => {
     <div className="sidebar">
       <div className="content-sidebar">
         <img className="sidebar-logo" src={logo} alt="BNW logo" />
-        <Link to="/">
-          <button>
-            <Icon
-              icon="octicon:home-fill-24"
-              width="35"
-              height="35"
-              color="white"
-            />
-          </button>
-        </Link>
-        <button>
-          <Icon icon="cil:bell" width="35" height="35" color="white" />
-        </button>
-        <Link to="/messages">
-          <button>
-            <Icon icon="bx:chat" width="35" height="35" color="white" />
-          </button>
-        </Link>
-        <Link to="/friend">
-          <button>
-            <Icon icon="ic:round-people" width="35" height="35" color="white" />
-          </button>
-        </Link>
+        <div className="home-button-container">
+          <div className="home-button-container2">
+            <Link to="/">
+              <button className="home-button">
+                <Icon icon="octicon:home-fill-24" width="30" height="30" />
+              </button>
+            </Link>
+          </div>
+        </div>
+        <div className="notif-button-container">
+          <div className="notif-button-container2">
+            <button className="notif-button">
+              <Icon icon="cil:bell" width="35" height="35" />
+            </button>
+          </div>
+        </div>
+        <div className="messages-button-container">
+          <div className="messages-button-container2">
+            <Link to="/messages">
+              <button className="messages-button">
+                <Icon icon="bx:chat" width="35" height="35" />
+              </button>
+            </Link>
+          </div>
+        </div>
+        <div className="friends-button-container">
+          <div className="friends-button-container2">
+            <Link to="/friend">
+              <button className="friends-button">
+                <Icon icon="ic:round-people" width="35" height="35" />
+              </button>
+            </Link>
+          </div>
+        </div>
         <button onClick={toggleSettings}>
           <Icon
             icon="solar:settings-outline"

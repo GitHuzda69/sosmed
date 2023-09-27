@@ -76,7 +76,7 @@ function Friendslist() {
   };
 
   return (
-    <div>
+    <div className="main-messages">
       <h1 className="messages-main">Messages</h1>
       <main className="main">
         <div className="message-form">

@@ -1,3 +1,6 @@
+.profile-main{
+  background-color: white;
+}
 .profil {
     display: flex;
     flex-direction: row;
@@ -297,12 +300,11 @@
     font-weight: bold;
   }
   .rightProfileBar{
-    border: 1px black solid;
-    border-left: none;
+    border: 1px black solid; 
     width: 100%;
     height: 100%;
     max-width: 500px;
-    margin-left: 12px;
+    margin-left: 11px;
   }
   .search-profile{
     display: flex;
@@ -361,12 +363,18 @@
     margin-top: 10px;
     margin-left: 15px;
   }
+  .avatar-rightBarprofile {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
   .friend-info-profil {
     display: flex;
     flex-direction: column;
     align-items: top;
-    margin-top: -46px;
-    margin-left: 65px;
+    margin-top: -50px;
+    margin-left: 75px;
     margin-bottom: 10px;
   }
   .friend-info-profil h3{
@@ -390,7 +398,7 @@
     border: 1px black solid;
     border-radius: 50%;
     margin-top: -45px;
-    margin-left: 170px;
+    margin-left: 160px;
   }
   .button-add:hover{
     border-radius: 50%;
@@ -410,8 +418,7 @@
     border-right: 1px black solid;
     overflow-x: hidden;
   }
-  .posts-profile .post-container{
-    margin-top: -22px;
+  .posts-profile .post-container{ 
     margin-bottom: 0px;
     border-bottom: 1px black solid;
     margin-left: -32px;
@@ -422,8 +429,7 @@
     border: none;
     margin-left: 25px;
   }
-  .posts-profile .user{
-    margin-top: 25px;
+  .posts-profile .user{ 
     margin-left: 0px;
   }
   .posts-profile .post-img-container{
@@ -437,3 +443,100 @@
     margin-left: -13px;
     width: 910px;
   }
+
+  /*buat leftbar */
+   
+.profile-main .gray-button-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 70px; 
+  border-radius: 35px 0px 0px 35px; 
+}
+.profile-main .black-button-container{
+  display: flex; 
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px; 
+  border-radius: 50%; 
+}
+
+.profile-main .home-button{  
+  margin-top: 5px; 
+  color: white;
+} 
+
+
+.profile-main .notif-button-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 60px;
+}
+.profile-main .notif-button-container{
+  display: flex; 
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+}
+.profile-main .notif-button{
+  color: white;
+}
+
+.profile-main .messages-button-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 60px;
+}
+.profile-main .messages-button-container{
+  display: flex; 
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+}
+.profile-main .messages-button{
+  color: white;
+}
+
+.profile-main .friends-button-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 60px;
+}
+.profile-main .friends-button-container{
+  display: flex; 
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+}
+.profile-main .friends-button{
+  color: white;
+}
+
+.profile-main .settings-button-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 60px;
+}
+.profile-main .settings-button-container{
+  display: flex; 
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+}
+.profile-main .settings-button{
+  color: white;
+}

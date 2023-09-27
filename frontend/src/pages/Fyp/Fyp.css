@@ -3,12 +3,107 @@
     grid-template-columns: auto 1fr; 
     grid-gap: 5px;
   }
+   
+.leftbar-fyp .gray-button-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 70px; 
+    border-radius: 35px 0px 0px 35px; 
+  }
+  .leftbar-fyp .black-button-container{
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px; 
+    border-radius: 50%; 
+  }
+  
+  .leftbar-fyp .home-button{  
+    margin-top: 5px; 
+    color: white;
+  } 
+
+  
+.leftbar-fyp .notif-button-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 60px;
+  }
+  .leftbar-fyp .notif-button-container{
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+  }
+  .leftbar-fyp .notif-button{
+    color: white;
+  }
+  
+  .leftbar-fyp .messages-button-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 60px;
+  }
+  .leftbar-fyp .messages-button-container{
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+  }
+  .leftbar-fyp .messages-button{
+    color: white;
+  }
+  
+  .leftbar-fyp .friends-button-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 60px;
+  }
+  .leftbar-fyp .friends-button-container{
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+  }
+  .leftbar-fyp .friends-button{
+    color: white;
+  }
+  
+  .leftbar-fyp .settings-button-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 60px;
+  }
+  .leftbar-fyp .settings-button-container{
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+  }
+  .leftbar-fyp .settings-button{
+    color: white;
+  }
   
 .topbar-fyp{
     display: flex;
     flex-direction: row;
     gap: 10px;
-    margin-top: 15px;
+    margin-top: 20px;
 }
 .topbar-fyp .link-fyp{
     background-color: black;
@@ -18,10 +113,7 @@
     background-color: white;
     color: black;
 }
-
-  .leftbar .sidebar{
-      width: 50px;
-  }
+ 
   
   .main-content {
     display: flex;

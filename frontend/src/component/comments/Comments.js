@@ -7,6 +7,8 @@ import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import { makeRequest } from "../../axios";
 import moment from "moment";
 
+import defaultprofile from "../../assets/profile/default_avatar.png";
+
 const Comments = ({ postid, comment }) => {
   const { currentUser } = useContext(AuthContext);
   const userId = parseInt(useLocation().pathname.split("/")[2]);
@@ -144,8 +146,12 @@ const Comments = ({ postid, comment }) => {
         <div className="comment-info">
           <img
             className="comments-pic"
-            src={"/data/" + comment.profilepic}
-            alt=""
+            src={
+              comment && comment.profilepic
+                ? "/data/" + comment.profilepic
+                : defaultprofile
+            }
+            alt={comment.displayname}
           />
           <span>{comment.displayname}</span>
           <h3>{moment(comment.createdat).fromNow()}</h3>

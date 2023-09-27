@@ -38,7 +38,7 @@ const Fyp = (post, className) => {
   return (
     <QueryClientProvider client={queryClient}>
       <div className="home">
-        <div className="leftbar">
+        <div className="leftbar-fyp">
           <Sidebar
             toggleSettings={toggleSettings}
             toggleLogout={toggleLogout}

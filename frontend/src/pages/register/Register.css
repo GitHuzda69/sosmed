@@ -1,3 +1,6 @@
+.signup-main{
+  background-color: white;
+}
 .signup-container {
   display: flex;
   justify-content: flex-end; 

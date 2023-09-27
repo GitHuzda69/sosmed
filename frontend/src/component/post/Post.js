@@ -9,6 +9,8 @@ import moment from "moment";
 import Commento from "../Commento/Commento.js";
 import Comments from "../comments/Comments.js";
 
+import defaultprofile from "../../assets/profile/default_avatar.png";
+
 const Post = ({ post }) => {
   const [commentOpen, setCommentOpen] = useState(false);
   const [popupOpen, setPopupOpen] = useState(false);
@@ -171,7 +173,11 @@ const Post = ({ post }) => {
               >
                 <img
                   className="profile"
-                  src={"/data/" + post.profilepic}
+                  src={
+                    post && post.profilepic
+                      ? "/data/" + post.profilepic
+                      : defaultprofile
+                  }
                   alt=""
                 />
               </Link>
