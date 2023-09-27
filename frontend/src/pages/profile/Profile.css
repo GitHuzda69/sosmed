@@ -1,5 +1,6 @@
 .profile-main{
   background-color: white;
+  padding-right: 20px;
 }
 .profil {
     display: flex;
@@ -305,6 +306,7 @@
     height: 100%;
     max-width: 500px;
     margin-left: 11px;
+    padding-right: 10px;
   }
   .search-profile{
     display: flex;

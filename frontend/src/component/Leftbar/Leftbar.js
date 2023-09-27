@@ -25,9 +25,11 @@ const Sidebar = ({ toggleSettings, toggleLogout }) => {
         </div>
         <div className="notif-button-container">
           <div className="notif-button-container2">
-            <button className="notif-button">
-              <Icon icon="cil:bell" width="35" height="35" />
-            </button>
+            <Link to="/notif">
+              <button className="notif-button">
+                <Icon icon="cil:bell" width="35" height="35" />
+              </button>
+            </Link>
           </div>
         </div>
         <div className="messages-button-container">
