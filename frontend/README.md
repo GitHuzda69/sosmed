@@ -11,7 +11,7 @@
 
 ## Users Database
 
-```CREATE TABLE `sosmed`.`users` (`id` INT NOT NULL AUTO_INCREMENT, `username` VARCHAR(255) NOT NULL, `email` VARCHAR(255) NOT NULL, `password` VARCHAR(255) NOT NULL, `name` VARCHAR(45) NOT NULL, `coverpic` VARCHAR(100) NULL, `profilepic` VARCHAR(100) NULL, city VARCHAR(45) NULL, `joinat` VARCHAR(45), PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC)); ```
+```CREATE TABLE `sosmed`.`users` (`id` INT NOT NULL AUTO_INCREMENT, `username` VARCHAR(255) NOT NULL, `email` VARCHAR(255) NOT NULL, `password` VARCHAR(255) NOT NULL, `displayname` VARCHAR(45) NOT NULL, `coverpic` VARCHAR(100) NULL, `profilepic` VARCHAR(100) NULL ,`biodata` VARCHAR(255) NOT NULL, city VARCHAR(45) NULL, `joinat` VARCHAR(45), PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC)); ```
 
 ## Post Database
 
@@ -19,7 +19,7 @@
 
 ## Comments Database
 
-```CREATE TABLE `sosmed`.`comments` (`id` INT NOT NULL AUTO_INCREMENT, `desc` VARCHAR(255) NOT NULL, `createdat` DATETIME NULL, `userid` INT NOT NULL, `postid` INT NOT NULL, PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC), INDEX `postid_idx` (`postid` ASC), INDEX `commentsuserid_idx` (`userid` ASC), CONSTRAINT `comments_userid` FOREIGN KEY (`userid`) REFERENCES `sosmed`.`users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, CONSTRAINT `comments_postid` FOREIGN KEY (`postid`) REFERENCES `sosmed`.`posts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE); ```
+```CREATE TABLE `sosmed`.`comments` (`id` INT NOT NULL AUTO_INCREMENT, `desc` VARCHAR(255) NOT NULL,  `img` VARCHAR(255) NOT NULL, `createdat` DATETIME NULL, `userid` INT NOT NULL, `postid` INT NOT NULL, PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC), INDEX `postid_idx` (`postid` ASC), INDEX `commentsuserid_idx` (`userid` ASC), CONSTRAINT `comments_userid` FOREIGN KEY (`userid`) REFERENCES `sosmed`.`users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, CONSTRAINT `comments_postid` FOREIGN KEY (`postid`) REFERENCES `sosmed`.`posts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE); ```
 
 ## Relationships Database
 
@@ -35,3 +35,4 @@
 
 [React documentation](https://reactjs.org/)
 
+ALTER TABLE `users` ADD `biodata` VARCHAR(255) NOT NULL DEFAULT 'NOT NULL' AFTER `profilepic`;

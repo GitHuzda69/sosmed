@@ -232,9 +232,7 @@ const Profile = () => {
                 <span>{data && data.city}</span>
               </h3>
               <h4>
-                Etiam libero dui, varius tempor malesuada, convallis in tellus.
-                Phasellus vel risus a dui facilisis iaculis. Fusce porttitor
-                efficitur pharetra. Integer sit amet aliquam turpis.
+               {data && data.biodata}
               </h4>
             </div>
             <div className="friends-rec">

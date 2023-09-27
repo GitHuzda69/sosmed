@@ -13,10 +13,10 @@ export const register = (req,res)=> {
 
             const salt = bcrypt.genSaltSync(10);
             const hashedPassword = bcrypt.hashSync(req.body.password, salt);
+            const bio = "Hello, This is my biodata"
+            const q = 'INSERT INTO users (`username`, `email`, `password`, `displayname`, `biodata` , `joinat`) VALUES (?)';
 
-            const q = 'INSERT INTO users (`username`, `email`, `password`, `displayname`, `joinat`) VALUES (?)';
-
-            db.query(q, [[req.body.username, req.body.email, hashedPassword, req.body.displayname ,moment().format("MMMM Do YYYY")]], (err, data) => {
+            db.query(q, [[req.body.username, req.body.email, hashedPassword, req.body.displayname , bio, moment().format("MMMM Do YYYY")]], (err, data) => {
                 if (err) return res.status(500).json(err);
                 return res.status(200).json("User has been created");
             })
