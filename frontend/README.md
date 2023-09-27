@@ -35,4 +35,4 @@
 
 [React documentation](https://reactjs.org/)
 
-ALTER TABLE `users` ADD `biodata` VARCHAR(255) NOT NULL DEFAULT 'NOT NULL' AFTER `profilepic`;
+ALTER TABLE `users` ADD `biodata` VARCHAR(255) NOT NULL AFTER `profilepic`;

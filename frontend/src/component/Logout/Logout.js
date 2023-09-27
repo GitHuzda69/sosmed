@@ -1,12 +1,10 @@
 import React from "react";
-import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { makeRequest } from "../../axios.js";
 
 const Logout = ({ onClose }) => {
-  const navigate = useNavigate
   const handleLogout = () => {
-      axios.post("http://localhost:8800/api/auth/logout").then(
-      navigate("/login"))
+      makeRequest.post("http://localhost:8800/api/auth/logout")
     }
     return (
     <div className="popup-logout-container">
@@ -15,7 +13,7 @@ const Logout = ({ onClose }) => {
         <p>Are you sure want to sign out?</p>
         <div className="logout-button">
           <Link to="/login">
-          <button className="logout-button-logout">
+          <button className="logout-button-logout" onClick={handleLogout}>
             Yes, Sign Out
           </button></Link>
           <button onClick={onClose} className="logout-button-close">

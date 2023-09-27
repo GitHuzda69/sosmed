@@ -1,13 +1,12 @@
 import "./Post.css";
 import React, { useContext, useState, useRef, useEffect } from "react";
-import { useLocation, Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { makeRequest } from "../../axios.js";
 import { AuthContext } from "../../context/authContext.js";
 import { Icon } from "@iconify/react";
 import moment from "moment";
 import Commento from "../Commento/Commento.js";
-import Comments from "../comments/Comments.js";
 
 import defaultprofile from "../../assets/profile/default_avatar.png";
 
@@ -65,7 +64,7 @@ const Post = ({ post }) => {
     (following) => {
       if (following)
         return makeRequest.delete("/relationships?userId=" + userId);
-      return makeRequest.post("/relationships", { userId });
+      return makeRequest.post("/relationships", ( userId ));
     },
     {
       onSuccess: () => {
@@ -160,7 +159,6 @@ const Post = ({ post }) => {
       console.error(error);
     }
   };
-
   return (
     <div className="post-container">
       <div className="post">

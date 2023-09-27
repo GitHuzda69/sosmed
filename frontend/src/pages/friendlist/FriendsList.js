@@ -20,11 +20,7 @@ const FriendList = ({ relationships }) => {
     left: 0,
   });
 
-  const {
-    isLoading,
-    error,
-    data: friendData,
-  } = useQuery(["friend"], () =>
+  const { isLoading, error, data: friendData } = useQuery(["friend"], () =>
     makeRequest.get("/friends").then((res) => {
       return res.data;
     })
@@ -39,7 +35,6 @@ const FriendList = ({ relationships }) => {
   const toggleLogout = () => {
     setLogoutOpen(!logoutOpen);
   };
-
   return (
     <div className="friendlist-main">
       <div className="friendlist-container">
@@ -60,9 +55,9 @@ const FriendList = ({ relationships }) => {
             : isLoading
             ? "loading"
             : friendData.map((friend) => (
-                <div className="friend" key={friend.id}>
+                <div className="friend" key={friend.userid}>
                   <Link
-                    to={`/profile/${currentUser.id}`}
+                    to={`/profile/${friend.userid}`}
                     style={{ textDecoration: "none", color: "inherit" }}
                     className="profileavatar"
                   >
@@ -101,15 +96,7 @@ const FriendList = ({ relationships }) => {
                   </div>
                   <div className="friend-desc">
                     <p>
-                      {friend.description} Lorem ipsum dolor sit amet,
-                      consectetur adipiscing elit. In dolor nisl, commodo et
-                      vehicula eget, vehicula ac erat. Aliquam vulputate erat
-                      arcu, ut viverra nibh aliquam et. Aenean lorem quam,
-                      iaculis id varius at, rhoncus sit amet eros. Nam vitae
-                      quam convallis, placerat libero sit amet, dapibus dui. Ut
-                      finibus est ut tincidunt rutrum. Duis magna risus,
-                      ultricies eget suscipit vel, aliquet a lorem. Aliquam
-                      vulputate erat arcu.
+                      {friend.biodata}
                     </p>
                   </div>
                 </div>
