@@ -1,4 +1,4 @@
-import { useContext, useState, useRef } from "react";
+import { useContext, useState, useRef, useEffect } from "react";
 import { Icon } from "@iconify/react";
 import "./Update.css";
 import { makeRequest } from "../../axios";
@@ -24,12 +24,27 @@ const Update = ({ user, onClose }) => {
   const [texts, setTexts] = useState({
     displayname: user.displayname,
     city: user.city,
+    biodata: user.biodata,
   });
+
+  useEffect(() => {
+    setTexts((prev) => ({
+      ...prev,
+      displayname: user.displayname,
+      city: user.city,
+      biodata: user.biodata,
+    }));
+  }, [user]);
+
   const { isLoading, error, data } = useQuery(["user"], () =>
     makeRequest.get("/users/find/" + userId).then((res) => {
       return res.data;
     })
   );
+
+  const [editedName, setEditedName] = useState(data.displayname);
+  const [originalName, setOriginalName] = useState(data.displayname);
+  const [isNameEmpty, setIsNameEmpty] = useState(false);
 
   const upload = async (file) => {
     try {
@@ -53,20 +68,32 @@ const Update = ({ user, onClose }) => {
   );
 
   const handleChange = (e) => {
-    setTexts((prev) => ({ ...prev, [e.target.name]: [e.target.value] }));
+    setTexts((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (texts.displayname.trim() === "") {
+      setIsNameEmpty(true);
+      return;
+    }
+
     let coverUrl;
     let profileUrl;
 
     coverUrl = cover ? await upload(cover) : user.coverpic;
     profileUrl = profile ? await upload(profile) : user.profilepic;
 
-    mutation.mutate({ ...texts, coverpic: coverUrl, profilepic: profileUrl });
+    mutation.mutate({
+      ...texts,
+      coverpic: coverUrl,
+      profilepic: profileUrl,
+      biodata: texts.biodata,
+    });
     onClose();
   };
+
   const handleCoverFileChange = (e) => {
     const selectedFile = e.target.files[0];
     setCover(selectedFile);
@@ -111,6 +138,12 @@ const Update = ({ user, onClose }) => {
   const handleBackClick = () => {
     resetInputCover();
     resetInputProfile();
+  };
+
+  const resetName = () => {
+    setTexts((prev) => ({ ...prev, displayname: originalName }));
+    setEditedName(originalName);
+    setIsNameEmpty(false);
   };
 
   return (
@@ -182,14 +215,14 @@ const Update = ({ user, onClose }) => {
                 />
               </div>
             </div>
-            <div className="edit-bio">
+            <div className="edit-profile-popup">
               <div className="edit-name">
                 <h4>Name</h4>
                 <input
                   className="input-edit-name"
                   type="text"
                   name="displayname"
-                  placeholder="Your Name"
+                  value={texts.displayname}
                   onChange={handleChange}
                 />
               </div>
@@ -205,22 +238,44 @@ const Update = ({ user, onClose }) => {
                   className="input-edit-city"
                   type="text"
                   name="city"
-                  placeholder="Your Location"
+                  value={texts.city}
                   onChange={handleChange}
-                ></input>
+                />
               </div>
             </div>
-            <div className="edit-desc">
-              <h4>Edit Your desc</h4>
-              <textarea className="input-edit-desc" type="text" name="city" />
+            <div className="edit-bio">
+              <h4>Edit Your Bio</h4>
+              <textarea
+                className="input-edit-bio"
+                type="text"
+                name="biodata"
+                value={texts.biodata}
+                onChange={handleChange}
+              />
             </div>
           </form>
-          <button className="edit-save" onClick={handleSubmit}>
+          <button
+            className="edit-save"
+            onClick={handleSubmit}
+            disabled={isNameEmpty}
+          >
             Save
           </button>
         </div>
+        {isNameEmpty && (
+          <div className="edit-profile-warn">
+            <button
+              className="close-warn-profile"
+              onClick={() => {
+                resetName();
+              }}
+            >
+              <Icon icon="ph:x-bold" width={20} height={20} />
+            </button>
+            <p>Name cannot be empty.</p>
+          </div>
+        )}
       </div>
-      <div className="popup-edit-container"></div>
     </div>
   );
 };

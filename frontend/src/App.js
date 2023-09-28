@@ -5,6 +5,7 @@ import Message from "./pages/messages/Messages.js";
 import Friends from "./pages/friendlist/FriendsList.js";
 import Profile from "./pages/profile/Profile.js";
 import Fyp from "./pages/Fyp/Fyp.js";
+import Notif from "./pages/notif/notif.js";
 import {
   RouterProvider,
   createBrowserRouter,
@@ -68,6 +69,10 @@ function App() {
         {
           path: "/fyp",
           element: <Fyp />,
+        },
+        {
+          path: "/notif",
+          element: <Notif />,
         },
       ],
     },

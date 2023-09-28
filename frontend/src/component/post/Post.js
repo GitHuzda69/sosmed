@@ -64,7 +64,7 @@ const Post = ({ post }) => {
     (following) => {
       if (following)
         return makeRequest.delete("/relationships?userId=" + userId);
-      return makeRequest.post("/relationships", ( userId ));
+      return makeRequest.post("/relationships", userId);
     },
     {
       onSuccess: () => {
