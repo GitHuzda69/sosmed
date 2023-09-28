@@ -3,8 +3,9 @@ import { Link } from "react-router-dom";
 import { makeRequest } from "../../axios.js";
 
 const Logout = ({ onClose }) => {
-  const handleLogout = () => {
-      makeRequest.post("http://localhost:8800/api/auth/logout")
+  const handleLogout = async () => {
+    await makeRequest.post("http://localhost:8800/api/auth/logout")
+      localStorage.removeItem("user");
     }
     return (
     <div className="popup-logout-container">

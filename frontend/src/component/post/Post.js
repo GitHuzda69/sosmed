@@ -64,7 +64,7 @@ const Post = ({ post }) => {
     (following) => {
       if (following)
         return makeRequest.delete("/relationships?userId=" + userId);
-      return makeRequest.post("/relationships", userId);
+      return makeRequest.post("/relationships", {userId});
     },
     {
       onSuccess: () => {
@@ -373,7 +373,6 @@ const Post = ({ post }) => {
               width={25}
               height={25}
             />
-            <h3>49</h3>
           </div>
           <div className="item">
             <Icon
@@ -382,7 +381,6 @@ const Post = ({ post }) => {
               width={30}
               height={30}
             />
-            <h3>67</h3>
           </div>
         </div>
         {commentOpen && <Commento postid={post.id} />}

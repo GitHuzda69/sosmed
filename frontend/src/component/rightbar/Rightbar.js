@@ -17,7 +17,7 @@ const Rightbar = () => {
       <h2>People You Follow</h2>
       <div className="rightBarContainer">
         {error
-          ? `Something went wrong`
+          ? "Something went wrong"
           : isLoading
           ? "loading"
           : friendData.map((friend) => (

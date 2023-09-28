@@ -139,7 +139,6 @@ const Comments = ({ postid, comment }) => {
       console.error(error);
     }
   };
-
   return (
     <div className="comments">
       <div className="comment" key={comment.id}>

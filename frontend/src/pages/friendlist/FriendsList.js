@@ -100,8 +100,7 @@ const FriendList = ({ relationships }) => {
                   </div>
                   <div className="friend-desc">
                     <p>
-                      {friend.biodata}jknbjknljknjnsdjcnbjdsbnc kjnbsdjhckb
-                      cbdshbcn sdjhcv bhjb
+                      {friend.biodata}
                     </p>
                   </div>
                 </div>

@@ -34,5 +34,3 @@
 [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started)
 
 [React documentation](https://reactjs.org/)
-
-ALTER TABLE `users` ADD `biodata` VARCHAR(255) NOT NULL AFTER `profilepic`;
