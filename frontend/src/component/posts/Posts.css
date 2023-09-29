@@ -16,7 +16,7 @@
   }
 
 .posts{
-  font-family: "Inter", sans-serif;
+  font-family: "Inter" ;
   font-weight: bold;
   font-size: 40px;
   margin-top: -5px;
@@ -128,14 +128,14 @@
 .posts-content h2{
   margin-top: 5px;
   font-size: 30px;
-  font-family: "Inter", sans-serif;
+  font-family: "Inter" ;
   font-weight: bold;
 }
 .posts-content p{
   margin-top: -15px;
   font-size: 20px;
   font-weight: normal;
-  font-family: "Inter", sans-serif;
+  font-family: "Inter" ;
 }
 .posts-content p.medium-font {
     font-size: 18px;
@@ -303,7 +303,7 @@
     flex: 1;
     max-height: 100%;
     border-bottom: 2px black solid;
-    font-family: "Inter", sans-serif;
+    font-family: "Inter" ;
     font-weight: bold;
     width: 355px;
   }
@@ -335,14 +335,14 @@
   .comment-content h5{
     margin-top: -30px;
     font-size: 20px;
-    font-family: "Inter", sans-serif;
+    font-family: "Inter" ;
     font-weight: bold;
   }
   .comment-content p{
     margin-top: -35px;
     margin-bottom: 5px;
     font-size: 15px;
-    font-family: "Inter", sans-serif;
+    font-family: "Inter" ;
     font-weight: 500;
   }
 
