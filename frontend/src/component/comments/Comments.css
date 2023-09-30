@@ -63,7 +63,7 @@
   margin-left: 100px;
   font-weight: bold;
   font-size: 15px;
-  font-family: "Inter", sans-serif;
+  font-family: "Inter" ;
 }
 .selected-image-comment{
   max-width: 150px;
@@ -148,7 +148,7 @@
 .comment-info span{
   font-size: 20px;
   font-weight: bold;
-  font-family: "Inter", sans-serif;
+  font-family: "Inter" ;
   margin-top: -53px;
   margin-left: 100px;
 }
@@ -156,7 +156,7 @@
 .comment-info h3{
   flex: 1;
   font-size: 15px;
-  font-family: "Inter", sans-serif;
+  font-family: "Inter" ;
   font-weight: 400;
   margin-top: 1px;
   margin-left: 100px;
@@ -178,7 +178,7 @@
 .comments-content h4{
   font-size: 15px;
   font-weight: normal;
-  font-family: "Inter", sans-serif;
+  font-family: "Inter" ;
   text-decoration: none;
   margin-top: -5px;
   margin-bottom: 10px;
@@ -350,7 +350,7 @@
   cursor: pointer;
 }
 .item-comment h3{
-  font-family: "Inter", sans-serif;
+  font-family: "Inter" ;
   font-size: 15px;
   font-weight: bold;
   margin: 0;

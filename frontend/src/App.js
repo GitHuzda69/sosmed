@@ -16,10 +16,20 @@ import "./pages/home/Home.css";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import Sidebar from "./component/Leftbar/Leftbar.js";
 import AuthContext from "./context/authContext.js";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
+import WebFont from "webfontloader";
 
 function App() {
   const queryClient = new QueryClient();
+
+  useEffect(() => {
+    WebFont.load({
+      google: {
+        families: ["Inter"],
+      },
+    });
+  }, []);
+
   const Layout = () => {
     return (
       <QueryClientProvider client={queryClient}>

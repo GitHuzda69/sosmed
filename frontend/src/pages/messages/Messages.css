@@ -1,6 +1,6 @@
 .messages-main{
   margin-left: 120px;
-  font-family: "Inter", sans-serif;
+  font-family: "Inter";
   font-weight: bold;
   font-size: 40px;
   margin-top: 10px;
@@ -76,12 +76,12 @@
 }
 .message-content h2{
   margin-top: -35px;
-  font-family: "Inter", sans-serif;
+  font-family: "Inter";
   font-weight: bold;
 }
 .message-content p{
   margin-top: -15px;
-  font-family: "Inter", sans-serif;
+  font-family: "Inter";
 }
 
 .avatar {

@@ -61,14 +61,14 @@
     margin-left: 170px;
   }
   .profil-bio h2 {
-    font-family: "Inter", sans-serif;
+    font-family: "Inter";
     font-weight: bold;
     font-size: 28px;
   }
   
   .profil-bio h4{
     margin-top: -20px;
-    font-family: "Inter", sans-serif;
+    font-family: "Inter";
     font-weight: 500;
     font-size: 18px;
   }
@@ -126,7 +126,7 @@
   }
   .add-button span{
     margin-left: 8px;
-    font-family: "Inter", sans-serif;
+    font-family: "Inter";
     font-size: 15px;
   }
   
@@ -135,7 +135,7 @@
     margin-right: -1px;
     margin-top: -1px;
     height: auto;
-    font-family: "Inter", sans-serif;
+    font-family: "Inter";
   }
   .avatar-post{
     width: 50px;
@@ -322,7 +322,7 @@
   }
   .intro{
     margin-left: 25px;
-    font-family: "Inter", sans-serif;
+    font-family: "Inter";
   }
   .intro h2{
     font-size: 25px;
@@ -380,14 +380,14 @@
     margin-bottom: 10px;
   }
   .friend-info-profil h3{
-    font-family: "Inter", sans-serif;
+    font-family: "Inter";
     font-size: 12px;
     font-size: bold;
     margin-top: 8px;
     margin-bottom: -8px;
   }
   .friend-info-profil h4{
-    font-family: "Inter", sans-serif;
+    font-family: "Inter";
     font-size: 12px;
     font-weight: normal;
     margin-top: 8px;
