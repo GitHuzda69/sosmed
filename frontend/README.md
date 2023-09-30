@@ -29,6 +29,10 @@
 
 ```CREATE TABLE `sosmed`.`likes` (`id` INT NOT NULL AUTO_INCREMENT, `userid` INT NOT NULL, `postid` INT NOT NULL, PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC), INDEX `likesuserid_idx` (`userid` ASC), INDEX `likespostid_idx` (`postid` ASC), CONSTRAINT `likesuserid` FOREIGN KEY (`userid`) REFERENCES `sosmed`.`users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, CONSTRAINT `likespostid` FOREIGN KEY (`postid`) REFERENCES `sosmed`.`posts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE); ```
 
+## Message Database
+
+```CREATE TABLE `sosmed`.`message` (`id` INT NOT NULL AUTO_INCREMENT, `desc` VARCHAR(255) NOT NULL,  `img` VARCHAR(255) NOT NULL, `createdat` DATETIME NULL, `senderid` INT NOT NULL, `receiverid` INT NOT NULL, PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC), CONSTRAINT `sender_id` FOREIGN KEY (`senderid`) REFERENCES `sosmed`.`users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, CONSTRAINT `receiver_id` FOREIGN KEY (`receiverid`) REFERENCES `sosmed`.`users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE); ```
+
 # Dokumentasi
 
 [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started)
