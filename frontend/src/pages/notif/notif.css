@@ -1,9 +1,119 @@
 
 .main-notif{
-    margin-top: 20px;
-    margin-left: 80px;
-    border-radius: 10px;
-    background-color: white;
+  width: 920px;
+  height: 580px; 
+  margin-top: 20px;
+  margin-left: 80px;
+  margin-bottom: 5px;
+  border-radius: 10px;
+  background-color: white; 
+  font-family: "Inter";  
+}
+.main-notif h1{
+  font-size: 25px;
+  margin-left: 15px;
+}
+
+.mark-read-button{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  font-size: 16px;
+  font-weight: 500;
+  margin-top: -50px;
+  margin-left: 740px;
+}
+
+.notif-container{
+  margin-bottom: 20px; 
+}
+
+.notif-border{  
+  border-bottom: 1px gray solid;
+}
+
+.notif-buttons{
+  margin-left: 15px;  
+  margin-bottom: -5px;
+}
+.notif-buttons button{
+  font-size: 15px;
+  margin-right: 30px;
+}
+.notif-buttons button:hover{
+  border-radius: 0;
+}
+
+.bold-button{
+  font-weight: bold;
+  border-bottom: 2px black solid;
+}
+
+.notif-content{
+  height: 470px; 
+  border-radius: 0px 0px 0px 10px;
+  margin-left: 15px;
+  margin-right: 15px;   
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: #999999 #ffffff;
+}
+
+.notif-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.notif-content::-webkit-scrollbar-thumb {
+  background-color: #999999;
+  border-radius: 10px;
+}
+
+.notif-content::-webkit-scrollbar-thumb:hover {
+  background-color: #777777;
+}
+
+.notif-content::-webkit-scrollbar-track {
+  background-color: #ffffff;
+  border-radius: 10px;
+
+}
+
+.all-notif-container{ 
+  margin-top: 10px; 
+}
+
+.notif{
+  display: flex; 
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 15px 0px; 
+  margin-top: -10px;
+  margin-right: 10px;
+  border-bottom: 1px gray solid;
+  overflow-x: hidden;
+}
+.notif-user{
+  display: flex;
+  flex-direction: row;
+}
+.notif-avatar{
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+  margin-right: 15px;
+}
+.notif-text{
+  display: flex;
+  align-items: center;
+  flex-direction: row; 
+  margin-top: -10px; 
+}
+.notif-date {
+  font-size: 12px;
+  color: #777;  
+  margin-left: auto;
 }
 
 /*buat leftbar inih*/
@@ -54,6 +164,9 @@
     margin-top: 10px;
     margin-left: 2px;
     color: gold;
+  }
+  .main-notif .notif-button:hover{
+    background-color: transparent;
   }
   
   .main-notif .messages-button-container{
