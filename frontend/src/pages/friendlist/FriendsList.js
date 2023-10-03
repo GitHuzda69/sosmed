@@ -99,9 +99,7 @@ const FriendList = ({ relationships }) => {
                     </div>
                   </div>
                   <div className="friend-desc">
-                    <p>
-                      {friend.biodata}
-                    </p>
+                    <p>{friend.biodata}</p>
                   </div>
                 </div>
               ))}
