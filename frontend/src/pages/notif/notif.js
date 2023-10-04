@@ -163,9 +163,49 @@ function Notif() {
             </div>
           )}
           {showMentions && (
-            <div className="mentions-notif-container">mentions</div>
+            <div className="mentions-notif-container">
+              {notification.map((notification) => (
+                <div className="notif" key={notification.id}>
+                  <span className="notif-date">{notification.date}</span>
+                  <div className="notif-user">
+                    <img
+                      className="notif-avatar"
+                      src={notification.avatar}
+                      alt={notification.name}
+                    />
+                    <div className="notif-text">
+                      <p>
+                        <strong>{notification.name}</strong>{" "}
+                        {notification.notif}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           )}
-          {showUnread && <div className="unread-notif-container">unread</div>}
+          {showUnread && (
+            <div className="unread-notif-container">
+              {notification.map((notification) => (
+                <div className="notif" key={notification.id}>
+                  <span className="notif-date">{notification.date}</span>
+                  <div className="notif-user">
+                    <img
+                      className="notif-avatar"
+                      src={notification.avatar}
+                      alt={notification.name}
+                    />
+                    <div className="notif-text">
+                      <p>
+                        <strong>{notification.name}</strong>{" "}
+                        {notification.notif}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
       <HomeProfile />
