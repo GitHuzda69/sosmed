@@ -1,18 +1,17 @@
 .main-messages{
-  height: 590px;
+  height: 600px;
   display: flex;
   flex-direction: row;
-  margin-left: 85px; 
-  margin-bottom: 5px;
+  margin-left: 53px; 
+  margin-bottom: 3px;
   font-family: "Inter";
-  font-weight: bold; 
-  margin-top: 10px; 
-  background-color: white; 
+  font-weight: bold;  
+  background-color: white;  
 }   
 
 .message-friend-container{ 
-  padding: 10px;
-  border: 1px blue solid;
+  padding: 10px; 
+  border-right: 1px gray solid;
 }
 .message-friend-container h1{
   font-size: 24px;
@@ -47,12 +46,11 @@
 .message-friend-bar{
   display: flex;
   flex-direction: column;
-  height: 400px;
+  height: 420px;
   padding-top: 20px;
   margin-left: -10px;
   margin-right: -10px; 
-  border-top: 2px gray solid;
-  border: 1px green solid;
+  border-top: 2px gray solid;  
   overflow-y: scroll;
   overflow-x: hidden;
   scrollbar-width: thin;
@@ -112,96 +110,205 @@
   font-weight: normal;
 }
 
-.message-chat{
-  padding: 15px; 
+.message-chat-container{
+  display: flex;
+  flex-direction: column; 
+  width: 910px;
 }
 
-/*buat leftbar inih*/
- 
-.main-messages .home-button-container{
+.chat-profile{
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 50px;
-  height: 60px;
-}
-.main-messages .home-button-container2{
-  display: flex; 
-  align-items: center;
-  justify-content: center;
-  width: 45px;
-  height: 45px;
+  height: 70px;
+  gap: 10px;
+  border: 1px gray solid;
+  background-color: #DBDBDB;
 }
 
-.main-messages .home-button{   
-  color: white;
+.chat-avatar{
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  margin-left: 15px;
 }
-.main-messages .home-button:hover{
+ 
+.chat-status{
+  display: flex;
+  flex-direction: column;
+}
+.chat-status h2{
+  font-size: 18px;
+  font-weight: bold;
+}
+.chat-status h3{
+  font-size: 16px;
+  font-weight: normal;
+  margin-top: -16px;
+}
+
+.chat-profile-button{
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  margin-left: 500px;
+}
+.chat-profile-button button{
   background-color: transparent;
 }
 
-.main-messages .notif-button-container{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 50px;
-  height: 60px;
-}
-.main-messages .notif-button-container{
-  display: flex; 
-  align-items: center;
-  justify-content: center;
-  width: 45px;
-  height: 45px;
-}
-.main-messages .notif-button{
-  color: white;
+.chat{
+  height: 460px;
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: #999999 #ffffff; 
 }
 
-.main-messages .messages-button-container{
+.chat::-webkit-scrollbar {
+  width: 8px;
+}
+
+.chat::-webkit-scrollbar-thumb {
+  background-color: #999999;
+  border-radius: 10px;
+}
+
+.chat::-webkit-scrollbar-thumb:hover {
+  background-color: #777777;
+}
+
+.chat::-webkit-scrollbar-track {
+  background-color: #ffffff;
+  border-radius: 10px;
+}
+
+.chat-time{
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  width: 50px;
-  height: 60px;
-  background-color: #DDDDDD;
-  border-radius: 35px 0px 0px 35px;
-  margin-left: 50px;
+  margin-top: -10px;
+  margin-bottom: -10px;
 }
-.main-messages .messages-button-container2{
-  display: flex; 
-  align-items: center;
-  justify-content: center;
-  width: 45px;
-  height: 45px;
-  background-color: black;  
-  border-radius: 50%;
-  margin-left: 10px;
+
+.chat-other{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-direction: column;
+  width: 60%;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-top: 5px;
+  margin-left: 20px;
+  border: 1px black solid;
+  border-radius: 0px 10px 10px 10px;
 }
-.main-messages .messages-button{
+
+.chat-other h3 {
+  font-size: 15px;
+}
+
+.chat-other h4 {
+  margin-top: -20px;
+  font-size: 12px;
+  align-self: flex-end; 
+  color: gray;
+}
+
+.chat-self{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-direction: column;
+  width: 60%;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-top: 5px;
+  margin-left: 330px;
+  border: 1px black solid;
+  border-radius: 10px 10px 0px 10px;
+  background-color: #EEFFF8;
+}
+
+.chat-self h3 {
+  font-size: 15px;
+}
+
+.chat-self h4 {
+  margin-top: -20px;
+  font-size: 12px;
+  align-self: flex-end; 
+  color: gray;
+}
+
+.chat-input{
+  display: flex;
+  flex-direction: row;
+  margin-top: 5px;
+}
+
+.chat-input textarea{
+  position: absolute;
+  width: 705px;
+  height: 30px;
+  resize: none;
+  margin-left: 25px;
+  background-color: #E4E4E4;
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  padding-top: 20px;
+  padding-right: 155px;
+  font-size: 14px;
+}
+.chat-input textarea:focus{  
+  outline: 2px lightgray solid;
+}
+.chat-input textarea::-webkit-scrollbar {
+  width: 8px;
+}
+
+.chat-input textarea::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
+
+.chat-input textarea::-webkit-scrollbar-thumb {
+  background-color: gray;
+  border-radius: 5px;
+}
+.chat-input textarea::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+
+.placeholder {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  pointer-events: none;
+  color: #999;
+  transition: all 0.2s ease;
+}
+
+.chat-input textarea:focus+.placeholder,
+.chat-input textarea:not(:placeholder-shown)+.placeholder {
+  transform: translateY(-26px) scale(0.8);
+  color: #666;
+}
+
+.chat-input-button{ 
+  display: flex;
+  flex-direction: row;
   margin-top: 10px;
-  margin-left: 2px;
-  color: gold;
+  margin-left: 730px;
+  z-index: 69; 
+  gap: 5px;
 }
-.main-messages .messages-button:hover{
+.chat-button{ 
   background-color: transparent;
 }
 
-.main-messages .friends-button-container{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 50px;
-  height: 60px;
+.post-chat{
+  width: 35px;
+  height: 35px;
+  border-radius: 10px;
+  background-color: black;
 }
-.main-messages .friends-button-container{
-  display: flex; 
-  align-items: center;
-  justify-content: center;
-  width: 45px;
-  height: 45px;
-}
-.main-messages .friends-button{
-  color: white;
-}
- 

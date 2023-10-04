@@ -19,6 +19,8 @@ function Home() {
   const [settingOpen, setSettingOpen] = useState(false);
   const [logoutOpen, setLogoutOpen] = useState(false);
 
+  const isHomePage = true;
+
   const toggleSettings = () => {
     setSettingOpen(!settingOpen);
   };
@@ -34,6 +36,7 @@ function Home() {
           <Sidebar
             toggleSettings={toggleSettings}
             toggleLogout={toggleLogout}
+            isHomePage={isHomePage}
           />
         </div>
         <div className="main-content">

@@ -33,6 +33,8 @@ const FriendList = ({ relationships }) => {
   const [settingOpen, setSettingOpen] = useState(false);
   const [logoutOpen, setLogoutOpen] = useState(false);
 
+  const isFriendListPage = true;
+
   const toggleSettings = () => {
     setSettingOpen(!settingOpen);
   };
@@ -127,7 +129,11 @@ const FriendList = ({ relationships }) => {
           </div>
         )}
       </div>
-      <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} />
+      <Sidebar
+        toggleSettings={toggleSettings}
+        toggleLogout={toggleLogout}
+        isFriendListPage={isFriendListPage}
+      />
       {settingOpen && (
         <>
           <div className="settings-overlay" />
