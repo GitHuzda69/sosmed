@@ -1,13 +1,12 @@
 .friendlist-main{
-  margin-bottom: 405px;
   background-color: white;
 }
 .friendlist-container{ 
 }
 .friendlist-container h2{
   font-size: 40px;
-  font-family: "Inter", sans-serif;
-  font-weight: bold;
+  font-family: "Inter";
+  font-weight: 1000;
   margin-left: 120px;
 }
 .friendlist-header {
@@ -98,7 +97,7 @@
   margin-left: 20px;
 }
 .friend-info-details h3{
-  font-family: "Inter", sans-serif;
+  font-family: "Inter";
   font-size: 20px;
   font-size: bold;
   margin-top: 8px;
@@ -112,13 +111,13 @@
   margin-top: -20px;
 }
 .friend-follower h3{
-  font-family: "Inter", sans-serif;
+  font-family: "Inter";
   font-size: 15px;
   font-weight: bold;
   margin: 0;
 }
 .friend-follower h4{
-  font-family: "Inter", sans-serif;
+  font-family: "Inter";
   font-size: 15px; 
   font-weight: normal;
   margin-right: 10px;
@@ -129,7 +128,7 @@
   margin-left: 20px;
   margin-bottom: 5px;
   margin-right: 10px;
-  font-family: "Inter", sans-serif;
+  font-family: "Inter";
   font-size: 16px;
   font-weight: normal;
 }

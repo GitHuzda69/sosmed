@@ -20,7 +20,11 @@ const FriendList = ({ relationships }) => {
     left: 0,
   });
 
-  const { isLoading, error, data: friendData } = useQuery(["friend"], () =>
+  const {
+    isLoading,
+    error,
+    data: friendData,
+  } = useQuery(["friend"], () =>
     makeRequest.get("/friends").then((res) => {
       return res.data;
     })
@@ -95,9 +99,7 @@ const FriendList = ({ relationships }) => {
                     </div>
                   </div>
                   <div className="friend-desc">
-                    <p>
-                      {friend.biodata}
-                    </p>
+                    <p>{friend.biodata}</p>
                   </div>
                 </div>
               ))}

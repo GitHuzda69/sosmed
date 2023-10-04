@@ -5,6 +5,7 @@ import Message from "./pages/messages/Messages.js";
 import Friends from "./pages/friendlist/FriendsList.js";
 import Profile from "./pages/profile/Profile.js";
 import Fyp from "./pages/Fyp/Fyp.js";
+import Notif from "./pages/notif/notif.js";
 import {
   RouterProvider,
   createBrowserRouter,
@@ -15,10 +16,20 @@ import "./pages/home/Home.css";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import Sidebar from "./component/Leftbar/Leftbar.js";
 import AuthContext from "./context/authContext.js";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
+import WebFont from "webfontloader";
 
 function App() {
   const queryClient = new QueryClient();
+
+  useEffect(() => {
+    WebFont.load({
+      google: {
+        families: ["Inter"],
+      },
+    });
+  }, []);
+
   const Layout = () => {
     return (
       <QueryClientProvider client={queryClient}>
@@ -68,6 +79,10 @@ function App() {
         {
           path: "/fyp",
           element: <Fyp />,
+        },
+        {
+          path: "/notif",
+          element: <Notif />,
         },
       ],
     },

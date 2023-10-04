@@ -7,18 +7,48 @@ import Logout from "../../component/Logout/Logout";
 import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
 
-const messages = [
+import avatar1 from "../../assets/friend/friend1.jpg";
+import avatar2 from "../../assets/friend/friend2.jpg";
+import avatar3 from "../../assets/friend/friend3.jpg";
+import avatar4 from "../../assets/friend/friend4.jpg";
+import avatar5 from "../../assets/friend/friend5.jpeg";
+
+const friend = [
   {
     sender: "John Doe",
     content: "Hello there!",
-    timestamp: "2023-08-05 12:30",
+    avatar: avatar4,
   },
   {
     sender: "Jane Smith",
     content: "Hi John! How are you?",
-    timestamp: "2023-08-05 12:35",
+    avatar: avatar5,
   },
-  // Add more messages here
+  {
+    sender: "Jane Ol",
+    content: "Hi John! How are you?",
+    avatar: avatar3,
+  },
+  {
+    sender: "Jade Smith",
+    content: "Hi John! How are you?",
+    avatar: avatar1,
+  },
+  {
+    sender: "Jane Lord",
+    content: "Hi John! How are you?",
+    avatar: avatar5,
+  },
+  {
+    sender: "Jath",
+    content: "Hi John! How are you?",
+    avatar: avatar2,
+  },
+  {
+    sender: "Nawtic",
+    content: "Hi John! How are you?",
+    avatar: avatar1,
+  },
 ];
 
 function Friendslist() {
@@ -27,9 +57,6 @@ function Friendslist() {
   const [logoutOpen, setLogoutOpen] = useState(false);
 
   const [newPost, setNewPost] = useState({ author: "", content: "" });
-  const [textareaHeight] = useState("auto");
-  const textareaRef = useRef(null);
-  const [maxTextareaHeight] = useState("120px");
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -48,24 +75,6 @@ function Friendslist() {
       setNewPost({ author: "", content: "" });
     }
   };
-  const handleTextareaChange = () => {
-    const textarea = textareaRef.current;
-    textarea.style.height = "auto";
-    textarea.style.height = textarea.scrollHeight + "px";
-
-    if (textarea.scrollHeight > parseInt(maxTextareaHeight)) {
-      textarea.style.overflowY = "scroll";
-      textarea.style.height = maxTextareaHeight;
-    } else {
-      textarea.style.overflowY = "hidden";
-    }
-  };
-
-  useEffect(() => {
-    const textarea = textareaRef.current;
-    textarea.style.width = "1000px";
-    textarea.style.width = textarea.scrollWidth + "px";
-  }, [newPost.content]);
 
   const toggleSettings = () => {
     setSettingOpen(!settingOpen);
@@ -77,50 +86,42 @@ function Friendslist() {
 
   return (
     <div className="main-messages">
-      <h1 className="messages-main">Messages</h1>
-      <main className="main">
-        <div className="message-form">
-          <form onSubmit={handleSubmit}>
-            <div className="avatar2">
-              <img src={profilimage} alt="Avatar" />
-            </div>
-            <textarea
-              className="content-text"
-              ref={textareaRef}
-              name="content"
-              placeholder="What's on your mind?"
-              value={newPost.content}
-              onChange={handleInputChange}
-              onInput={handleTextareaChange}
-              style={{ height: textareaHeight, maxHeight: maxTextareaHeight }}
-            />
-            <button className="post-button" type="submit">
-              <Icon icon="fluent:send-28-filled" height={25} width={25} />
-            </button>
-            <input
-              className="author"
-              type="text"
-              name="author"
-              placeholder="Your Name"
-              value={newPost.author}
-              onChange={handleInputChange}
-            />
-          </form>
+      <div className="message-friend-container">
+        <h1>Messages</h1>
+        <div className="search-message-friend">
+          <Icon
+            icon="octicon:search-16"
+            className="searchbar-message-friend-button"
+            color="black"
+            width="22"
+            height="22"
+          />
+          <input
+            className="input-search-friend"
+            type="text"
+            placeholder="Search on Messages"
+          />
         </div>
-        <div className="message-list">
-          {posts.map((post) => (
-            <div className="message" key={post.id}>
-              <div className="avatar">
-                <img src={profilimage} alt="Avatar" />
+        <div className="message-friend-bar">
+          {friend.map((friend) => (
+            <button>
+              <div className="message-friend">
+                <img
+                  className="message-friend-avatar"
+                  src={friend.avatar}
+                  alt={friend.sender}
+                  avatar
+                />
+                <div className="message-friend-bio">
+                  <h2>{friend.sender}</h2>
+                  <h3>{friend.content}</h3>
+                </div>
               </div>
-              <div className="message-content">
-                <h2>{post.author}</h2>
-                <p>{post.content}</p>
-              </div>
-            </div>
+            </button>
           ))}
         </div>
-      </main>
+      </div>
+      <div className="message-chat-container">chat</div>
       <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} />
       {settingOpen && (
         <>

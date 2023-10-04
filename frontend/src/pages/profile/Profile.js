@@ -229,10 +229,11 @@ const Profile = () => {
               <h3>
                 <Icon icon="fluent:location-16-filled" width={25} height={25} />
                 From
-                <span>{data && data.city}</span>
+                <span>{data?.city || "Earth"}</span>
               </h3>
               <h4>
-               {data && data.biodata}
+                {data?.biodata ||
+                  "This is your biodata, You can update it on the edit profile."}
               </h4>
             </div>
             <div className="friends-rec">
