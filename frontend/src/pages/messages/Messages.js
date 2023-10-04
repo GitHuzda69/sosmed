@@ -1,10 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
-import profilimage from "../../assets/profil.jpg";
 import "./Messages.css";
 import Sidebar from "../../component/Leftbar/Leftbar";
 import Settings from "../../component/Settings/Settings";
 import Logout from "../../component/Logout/Logout";
 import { Link } from "react-router-dom";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { makeRequest } from "../../axios.js";
 import { Icon } from "@iconify/react";
 
 import avatar1 from "../../assets/friend/friend1.jpg";
@@ -84,6 +85,18 @@ function Friendslist() {
     setLogoutOpen(!logoutOpen);
   };
 
+  const { isLoading: cIsLoading, error: cError, data: convData} = useQuery(["conversation"], () =>
+    makeRequest.get("/conversations").then((res) => {
+      return res.data;
+    })
+);
+
+  const { isLoading, error, data} = useQuery(["message"], () =>
+    makeRequest.get("/messages").then((res) => {
+      return res.data;
+    })
+);
+console.log(data)
   return (
     <div className="main-messages">
       <div className="message-friend-container">
