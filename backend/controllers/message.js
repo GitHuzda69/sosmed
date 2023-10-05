@@ -35,9 +35,10 @@ export const getMessage = (req, res)=> {
         if (err) return res.status(403).json("Token not valid");
     
 
-    const q = 'SELECT * FROM messages WHERE id= ?';
+    const q = 'SELECT * FROM messages AS m JOIN conversations AS c ON m.senderid = c.senderid OR m.receiverid = c.receiverid WHERE m.senderid = ? OR m.receiverid = ?';
 
-    const values = req.body.message.id;
+    const values =  [1, 1];
+    const values2 = req.body.message.id;
 
     db.query(q, values, (err, data)=>{
         if (err) return res.status(500).json(err);

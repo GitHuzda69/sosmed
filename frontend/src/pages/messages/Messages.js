@@ -121,21 +121,17 @@ function Friendslist() {
     setLogoutOpen(!logoutOpen);
   };
 
-  const {
-    isLoading: cIsLoading,
-    error: cError,
-    data: convData,
-  } = useQuery(["conversation"], () =>
+  const {isLoading: cIsLoading, error: cError, data: convData } = useQuery(["conversation"], () =>
     makeRequest.get("/conversations").then((res) => {
       return res.data;
     })
   );
 
-//   const { isLoading, error, data} = useQuery(["message"], () =>
-//     makeRequest.get("/messages").then((res) => {
-//       return res.data;
-//     })
-// );
+  const { isLoading, error, data } = useQuery(["message"], () =>
+    makeRequest.get("/messages").then((res) => {
+      return res.data;
+    })
+  );
 
   return (
     <div className="main-messages">
