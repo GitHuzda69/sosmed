@@ -8,48 +8,100 @@ import Settings from "../Settings/Settings";
 import defaultprofile from "../../assets/profile/default_avatar.png";
 import logo from "../../assets/Logo_BNW.jpg";
 
-const Sidebar = ({ toggleSettings, toggleLogout }) => {
+const Sidebar = ({
+  toggleSettings,
+  toggleLogout,
+  isFriendListPage,
+  isHomePage,
+  isMessagesPage,
+  isNotifPage,
+}) => {
   const { currentUser } = useContext(AuthContext);
+
   return (
     <div className="sidebar">
       <div className="content-sidebar">
         <img className="sidebar-logo" src={logo} alt="BNW logo" />
-        <div className="home-button-container">
-          <div className="home-button-container2">
-            <Link to="/">
-              <button className="home-button">
-                <Icon icon="octicon:home-fill-24" width="30" height="30" />
-              </button>
-            </Link>
-          </div>
-        </div>
-        <div className="notif-button-container">
-          <div className="notif-button-container2">
-            <Link to="/notif">
-              <button className="notif-button">
-                <Icon icon="cil:bell" width="35" height="35" />
-              </button>
-            </Link>
-          </div>
-        </div>
-        <div className="messages-button-container">
-          <div className="messages-button-container2">
-            <Link to="/messages">
-              <button className="messages-button">
-                <Icon icon="bx:chat" width="35" height="35" />
-              </button>
-            </Link>
-          </div>
-        </div>
-        <div className="friends-button-container">
-          <div className="friends-button-container2">
-            <Link to="/friend">
-              <button className="friends-button">
-                <Icon icon="ic:round-people" width="35" height="35" />
-              </button>
-            </Link>
-          </div>
-        </div>
+        {isHomePage ? (
+          <Link to="/">
+            <button className="home-button">
+              <Icon
+                icon="mingcute:home-4-fill"
+                width="35"
+                height="35"
+                color="white"
+              />
+            </button>
+          </Link>
+        ) : (
+          <Link to="/">
+            <button className="home-button">
+              <Icon
+                icon="mingcute:home-4-line"
+                width="35"
+                height="35"
+                color="white"
+              />
+            </button>
+          </Link>
+        )}
+        {isNotifPage ? (
+          <Link to="/notif">
+            <button className="notif-button">
+              <Icon icon="mdi:bell" width="35" height="35" color="white" />
+            </button>
+          </Link>
+        ) : (
+          <Link to="/notif">
+            <button className="notif-button">
+              <Icon
+                icon="mdi:bell-outline"
+                width="35"
+                height="35"
+                color="white"
+              />
+            </button>
+          </Link>
+        )}
+        {isMessagesPage ? (
+          <Link to="/messages">
+            <button className="messages-button">
+              <Icon icon="bxs:chat" width="35" height="35" color="white" />
+            </button>
+          </Link>
+        ) : (
+          <Link to="/messages">
+            <button className="messages-button">
+              <Icon icon="bx:chat" width="35" height="35" color="white" />
+            </button>
+          </Link>
+        )}
+
+        {isFriendListPage ? (
+          <Link to="/friend">
+            <button className="friends-button">
+              <Icon
+                icon="ion:people"
+                hFlip={true}
+                width="35"
+                height="35"
+                color="white"
+              />
+            </button>
+          </Link>
+        ) : (
+          <Link to="/friend">
+            <button className="friends-button">
+              <Icon
+                icon="ion:people-outline"
+                hFlip={true}
+                width="35"
+                height="35"
+                color="white"
+              />
+            </button>
+          </Link>
+        )}
         <button onClick={toggleSettings}>
           <Icon
             icon="solar:settings-outline"
