@@ -35,7 +35,7 @@
 
 ## Message Database
 
-```CREATE TABLE `sosmed`.`messages` (`id` INT NOT NULL AUTO_INCREMENT, `desc` VARCHAR(255) NOT NULL,  `img` VARCHAR(255) NOT NULL, `createdat` DATETIME NULL, `senderid` INT NOT NULL, `receiverid` INT NOT NULL, PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC), CONSTRAINT `messages_sender_id` FOREIGN KEY (`senderid`) REFERENCES `sosmed`.`conversations` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, CONSTRAINT `messages_receiver_id` FOREIGN KEY (`receiverid`) REFERENCES `sosmed`.`conversations` (`id`) ON DELETE CASCADE ON UPDATE CASCADE);  ```
+```CREATE TABLE `sosmed`.`messages` (`id` INT NOT NULL AUTO_INCREMENT, `desc` VARCHAR(255) NOT NULL,  `img` VARCHAR(255) NOT NULL, `createdat` DATETIME NULL, `senderid` INT NOT NULL, `receiverid` INT NOT NULL, PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC), CONSTRAINT `messages_sender_id` FOREIGN KEY (`senderid`) REFERENCES `sosmed`.`conversations` (`senderid`) ON DELETE CASCADE ON UPDATE CASCADE, CONSTRAINT `messages_receiver_id` FOREIGN KEY (`receiverid`) REFERENCES `sosmed`.`conversations` (`receiverid`) ON DELETE CASCADE ON UPDATE CASCADE);  ```
 
 # Dokumentasi
 

@@ -91,12 +91,12 @@ function Friendslist() {
     })
 );
 
-  const { isLoading, error, data} = useQuery(["message"], () =>
-    makeRequest.get("/messages").then((res) => {
-      return res.data;
-    })
-);
-console.log(data)
+//   const { isLoading, error, data} = useQuery(["message"], () =>
+//     makeRequest.get("/messages").then((res) => {
+//       return res.data;
+//     })
+// );
+
   return (
     <div className="main-messages">
       <div className="message-friend-container">
