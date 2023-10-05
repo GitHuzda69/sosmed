@@ -52,10 +52,46 @@ const friend = [
   },
 ];
 
+const other = [
+  {
+    chat: "Hoe",
+    time: "19.21 AM",
+  },
+  {
+    chat: "Dodol baru mateng, ditarik susah putus",
+    time: "19.21 AM",
+  },
+  {
+    chat: "Temanku yg ganteng, adakah seratus",
+    time: "19.21 AM",
+  },
+];
+
+const self = [
+  {
+    chat: "Keren",
+    time: "19.25 AM",
+  },
+  {
+    chat: "Tapi Gaada",
+    time: "19.25 AM",
+  },
+  {
+    chat: "Ini aja ada kerjaan ",
+    time: "19.25 AM",
+  },
+  {
+    chat: "Bawa aqua gelas sambil jongkok",
+    time: "19.25 AM",
+  },
+];
+
 function Friendslist() {
   const [posts, setPosts] = useState([]);
   const [settingOpen, setSettingOpen] = useState(false);
   const [logoutOpen, setLogoutOpen] = useState(false);
+
+  const isMessagesPage = true;
 
   const [newPost, setNewPost] = useState({ author: "", content: "" });
 
@@ -85,18 +121,22 @@ function Friendslist() {
     setLogoutOpen(!logoutOpen);
   };
 
-  const { isLoading: cIsLoading, error: cError, data: convData} = useQuery(["conversation"], () =>
+  const {
+    isLoading: cIsLoading,
+    error: cError,
+    data: convData,
+  } = useQuery(["conversation"], () =>
     makeRequest.get("/conversations").then((res) => {
       return res.data;
     })
-);
+  );
 
-  const { isLoading, error, data} = useQuery(["message"], () =>
+  const { isLoading, error, data } = useQuery(["message"], () =>
     makeRequest.get("/messages").then((res) => {
       return res.data;
     })
-);
-console.log(data)
+  );
+  console.log(data);
   return (
     <div className="main-messages">
       <div className="message-friend-container">
@@ -134,8 +174,79 @@ console.log(data)
           ))}
         </div>
       </div>
-      <div className="message-chat-container">chat</div>
-      <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} />
+      <div className="message-chat-container">
+        <div className="chat-profile">
+          <img className="chat-avatar" src={avatar5} alt="name" />
+          <div className="chat-status">
+            <h2>Jane Smith</h2>
+            <h3>Last online 12 hours ago.</h3>
+          </div>
+          <div className="chat-profile-button">
+            <button>
+              <Icon icon="octicon:search-16" width={25} height={25} />
+            </button>
+            <button>
+              <Icon icon="clarity:pinned-solid" width={25} height={25} />
+            </button>
+            <button>
+              <Icon
+                icon="solar:menu-dots-bold"
+                rotate={1}
+                width={25}
+                height={25}
+              />
+            </button>
+          </div>
+        </div>
+        <div className="chat">
+          <div className="chat-time">
+            <h3>Today</h3>
+          </div>
+          {other.map((other) => (
+            <div className="chat-other">
+              <h3>{other.chat}</h3>
+              <h4>{other.time}</h4>
+            </div>
+          ))}
+          {self.map((self) => (
+            <div className="chat-self">
+              <h3>{self.chat}</h3>
+              <h4>{self.time}</h4>
+            </div>
+          ))}
+        </div>
+        <div className="chat-input">
+          <textarea type="text" placeholder={`Tuliskan sesuatu `} />
+          <div className="chat-input-button">
+            <button className="chat-button">
+              <Icon icon="mdi:paperclip" width={25} height={25} />
+            </button>
+            <button className="chat-button">
+              <Icon icon="fluent:gif-16-regular" width={25} height={25} />
+            </button>
+            <button className="chat-button">
+              <Icon
+                icon="material-symbols:folder-copy-outline"
+                width={25}
+                height={25}
+              />
+            </button>
+            <button className="post-chat">
+              <Icon
+                icon="icon-park-outline:send-one"
+                width={23}
+                height={23}
+                color="white"
+              />
+            </button>
+          </div>
+        </div>
+      </div>
+      <Sidebar
+        toggleSettings={toggleSettings}
+        toggleLogout={toggleLogout}
+        isMessagesPage={isMessagesPage}
+      />
       {settingOpen && (
         <>
           <div className="settings-overlay" />

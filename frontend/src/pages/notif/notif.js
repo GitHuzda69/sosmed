@@ -22,6 +22,8 @@ function Notif() {
   const [showMentions, setShowMentions] = useState(false);
   const [showUnread, setShowUnread] = useState(false);
 
+  const isNotifPage = true;
+
   const notification = [
     {
       id: 1,
@@ -210,7 +212,11 @@ function Notif() {
       </div>
       <HomeProfile />
       <Rightbar />
-      <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} />
+      <Sidebar
+        toggleSettings={toggleSettings}
+        toggleLogout={toggleLogout}
+        isNotifPage={isNotifPage}
+      />
       {settingOpen && (
         <>
           <div className="settings-overlay" />
