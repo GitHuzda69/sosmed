@@ -90,7 +90,7 @@ function Friendslist() {
   const [posts, setPosts] = useState([]);
   const [settingOpen, setSettingOpen] = useState(false);
   const [logoutOpen, setLogoutOpen] = useState(false);
-
+  const [currentChat, setCurrenChat] = useState(null);
   const isMessagesPage = true;
 
   const [newPost, setNewPost] = useState({ author: "", content: "" });
@@ -132,6 +132,7 @@ function Friendslist() {
       return res.data;
     })
   );
+console.log(data)
 
   return (
     <div className="main-messages">
@@ -152,24 +153,25 @@ function Friendslist() {
           />
         </div>
         <div className="message-friend-bar">
-          {friend.map((friend) => (
+          {convData.map((friend) => (
             <button>
               <div className="message-friend">
                 <img
                   className="message-friend-avatar"
-                  src={friend.avatar}
-                  alt={friend.sender}
+                  src={"/data/" + friend.profilepic}
+                  alt={friend.displayname}
                   avatar
                 />
                 <div className="message-friend-bio">
-                  <h2>{friend.sender}</h2>
-                  <h3>{friend.content}</h3>
+                  <h2>{friend.displayname}</h2>
+                  <h3>Data dummy</h3>
                 </div>
               </div>
             </button>
           ))}
         </div>
       </div>
+      {currentChat ? 
       <div className="message-chat-container">
         <div className="chat-profile">
           <img className="chat-avatar" src={avatar5} alt="name" />
@@ -237,7 +239,7 @@ function Friendslist() {
             </button>
           </div>
         </div>
-      </div>
+      </div> : <span>Open a Conversation</span>}
       <Sidebar
         toggleSettings={toggleSettings}
         toggleLogout={toggleLogout}
