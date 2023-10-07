@@ -21,7 +21,7 @@ export const getConversation = (req, res)=> {
     jwt.verify(token, "secretkey", (err, userInfo) => {
         if (err) return res.status(403).json("Token not valid");
 
-    const q = 'SELECT DISTINCT c.*, u.profilepic, u.displayname FROM conversations AS c JOIN users AS u ON (c.senderid = u.id OR c.receiverid = u.id) WHERE (c.senderid = ? OR c.receiverid = ?) AND u.id <> ?';
+    const q = 'SELECT DISTINCT c.*, u.profilepic, u.displayname, u.biodata FROM conversations AS c JOIN users AS u ON (c.senderid = u.id OR c.receiverid = u.id) WHERE (c.senderid = ? OR c.receiverid = ?) AND u.id <> ?';
 
     const values = [userInfo.id, userInfo.id, userInfo.id];
 

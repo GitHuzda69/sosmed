@@ -7,90 +7,15 @@ import { Link } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { makeRequest } from "../../axios.js";
 import { Icon } from "@iconify/react";
+import moment from "moment";
 
-import avatar1 from "../../assets/friend/friend1.jpg";
-import avatar2 from "../../assets/friend/friend2.jpg";
-import avatar3 from "../../assets/friend/friend3.jpg";
-import avatar4 from "../../assets/friend/friend4.jpg";
-import avatar5 from "../../assets/friend/friend5.jpeg";
+import defaultprofile from "../../assets/profile/default_avatar.png";
 
-const friend = [
-  {
-    sender: "John Doe",
-    content: "Hello there!",
-    avatar: avatar4,
-  },
-  {
-    sender: "Jane Smith",
-    content: "Hi John! How are you?",
-    avatar: avatar5,
-  },
-  {
-    sender: "Jane Ol",
-    content: "Hi John! How are you?",
-    avatar: avatar3,
-  },
-  {
-    sender: "Jade Smith",
-    content: "Hi John! How are you?",
-    avatar: avatar1,
-  },
-  {
-    sender: "Jane Lord",
-    content: "Hi John! How are you?",
-    avatar: avatar5,
-  },
-  {
-    sender: "Jath",
-    content: "Hi John! How are you?",
-    avatar: avatar2,
-  },
-  {
-    sender: "Nawtic",
-    content: "Hi John! How are you?",
-    avatar: avatar1,
-  },
-];
-
-const other = [
-  {
-    chat: "Hoe",
-    time: "19.21 AM",
-  },
-  {
-    chat: "Dodol baru mateng, ditarik susah putus",
-    time: "19.21 AM",
-  },
-  {
-    chat: "Temanku yg ganteng, adakah seratus",
-    time: "19.21 AM",
-  },
-];
-
-const self = [
-  {
-    chat: "Keren",
-    time: "19.25 AM",
-  },
-  {
-    chat: "Tapi Gaada",
-    time: "19.25 AM",
-  },
-  {
-    chat: "Ini aja ada kerjaan ",
-    time: "19.25 AM",
-  },
-  {
-    chat: "Bawa aqua gelas sambil jongkok",
-    time: "19.25 AM",
-  },
-];
-
-function Friendslist() {
+function Message() {
   const [posts, setPosts] = useState([]);
   const [settingOpen, setSettingOpen] = useState(false);
   const [logoutOpen, setLogoutOpen] = useState(false);
-  const [currentChat, setCurrenChat] = useState(null);
+  const [currentChat, setCurrentChat] = useState(null);
   const isMessagesPage = true;
 
   const [newPost, setNewPost] = useState({ author: "", content: "" });
@@ -127,12 +52,13 @@ function Friendslist() {
     })
   );
 
-  const { isLoading, error, data } = useQuery(["message"], () =>
+  const { isLoading: mIsLoading, error: mError, data:messData } = useQuery(["message"], () =>
     makeRequest.get("/messages").then((res) => {
       return res.data;
     })
   );
-console.log(data)
+console.log(currentChat)
+console.log(messData)
 
   return (
     <div className="main-messages">
@@ -153,18 +79,17 @@ console.log(data)
           />
         </div>
         <div className="message-friend-bar">
-          {convData.map((friend) => (
-            <button>
+        {convData && convData.map((friend) => (
+            <button onClick={()=>{setCurrentChat(friend)}}>
               <div className="message-friend">
                 <img
                   className="message-friend-avatar"
-                  src={"/data/" + friend.profilepic}
+                  src={friend.profilepic && friend.profilepic ? "/data/" + friend.profilepic : defaultprofile}
                   alt={friend.displayname}
-                  avatar
                 />
                 <div className="message-friend-bio">
                   <h2>{friend.displayname}</h2>
-                  <h3>Data dummy</h3>
+                  <h3>{friend.biodata}</h3>
                 </div>
               </div>
             </button>
@@ -174,10 +99,10 @@ console.log(data)
       {currentChat ? 
       <div className="message-chat-container">
         <div className="chat-profile">
-          <img className="chat-avatar" src={avatar5} alt="name" />
+          <img className="chat-avatar" src={currentChat.profilepic && currentChat.profilepic ? "/data/" + currentChat.profilepic : defaultprofile} alt="name" />
           <div className="chat-status">
-            <h2>Jane Smith</h2>
-            <h3>Last online 12 hours ago.</h3>
+            <h2>{currentChat.displayname}</h2>
+            <h3>{currentChat.biodata}</h3>
           </div>
           <div className="chat-profile-button">
             <button>
@@ -200,16 +125,11 @@ console.log(data)
           <div className="chat-time">
             <h3>Today</h3>
           </div>
-          {other.map((other) => (
+          {messData.map((message) => (
             <div className="chat-other">
-              <h3>{other.chat}</h3>
-              <h4>{other.time}</h4>
-            </div>
-          ))}
-          {self.map((self) => (
-            <div className="chat-self">
-              <h3>{self.chat}</h3>
-              <h4>{self.time}</h4>
+              <h3>{message.senderid}</h3>
+              <h4>{message.desc}</h4>
+              <h5>{moment(message.createdat).fromNow()}</h5>
             </div>
           ))}
         </div>
@@ -265,4 +185,4 @@ console.log(data)
   );
 }
 
-export default Friendslist;
+export default Message;
