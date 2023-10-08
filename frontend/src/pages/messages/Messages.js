@@ -28,20 +28,29 @@ function Message() {
     setLogoutOpen(!logoutOpen);
   };
 
-  const {isLoading: cIsLoading, error: cError, data: convData } = useQuery(["conversation"], () =>
+  const {
+    isLoading: cIsLoading,
+    error: cError,
+    data: convData,
+  } = useQuery(["conversation"], () =>
     makeRequest.get("/conversations").then((res) => {
       return res.data;
     })
   );
   const chatId = currentChat?.id;
-  const {isLoading: mIsLoading, error: mError, data: messData } = useQuery(["message"], async () =>
-    await makeRequest.get("/messages/"+ chatId).then((res) => {
-      return res.data;
-    })
+  const {
+    isLoading: mIsLoading,
+    error: mError,
+    data: messData,
+  } = useQuery(
+    ["message"],
+    async () =>
+      await makeRequest.get("/messages/" + chatId).then((res) => {
+        return res.data;
+      })
   );
 
-
-console.log(chatId)
+  console.log(chatId);
 
   return (
     <div className="main-messages">
@@ -62,88 +71,112 @@ console.log(chatId)
           />
         </div>
         <div className="message-friend-bar">
-        {cIsLoading ? "Loading" : cError ? "Something went wrong" :convData && convData.map ((C) => (
-            <button onClick={()=>{setCurrentChat(C)}}>
-              <div className="message-friend">
-                <img
-                  className="message-friend-avatar"
-                  src={C.profilepic && C.profilepic ? "/data/" + C.profilepic : defaultprofile}
-                  alt={C.displayname}
-                />
-                <div className="message-friend-bio">
-                  <h2>{C.displayname}</h2>
-                  <h3>{C.biodata}</h3>
-                </div>
-              </div>
-            </button>
-          ))}
+          {cIsLoading
+            ? "Loading"
+            : cError
+            ? "Something went wrong"
+            : convData &&
+              convData.map((C) => (
+                <button
+                  onClick={() => {
+                    setCurrentChat(C);
+                  }}
+                >
+                  <div className="message-friend">
+                    <img
+                      className="message-friend-avatar"
+                      src={
+                        C.profilepic && C.profilepic
+                          ? "/data/" + C.profilepic
+                          : defaultprofile
+                      }
+                      alt={C.displayname}
+                    />
+                    <div className="message-friend-bio">
+                      <h2>{C.displayname}</h2>
+                      <h3>{C.biodata}</h3>
+                    </div>
+                  </div>
+                </button>
+              ))}
         </div>
       </div>
-      {currentChat ? 
-      <div className="message-chat-container">
-        <div className="chat-profile">
-          <img className="chat-avatar" src={currentChat.profilepic && currentChat.profilepic ? "/data/" + currentChat.profilepic : defaultprofile} alt="name" />
-          <div className="chat-status">
-            <h2>{currentChat.displayname}</h2>
-            <h3>{currentChat.biodata}</h3>
-          </div>
-          <div className="chat-profile-button">
-            <button>
-              <Icon icon="octicon:search-16" width={25} height={25} />
-            </button>
-            <button>
-              <Icon icon="clarity:pinned-solid" width={25} height={25} />
-            </button>
-            <button>
-              <Icon
-                icon="solar:menu-dots-bold"
-                rotate={1}
-                width={25}
-                height={25}
-              />
-            </button>
-          </div>
-        </div>
-        <div className="chat">
-          <div className="chat-time">
-            <h3>Today</h3>
-          </div>
-          {messData && messData.map((message) => (
-            <div className="chat-other">
-              <h3>{message.displayname}</h3>
-              <h4>{message.desc}</h4>
-              <h5>{moment(message.createdat).fromNow()}</h5>
+      {currentChat ? (
+        <div className="message-chat-container">
+          <div className="chat-profile">
+            <img
+              className="chat-avatar"
+              src={
+                currentChat.profilepic && currentChat.profilepic
+                  ? "/data/" + currentChat.profilepic
+                  : defaultprofile
+              }
+              alt="name"
+            />
+            <div className="chat-status">
+              <h2>{currentChat.displayname}</h2>
+              <h3>{currentChat.biodata}</h3>
             </div>
-          ))}
-
-        </div>
-        <div className="chat-input">
-          <textarea type="text" placeholder={`Tuliskan sesuatu `} />
-          <div className="chat-input-button">
-            <button className="chat-button">
-              <Icon icon="mdi:paperclip" width={25} height={25} />
-            </button>
-            <button className="chat-button">
-              <Icon icon="fluent:gif-16-regular" width={25} height={25} />
-            </button>
-            <button className="chat-button">
-              <Icon
-                icon="material-symbols:folder-copy-outline"
-                width={25}
-                height={25}
-              />
-            </button>
-            <button className="post-chat">
-              <Icon
-                icon="icon-park-outline:send-one"
-                width={23}
-                height={23}
-                color="white"
-              />
-            </button>
+            <div className="chat-profile-button">
+              <button>
+                <Icon icon="octicon:search-16" width={25} height={25} />
+              </button>
+              <button>
+                <Icon icon="clarity:pinned-solid" width={25} height={25} />
+              </button>
+              <button>
+                <Icon
+                  icon="solar:menu-dots-bold"
+                  rotate={1}
+                  width={25}
+                  height={25}
+                />
+              </button>
+            </div>
+          </div>
+          <div className="chat">
+            <div className="chat-time">
+              <h3>Today</h3>
+            </div>
+            {messData &&
+              messData.map((message) => (
+                <div className="chat-other">
+                  <h3>{message.displayname}</h3>
+                  <h4>{message.desc}</h4>
+                  <h5>{moment(message.createdat).fromNow()}</h5>
+                </div>
+              ))}
+          </div>
+          <div className="chat-input">
+            <textarea type="text" placeholder={`Tuliskan sesuatu `} />
+            <div className="chat-input-button">
+              <button className="chat-button">
+                <Icon icon="mdi:paperclip" width={25} height={25} />
+              </button>
+              <button className="chat-button">
+                <Icon icon="fluent:gif-16-regular" width={25} height={25} />
+              </button>
+              <button className="chat-button">
+                <Icon
+                  icon="material-symbols:folder-copy-outline"
+                  width={25}
+                  height={25}
+                />
+              </button>
+              <button className="post-chat">
+                <Icon
+                  icon="icon-park-outline:send-one"
+                  width={23}
+                  height={23}
+                  color="white"
+                />
+              </button>
+            </div>
           </div>
         </div>
-      </div> : <span>Open a Conversation</span>}
+      ) : (
+        <span className="not-chat">Open a Conversation</span>
+      )}
       <Sidebar
         toggleSettings={toggleSettings}
         toggleLogout={toggleLogout}

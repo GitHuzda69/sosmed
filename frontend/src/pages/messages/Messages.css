@@ -1,9 +1,12 @@
-.main-messages{
-  height: 600px;
+.main-messages{ 
+  min-height: 600px;
+  height: auto;
   display: flex;
+  max-height: max-content;
   flex-direction: row;
   margin-left: 53px; 
   margin-bottom: 3px;
+  padding-bottom: 2px;
   font-family: "Inter";
   font-weight: bold;  
   background-color: white;  
@@ -46,7 +49,7 @@
 .message-friend-bar{
   display: flex;
   flex-direction: column;
-  height: 420px;
+  height: auto;
   padding-top: 20px;
   margin-left: -10px;
   margin-right: -10px; 
@@ -311,4 +314,10 @@
   height: 35px;
   border-radius: 10px;
   background-color: black;
+}
+
+.not-chat{
+  min-width: 900px;
+  width: auto;
+  max-width: 1200px;
 }
