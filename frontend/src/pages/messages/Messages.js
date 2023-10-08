@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import "./Messages.css";
 import Sidebar from "../../component/Leftbar/Leftbar";
 import Settings from "../../component/Settings/Settings";
@@ -6,37 +6,19 @@ import Logout from "../../component/Logout/Logout";
 import { Link } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { makeRequest } from "../../axios.js";
+import { AuthContext } from "../../context/authContext.js";
 import { Icon } from "@iconify/react";
 import moment from "moment";
 
 import defaultprofile from "../../assets/profile/default_avatar.png";
 
 function Message() {
-  const [posts, setPosts] = useState([]);
   const [settingOpen, setSettingOpen] = useState(false);
   const [logoutOpen, setLogoutOpen] = useState(false);
   const [currentChat, setCurrentChat] = useState(null);
+  const [messages, setMessages] = useState(null);
+  const { currentUser } = useContext(AuthContext);
   const isMessagesPage = true;
-
-  const [newPost, setNewPost] = useState({ author: "", content: "" });
-
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setNewPost({ ...newPost, [name]: value });
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    if (newPost.author && newPost.content) {
-      const newPostWithId = {
-        ...newPost,
-        id: Date.now(),
-        likes: 0,
-      };
-      setPosts([...posts, newPostWithId]);
-      setNewPost({ author: "", content: "" });
-    }
-  };
 
   const toggleSettings = () => {
     setSettingOpen(!settingOpen);
@@ -51,14 +33,15 @@ function Message() {
       return res.data;
     })
   );
-
-  const { isLoading: mIsLoading, error: mError, data:messData } = useQuery(["message"], () =>
-    makeRequest.get("/messages").then((res) => {
+  const chatId = currentChat?.id;
+  const {isLoading: mIsLoading, error: mError, data: messData } = useQuery(["message"], async () =>
+    await makeRequest.get("/messages/"+ chatId).then((res) => {
       return res.data;
     })
   );
-console.log(currentChat)
-console.log(messData)
+
+
+console.log(chatId)
 
   return (
     <div className="main-messages">
@@ -79,17 +62,17 @@ console.log(messData)
           />
         </div>
         <div className="message-friend-bar">
-        {convData && convData.map((friend) => (
-            <button onClick={()=>{setCurrentChat(friend)}}>
+        {cIsLoading ? "Loading" : cError ? "Something went wrong" :convData && convData.map ((C) => (
+            <button onClick={()=>{setCurrentChat(C)}}>
               <div className="message-friend">
                 <img
                   className="message-friend-avatar"
-                  src={friend.profilepic && friend.profilepic ? "/data/" + friend.profilepic : defaultprofile}
-                  alt={friend.displayname}
+                  src={C.profilepic && C.profilepic ? "/data/" + C.profilepic : defaultprofile}
+                  alt={C.displayname}
                 />
                 <div className="message-friend-bio">
-                  <h2>{friend.displayname}</h2>
-                  <h3>{friend.biodata}</h3>
+                  <h2>{C.displayname}</h2>
+                  <h3>{C.biodata}</h3>
                 </div>
               </div>
             </button>
@@ -125,13 +108,14 @@ console.log(messData)
           <div className="chat-time">
             <h3>Today</h3>
           </div>
-          {messData.map((message) => (
+          {messData && messData.map((message) => (
             <div className="chat-other">
-              <h3>{message.senderid}</h3>
+              <h3>{message.displayname}</h3>
               <h4>{message.desc}</h4>
               <h5>{moment(message.createdat).fromNow()}</h5>
             </div>
           ))}
+
         </div>
         <div className="chat-input">
           <textarea type="text" placeholder={`Tuliskan sesuatu `} />

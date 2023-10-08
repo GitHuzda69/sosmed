@@ -7,7 +7,6 @@ import "./Login.css";
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
-
   const [inputs, setInputs] = useState({
     username: "",
     password: "",

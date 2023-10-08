@@ -35,7 +35,7 @@ export const getMessage = (req, res)=> {
         if (err) return res.status(403).json("Token not valid");
     
 
-    const q = 'SELECT DISTINCT m.* FROM messages AS m JOIN conversations AS c ON m.senderid = c.senderid OR m.receiverid = c.receiverid WHERE (m.senderid = ? OR m.receiverid = ?) AND (c.senderid OR c.receiverid IS NULL);';
+    const q = 'SELECT DISTINCT m.*, u.profilepic, u.displayname, u.biodata FROM messages AS m JOIN conversations AS c  ON m.senderid = c.senderid OR m.receiverid = c.receiverid JOIN users AS u ON m.senderid = u.id OR m.receiverid = u.id WHERE (m.senderid = ? OR m.receiverid = ?) AND (c.senderid OR c.receiverid IS NULL);';
 
     const values =  [userInfo.id, userInfo.id];
 
