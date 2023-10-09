@@ -1,5 +1,8 @@
 .friendlist-main{
-  background-color: white;
+  background-color: white; 
+  min-width: 1350px;
+  width: auto;
+  max-width: 1500px;
 }
 .friendlist-container{ 
 }
@@ -28,6 +31,14 @@
 }
 .button-info:hover{
   border-radius: 12px;
+}
+
+.friendlist-empty{
+  width: 900px;
+  font-family: "Inter";
+  font-weight: bold;
+  font-size: 25px;
+  margin-left: 30px;
 }
 
 .friendlist {
