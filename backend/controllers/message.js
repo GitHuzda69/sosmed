@@ -40,7 +40,7 @@ export const getMessage = (req, res)=> {
 
     const values =  [userInfo.id, userInfo.id];
 
-    db.query(q, values, (err, data)=>{
+    db.query(q1, values, (err, data)=>{
         if (err) return res.status(500).json(err);
         return res.status(200).json(data)
     })})
