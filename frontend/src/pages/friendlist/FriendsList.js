@@ -56,55 +56,61 @@ const FriendList = ({ relationships }) => {
           </button>
         </div>
         <div className="friendlist">
-          {error
-            ? `Something went wrong`
-            : isLoading
-            ? "loading"
-            : friendData.map((friend) => (
-                <div className="friend" key={friend.userid}>
-                  <Link
-                    to={`/profile/${friend.userid}`}
-                    style={{ textDecoration: "none", color: "inherit" }}
-                    className="profileavatar"
-                  >
+          {error ? (
+            `Something went wrong`
+          ) : isLoading ? (
+            "Loading"
+          ) : friendData.length === 0 ? (
+            <span className="friendlist-empty">
+              You didn't follow anyone yet. You can find someone in FYP pages.
+            </span>
+          ) : (
+            friendData.map((friend) => (
+              <div className="friend" key={friend.userid}>
+                <Link
+                  to={`/profile/${friend.userid}`}
+                  style={{ textDecoration: "none", color: "inherit" }}
+                  className="profileavatar"
+                >
+                  <img
+                    className="friend-cover"
+                    src={
+                      friend && friend.coverpic
+                        ? "/data/" + friend.coverpic
+                        : defaultcover
+                    }
+                    alt={friend.displayname}
+                  />
+                  <div className="friend-avatar">
                     <img
-                      className="friend-cover"
                       src={
-                        friend && friend.coverpic
-                          ? "/data/" + friend.coverpic
-                          : defaultcover
+                        friend && friend.profilepic
+                          ? "/data/" + friend.profilepic
+                          : defaultprofile
                       }
                       alt={friend.displayname}
+                      className="avatar"
                     />
-                    <div className="friend-avatar">
-                      <img
-                        src={
-                          friend && friend.profilepic
-                            ? "/data/" + friend.profilepic
-                            : defaultprofile
-                        }
-                        alt={friend.displayname}
-                        className="avatar"
-                      />
-                    </div>
-                  </Link>
-                  <div className="friend-info-details">
-                    <h3>{friend.displayname}</h3>
-                    <button className="button-popup">
-                      <Icon icon="tabler:dots" width={20} height={20} />
-                    </button>
-                    <div className="friend-follower">
-                      <h3>234</h3>
-                      <h4>Following</h4>
-                      <h3>4334</h3>
-                      <h4>Followers</h4>
-                    </div>
                   </div>
-                  <div className="friend-desc">
-                    <p>{friend.biodata}</p>
+                </Link>
+                <div className="friend-info-details">
+                  <h3>{friend.displayname}</h3>
+                  <button className="button-popup">
+                    <Icon icon="tabler:dots" width={20} height={20} />
+                  </button>
+                  <div className="friend-follower">
+                    <h3>234</h3>
+                    <h4>Following</h4>
+                    <h3>4334</h3>
+                    <h4>Followers</h4>
                   </div>
                 </div>
-              ))}
+                <div className="friend-desc">
+                  <p>{friend.biodata}</p>
+                </div>
+              </div>
+            ))
+          )}
         </div>
         {popupPosition.visible && (
           <div

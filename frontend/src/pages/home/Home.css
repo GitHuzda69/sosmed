@@ -1,5 +1,6 @@
-.app{   
+ .app{   
     margin-top: -10px;  
+    margin-bottom: -10px;
     background-color: #DDDDDD;
     scrollbar-width: thin;
     scrollbar-color: #999999 #ffffff;
@@ -72,7 +73,7 @@
   text-align: center;
   width: 230px;
   right: 60px;
-  bottom: -15px;
+  bottom: 0px;
   font-size: 12px;
   font-family: "Inter" ;
   font-weight: bold;
