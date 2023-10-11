@@ -17,6 +17,7 @@ function Message() {
   const [settingOpen, setSettingOpen] = useState(false);
   const [logoutOpen, setLogoutOpen] = useState(false);
   const [currentChat, setCurrentChat] = useState(null);
+  const queryClient = useQueryClient();
   const [inputValue, setInputValue] = useState(null);
   const { currentUser } = useContext(AuthContext);
   const isMessagesPage = true;
@@ -29,16 +30,19 @@ function Message() {
     setLogoutOpen(!logoutOpen);
   };
 
-  const { isLoading: cIsLoading, error: cError, data:convData } = useQuery(["conversation"], () =>
-    makeRequest.get("/conversations").then((res) => {
-      return res.data;
-    })
+  const { isLoading: cIsLoading, error: cError, data: convData } = useQuery(["conversation"], () =>
+      makeRequest.get("/conversations").then((res) => {
+        return res.data;
+      })
   );
-  const { isLoading: mIsLoading, error: mError, data:messData } = useQuery(["message"], () =>
-    makeRequest.get("/messages").then((res) => {
-      return res.data;
-    })
-  );
+  const { isLoading: mIsLoading, error: mError, data: messData } = useQuery(["message"], () => {
+    const messageId = convData[0].id;
+    console.log("Message ID:", messageId);
+      return makeRequest.get("/messages/" + messageId).then((res) => {
+        return res.data;
+      });
+  });
+
  console.log(convData)
  console.log(messData)
 
@@ -61,7 +65,7 @@ function Message() {
         />
       </div>
       <div className="message-friend-bar">
-        {convData &&
+        {cIsLoading ? "Loading" : cError ? "Something went wrong" :  convData &&
           convData.map((friend) => (
             <button key={friend.id} onClick={() => setCurrentChat(friend)}>
               <div className="message-friend">
@@ -121,7 +125,7 @@ function Message() {
           <div className="chat-time">
             <h3>Today</h3>
           </div>
-          {messData.map((message) => (
+          {mIsLoading ? "Loading" : mError ? "Something went wrong" : messData.map((message) => (
             <div key={message.id} className="chat-other">
               <h3>{message.displayname}</h3>
               <h4>{message.desc}</h4>
