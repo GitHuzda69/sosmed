@@ -1,6 +1,6 @@
 import "./Post.css";
 import React, { useContext, useState, useRef, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { makeRequest } from "../../axios.js";
 import { AuthContext } from "../../context/authContext.js";
@@ -73,6 +73,17 @@ const Post = ({ post }) => {
     }
   );
 
+  const messageMutation = useMutation(
+    (userId) => {
+        return makeRequest.post("/conversations/" + userId);
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["conversation"]);
+      },
+    }
+  );
+
   const upload = async (file) => {
     try {
       const formData = new FormData();
@@ -134,6 +145,12 @@ const Post = ({ post }) => {
 
   const handleFollow = () => {
     followMutation.mutate(relationshipData.includes(currentUser.id));
+  };
+
+  const navigate = useNavigate()
+  const handleMessage = () => {
+    messageMutation.mutate(userId);
+    navigate("/messages")
   };
 
   const openPopup = (imgUrl) => {
@@ -199,6 +216,7 @@ const Post = ({ post }) => {
                 {post.userid !== currentUser.id ? (
                   <div className="post-option-popup-other">
                     <button
+                    onClick={handleMessage}
                       style={{
                         height: "24px",
                         display: "flex",
