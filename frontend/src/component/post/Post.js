@@ -75,7 +75,7 @@ const Post = ({ post }) => {
 
   const messageMutation = useMutation(
     (userId) => {
-        return makeRequest.post("/conversations/" + userId);
+      return makeRequest.post("/conversations/" + userId);
     },
     {
       onSuccess: () => {
@@ -147,10 +147,10 @@ const Post = ({ post }) => {
     followMutation.mutate(relationshipData.includes(currentUser.id));
   };
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const handleMessage = () => {
     messageMutation.mutate(userId);
-    navigate("/messages")
+    navigate("/messages");
   };
 
   const openPopup = (imgUrl) => {
@@ -177,7 +177,7 @@ const Post = ({ post }) => {
     }
   };
   return (
-    <div className="post-container">
+    <div className={`post-container ${post.img ? "has-image" : ""}`}>
       <div className="post">
         <div className="container">
           <div className="user">
@@ -200,148 +200,163 @@ const Post = ({ post }) => {
                 <span className="name">{post.displayname}</span>
                 <span className="date">{moment(post.createdat).fromNow()}</span>
               </div>
-              <button
-                className="opsi-post-button"
-                onClick={(e) => {
-                  setPostOptionButtonPosition(e.target.getBoundingClientRect());
-                  setpostOptionOpen(!postOptionOpen);
-                  setPostEditOpen(false);
-                }}
-              >
-                <Icon icon="tabler:dots" width={20} height={20} />
-              </button>
-            </div>
-            {postOptionOpen ? (
-              <div>
-                {post.userid !== currentUser.id ? (
-                  <div className="post-option-popup-other">
-                    <button
-                    onClick={handleMessage}
-                      style={{
-                        height: "24px",
-                        display: "flex",
-                        alignItems: "center",
-                        marginTop: "2px",
-                        gap: "5px",
-                      }}
-                    >
-                      <Icon
-                        icon="ion:chatbox-ellipses-outline"
-                        width={20}
-                        height={20}
-                      />
-                      Message
-                    </button>
-                    <button
-                      onClick={handleFollow}
-                      style={{
-                        height: "24px",
-                        display: "flex",
-                        alignItems: "center",
-                        marginTop: "-3px",
-                        gap: "5px",
-                      }}
-                    >
-                      <Icon
-                        icon="ic:round-person-add"
-                        hFlip={true}
-                        width={20}
-                        height={20}
-                      />
-                      {relationshipData.includes(currentUser.id)
-                        ? "Following"
-                        : "Follow"}
-                    </button>
-                  </div>
-                ) : (
-                  <div className="post-option-popup-self">
-                    <button
-                      onClick={handleDelete}
-                      style={{
-                        color: "red",
-                        height: "24px",
-                        display: "flex",
-                        alignItems: "center",
-                        marginTop: "2px",
-                        gap: "2px",
-                      }}
-                    >
-                      <Icon icon="mdi:delete" height={20} width={20} />
-                      Delete This Post
-                    </button>
-                    <button
-                      className="edit-post1"
-                      style={{
-                        height: "24px",
-                        display: "flex",
-                        alignItems: "center",
-                        marginTop: "-4px",
-                        gap: "5px",
-                      }}
-                    >
-                      <button
-                        className="edit-post2"
-                        style={{
-                          height: "14px",
-                          display: "flex",
-                          alignItems: "center",
-                          marginTop: "5px",
-                          gap: "5px",
-                        }}
-                        onClick={() => {
-                          setPostEditOpen(!postEditOpen);
-                        }}
-                      >
-                        <Icon icon="tabler:edit" height={20} width={20} />
-                        Edit Post
-                      </button>
-                      {postEditOpen && (
-                        <div className="edit-post">
-                          {isDescEmpty && (
-                            <div className="edit-post-warn">
-                              <button
-                                className="close-warn-post"
-                                onClick={() => {
-                                  setEditedDesc(originalDesc);
-                                  setIsDescEmpty(false);
-                                }}
-                              >
-                                <Icon icon="ph:x-bold" width={15} height={15} />
-                              </button>
-                              <p>Deskripsi tidak boleh kosong.</p>
+              <div className="options">
+                {postOptionOpen ? (
+                  <div className="post-option-popup">
+                    {post.userid !== currentUser.id ? (
+                      <div className="post-option-popup-other">
+                        <button
+                          onClick={handleMessage}
+                          style={{
+                            height: "24px",
+                            display: "flex",
+                            alignItems: "center",
+                            marginTop: "2px",
+                            gap: "5px",
+                          }}
+                        >
+                          <Icon
+                            icon="ion:chatbox-ellipses-outline"
+                            width={20}
+                            height={20}
+                          />
+                          Message
+                        </button>
+                        <button
+                          onClick={handleFollow}
+                          style={{
+                            height: "24px",
+                            display: "flex",
+                            alignItems: "center",
+                            marginTop: "-3px",
+                            gap: "5px",
+                          }}
+                        >
+                          <Icon
+                            icon="ic:round-person-add"
+                            hFlip={true}
+                            width={20}
+                            height={20}
+                          />
+                          {relationshipData.includes(currentUser.id)
+                            ? "Following"
+                            : "Follow"}
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="post-option-popup-self">
+                        <button
+                          onClick={handleDelete}
+                          style={{
+                            color: "red",
+                            height: "24px",
+                            display: "flex",
+                            alignItems: "center",
+                            marginTop: "2px",
+                            gap: "2px",
+                          }}
+                        >
+                          <Icon icon="mdi:delete" height={20} width={20} />
+                          Delete This Post
+                        </button>
+                        <button
+                          className="edit-post1"
+                          style={{
+                            height: "24px",
+                            display: "flex",
+                            alignItems: "center",
+                            marginTop: "-4px",
+                            gap: "5px",
+                          }}
+                        >
+                          <button
+                            className="edit-post2"
+                            style={{
+                              height: "14px",
+                              display: "flex",
+                              alignItems: "center",
+                              marginTop: "5px",
+                              gap: "5px",
+                            }}
+                            onClick={() => {
+                              setPostEditOpen(!postEditOpen);
+                            }}
+                          >
+                            <Icon icon="tabler:edit" height={20} width={20} />
+                            Edit Post
+                          </button>
+                          {postEditOpen && (
+                            <div className="edit-post">
+                              {isDescEmpty && (
+                                <div className="edit-post-warn">
+                                  <button
+                                    className="close-warn-post"
+                                    onClick={() => {
+                                      setEditedDesc(originalDesc);
+                                      setIsDescEmpty(false);
+                                    }}
+                                  >
+                                    <Icon
+                                      icon="ph:x-bold"
+                                      width={15}
+                                      height={15}
+                                    />
+                                  </button>
+                                  <p>Deskripsi tidak boleh kosong.</p>
+                                </div>
+                              )}
+                              <form className="edit-post-content">
+                                <input
+                                  type="text"
+                                  name="desc"
+                                  value={editedDesc}
+                                  onChange={(e) =>
+                                    setEditedDesc(e.target.value)
+                                  }
+                                  ref={descInputRef}
+                                />
+                                <input
+                                  type="file"
+                                  name="img"
+                                  onChange={(e) =>
+                                    setEditedImg(e.target.files[0])
+                                  }
+                                />
+                                {post.img && post.desc && (
+                                  <div className="add-empty-desc-button">
+                                    <button onClick={handleRemoveImg}>
+                                      Hapus Gambar
+                                    </button>
+                                  </div>
+                                )}
+                                <button
+                                  onClick={handleEdit}
+                                  disabled={isDescEmpty}
+                                >
+                                  Post
+                                </button>
+                              </form>
                             </div>
                           )}
-                          <form className="edit-post-content">
-                            <input
-                              type="text"
-                              name="desc"
-                              value={editedDesc}
-                              onChange={(e) => setEditedDesc(e.target.value)}
-                              ref={descInputRef}
-                            />
-                            <input
-                              type="file"
-                              name="img"
-                              onChange={(e) => setEditedImg(e.target.files[0])}
-                            />
-                            {post.img && post.desc && (
-                              <div className="add-empty-desc-button">
-                                <button onClick={handleRemoveImg}>
-                                  Hapus Gambar
-                                </button>
-                              </div>
-                            )}
-                            <button onClick={handleEdit} disabled={isDescEmpty}>
-                              Post
-                            </button>
-                          </form>
-                        </div>
-                      )}
-                    </button>
+                        </button>
+                      </div>
+                    )}
                   </div>
-                )}
+                ) : null}
+                <button
+                  className="opsi-post-button"
+                  onClick={(e) => {
+                    setPostOptionButtonPosition(
+                      e.target.getBoundingClientRect()
+                    );
+                    setpostOptionOpen(!postOptionOpen);
+                    setPostEditOpen(false);
+                  }}
+                >
+                  <Icon icon="tabler:dots" width={20} height={20} />
+                </button>
               </div>
-            ) : null}
+            </div>
           </div>
         </div>
         <div className="post-content">

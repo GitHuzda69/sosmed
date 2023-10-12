@@ -28,9 +28,10 @@
   border: none;
   padding: 10px;
   padding-bottom: 30px;
-  width: 900px;
+  width: 100%;
+  height: 100%;
   margin-bottom: 430px;
-  overflow-y: hidden;
+  overflow-y: hidden; 
 }
 .posts-form{
   position: fixed;

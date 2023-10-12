@@ -2,10 +2,10 @@
     position: fixed;
     float: right;
     flex-direction: column;
-    top: 10px;
-    right: 30px; 
-    width: 290px;
-    height: 210px;
+    top: 1%;
+    right: 20px; 
+    width: 22%;
+    height: 35%;
     border-radius: 10px; 
     background-color: #ffffff;
     padding: 10px;
@@ -22,12 +22,12 @@
 }
 
 .banner-homeProfile{
-    width: 310px;
-    height: 90px;
+    width: 106%;
+    height: 40%;
     object-fit: cover;
     margin-top: -10px;
-    margin-left: -10px;
-    border-radius: 10px 10px 0px 0px; 
+    margin-left: -9px;
+    border-radius: 7% 7% 0% 0%; 
 }
 .banner-homeProfile:hover{
     filter: brightness(0.7); 
@@ -35,8 +35,8 @@
 
 .profile-homeProfile{
     position: fixed;
-    width: 65px;
-    height: 65px;
+    width: 5%;
+    height: 11%;
     margin-top: -35px;
     margin-left: 10px;
     border-radius: 10px;
