@@ -1,13 +1,13 @@
 .rightBar{
-    width: 290px;
-    height: 280px;
+    width: 22%;
+    height: 46%;
     background-color: #ffffff;
     float: right;
     flex-direction: column;
     padding: 10px;
     margin-right: 10px;
-    top: 250px;  
-    right: 15px;
+    top: 41%;  
+    right: 5px;
     position: fixed; 
     border-radius: 10px;
     overflow-y: visible;

@@ -45,7 +45,7 @@ const FriendList = ({ relationships }) => {
     <div className="friendlist-main">
       <div className="friendlist-container">
         <div className="friendlist-header">
-          <h2>Following Lists</h2>
+          <h2 style={{ flex: 1 }}>Following Lists</h2>
           <button className="button-info">
             <Icon
               icon="fluent:person-alert-20-filled"

@@ -4,27 +4,32 @@
   margin-top: 20px;
   margin-left: -20px;
   margin-bottom: 5px;
-  width: 895px; 
+  width: 68%; 
+  height: 8%;
+}
+.post-container.has-image {
+  height: 19%;  
 }
 .post {
-  width: 875px;
+  width: 100%;
+  height: 100%;
   border-radius: 10px;
   flex-direction: column;
   display: flex;
+  flex: 1;
   margin-left: 15px;
   margin-top: -15px; 
   border: none;
   background-color: white;
 }
 .container {
-  padding: 20px;
+  padding: 10px;
 }
 .user {
   display: flex;
+  flex-direction: row;
   align-items: center;
-  justify-content: space-between;
-  margin-top: -15px;
-  margin-left: -15px;
+  justify-content: space-between;  
 }
 .user:focus {
   border-color: grey;
@@ -33,8 +38,8 @@
 }
 
 .userinfo {
-  flex-direction: row;
-  display: flex;
+  display: flex; 
+  flex: 1;
 }
 .profile {
   width: 60px;
@@ -51,7 +56,7 @@
   display: flex;
   flex-direction: column;
   margin-top: -60px;
-  margin-left: 70px;
+  margin-left: 70px; 
 }
 .name {
   font-size: 25px;
@@ -64,12 +69,19 @@
   font-family: "Inter" ;
   font-weight: 600; 
 }
-.opsi-post-button{
-  position: absolute;
+
+.options {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end; 
+  margin-left: auto;
+}
+
+.opsi-post-button { 
   width: 30px;
   height: 30px;
-  margin-top: 5px;
-  margin-left: 835px;
+  margin-top: 5px; 
+  margin-left: auto; 
 }
 .opsi-post-button:hover{
   background-color: lightgray;
@@ -78,6 +90,12 @@
 .delete-post-button{
 
 }
+
+.post-option-popup{ 
+  margin-right: -10px;
+}
+
+
 .post-option-popup-other {
   top: 0;
   width: 130px;
@@ -172,7 +190,7 @@
   padding-left: 15px;
   padding-bottom: 5px;
   padding-right: 10px;
-  margin-top: -15px;
+  margin-top: 0px;
   scrollbar-width: thin;
   scrollbar-color: gray transparent;
 }
@@ -207,6 +225,7 @@
   align-items: center;
   font-size: 14px;
   margin-left: 25px;
+  margin-bottom: 10px;
 }
 .item {
   align-items: center;
