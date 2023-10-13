@@ -7,7 +7,11 @@ import { makeRequest } from "../../axios.js";
 import defaultprofile from "../../assets/profile/default_avatar.png";
 
 const Rightbar = () => {
-  const { isLoading, error, data: friendData } = useQuery(["friend"], () =>
+  const {
+    isLoading,
+    error,
+    data: friendData,
+  } = useQuery(["friend"], () =>
     makeRequest.get("/friends").then((res) => {
       return res.data;
     })

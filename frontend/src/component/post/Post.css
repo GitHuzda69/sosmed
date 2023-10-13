@@ -4,12 +4,8 @@
   margin-top: 20px;
   margin-left: -20px;
   margin-bottom: 5px;
-  width: 68%; 
-  height: 8%;
-}
-.post-container.has-image {
-  height: 19%;  
-}
+  width: 100%;  
+} 
 .post {
   width: 100%;
   height: 100%;
@@ -80,7 +76,7 @@
 .opsi-post-button { 
   width: 30px;
   height: 30px;
-  margin-top: 5px; 
+  margin-top: -35px; 
   margin-left: auto; 
 }
 .opsi-post-button:hover{

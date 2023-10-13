@@ -1,11 +1,16 @@
- .app{   
-    margin-top: -10px;  
-    margin-bottom: -10px;
-    background-color: #DDDDDD;
-    scrollbar-width: thin;
-    scrollbar-color: #999999 #ffffff;
-    overflow-x: hidden;
-    overflow-y: hidden;
+ html{ 
+  overflow-y: hidden;
+  overflow-x: hidden;
+  background-color: #DDDDDD;
+ }
+ .app{     
+  margin-top: -10px;  
+  margin-right: -7px; 
+  padding-bottom: 0px; 
+  scrollbar-width: thin;
+  scrollbar-color: #999999 #ffffff;
+  overflow-x: hidden; 
+  overflow-y: hidden;
   }
   
   .app::-webkit-scrollbar {
@@ -57,7 +62,7 @@
   justify-content: space-between;
   align-items: flex-start;
   }
-
+ 
 .home-content .posts{
     border: none;
 }  

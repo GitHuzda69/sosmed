@@ -1,6 +1,5 @@
-.main-messages{ 
-  min-height: 600px;
-  height: auto;
+.main-messages{  
+  height: 600px;
   display: flex;
   max-height: max-content;
   flex-direction: row;
@@ -9,7 +8,7 @@
   padding-bottom: 2px;
   font-family: "Inter";
   font-weight: bold;  
-  background-color: white;  
+  background-color: white;   
 }   
 
 .message-friend-container{ 
@@ -53,7 +52,7 @@
   padding-top: 20px;
   margin-left: -10px;
   margin-right: -10px; 
-  border-top: 2px gray solid;  
+  border-top: 2px gray solid;   
   overflow-y: scroll;
   overflow-x: hidden;
   scrollbar-width: thin;
@@ -74,7 +73,7 @@
 }
 
 .message-friend-bar::-webkit-scrollbar-track {
-  background-color: #ffffff;
+  background-color: transparent;
   border-radius: 10px;
 }
 
@@ -86,7 +85,7 @@
   margin-right: -10px;
   margin-bottom: 10px;
   border-bottom: 1px gray solid;
-  padding: 5px 10px;
+  padding: 5px 10px; 
 }
 
 .message-friend-avatar{
@@ -321,3 +320,4 @@
   width: auto;
   max-width: 1200px;
 }
+ 

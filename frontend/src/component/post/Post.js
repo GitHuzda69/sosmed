@@ -75,7 +75,7 @@ const Post = ({ post }) => {
 
   const messageMutation = useMutation(
     (userId) => {
-      return makeRequest.post("/conversations", {userId});
+      return makeRequest.post("/conversations", { userId });
     },
     {
       onSuccess: () => {
@@ -177,7 +177,7 @@ const Post = ({ post }) => {
     }
   };
   return (
-    <div className={`post-container ${post.img ? "has-image" : ""}`}>
+    <div className="post-container">
       <div className="post">
         <div className="container">
           <div className="user">
