@@ -17,7 +17,6 @@ function Message() {
   const [settingOpen, setSettingOpen] = useState(false);
   const [logoutOpen, setLogoutOpen] = useState(false);
   const [currentChat, setCurrentChat] = useState(null);
-  const queryClient = useQueryClient();
   const [inputValue, setInputValue] = useState(null);
   const { currentUser } = useContext(AuthContext);
   const isMessagesPage = true;
@@ -39,20 +38,6 @@ function Message() {
       return res.data;
     })
   );
-  const {
-    isLoading: mIsLoading,
-    error: mError,
-    data: messData,
-  } = useQuery(["message"], () => {
-    const messageId = convData[0].id;
-    console.log("Message ID:", messageId);
-    return makeRequest.get("/messages/" + messageId).then((res) => {
-      return res.data;
-    });
-  });
-
-  console.log(convData);
-  console.log(messData);
 
   return (
     <div className="main-messages">
@@ -137,7 +122,7 @@ function Message() {
             <div className="chat-time">
               <h3>Today</h3>
             </div>
-            <Chat />
+            <Chat conv={convData} />
           </div>
           <div className="chat-input">
             <textarea

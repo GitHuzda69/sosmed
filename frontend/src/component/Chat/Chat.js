@@ -5,16 +5,15 @@ import { Icon } from "@iconify/react";
 import { makeRequest } from "../../axios";
 import defaultprofile from "../../assets/profile/default_avatar.png";
 
-const Chat = (conversation_id, currentChat) => {
-  const {
-    isLoading: mIsLoading,
-    error: mError,
-    data: messData,
-  } = useQuery(["message"], () =>
-    makeRequest.get("/messages/" + conversation_id).then((res) => {
-      return res.data;
-    })
-  );
+const Chat = (conv, currentChat) => {
+  const { isLoading: mIsLoading, error: mError, data: messData } = useQuery(["message"], () => {
+    const messageId = conv.id;
+    console.log("Message ID:", messageId);
+      return makeRequest.get("/messages/" + conv.id).then((res) => {
+        return res.data;
+      });
+  });
+  console.log(conv)    
 
   return (
     <div>

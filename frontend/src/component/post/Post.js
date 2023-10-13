@@ -75,7 +75,7 @@ const Post = ({ post }) => {
 
   const messageMutation = useMutation(
     (userId) => {
-      return makeRequest.post("/conversations/" + userId);
+      return makeRequest.post("/conversations", {userId});
     },
     {
       onSuccess: () => {

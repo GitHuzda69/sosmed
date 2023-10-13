@@ -11,7 +11,7 @@ export const newConversation = (req, res)=> {
 
     const q = 'INSERT INTO conversations (`senderid`, `receiverid`) VALUES (?)';
 
-    const values = [userInfo.id, req.params.userId,];
+    const values = [userInfo.id, req.body.userId,];
 
     db.query(q, values, (err, data)=>{
         if (err) return res.status(500).json(err);
