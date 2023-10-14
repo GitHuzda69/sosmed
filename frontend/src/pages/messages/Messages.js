@@ -157,7 +157,7 @@ function Message() {
           </div>
         </div>
       ) : (
-        <span>Open a Conversation</span>
+        <span className="not-chat">Open a Conversation</span>
       )}
 
       <Sidebar

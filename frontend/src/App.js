@@ -34,7 +34,11 @@ function App() {
     return (
       <QueryClientProvider client={queryClient}>
         <div>
-          <div style={{ display: "flex" }}>
+          <div
+            style={{
+              display: "flex",
+            }}
+          >
             <Sidebar />
             <Outlet />
           </div>
