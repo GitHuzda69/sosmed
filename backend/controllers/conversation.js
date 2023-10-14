@@ -9,13 +9,13 @@ export const newConversation = (req, res)=> {
     jwt.verify(token, "secretkey", (err, userInfo) => {
         if (err) return res.status(403).json("Token not valid");
 
-    const q = 'INSERT INTO conversations (`senderid`, `receiverid`) VALUES (?)';
+    const q = 'INSERT INTO `conversations` (`senderid`, `receiverid`) VALUES (?, ?)';
 
-    const values = [userInfo.id, req.body.userId,];
+    const values = [userInfo.id, req.body.userId];
 
     db.query(q, values, (err, data)=>{
         if (err) return res.status(500).json(err);
-        return res.status(200).json("Conversation has been created")
+        return res.status(200).json(data)
     })})
 }
 

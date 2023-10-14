@@ -8,12 +8,13 @@ import defaultprofile from "../../assets/profile/default_avatar.png";
 const Chat = (conv, currentChat) => {
   const { isLoading: mIsLoading, error: mError, data: messData } = useQuery(["message"], () => {
     const messageId = conv.id;
-    console.log("Message ID:", messageId);
       return makeRequest.get("/messages/" + conv.id).then((res) => {
         return res.data;
       });
   });
   console.log(conv)    
+  console.log(messData)    
+  console.log("Message ID:", conv.id);
 
   return (
     <div>
