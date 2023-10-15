@@ -1,6 +1,5 @@
 .rightBar{
-    width: 22%; 
-    height: 46%;
+    width: 22%;  
     background-color: #ffffff;
     float: right;
     flex-direction: column;
@@ -24,9 +23,7 @@
     font-weight: bold;
 }
 
-.rightBarContainer { 
-    height: 72%;
-    max-height: 70%;
+.rightBarContainer {   
     margin-top: 5px;
     margin-right: -8px;
     padding: 20px;
@@ -170,122 +167,291 @@
 
 /*code buat responsive height*/
 
-@media screen and (max-height: 650px) {
-  .rightBar { 
-  }
-  .rightBarContainer {
-    max-height: 480px;
-  }
-}
-@media screen and (max-height: 600px) {
+@media screen and (max-height: 1110px) {
   .rightBar {
-    height: 530px;
-  }
+    height: 510px; 
+  } 
   .rightBarContainer {
-    max-height: 445px;
-  }
+    height: 440px; 
+  } 
+}
+@media screen and (max-height: 1090px) {
+  .rightBar {
+    height: 500px; 
+  } 
+  .rightBarContainer {
+    height: 430px; 
+  } 
+}
+@media screen and (max-height: 1070px) {
+  .rightBar {
+    height: 490px; 
+  } 
+  .rightBarContainer {
+    height: 420px; 
+  } 
+}
+@media screen and (max-height: 1050px) {
+  .rightBar {
+    height: 480px; 
+  } 
+  .rightBarContainer {
+    height: 410px; 
+  } 
+}
+@media screen and (max-height: 1030px) {
+  .rightBar {
+    height: 470px; 
+  } 
+  .rightBarContainer {
+    height: 400px; 
+  } 
+}
+@media screen and (max-height: 1010px) {
+  .rightBar {
+    height: 460px; 
+  } 
+  .rightBarContainer {
+    height: 390px; 
+  } 
+}
+@media screen and (max-height: 990px) {
+  .rightBar {
+    height: 450px; 
+  } 
+  .rightBarContainer {
+    height: 380px; 
+  } 
+}
+@media screen and (max-height: 970px) {
+  .rightBar {
+    height: 440px; 
+  } 
+  .rightBarContainer {
+    height: 370px; 
+  } 
+}
+@media screen and (max-height: 950px) {
+  .rightBar {
+    height: 430px; 
+  } 
+  .rightBarContainer {
+    height: 360px; 
+  } 
+}
+@media screen and (max-height: 930px) {
+  .rightBar {
+    height: 420px; 
+  } 
+  .rightBarContainer {
+    height: 350px; 
+  } 
+}
+@media screen and (max-height: 910px) {
+  .rightBar {
+    height: 410px; 
+  } 
+  .rightBarContainer {
+    height: 340px; 
+  } 
+}
+@media screen and (max-height: 890px) {
+  .rightBar {
+    height: 400px; 
+  } 
+  .rightBarContainer {
+    height: 330px; 
+  } 
+}
+@media screen and (max-height: 870px) {
+  .rightBar {
+    height: 390px; 
+  } 
+  .rightBarContainer {
+    height: 320px; 
+  } 
+}
+@media screen and (max-height: 850px) {
+  .rightBar {
+    height: 380px; 
+  } 
+  .rightBarContainer {
+    height: 310px; 
+  } 
+}
+@media screen and (max-height: 830px) {
+  .rightBar {
+    height: 370px; 
+  } 
+  .rightBarContainer {
+    height: 300px; 
+  } 
+}
+@media screen and (max-height: 810px) {
+  .rightBar {
+    height: 360px; 
+  } 
+  .rightBarContainer {
+    height: 290px; 
+  } 
+}
+@media screen and (max-height: 790px) {
+  .rightBar {
+    height: 350px; 
+  } 
+  .rightBarContainer {
+    height: 280px; 
+  } 
+}
+@media screen and (max-height: 770px) {
+  .rightBar {
+    height: 340px; 
+  } 
+  .rightBarContainer {
+    height: 270px; 
+  } 
+}
+@media screen and (max-height: 730px) {
+  .rightBar {
+    height: 330px; 
+  } 
+  .rightBarContainer {
+    height: 260px; 
+  } 
+}
+@media screen and (max-height: 710px) {
+  .rightBar {
+    height: 320px; 
+  } 
+  .rightBarContainer {
+    height: 250px; 
+  } 
+}
+@media screen and (max-height: 690px) {
+  .rightBar {
+    height: 310px; 
+  } 
+  .rightBarContainer {
+    height: 240px; 
+  } 
+}
+@media screen and (max-height: 670px) {
+  .rightBar {
+    height: 300px; 
+  } 
+  .rightBarContainer {
+    height: 230px; 
+  } 
+}
+@media screen and (max-height: 650px) {
+  .rightBar {
+    height: 290px; 
+  } 
+  .rightBarContainer {
+    height: 220px; 
+  } 
+}
+@media screen and (max-height: 630px) {
+  .rightBar {
+    height: 280px; 
+  } 
+  .rightBarContainer {
+    height: 205px; 
+  } 
+}
+@media screen and (max-height: 610px) {
+  .rightBar {
+    height: 270px; 
+  } 
+  .rightBarContainer {
+    height: 195px; 
+  } 
+}
+@media screen and (max-height: 590px) {
+  .rightBar {
+    height: 260px; 
+  } 
+  .rightBarContainer {
+    height: 185px; 
+  } 
 }
 @media screen and (max-height: 570px) {
   .rightBar {
-    height: 500px;
-  }
+    height: 250px; 
+  } 
   .rightBarContainer {
-    max-height: 410px;
-  }
+    height: 175px; 
+  } 
 }
-@media screen and (max-height: 540px) {
+@media screen and (max-height: 550px) {
   .rightBar {
-    height: 470px;
-  }
+    height: 240px; 
+  } 
   .rightBarContainer {
-    max-height: 380px;
-  }
+    height: 165px; 
+  } 
+}
+@media screen and (max-height: 530px) {
+  .rightBar {
+    height: 230px; 
+  } 
+  .rightBarContainer {
+    height: 155px; 
+  } 
 }
 @media screen and (max-height: 510px) {
   .rightBar {
-    height: 450px;
-  }
+    height: 220px; 
+  } 
   .rightBarContainer {
-    max-height: 360px;
-  }
+    height: 145px; 
+  } 
 }
 @media screen and (max-height: 490px) {
   .rightBar {
-    height: 430px;
-  }
+    height: 210px; 
+  } 
   .rightBarContainer {
-    max-height: 340px;
-  }
+    height: 135px; 
+  } 
 }
 @media screen and (max-height: 470px) {
   .rightBar {
-    height: 410px;
-  }
+    height: 200px; 
+  } 
   .rightBarContainer {
-    max-height: 320px;
-  }
+    height: 125px; 
+  } 
 }
 @media screen and (max-height: 450px) {
   .rightBar {
-    height: 390px;
-  }
+    height: 190px; 
+  } 
   .rightBarContainer {
-    max-height: 300px;
-  }
+    height: 115px; 
+  } 
 }
 @media screen and (max-height: 430px) {
   .rightBar {
-    height: 370px;
-  }
+    height: 180px; 
+  } 
   .rightBarContainer {
-    max-height: 280px;
-  }
+    height: 105px; 
+  } 
 }
 @media screen and (max-height: 410px) {
   .rightBar {
-    height: 350px;
-  }
+    height: 170px; 
+  } 
   .rightBarContainer {
-    max-height: 260px;
-  }
+    height: 95px; 
+  } 
 }
 @media screen and (max-height: 390px) {
   .rightBar {
-    height: 330px;
-  }
+    height: 160px; 
+  } 
   .rightBarContainer {
-    max-height: 240px;
-  }
-}
-@media screen and (max-height: 370px) {
-  .rightBar {
-    height: 310px;
-  }
-  .rightBarContainer {
-    max-height: 220px;
-  }
-}
-@media screen and (max-height: 350px) {
-  .rightBar {
-    height: 290px;
-  }
-  .rightBarContainer {
-    max-height: 200px;
-  }
-}
-@media screen and (max-height: 330px) {
-  .rightBar {
-    height: 270px;
-  }
-  .rightBarContainer {
-    max-height: 180px;
-  }
-}
-@media screen and (max-height: 310px) {
-  .rightBar {
-    height: 250px;
-  }
-  .rightBarContainer {
-    max-height: 160px;
-  }
+    height: 85px; 
+  } 
 }

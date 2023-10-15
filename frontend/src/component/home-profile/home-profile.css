@@ -4,8 +4,7 @@
     flex-direction: column;
     top: 1%;
     right: 20px; 
-    width: 22%;
-    height: 35%;
+    width: 22%; 
     border-radius: 10px; 
     background-color: #ffffff;
     padding: 10px;
@@ -34,9 +33,9 @@
 }
 
 .profile-homeProfile{
-    position: fixed;
-    width: 5%;
-    height: 11%;
+    position: fixed; 
+    width: 70px;
+    height: 70px;
     margin-top: -2%;
     margin-left: 1%;
     border-radius: 10px;
@@ -51,8 +50,7 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    gap: 5px;
-    margin-top: -1%;
+    gap: 5px; 
     font-family: "Inter" ;  
 }
 .follow-homeProfile h3{
@@ -68,11 +66,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100%;
-    height: 16%;
+    width: 100%; 
     gap: 20px;
-    padding: 5px;
-    margin-top: 1%;
+    padding: 5px; 
     border-radius: 10px;
     background-color: black;
     color: white;
@@ -81,3 +77,211 @@
     border-radius: 12px;
     background-color: rgb(54, 54, 54);
 }
+
+/*code buat responsive height*/
+
+@media screen and (max-height: 1110px) {
+    .homeProfile {
+      height: 440px; 
+    } 
+  }
+  @media screen and (max-height: 1090px) {
+    .homeProfile {
+      height: 430px; 
+    } 
+  }
+  @media screen and (max-height: 1070px) {
+    .homeProfile {
+      height: 420px; 
+    } 
+  }
+  @media screen and (max-height: 1050px) {
+    .homeProfile {
+      height: 410px; 
+    } 
+  }
+  @media screen and (max-height: 1030px) {
+    .homeProfile {
+      height: 400px; 
+    } 
+  }
+  @media screen and (max-height: 1010px) {
+    .homeProfile {
+      height: 390px; 
+    } 
+  }
+  @media screen and (max-height: 990px) {
+    .homeProfile {
+      height: 380px; 
+    } 
+  }
+  @media screen and (max-height: 970px) {
+    .homeProfile {
+      height: 370px; 
+    } 
+  }
+  @media screen and (max-height: 950px) {
+    .homeProfile {
+      height: 365px; 
+    } 
+  }
+  @media screen and (max-height: 930px) {
+    .homeProfile {
+      height: 355px; 
+    } 
+  }
+  @media screen and (max-height: 910px) {
+    .homeProfile {
+      height: 345px; 
+    } 
+  }
+  @media screen and (max-height: 890px) {
+    .homeProfile {
+      height: 335px; 
+    } 
+  }
+  @media screen and (max-height: 870px) {
+    .homeProfile {
+      height: 320px; 
+    } 
+  }
+  @media screen and (max-height: 850px) {
+    .homeProfile {
+      height: 315px; 
+    } 
+  }
+  @media screen and (max-height: 830px) {
+    .homeProfile {
+      height: 295px; 
+    } 
+  }
+  @media screen and (max-height: 810px) {
+    .homeProfile {
+      height: 285px; 
+    } 
+  }
+  @media screen and (max-height: 790px) {
+    .homeProfile {
+      height: 275px; 
+    } 
+  }
+  @media screen and (max-height: 770px) {
+    .homeProfile {
+      height: 265px; 
+    } 
+  }
+  @media screen and (max-height: 730px) {
+    .homeProfile {
+      height: 255px; 
+    } 
+  }
+  @media screen and (max-height: 710px) {
+    .homeProfile {
+      height: 245px; 
+    } 
+  }
+  @media screen and (max-height: 690px) {
+    .homeProfile {
+      height: 240px; 
+    } 
+  }
+  @media screen and (max-height: 660px) {
+    .homeProfile {
+      height: 230px; 
+    } 
+    .follow-homeProfile{
+        margin-top: 0px;
+    }
+  } 
+  @media screen and (max-height: 640px) {
+    .homeProfile {
+      height: 220px; 
+    } 
+  }
+  @media screen and (max-height: 620px) {
+    .homeProfile {
+      height: 215px; 
+    } 
+  }
+  @media screen and (max-height: 600px) {
+    .homeProfile {
+      height: 215px; 
+    } 
+    .follow-homeProfile{
+        margin-top: -5px;
+    }
+  }
+  @media screen and (max-height: 580px) {
+    .homeProfile {
+      height: 205px; 
+    } 
+  }
+  @media screen and (max-height: 560px) {
+    .homeProfile {
+      height: 195px; 
+    } 
+    .follow-homeProfile{
+        margin-top: -10px;
+    }
+    .connect-homeProfile{
+        margin-top: -5px;
+    }
+  }
+  @media screen and (max-height: 540px) {
+    .homeProfile {
+      height: 185px; 
+    } 
+  }
+  @media screen and (max-height: 520px) {
+    .homeProfile {
+      height: 170px; 
+    } 
+    .follow-homeProfile{
+        margin-top: -10px;
+    }
+    .connect-homeProfile{
+        margin-top: -15px;
+    }
+  }
+  @media screen and (max-height: 500px) {
+    .homeProfile {
+      height: 165px; 
+    } 
+  }
+  @media screen and (max-height: 480px) {
+    .homeProfile {
+      height: 160px; 
+    } 
+    .follow-homeProfile{
+        margin-top: -15px;
+    }
+    .connect-homeProfile{
+        margin-top: -13px;
+    }
+  }
+  @media screen and (max-height: 460px) {
+    .homeProfile {
+      height: 150px; 
+    } 
+    .follow-homeProfile{
+        margin-top: -15px;
+    }
+    .connect-homeProfile{
+        margin-top: -15px;
+    }
+  }
+  @media screen and (max-height: 440px) {
+    .homeProfile {
+      height: 140px; 
+    } 
+  }
+  @media screen and (max-height: 420px) {
+    .homeProfile {
+      height: 135px; 
+    } 
+  }
+  @media screen and (max-height: 400px) {
+    .homeProfile {
+      height: 130px; 
+    } 
+  }

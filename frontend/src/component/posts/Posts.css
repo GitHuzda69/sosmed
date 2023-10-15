@@ -28,7 +28,7 @@
   border: none;
   padding: 10px;
   padding-bottom: 40px;
-  width: 67%;
+  width: 67%; 
   height: 800px;
   overflow-y: scroll;
   margin-bottom: 0px;  
@@ -442,3 +442,185 @@
     margin-right: 5px; 
   }
   
+/*code buat responsive height*/
+
+@media screen and (max-height: 1110px) {
+  .posts {
+    height: 870px; 
+  } 
+}
+@media screen and (max-height: 1090px) {
+  .posts {
+    height: 850px; 
+  } 
+}
+@media screen and (max-height: 1070px) {
+  .posts {
+    height: 830px; 
+  } 
+}
+@media screen and (max-height: 1050px) {
+  .posts {
+    height: 810px; 
+  } 
+}
+@media screen and (max-height: 1030px) {
+  .posts {
+    height: 790px; 
+  } 
+}
+@media screen and (max-height: 1010px) {
+  .posts {
+    height: 770px; 
+  } 
+}
+@media screen and (max-height: 990px) {
+  .posts {
+    height: 750px; 
+  } 
+}
+@media screen and (max-height: 970px) {
+  .posts {
+    height: 730px; 
+  } 
+}
+@media screen and (max-height: 950px) {
+  .posts {
+    height: 710px; 
+  } 
+}
+@media screen and (max-height: 930px) {
+  .posts {
+    height: 690px; 
+  } 
+}
+@media screen and (max-height: 910px) {
+  .posts {
+    height: 670px; 
+  } 
+}
+@media screen and (max-height: 890px) {
+  .posts {
+    height: 650px; 
+  } 
+}
+@media screen and (max-height: 870px) {
+  .posts {
+    height: 630px; 
+  } 
+}
+@media screen and (max-height: 850px) {
+  .posts {
+    height: 610px; 
+  } 
+}
+@media screen and (max-height: 830px) {
+  .posts {
+    height: 590px; 
+  } 
+}
+@media screen and (max-height: 810px) {
+  .posts {
+    height: 570px; 
+  } 
+}
+@media screen and (max-height: 790px) {
+  .posts {
+    height: 550px; 
+  } 
+}
+@media screen and (max-height: 770px) {
+  .posts {
+    height: 530px; 
+  } 
+}
+@media screen and (max-height: 730px) {
+  .posts {
+    height: 510px; 
+  } 
+}
+@media screen and (max-height: 710px) {
+  .posts {
+    height: 490px; 
+  } 
+}
+@media screen and (max-height: 690px) {
+  .posts {
+    height: 470px; 
+  } 
+}
+@media screen and (max-height: 670px) {
+  .posts {
+    height: 450px; 
+  } 
+}
+@media screen and (max-height: 650px) {
+  .posts {
+    height: 430px; 
+  } 
+}
+@media screen and (max-height: 630px) {
+  .posts {
+    height: 410px; 
+  } 
+}
+@media screen and (max-height: 610px) {
+  .posts {
+    height: 390px; 
+  } 
+}
+@media screen and (max-height: 590px) {
+  .posts {
+    height: 370px; 
+  } 
+}
+@media screen and (max-height: 570px) {
+  .posts {
+    height: 350px; 
+  } 
+}
+@media screen and (max-height: 550px) {
+  .posts {
+    height: 330px; 
+  } 
+}
+@media screen and (max-height: 530px) {
+  .posts {
+    height: 310px; 
+  } 
+}
+@media screen and (max-height: 510px) {
+  .posts {
+    height: 290px; 
+  } 
+}
+@media screen and (max-height: 490px) {
+  .posts {
+    height: 270px; 
+  } 
+}
+@media screen and (max-height: 470px) {
+  .posts {
+    height: 250px; 
+  } 
+}
+@media screen and (max-height: 450px) {
+  .posts {
+    height: 230px; 
+  } 
+}
+@media screen and (max-height: 430px) {
+  .posts {
+    height: 210px; 
+  } 
+}
+@media screen and (max-height: 410px) {
+  .posts {
+    height: 190px; 
+  } 
+}
+@media screen and (max-height: 390px) {
+  .posts {
+    height: 170px; 
+  } 
+}
