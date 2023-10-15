@@ -4,7 +4,7 @@ import Sidebar from "../../component/Leftbar/Leftbar";
 import Settings from "../../component/Settings/Settings";
 import Logout from "../../component/Logout/Logout";
 import { Link } from "react-router-dom";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { makeRequest } from "../../axios.js";
 import { AuthContext } from "../../context/authContext.js";
 import { Icon } from "@iconify/react";
@@ -29,15 +29,24 @@ function Message() {
     setLogoutOpen(!logoutOpen);
   };
 
-  const {
-    isLoading: cIsLoading,
-    error: cError,
-    data: convData,
-  } = useQuery(["conversation"], () =>
-    makeRequest.get("/conversations").then((res) => {
-      return res.data;
-    })
+  const { isLoading: cIsLoading, error: cError, data: convData } = useQuery(["conversation"], () => 
+      makeRequest.get("/conversations").then((res) => {
+        return res.data;
+      })
   );
+
+  const { isLoading: mIsLoading, error: mError, data: messData } = useQuery(["message"], async () => {
+    try {
+      const response = await makeRequest.get("/messages/" + currentChat.id);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      throw error;
+    }
+  });
+  
+
+ console.log(currentChat)
 
   return (
     <div className="main-messages">
@@ -58,12 +67,7 @@ function Message() {
           />
         </div>
         <div className="message-friend-bar">
-          {cIsLoading
-            ? "Loading"
-            : cError
-            ? "Something went wrong"
-            : convData &&
-              convData.map((friend) => (
+          {cIsLoading ? "Loading": cError ? "Error" : convData.map((friend) => (
                 <button key={friend.id} onClick={() => setCurrentChat(friend)}>
                   <div className="message-friend">
                     <img
@@ -122,7 +126,13 @@ function Message() {
             <div className="chat-time">
               <h3>Today</h3>
             </div>
-            <Chat conv={convData} />
+            {mIsLoading ? "Loading" : mError ? "Error" : messData.map((m) => (
+            <div key={m.id} className="chat-other">
+              <h3>{m.displayname}</h3>
+              <h4>{m.desc}</h4>
+              <h5>{moment(m.createdat).fromNow()}</h5>
+            </div>
+          ))}
           </div>
           <div className="chat-input">
             <textarea

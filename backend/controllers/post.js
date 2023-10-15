@@ -107,9 +107,6 @@ export const updatePost = (req, res) => {
           req.params.id,
         ],
         (err, data) => {
-          console.log(req.body.desc,
-            req.body.img,
-            req.params.id,)
           if (err) {
             return res.status(500).json(err);
           }
