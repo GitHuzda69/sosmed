@@ -1,5 +1,12 @@
-import Express from "express";
-import mysql from "mysql";
+const express = require("express");
+const app = express();
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+const helmet = require("helmet");
+const morgan = require("morgan");
+const multer = require("multer");
+const router = express.Router();
+const path = require("path");
 import authRoutes from "./routes/auth.js";
 import userRoutes from  "./routes/users.js";
 import postRoutes from "./routes/posts.js";
@@ -9,38 +16,39 @@ import RelationshipRoutes from "./routes/relationships.js";
 import friendsRoutes from "./routes/friends.js";
 import conversationRoutes from "./routes/conversations.js";
 import messageRoutes from "./routes/messages.js";
-import cookieParser from "cookie-parser";
-import cors from "cors"
-import multer from "multer";
 
-const app = Express()
+mongoose.connect(
+    process.env.MONGO_URL,
+    { useNewUrlParser: true, useUnifiedTopology: true },
+    () => {
+      console.log("Connected to MongoDB");
+    }
+  );
+  app.use("/images", express.static(path.join(__dirname, "public/images")));
+
 //middlewares
-app.use((req, res, next) =>{
-    res.header("Access-Control_Allow_Credentials", true)
-    next()
-})
-app.use(Express.json())
-app.use(cors({
-    origin: "http://localhost:3000",
-    credentials: true,
-}))
-app.use(cookieParser())
+app.use(express.json());
+app.use(helmet());
+app.use(morgan("common"));
 
-    const storage = multer.diskStorage({
-        destination: function (req, file, cb) {
-            cb(null, '../frontend/public/data')
-        },
-        filename: function (req, file, cb) {
-            cb(null, Date.now() + file.originalname)
-        } 
-    })
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, "public/images");
+    },
+    filename: (req, file, cb) => {
+      cb(null, req.body.name);
+    },
+  });
 
-    const upload = multer({ storage: storage })
+  const upload = multer({ storage: storage });
+  app.post("/api/upload", upload.single("file"), (req, res) => {
+    try {
+      return res.status(200).json("File uploded successfully");
+    } catch (error) {
+      console.error(error);
+    }
+  });
 
-app.post('/api/upload', upload.single("file"), (req, res) => {
-    const file = req.file;
-    res.status(200).json(file.filename);
-})
 app.use('/api/auth', authRoutes)
 app.use('/api/users', userRoutes)
 app.use('/api/posts', postRoutes)
@@ -58,14 +66,6 @@ const db = mysql.createConnection({
     database: "sosmed"
 });
 
-db.connect((err) => {
-    if (err) {
-        console.error("Gagal", err);
-        return;
-    }
-    console.error("Success");
-})
-
-app.listen(8800, ()=>{
-    console.log("Server Working....")
-})
+app.listen(8800, () => {
+    console.log("Backend server is running!");
+  });

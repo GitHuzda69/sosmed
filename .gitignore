@@ -36,5 +36,6 @@ yarn-error.log*
 /frontend/yarn-error.log*
 
 /backend/node_modules
+/backend/.env
 
 /frontend/public/data/
