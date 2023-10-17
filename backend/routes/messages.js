@@ -1,9 +1,30 @@
-import express from "express";
-import { getMessage, addMessage } from "../controllers/message.js";
+const router = require("express").Router();
+const Message = require("../models/Message");
 
-const router = express.Router()
+//add message
 
-router.post("/", addMessage)
-router.get("/:conversationsid", getMessage)
+router.post("/", async (req, res) => {
+  const newMessage = new Message(req.body);
 
-export default router
+  try {
+    const savedMessage = await newMessage.save();
+    res.status(200).json(savedMessage);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+//get message
+
+router.get("/:conversationId", async (req, res) => {
+  try {
+    const messages = await Message.find({
+      conversationId: req.params.conversationId,
+    });
+    res.status(200).json(messages);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+module.exports = router;

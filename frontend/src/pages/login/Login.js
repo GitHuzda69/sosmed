@@ -1,10 +1,13 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/authContext";
 import { Icon } from "@iconify/react";
 import "./Login.css";
 
 const Login = () => {
+  const username = useRef();
+  const password = useRef();
+  const { isFetching, dispatch } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const [inputs, setInputs] = useState({
@@ -12,27 +15,18 @@ const Login = () => {
     password: "",
   });
   const [err, setErrors] = useState(null);
-  const navigate = useNavigate();
   const handleChange = (e) => {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
-  const { login } = useContext(AuthContext);
+
   const handleLogin = async (e) => {
     e.preventDefault();
-    try {
-      await login(inputs);
-      if (rememberMe) {
-        localStorage.setItem("rememberMe", "true");
-      } else {
-        localStorage.removeItem("rememberMe");
-      }
-      navigate("/");
-    } catch (err) {
-      if (err.response) {
-        setErrors(err.response.data);
-      }
-    }
+    loginCall(
+      { username: username.current.value, password: password.current.value },
+      dispatch
+    );
   };
+
   useEffect(() => {
     const rememberMeStatus = localStorage.getItem("rememberMe");
     if (rememberMeStatus === "true") {
@@ -46,7 +40,7 @@ const Login = () => {
         <h1>Selamat Datang, silahkan masukkan pilih metode Log in Anda</h1>
         <div className="login-forms">
           <h3>Log in</h3>
-          <form action="">
+          <form action="" onSubmit={handleLogin}>
             <div
               className="form-groups"
               style={{
@@ -63,7 +57,7 @@ const Login = () => {
                 type="username"
                 placeholder="Enter Username"
                 onChange={handleChange}
-                name="username"
+                ref={username}
               />
             </div>
             <div
@@ -83,6 +77,7 @@ const Login = () => {
                 placeholder="Enter Password"
                 onChange={handleChange}
                 name="password"
+                ref={password}
               />
               <button
                 type="button"
@@ -124,9 +119,13 @@ const Login = () => {
                 type="submit"
                 className="login"
                 style={{ marginTop: "20px" }}
-                onClick={handleLogin}
+                disabled={isFetching}
               >
-                Sign in
+                {isFetching ? (
+                <></>
+              ) : (
+                "Log In"
+              )}
               </button>
             </div>
             <div className="or-divider">

@@ -1,11 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./Register.css";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import { Icon } from "@iconify/react";
 
 const Register = () => {
+  const username = useRef();
+  const email = useRef();
+  const password = useRef();
+  const displayname = useRef();
+  const history = useHistory();
   const [rememberMe, setRememberMe] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -15,7 +19,6 @@ const Register = () => {
     displayname: "",
     password: "",
   });
-  const navigate = useNavigate();
   const [err, setErrors] = useState(null);
 
   useEffect(() => {
@@ -31,13 +34,19 @@ const Register = () => {
 
   const handleClick = async (e) => {
     e.preventDefault();
-    try {
-      await axios.post("http://localhost:8800/api/auth/register", inputs);
-      navigate("/login");
-    } catch (err) {
-      setErrors(err);
-      if (err.response) {
-        console.log(err.response.data);
+    if (passwordAgain.current.value !== password.current.value) {
+      passwordAgain.current.setCustomValidity("Passwords don't match!");
+    } else {
+      const user = {
+        username: username.current.value,
+        email: email.current.value,
+        password: password.current.value,
+      };
+      try {
+        await axios.post("/auth/register", user);
+        history.push("/login");
+      } catch (err) {
+        console.log(err);
       }
     }
   };
@@ -48,7 +57,7 @@ const Register = () => {
         <h1>Selamat Datang, silahkan masukkan data diri untuk membuat akun</h1>
         <div className="signup-form">
           <h3>Sign up</h3>
-          <form action="">
+          <form action="" onSubmit={handleClick}>
             <div
               className="form-group"
               style={{
@@ -62,9 +71,9 @@ const Register = () => {
               </strong>
               <input
                 className="input-signup"
-                type="username"
                 placeholder="Enter Your Username"
-                name="username"
+                required
+                ref={username}
                 onChange={handleChange}
               />
             </div>
@@ -81,9 +90,9 @@ const Register = () => {
               </strong>
               <input
                 className="input-signup"
-                type="email"
-                placeholder="Enter Your Active Email "
-                name="email"
+                placeholder="Enter Your Active Email"
+                required
+                ref={email}
                 onChange={handleChange}
               />
             </div>
@@ -100,7 +109,6 @@ const Register = () => {
               </strong>
               <input
                 className="input-signup"
-                type="username"
                 placeholder="Enter Your Display Name "
                 name="displayname"
                 onChange={handleChange}
@@ -121,7 +129,8 @@ const Register = () => {
                 className="input-signup"
                 type={showPassword ? "text" : "password"}
                 placeholder="Enter Your Password"
-                name="password"
+                required
+                ref={password}
                 onChange={handleChange}
               />
               <button
@@ -163,7 +172,7 @@ const Register = () => {
                 Policy
               </h4>
             </label>
-            <button className="sign-up" onClick={handleClick}>
+            <button className="sign-up" type="submit">
               Sign Up
             </button>
             <div
