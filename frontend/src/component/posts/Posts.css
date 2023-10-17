@@ -27,8 +27,7 @@
   border-radius: 0;
   border: none;
   padding: 10px;
-  padding-bottom: 40px;
-  width: 67%; 
+  padding-bottom: 40px; 
   height: 800px;
   overflow-y: scroll;
   margin-bottom: 0px;  
@@ -441,6 +440,156 @@
   .comment-cancel-button span {
     margin-right: 5px; 
   }
+
+
+   
+/*code buat responsive width*/
+ 
+@media screen and (max-width: 1500px) {
+  .posts {
+    width: 1000px; 
+  } 
+}
+@media screen and (max-width: 1480px) {
+  .posts {
+    width: 985px; 
+  } 
+}
+@media screen and (max-width: 1460px) {
+  .posts {
+    width: 970px; 
+  } 
+}
+@media screen and (max-width: 1440px) {
+  .posts {
+    width: 950px; 
+  } 
+}
+@media screen and (max-width: 1420px) {
+  .posts {
+    width: 940px; 
+  } 
+}
+@media screen and (max-width: 1400px) {
+  .posts {
+    width: 925px; 
+  } 
+}
+@media screen and (max-width: 1380px) {
+  .posts {
+    width: 905px; 
+  } 
+}
+@media screen and (max-width: 1360px) {
+  .posts {
+    width: 890px; 
+  } 
+}
+@media screen and (max-width: 1340px) {
+  .posts {
+    width: 870px; 
+  } 
+}
+@media screen and (max-width: 1320px) {
+  .posts {
+    width: 855px; 
+  } 
+}
+@media screen and (max-width: 1300px) {
+  .posts {
+    width: 835px; 
+  } 
+}
+@media screen and (max-width: 1260px) {
+  .posts {
+    width: 810px; 
+  } 
+}
+@media screen and (max-width: 1245px) {
+  .posts {
+    width: 795px; 
+  } 
+}
+@media screen and (max-width: 1220px) {
+  .posts {
+    width: 775px; 
+  } 
+}
+@media screen and (max-width: 1200px) {
+  .posts {
+    width: 765px; 
+  } 
+}
+@media screen and (max-width: 1185px) {
+  .posts {
+    width: 745px; 
+  } 
+}
+@media screen and (max-width: 1160px) {
+  .posts {
+    width: 730px; 
+  } 
+}
+@media screen and (max-width: 1145px) {
+  .posts {
+    width: 715px; 
+  } 
+}
+@media screen and (max-width: 1125px) {
+  .posts {
+    width: 700px; 
+  } 
+}
+@media screen and (max-width: 1105px) {
+  .posts {
+    width: 685px; 
+  } 
+}
+@media screen and (max-width: 1085px) {
+  .posts {
+    width: 670px; 
+  } 
+}
+@media screen and (max-width: 1065px) {
+  .posts {
+    width: 655px; 
+  } 
+}
+@media screen and (max-width: 1045px) {
+  .posts {
+    width: 640px; 
+  } 
+}
+@media screen and (max-width: 1025px) {
+  .posts {
+    width: 625px; 
+  } 
+}
+@media screen and (max-width: 1005px) {
+  .posts {
+    width: 615px; 
+  } 
+}
+@media screen and (max-width: 985px) {
+  .posts {
+    width: 595px; 
+  } 
+}
+@media screen and (max-width: 965px) {
+  .posts {
+    width: 585px; 
+  } 
+}
+@media screen and (max-width: 945px) {
+  .posts {
+    width: 570px; 
+  } 
+}
+@media screen and (max-width: 925px) {
+  .posts {
+    width: 560px; 
+  } 
+}
   
 /*code buat responsive height*/
 
