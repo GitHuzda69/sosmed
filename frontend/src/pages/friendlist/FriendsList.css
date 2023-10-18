@@ -41,16 +41,14 @@
 
 .friendlist {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); 
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));  
   gap: 20px;
-  flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  margin-left: 95px;
+  margin-left: 95px; 
   margin-right: 50px;
   margin-bottom: 10px;
   overflow-y: auto;
 }
+
 .friendlist::-webkit-scrollbar {
   width: 8px;
 }
