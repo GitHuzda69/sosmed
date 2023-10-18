@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./Register.css";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Icon } from "@iconify/react";
 
 const Register = () => {
   const username = useRef();
   const email = useRef();
-  const password = useRef();
   const displayname = useRef();
-  const history = useHistory();
+  const password = useRef();
+  const history = useNavigate();
   const [rememberMe, setRememberMe] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -34,21 +34,19 @@ const Register = () => {
 
   const handleClick = async (e) => {
     e.preventDefault();
-    if (passwordAgain.current.value !== password.current.value) {
-      passwordAgain.current.setCustomValidity("Passwords don't match!");
-    } else {
       const user = {
         username: username.current.value,
         email: email.current.value,
+        displayname: displayname.current.value,
         password: password.current.value,
       };
       try {
         await axios.post("/auth/register", user);
-        history.push("/login");
+        history("/login");
       } catch (err) {
         console.log(err);
       }
-    }
+    
   };
 
   return (
@@ -57,7 +55,7 @@ const Register = () => {
         <h1>Selamat Datang, silahkan masukkan data diri untuk membuat akun</h1>
         <div className="signup-form">
           <h3>Sign up</h3>
-          <form action="" onSubmit={handleClick}>
+          <form action="">
             <div
               className="form-group"
               style={{
@@ -110,7 +108,7 @@ const Register = () => {
               <input
                 className="input-signup"
                 placeholder="Enter Your Display Name "
-                name="displayname"
+                ref={displayname}
                 onChange={handleChange}
               />
             </div>
@@ -172,7 +170,7 @@ const Register = () => {
                 Policy
               </h4>
             </label>
-            <button className="sign-up" type="submit">
+            <button className="sign-up" onClick={handleClick}>
               Sign Up
             </button>
             <div
