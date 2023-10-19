@@ -81,7 +81,7 @@ const FriendList = ({ relationships }) => {
                     }
                     alt={friend.displayname}
                   />
-                  <div className="friend-avatar">
+                  <div>
                     <img
                       src={
                         friend && friend.profilepic
@@ -89,7 +89,7 @@ const FriendList = ({ relationships }) => {
                           : defaultprofile
                       }
                       alt={friend.displayname}
-                      className="avatar"
+                      className="friend-avatar"
                     />
                   </div>
                 </Link>
