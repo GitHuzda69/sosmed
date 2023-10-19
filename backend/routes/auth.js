@@ -4,24 +4,30 @@ const bcrypt = require("bcrypt");
 const moment = require("moment")
 
 router.post("/login", async (req, res) => {
-    try {
-      const user = await User.findOne({ username: req.body.username });
-      !user && res.status(404).json("user not found");
-
-      const validPassword = await bcrypt.compareSync(req.body.password, user.password)
-      !validPassword && res.status(400).json("wrong password")
-  
-      res.status(200).json(user)
-    } catch (err) {
-      res.status(500).json(err)
+  try {
+    const user = await User.findOne({ username: req.body.username });
+    if (!user) {
+      return res.status(400).json({ error: "Invalid credentials" });
     }
-  });
+
+    const validPassword = await bcrypt.compare(req.body.password, user.password);
+    if (!validPassword) {
+      return res.status(400).json({ error: "Invalid credentials" });
+    }
+
+    res.status(200).json(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 
   router.post("/register", async (req, res) => {
     try {
       //generate new password
       const salt = await bcrypt.genSalt(10);
-      const hashedPassword = await bcrypt.hashSync(req.body.password, salt);
+      const hashedPassword = await bcrypt.hash(req.body.password, salt);
       const bio = "Hello, This is my biodata"
   
       //create new user
