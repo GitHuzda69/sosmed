@@ -1,19 +1,20 @@
 .main-messages{  
-  height: 600px;
+  width: 100%;
+  height: 100%;
   display: flex;
   max-height: max-content;
   flex-direction: row;
   margin-left: 53px; 
   margin-bottom: 3px;
-  padding-bottom: 2px;
+  padding-bottom: 30px;
   font-family: "Inter";
   font-weight: bold;  
   background-color: white;   
 }   
 
 .message-friend-container{ 
-  padding: 10px; 
-  border-right: 1px gray solid;
+  padding: 10px;
+  margin-bottom: 600px; 
 }
 .message-friend-container h1{
   font-size: 24px;
@@ -49,6 +50,7 @@
   display: flex;
   flex-direction: column;
   height: auto;
+  max-height: 430px;
   padding-top: 20px;
   margin-left: -10px;
   margin-right: -10px; 
@@ -56,7 +58,7 @@
   overflow-y: scroll;
   overflow-x: hidden;
   scrollbar-width: thin;
-  scrollbar-color: #999999 #ffffff; 
+  scrollbar-color: #999999 #ffffff;  
 }
 
 .message-friend-bar::-webkit-scrollbar {
@@ -107,7 +109,7 @@
 }
 
 .message-friend-bio h3{
-  margin-top: -15px;
+  margin-top: -12px;
   font-size: 13px;
   font-weight: normal;
 }
@@ -161,6 +163,7 @@
 .chat{
   height: 460px;
   overflow-y: scroll;
+  border-left: 1px gray solid;
   scrollbar-width: thin;
   scrollbar-color: #999999 #ffffff; 
 }
@@ -245,7 +248,8 @@
 .chat-input{
   display: flex;
   flex-direction: row;
-  margin-top: 5px;
+  padding-bottom: 40px;
+  border-left: 1px gray solid;
 }
 
 .chat-input textarea{
@@ -319,5 +323,6 @@
   min-width: 900px;
   width: auto;
   max-width: 1200px;
+  border-left: 1px gray solid;
 }
  
