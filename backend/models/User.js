@@ -22,14 +22,9 @@ const UserSchema = new mongoose.Schema(
     },
     displayname: {
         type: String,
-        require: true,
         min: 3,
         max: 20,
         unique: true,
-      },
-    biodata: {
-      type: String,
-      default: "",
       },
     profilePicture: {
       type: String,
@@ -66,11 +61,7 @@ const UserSchema = new mongoose.Schema(
     relationship: {
       type: Number,
       enum: [1, 2, 3],
-    },
-    joinat: {
-        type: String,
-        default: "",
-        },
+    }
   },
   { timestamps: true }
 );

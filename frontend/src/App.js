@@ -46,9 +46,9 @@ function App() {
       </QueryClientProvider>
     );
   };
-  const { currentUser } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const ProtectedRoute = ({ children }) => {
-    if (!currentUser) {
+    if (!user) {
       return <Navigate to="/login" />;
     }
 

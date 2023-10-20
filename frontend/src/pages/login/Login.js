@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/authContext";
 import { Icon } from "@iconify/react";
 import { loginCall } from "../apiCalls.js";
@@ -16,6 +16,7 @@ const Login = () => {
     password: "",
   });
   const [err, setErrors] = useState(null);
+  const navigate = useNavigate();
   const handleChange = (e) => {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
@@ -24,8 +25,9 @@ const Login = () => {
     e.preventDefault();
     loginCall(
       { username: username.current.value, password: password.current.value },
-      dispatch
+      dispatch      
     );
+    navigate("/")
   };
 
   useEffect(() => {

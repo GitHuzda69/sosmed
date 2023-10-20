@@ -36,8 +36,7 @@ router.post("/login", async (req, res) => {
         email: req.body.email,
         password: hashedPassword,
         displayname: req.body.displayname,
-        biodata: bio,
-        joinat: moment().format("MMMM Do YYYY")
+        desc: bio,
       });
   
       //save user and respond
