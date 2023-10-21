@@ -40,3 +40,4 @@ yarn-error.log*
 /backend/.env
 
 /frontend/public/data/
+/backend/public/images/
