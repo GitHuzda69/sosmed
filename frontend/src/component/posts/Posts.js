@@ -1,24 +1,33 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Post from "../post/Post.js";
 import "./Posts.css";
-import { useQuery } from "@tanstack/react-query";
 import { makeRequest } from "../../axios";
+import AuthContext from "../../context/authContext.js";
 
-const Posts = ({ userId, className }) => {
-  const { isLoading, error, data } = useQuery(["posts"], () =>
-    makeRequest.get("/posts?userid=" + userId).then((res) => {
-      return res.data;
-    })
-  );
+export default function Posts ({ username, className }) {
+  const [posts, setPosts] = useState([""]);
+  const { user } = useContext(AuthContext);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const res = username
+        ? await makeRequest.get("/posts/profile/" + username)
+        : await makeRequest.get("posts/timeline/" + user._id);
+      setPosts(
+        res.data.sort((p1, p2) => {
+          return new Date(p2.createdAt) - new Date(p1.createdAt);
+        })
+      );
+    };
+    fetchPosts();
+  }, [username, user._id]);
+
   return (
     <div className={`posts ${className}`}>
-      {error
-        ? `Please login again to continue`
-        : isLoading
-        ? "loading"
-        : data.map((post) => <Post post={post} key={post.id} />)}
+      {(!username || username === user.username)}
+        {posts.map((p) => (
+          <Post key={p._id} post={p} />
+        ))}
     </div>
   );
 };
-
-export default Posts;

@@ -23,7 +23,7 @@ const Upload = () => {
     }
   };
 
-  const { currentUser } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const handleFileInputChange = (e) => {
     const selectedFile = e.target.files[0];
     setFile(selectedFile);
@@ -97,7 +97,7 @@ const Upload = () => {
       <div className="input-post">
         <textarea
           type="text"
-          placeholder={`Tuliskan sesuatu ${currentUser.displayname}`}
+          placeholder={"What's in your mind " + user.username + "?"}
           onChange={(e) => setDesc(e.target.value)}
           onKeyDown={handleEnterKey}
           value={desc}

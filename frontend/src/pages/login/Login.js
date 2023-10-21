@@ -11,24 +11,17 @@ const Login = () => {
   const { isFetching, dispatch } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
-  const [inputs, setInputs] = useState({
-    username: "",
-    password: "",
-  });
   const [err, setErrors] = useState(null);
   const navigate = useNavigate();
-  const handleChange = (e) => {
-    setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
 
-  const handleLogin = async (e) => {
+  const handleLogin = (e) => {
     e.preventDefault();
     loginCall(
       { username: username.current.value, password: password.current.value },
-      dispatch      
+      dispatch
     );
-    navigate("/")
   };
+  
 
   useEffect(() => {
     const rememberMeStatus = localStorage.getItem("rememberMe");
@@ -59,7 +52,6 @@ const Login = () => {
                 className="input-login"
                 type="username"
                 placeholder="Enter Username"
-                onChange={handleChange}
                 ref={username}
               />
             </div>
@@ -78,7 +70,6 @@ const Login = () => {
                 className="input-login"
                 type={showPassword ? "text" : "password"}
                 placeholder="Enter Password"
-                onChange={handleChange}
                 name="password"
                 ref={password}
               />
@@ -124,11 +115,7 @@ const Login = () => {
                 style={{ marginTop: "20px" }}
                 disabled={isFetching}
               >
-                {isFetching ? (
-                <></>
-              ) : (
-                "Log In"
-              )}
+                {isFetching ? <></> : "Log In"}
               </button>
             </div>
             <div className="or-divider">
