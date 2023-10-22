@@ -108,7 +108,7 @@ const Login = () => {
               <button type="button" className="forgot-password-button">
                 Forgot Password
               </button>
-              <span className="loginError">{err && err}</span>
+              <span className="loginError">{err && err.response.statusText}</span>
               <button
                 type="submit"
                 className="login"

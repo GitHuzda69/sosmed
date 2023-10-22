@@ -6,6 +6,7 @@ const Logout = ({ onClose }) => {
   const handleLogout = async () => {
     await makeRequest.post("http://localhost:8800/api/auth/logout")
       localStorage.removeItem("user");
+      window.location.reload();
     }
     return (
     <div className="popup-logout-container">

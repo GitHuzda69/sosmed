@@ -11,7 +11,7 @@ export default function Posts ({ username, className }) {
   useEffect(() => {
     const fetchPosts = async () => {
       const res = username
-        ? await makeRequest.get("/posts/profile/" + username)
+        ? await makeRequest.get("/posts/timeline/65332e347f503fcdc4b2747c")
         : await makeRequest.get("posts/timeline/" + user._id);
       setPosts(
         res.data.sort((p1, p2) => {

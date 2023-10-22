@@ -14,19 +14,20 @@ import banner from "../../assets/banner.jpg";
 
 const HomeProfile = () => {
   const { user } = useContext(AuthContext);
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
   return (
     <div className="homeProfile">
       <Link
-        to={`/profile/${user._id}`}
+        to={`/profile/${user.username}`}
         style={{ textDecoration: "none", color: "inherit" }}
         className="profileavatar"
       >
         <img
           className="banner-homeProfile"
           src={
-            user && user.coverpic
-              ? "/data/" + user.coverpic
+            user.coverPicture
+              ? PF + user.coverPicture
               : defaultcover
           }
           alt="banner"
@@ -34,8 +35,8 @@ const HomeProfile = () => {
         <img
           className="profile-homeProfile"
           src={
-            user && user.profilepic
-              ? "/data/" + user.profilepic
+            user.profilePicture
+              ? PF + user.profilePicture
               : defaultprofile
           }
           alt="profile"

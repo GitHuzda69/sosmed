@@ -154,7 +154,7 @@ const Register = () => {
               </button>
             </div>
 
-            {err && <span>{err.response.data}</span>}
+            {err && <span>{err.response.statusText}</span>}
             <label className="checkbox-container-signup checkbox-label-signup">
               <input
                 type="checkbox"

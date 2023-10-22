@@ -9,11 +9,9 @@ import Notif from "./pages/notif/notif.js";
 import {
   BrowserRouter as Router,
   Route,
-  Outlet,
   Routes,
 } from "react-router-dom";
 import "./pages/home/Home.css";
-import Sidebar from "./component/Leftbar/Leftbar.js";
 import AuthContext from "./context/authContext.js";
 import { useContext, useEffect } from "react";
 import WebFont from "webfontloader";
@@ -28,20 +26,11 @@ function App() {
     });
   }, []);
 
-  const Layout = () => {
-    return (
-          <div>
-            <Sidebar />
-            <Outlet />
-          </div>
-    );
-  };
-
   const { user } = useContext(AuthContext);
   return (
     <Router>
       <Routes>
-        <Route path="/" element={user ? <Layout /> : <Login />}>
+        <Route path="/" element={user ? <Home /> : <Login />}>
           <Route path="/messenger" element={!user ? <Message /> : <Login />} />
           <Route path="/profile/:username" element={<Profile />} />
           <Route path="/friend" element={user ? <Friends /> : <Login/>} />

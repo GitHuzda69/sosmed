@@ -5,49 +5,39 @@ import { useQuery } from "@tanstack/react-query";
 import { makeRequest } from "../../axios.js";
 
 import defaultprofile from "../../assets/profile/default_avatar.png";
+import { useContext } from "react";
+import AuthContext from "../../context/authContext";
 
 const Rightbar = () => {
-  const {
-    isLoading,
-    error,
-    data: friendData,
-  } = useQuery(["friend"], () =>
-    makeRequest.get("/friends").then((res) => {
-      return res.data;
-    })
-  );
-  return (
+  const user = useContext(AuthContext)
+   return (
     <div className="rightBar">
       <h2>People You Follow</h2>
       <div className="rightBarContainer">
-        {error
-          ? "Something went wrong"
-          : isLoading
-          ? "loading"
-          : friendData.map((friend) => (
-              <div key={friend.userid} className="rightBarItem">
+        
+              <div key={user._id} className="rightBarItem">
                 <div className="rightBarUser">
                   <div className="rightBarUserInfo">
                     <img
                       className="rightBarImg"
                       src={
-                        friend && friend.profilepic
-                          ? "/data/" + friend.profilepic
+                        user && user.profilePicture
+                          ? "/data/" + user.profilePicture
                           : defaultprofile
                       }
-                      alt={friend.displayname}
+                      alt={user.displayname}
                     />
                     <div className={`statusDot ${"grayDot"}`} />
                   </div>
                   <p className={`rightBarUserStatus `}>
-                    <span className="rightBarName">{friend.displayname}</span>
+                    <span className="rightBarName">{user.displayname}</span>
                   </p>
                 </div>
                 <Link to="/messages" className="link-rightbar">
                   <button className="rightBarButton">Chat</button>
                 </Link>
               </div>
-            ))}
+            
       </div>
     </div>
   );
