@@ -30,19 +30,13 @@ const Post = ({ post }) => {
   const [user, setUser] = useState({});
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const { user: currentUser } = useContext(AuthContext);
-  const userId = post.userid;
+  const userId = post.userId;
 
   useEffect(() => {
     setIsLiked(post.likes && post.likes.includes(currentUser._id));
   }, [currentUser._id, post.likes]);
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      const res = await makeRequest.get(`/users?userId=${post.userId}`);
-      setUser(res.data);
-    };
-    fetchUser();
-  }, [post.userId]);
+
   const deleteMutation = useMutation(
     (postid) => {
       return makeRequest.delete("/posts/" + postid);
@@ -169,8 +163,8 @@ const Post = ({ post }) => {
                 <img
                   className="profile"
                   src={
-                    post.profilepic
-                      ? PF + post.profilepic
+                    user.profilepic
+                      ? PF + user.profilePicture
                       : defaultprofile
                   }
                   alt=""
