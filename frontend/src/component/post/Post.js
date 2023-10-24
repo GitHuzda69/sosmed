@@ -20,35 +20,29 @@ const Post = ({ post }) => {
   const [editedImg, setEditedImg] = useState(null);
   const [isDescEmpty, setIsDescEmpty] = useState(false);
   const descInputRef = useRef(null);
+  
   const [originalDesc, setOriginalDesc] = useState(post.desc);
   const [postOptionButtonPosition, setPostOptionButtonPosition] =
     useState(null);
   const queryClient = useQueryClient();
-  const { currentUser } = useContext(AuthContext);
-  const { isLoading, data } = useQuery(["likes", post.id], () =>
-    makeRequest.get("/likes?postid=" + post.id).then((res) => {
-      return res.data;
-    })
-  );
+  const [like, setLike] = useState(post.likes && post.likes.length);
+  const [isLiked, setIsLiked] = useState(false);
+  const [user, setUser] = useState({});
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+  const { user: currentUser } = useContext(AuthContext);
   const userId = post.userid;
-  const { data: relationshipData } = useQuery(["relationship"], () =>
-    makeRequest.get("/relationships?followeduserid=" + userId).then((res) => {
-      return res.data;
-    })
-  );
 
-  const likeMutation = useMutation(
-    (liked) => {
-      if (liked) return makeRequest.delete("/likes?postid=" + post.id);
-      return makeRequest.post("/likes", { postid: post.id });
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["likes"]);
-      },
-    }
-  );
+  useEffect(() => {
+    setIsLiked(post.likes && post.likes.includes(currentUser._id));
+  }, [currentUser._id, post.likes]);
 
+  useEffect(() => {
+    const fetchUser = async () => {
+      const res = await makeRequest.get(`/users?userId=${post.userId}`);
+      setUser(res.data);
+    };
+    fetchUser();
+  }, [post.userId]);
   const deleteMutation = useMutation(
     (postid) => {
       return makeRequest.delete("/posts/" + postid);
@@ -56,19 +50,6 @@ const Post = ({ post }) => {
     {
       onSuccess: () => {
         queryClient.invalidateQueries(["posts"]);
-      },
-    }
-  );
-
-  const followMutation = useMutation(
-    (following) => {
-      if (following)
-        return makeRequest.delete("/relationships?userId=" + userId);
-      return makeRequest.post("/relationships", { userId });
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["relationship"]);
       },
     }
   );
@@ -96,11 +77,15 @@ const Post = ({ post }) => {
   };
 
   const handleLike = () => {
-    likeMutation.mutate(data.includes(currentUser.id));
+    try {
+      makeRequest.put("/posts/" + post._id + "/like", { userId: currentUser._id });
+    } catch (err) {}
+    setLike(isLiked ? like - 1 : like + 1);
+    setIsLiked(!isLiked);
   };
 
   const handleDelete = () => {
-    deleteMutation.mutate(post.id);
+    deleteMutation.mutate(post._id);
   };
 
   const handleEdit = async (e) => {
@@ -118,7 +103,7 @@ const Post = ({ post }) => {
     };
 
     try {
-      await makeRequest.put("/posts/" + editedPost.id, editedPost);
+      await makeRequest.put("/posts/" + editedPost._id, editedPost);
       setPostEditOpen(false);
 
       window.location.reload();
@@ -142,11 +127,6 @@ const Post = ({ post }) => {
       document.removeEventListener("keydown", handleEnterKey);
     };
   }, []);
-
-  const handleFollow = () => {
-    followMutation.mutate(relationshipData.includes(currentUser.id));
-  };
-
   const navigate = useNavigate();
   const handleMessage = () => {
     messageMutation.mutate(userId);
@@ -170,7 +150,7 @@ const Post = ({ post }) => {
         img: null,
       };
 
-      await makeRequest.put(`/posts/${post.id}`, updatedPost);
+      await makeRequest.put(`/posts/${post._id}`, updatedPost);
       setEditedImg(null);
     } catch (error) {
       console.error(error);
@@ -183,14 +163,14 @@ const Post = ({ post }) => {
           <div className="user">
             <div className="userinfo">
               <Link
-                to={`/profile/${post.userid}`}
+                to={`/profile/${post.username}`}
                 style={{ textDecoration: "none", color: "inherit" }}
               >
                 <img
                   className="profile"
                   src={
-                    post && post.profilepic
-                      ? "/data/" + post.profilepic
+                    post.profilepic
+                      ? PF + post.profilepic
                       : defaultprofile
                   }
                   alt=""
@@ -203,7 +183,7 @@ const Post = ({ post }) => {
               <div className="options">
                 {postOptionOpen ? (
                   <div className="post-option-popup">
-                    {post.userid !== currentUser.id ? (
+                    {post.userId !== currentUser._id ? (
                       <div className="post-option-popup-other">
                         <button
                           onClick={handleMessage}
@@ -221,26 +201,6 @@ const Post = ({ post }) => {
                             height={20}
                           />
                           Message
-                        </button>
-                        <button
-                          onClick={handleFollow}
-                          style={{
-                            height: "24px",
-                            display: "flex",
-                            alignItems: "center",
-                            marginTop: "-3px",
-                            gap: "5px",
-                          }}
-                        >
-                          <Icon
-                            icon="ic:round-person-add"
-                            hFlip={true}
-                            width={20}
-                            height={20}
-                          />
-                          {relationshipData.includes(currentUser.id)
-                            ? "Following"
-                            : "Follow"}
                         </button>
                       </div>
                     ) : (
@@ -374,10 +334,6 @@ const Post = ({ post }) => {
         </div>
         <div className="info">
           <div className="item">
-            {isLoading ? (
-              "loading"
-            ) : data && data.includes(currentUser.id) ? (
-              <>
                 <Icon
                   className="icon"
                   icon="iconamoon:like-fill"
@@ -386,9 +342,6 @@ const Post = ({ post }) => {
                   color={"black"}
                   onClick={handleLike}
                 />
-                <h3>{data.length} Likes</h3>
-              </>
-            ) : (
               <Icon
                 className="icon"
                 icon="iconamoon:like-light"
@@ -396,8 +349,7 @@ const Post = ({ post }) => {
                 height={25}
                 color={"black"}
                 onClick={handleLike}
-              />
-            )}
+              /><h3>{like} Likes</h3>
           </div>
           <div className="item" onClick={() => setCommentOpen(!commentOpen)}>
             <Icon
@@ -416,7 +368,7 @@ const Post = ({ post }) => {
             />
           </div>
         </div>
-        {commentOpen && <Commento postid={post.id} />}
+        {commentOpen && <Commento postid={post._id} />}
       </div>
       {popupOpen && (
         <div className="popup-overlay-post" onClick={closePopup}>

@@ -4,6 +4,7 @@ node_modules
 
 # dependencies
 /frontend/node_modules
+/frontend/.env
 /frontend/.pnp
 .pnp.js
 
@@ -36,5 +37,7 @@ yarn-error.log*
 /frontend/yarn-error.log*
 
 /backend/node_modules
+/backend/.env
 
 /frontend/public/data/
+/backend/public/images/

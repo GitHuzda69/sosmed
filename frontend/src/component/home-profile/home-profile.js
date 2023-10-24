@@ -13,20 +13,21 @@ import profil from "../../assets/profil.jpg";
 import banner from "../../assets/banner.jpg";
 
 const HomeProfile = () => {
-  const { currentUser } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
   return (
     <div className="homeProfile">
       <Link
-        to={`/profile/${currentUser.id}`}
+        to={`/profile/${user.username}`}
         style={{ textDecoration: "none", color: "inherit" }}
         className="profileavatar"
       >
         <img
           className="banner-homeProfile"
           src={
-            currentUser && currentUser.coverpic
-              ? "/data/" + currentUser.coverpic
+            user.coverPicture
+              ? PF + user.coverPicture
               : defaultcover
           }
           alt="banner"
@@ -34,14 +35,14 @@ const HomeProfile = () => {
         <img
           className="profile-homeProfile"
           src={
-            currentUser && currentUser.profilepic
-              ? "/data/" + currentUser.profilepic
+            user.profilePicture
+              ? PF + user.profilePicture
               : defaultprofile
           }
           alt="profile"
         />
       </Link>
-      <h2>{currentUser.displayname}</h2>
+      <h2>{user.displayname}</h2>
       <div className="follow-homeProfile">
         <h3>123</h3>
         <h4>Following</h4>
