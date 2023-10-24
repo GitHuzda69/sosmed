@@ -30,6 +30,7 @@
     border-radius: 15px; 
     overflow-y: auto;
     overflow-x: hidden;
+    font-family: "Inter";
     scrollbar-width: thin;
     scrollbar-color: #999999 #ffffff;
   }
@@ -80,12 +81,16 @@
     border-radius: 50%;
     object-fit: cover;
 }
+.rightBarImg:hover{
+  filter: brightness(0.7);
+}
 .statusDot {
     width: 12px;
     height: 12px;
     border-radius: 50%;
     margin-top: 40px;
     margin-left: -15px;
+    z-index: 10;
   }
   
   .greenDot {

@@ -20,14 +20,18 @@ const Rightbar = () => {
     <div className="rightBar">
       <h2>People You Follow</h2>
       <div className="rightBarContainer">
-        {error
-          ? "Something went wrong"
-          : isLoading
-          ? "loading"
-          : friendData.map((friend) => (
-              <div key={friend.userid} className="rightBarItem">
-                <div className="rightBarUser">
-                  <div className="rightBarUserInfo">
+        {error ? (
+          "Something went wrong"
+        ) : isLoading ? (
+          "Loading"
+        ) : friendData.length === 0 ? (
+          <h3>You didn't follow anyone yet. Found someone in the fyp pages!</h3>
+        ) : (
+          friendData.map((friend) => (
+            <div key={friend.userid} className="rightBarItem">
+              <div className="rightBarUser">
+                <div className="rightBarUserInfo">
+                  <Link to={`/profile/${friend.userid}`}>
                     <img
                       className="rightBarImg"
                       src={
@@ -37,17 +41,19 @@ const Rightbar = () => {
                       }
                       alt={friend.displayname}
                     />
-                    <div className={`statusDot ${"grayDot"}`} />
-                  </div>
-                  <p className={`rightBarUserStatus `}>
-                    <span className="rightBarName">{friend.displayname}</span>
-                  </p>
+                  </Link>
+                  <div className={`statusDot ${"grayDot"}`} />
                 </div>
-                <Link to="/messages" className="link-rightbar">
-                  <button className="rightBarButton">Chat</button>
-                </Link>
+                <p className={`rightBarUserStatus `}>
+                  <span className="rightBarName">{friend.displayname}</span>
+                </p>
               </div>
-            ))}
+              <Link to="/messages" className="link-rightbar">
+                <button className="rightBarButton">Chat</button>
+              </Link>
+            </div>
+          ))
+        )}
       </div>
     </div>
   );

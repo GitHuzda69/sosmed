@@ -11,6 +11,7 @@ import {
   createBrowserRouter,
   Navigate,
   Outlet,
+  Route,
 } from "react-router-dom";
 import "./pages/home/Home.css";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
@@ -23,6 +24,7 @@ function App() {
   const queryClient = new QueryClient();
 
   useEffect(() => {
+    router.navigate("/login");
     WebFont.load({
       google: {
         families: ["Inter"],
