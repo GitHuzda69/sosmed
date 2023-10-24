@@ -36,8 +36,6 @@ const Rightbar = () => {
                 <button className="rightBarButton">Chat</button>
               </Link>
             </div>
-          ))
-        )}
       </div>
     </div>
   );

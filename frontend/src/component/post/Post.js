@@ -5,7 +5,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { makeRequest } from "../../axios.js";
 import { AuthContext } from "../../context/authContext.js";
 import { Icon } from "@iconify/react";
-import moment from "moment";
+import {format} from "timeago.js";
 import Commento from "../Commento/Commento.js";
 
 import defaultprofile from "../../assets/profile/default_avatar.png";
@@ -36,23 +36,13 @@ const Post = ({ post }) => {
     setIsLiked(post.likes && post.likes.includes(currentUser._id));
   }, [currentUser._id, post.likes]);
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      const res = await makeRequest.get(`/users?userId=${post.userId}`);
-      setUser(res.data);
-    };
-    fetchUser();
-  }, [post.userId]);
-  const deleteMutation = useMutation(
-    (postid) => {
-      return makeRequest.delete("/posts/" + postid);
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["posts"]);
-      },
-    }
-  );
+  // useEffect(() => {
+  //   const fetchUser = async () => {
+  //     const res = await makeRequest.get(`/users?userId=${post.userId}`);
+  //     setUser(res.data);
+  //   };
+  //   fetchUser();
+  // }, [post.userId]);
 
   const messageMutation = useMutation(
     (userId) => {
@@ -85,7 +75,11 @@ const Post = ({ post }) => {
   };
 
   const handleDelete = () => {
-    deleteMutation.mutate(post._id);
+    try {
+   makeRequest.delete("/posts/" + post._id, { userId: currentUser._id });
+  } catch (err) {
+    console.log(Error)
+  }
   };
 
   const handleEdit = async (e) => {
@@ -169,8 +163,8 @@ const Post = ({ post }) => {
                 <img
                   className="profile"
                   src={
-                    post.profilepic
-                      ? PF + post.profilepic
+                    post.profilePicture
+                      ? PF + post.profilePicture
                       : defaultprofile
                   }
                   alt=""
@@ -178,7 +172,7 @@ const Post = ({ post }) => {
               </Link>
               <div className="details">
                 <span className="name">{post.displayname}</span>
-                <span className="date">{moment(post.createdat).fromNow()}</span>
+                <span className="date">{format(post.createdAt)}</span>
               </div>
               <div className="options">
                 {postOptionOpen ? (
