@@ -13,8 +13,7 @@ const Rightbar = () => {
    return (
     <div className="rightBar">
       <h2>People You Follow</h2>
-      <div className="rightBarContainer">
-        
+      <div className="rightBarContainer">        
               <div key={user._id} className="rightBarItem">
                 <div className="rightBarUser">
                   <div className="rightBarUserInfo">
@@ -33,11 +32,12 @@ const Rightbar = () => {
                     <span className="rightBarName">{user.displayname}</span>
                   </p>
                 </div>
-                <Link to="/messages" className="link-rightbar">
-                  <button className="rightBarButton">Chat</button>
-                </Link>
-              </div>
-            
+              <Link to="/messages" className="link-rightbar">
+                <button className="rightBarButton">Chat</button>
+              </Link>
+            </div>
+          ))
+        )}
       </div>
     </div>
   );

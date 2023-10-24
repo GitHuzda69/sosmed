@@ -19,6 +19,7 @@ import WebFont from "webfontloader";
 function App() {
 
   useEffect(() => {
+    router.navigate("/login");
     WebFont.load({
       google: {
         families: ["Inter"],
