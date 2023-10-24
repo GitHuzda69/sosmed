@@ -24,7 +24,6 @@ function App() {
   const queryClient = new QueryClient();
 
   useEffect(() => {
-    router.navigate("/login");
     WebFont.load({
       google: {
         families: ["Inter"],

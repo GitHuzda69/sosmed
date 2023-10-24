@@ -1,14 +1,18 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "./Settings.css";
 import { Icon } from "@iconify/react";
 import { Link } from "react-router-dom";
+import AuthContext from "../../context/authContext";
 
 const Settings = ({ onClose }) => {
   const [isSliderOn, setIsSliderOn] = useState(false);
-
+  const currentUser = useContext(AuthContext);
+  const currentId = currentUser.id;
   const handleSliderChange = () => {
     setIsSliderOn(!isSliderOn);
   };
+  console.log(currentUser)
+  console.log(currentUser.id)
   return (
     <div className="settings-popup">
       <div className="settings-title">
@@ -41,7 +45,7 @@ const Settings = ({ onClose }) => {
           Connect to Twitter
           <Icon icon="mdi:twitter" width="20" height="20" />
         </button>
-        <Link to="/update">
+        <Link to={`/profile/${currentUser.id}`}>
           <button>Edit Profile</button>
         </Link>
       </div>
