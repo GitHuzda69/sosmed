@@ -36,17 +36,6 @@ const Post = ({ post }) => {
     setIsLiked(post.likes && post.likes.includes(currentUser._id));
   }, [currentUser._id, post.likes]);
 
-
-  const deleteMutation = useMutation(
-    (postid) => {
-      return makeRequest.delete("/posts/" + postid);
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["posts"]);
-      },
-    }
-  );
   // useEffect(() => {
   //   const fetchUser = async () => {
   //     const res = await makeRequest.get(`/users?userId=${post.userId}`);
@@ -89,7 +78,7 @@ const Post = ({ post }) => {
     try {
    makeRequest.delete("/posts/" + post._id, { userId: currentUser._id });
   } catch (err) {
-    console.log(Error)
+    console.log(err)
   }
   };
 

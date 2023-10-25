@@ -11,13 +11,8 @@ export default function Posts({ username, className }) {
   useEffect(() => {
     const fetchPosts = async () => {
       const res = username
-<<<<<<< HEAD
-        ? await makeRequest.get("/posts/profile/" + username)
-        : await makeRequest.get("/posts/timeline/" + user._id);
-=======
-        ? await makeRequest.get("/posts/timeline/" + username)
+        ? await makeRequest.get("/posts/timeline/" + user.username)
         : await makeRequest.get("posts/timeline/" + user._id);
->>>>>>> d64fa11db0ff931b0f2efc57a55662696b5277d5
       setPosts(
         res.data.sort((p1, p2) => {
           return new Date(p2.createdAt) - new Date(p1.createdAt);
