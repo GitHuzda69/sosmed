@@ -8,12 +8,6 @@ const rootElement = document.getElementById("root");
 
 const root = ReactDOM.createRoot(rootElement);
 
-const userData = localStorage.getItem("userData");
-
-if (userData) {
-  localStorage.removeItem("userData");
-}
-
 root.render(
   <React.StrictMode>
     <AuthContextProvider>

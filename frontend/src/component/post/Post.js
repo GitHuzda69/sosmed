@@ -29,19 +29,28 @@ const Post = ({ post }) => {
   const [isLiked, setIsLiked] = useState(false);
   const [user, setUser] = useState({});
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-  const { user: currentUser } = useContext(AuthContext);
-  console.log(post)
+  const { user: currentUser } = useContext(AuthContext)
   const eek = post.userId
+
   useEffect(() => {
     setIsLiked(post.likes && post.likes.includes(currentUser._id));
   }, [currentUser._id, post.likes]);
+
   useEffect(() => {
-    const fetchUser = async () => {
-      const res = await makeRequest.get(`/users?userId=${post.userId}`);
-      setUser(res.data);
-    };
-    fetchUser();
+    if (post.userId) {
+      const fetchUser = async () => {
+        try {
+          const res = await makeRequest.get(`/users?userId=${post.userId}`);
+          setUser(res.data);
+        } catch (err) {
+          console.error(err);
+        }
+      };
+      fetchUser();
+    }
   }, [post.userId]);
+  
+  
   const messageMutation = useMutation(
     (eek) => {
       return makeRequest.post("/conversations", { eek });
@@ -74,9 +83,7 @@ const Post = ({ post }) => {
 
   const handleDelete = async () => {
     try {
-      makeRequest.delete(`/posts/${post._id}`, {
-        data: { userId: currentUser._id }
-      })
+      makeRequest.delete(`/posts/${post._id}`, {data: { userId: currentUser._id }})
       window.location.reload();
     } catch (err) {
       console.log(err);
@@ -106,6 +113,7 @@ const Post = ({ post }) => {
       console.error(error);
     }
   };
+
   useEffect(() => {
     const handleEnterKey = (e) => {
       if (e.key === "Enter") {
@@ -122,6 +130,7 @@ const Post = ({ post }) => {
       document.removeEventListener("keydown", handleEnterKey);
     };
   }, []);
+
   const navigate = useNavigate();
   const handleMessage = () => {
     messageMutation.mutate(eek);

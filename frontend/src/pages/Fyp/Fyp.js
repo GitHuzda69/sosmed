@@ -16,22 +16,23 @@ import AuthContext from "../../context/authContext.js";
 
 const Fyp = (post, className, username) => {
   const [posts, setPosts] = useState([""]);
-  const userId = post.userid;
   const [settingOpen, setSettingOpen] = useState(false);
   const [logoutOpen, setLogoutOpen] = useState(false);
   const user = useContext(AuthContext)
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      const res = await makeRequest.get("posts/" + post._id);
-      setPosts(
-        res.data.sort((p1, p2) => {
-          return new Date(p2.createdAt) - new Date(p1.createdAt);
-        })
-      );
+    const fetchPost = async () => {
+      try {
+        const res = await makeRequest.get(`posts/${post._id}`);
+        setPosts([res.data.sort((p1, p2) => {
+          return new Date(p2.createdAt) - new Date(p1.createdAt)})]); 
+      } catch (err) {
+        console.log(err);
+      }
     };
-    fetchPosts();
+    fetchPost();
   }, [post._id]);
+  
 
   const toggleSettings = () => {
     setSettingOpen(!settingOpen);
@@ -40,7 +41,7 @@ const Fyp = (post, className, username) => {
   const toggleLogout = () => {
     setLogoutOpen(!logoutOpen);
   };
-
+  console.log(posts)
   return (
     <>
       <div className="home">
