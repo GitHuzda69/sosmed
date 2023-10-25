@@ -4,7 +4,7 @@ import "./Posts.css";
 import { makeRequest } from "../../axios";
 import AuthContext from "../../context/authContext.js";
 
-export default function Posts ({ username, className }) {
+export default function Posts({ username, className }) {
   const [posts, setPosts] = useState([""]);
   const { user } = useContext(AuthContext);
 
@@ -24,10 +24,10 @@ export default function Posts ({ username, className }) {
 
   return (
     <div className={`posts ${className}`}>
-      {(!username || username === user.username)}
-        {posts.map((p) => (
-          <Post key={p._id} post={p} />
-        ))}
+      {!username || username === user.username}
+      {posts.map((p) => (
+        <Post key={p._id} post={p} />
+      ))}
     </div>
   );
-};
+}
