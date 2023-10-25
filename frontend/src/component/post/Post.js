@@ -30,23 +30,21 @@ const Post = ({ post }) => {
   const [user, setUser] = useState({});
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const { user: currentUser } = useContext(AuthContext);
-  const userId = post.userId;
-
+  console.log(post)
+  const eek = post.userId
   useEffect(() => {
     setIsLiked(post.likes && post.likes.includes(currentUser._id));
   }, [currentUser._id, post.likes]);
-
-  // useEffect(() => {
-  //   const fetchUser = async () => {
-  //     const res = await makeRequest.get(`/users?userId=${post.userId}`);
-  //     setUser(res.data);
-  //   };
-  //   fetchUser();
-  // }, [post.userId]);
-
+  useEffect(() => {
+    const fetchUser = async () => {
+      const res = await makeRequest.get(`/users?userId=${post.userId}`);
+      setUser(res.data);
+    };
+    fetchUser();
+  }, [post.userId]);
   const messageMutation = useMutation(
-    (userId) => {
-      return makeRequest.post("/conversations", { userId });
+    (eek) => {
+      return makeRequest.post("/conversations", { eek });
     },
     {
       onSuccess: () => {
@@ -68,19 +66,22 @@ const Post = ({ post }) => {
 
   const handleLike = () => {
     try {
-      makeRequest.put("/posts/" + post._id + "/like", { userId: currentUser._id });
+      makeRequest.put("/posts/" + post._id , { userId: currentUser._id });
     } catch (err) {}
     setLike(isLiked ? like - 1 : like + 1);
     setIsLiked(!isLiked);
   };
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     try {
-   makeRequest.delete("/posts/" + post._id, { userId: currentUser._id });
-  } catch (err) {
-    console.log(err)
+      makeRequest.delete(`/posts/${post._id}`, {
+        data: { userId: currentUser._id }
+      })
+      window.location.reload();
+    } catch (err) {
+      console.log(err);
+    }
   }
-  };
 
   const handleEdit = async (e) => {
     e.preventDefault();
@@ -123,7 +124,7 @@ const Post = ({ post }) => {
   }, []);
   const navigate = useNavigate();
   const handleMessage = () => {
-    messageMutation.mutate(userId);
+    messageMutation.mutate(eek);
     navigate("/messages");
   };
 
@@ -171,7 +172,7 @@ const Post = ({ post }) => {
                 />
               </Link>
               <div className="details">
-                <span className="name">{post.displayname}</span>
+                <span className="name">{user.displayname}</span>
                 <span className="date">{format(post.createdAt)}</span>
               </div>
               <div className="options">
