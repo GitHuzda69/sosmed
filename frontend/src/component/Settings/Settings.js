@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Settings.css";
+import "../../DarkMode.css";
 import { Icon } from "@iconify/react";
 import { Link } from "react-router-dom";
 
@@ -29,7 +30,7 @@ const Settings = ({ onClose }) => {
         <div className="settings-title">
           <h2>Settings</h2>
           <button onClick={onClose}>
-            <Icon icon="ph:x-bold" color="black" width={25} height={25} />
+            <Icon icon="ph:x-bold" width={25} height={25} />
           </button>
         </div>
         <div className="settings-content">
