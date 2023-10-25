@@ -1,19 +1,4 @@
-.posts-main{
-    scrollbar-width: thin;
-    scrollbar-color: gray transparent;
-  }
-  .comment-list::-webkit-scrollbar {
-    width: 8px; 
-  }
-  
-  .comment-list::-webkit-scrollbar-thumb {
-    background-color: gray; 
-    border-radius: 5px; 
-  }
-  
-  .comment-list::-webkit-scrollbar-track {
-    background: transparent; 
-  }
+ 
 
 .posts{
   font-family: "Inter" ;
@@ -40,16 +25,16 @@
   }
   
   .posts::-webkit-scrollbar-thumb {
-    background-color: #999999;
+    background-color: transparent;
     border-radius: 10px;
   }
   
   .posts::-webkit-scrollbar-thumb:hover {
-    background-color: #777777;
+    background-color: transparent;
   }
   
   .posts::-webkit-scrollbar-track {
-    background-color: #ffffff;
+    background-color: transparent;
     border-radius: 10px;
   }
 .posts-form{

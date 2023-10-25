@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Sidebar from "../../component/Leftbar/Leftbar.js";
 import Rightbar from "../../component/rightbar/Rightbar.js";
 import SearchBar from "../../component/search/Search";
@@ -6,26 +6,32 @@ import Settings from "../../component/Settings/Settings.js";
 import "./Fyp.css";
 import "../../component/Settings/Settings.css";
 import "../../component/Logout/Logout.css";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Post from "../../component/post/Post.js";
 import Upload from "../../component/Upload/Upload.js";
 import Logout from "../../component/Logout/Logout.js";
-import { useQuery } from "@tanstack/react-query";
 import { makeRequest } from "../../axios.js";
 import FypSwitch from "../../component/fyp-button/fyp-switch.js";
 import HomeProfile from "../../component/home-profile/home-profile.js";
+import AuthContext from "../../context/authContext.js";
 
-const queryClient = new QueryClient();
-
-const Fyp = (post, className) => {
-  const { isLoading, error, data } = useQuery(["posts"], () =>
-    makeRequest.get("/posts/fyp?userid=" + userId).then((res) => {
-      return res.data;
-    })
-  );
+const Fyp = (post, className, username) => {
+  const [posts, setPosts] = useState([""]);
   const userId = post.userid;
   const [settingOpen, setSettingOpen] = useState(false);
   const [logoutOpen, setLogoutOpen] = useState(false);
+  const user = useContext(AuthContext)
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const res = await makeRequest.get("posts/" + post._id);
+      setPosts(
+        res.data.sort((p1, p2) => {
+          return new Date(p2.createdAt) - new Date(p1.createdAt);
+        })
+      );
+    };
+    fetchPosts();
+  }, [post._id]);
 
   const toggleSettings = () => {
     setSettingOpen(!settingOpen);
@@ -36,7 +42,7 @@ const Fyp = (post, className) => {
   };
 
   return (
-    <QueryClientProvider client={queryClient}>
+    <>
       <div className="home">
         <div className="leftbar-fyp">
           <Sidebar
@@ -52,11 +58,10 @@ const Fyp = (post, className) => {
           <div className="home-content">
             <Upload />
             <div className={`posts ${className}`}>
-              {error
-                ? `Please login again to continue`
-                : isLoading
-                ? "loading"
-                : data.map((post) => <Post post={post} key={post.id} />)}
+            {(!username || username === user.username)}
+              {posts.map((p) => (
+                <Post key={p._id} post={p} />
+              ))}
             </div>
           </div>
           <div className="side-content">
@@ -84,7 +89,7 @@ const Fyp = (post, className) => {
           </div>
         </>
       )}
-    </QueryClientProvider>
+      </>
   );
 };
 

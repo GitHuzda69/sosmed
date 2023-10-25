@@ -4,15 +4,20 @@ import "./Posts.css";
 import { makeRequest } from "../../axios";
 import AuthContext from "../../context/authContext.js";
 
-export default function Posts ({ username, className }) {
+export default function Posts({ username, className }) {
   const [posts, setPosts] = useState([""]);
   const { user } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchPosts = async () => {
       const res = username
+<<<<<<< HEAD
         ? await makeRequest.get("/posts/profile/" + username)
         : await makeRequest.get("/posts/timeline/" + user._id);
+=======
+        ? await makeRequest.get("/posts/timeline/" + username)
+        : await makeRequest.get("posts/timeline/" + user._id);
+>>>>>>> d64fa11db0ff931b0f2efc57a55662696b5277d5
       setPosts(
         res.data.sort((p1, p2) => {
           return new Date(p2.createdAt) - new Date(p1.createdAt);
@@ -24,10 +29,10 @@ export default function Posts ({ username, className }) {
 
   return (
     <div className={`posts ${className}`}>
-      {(!username || username === user.username)}
-        {posts.map((p) => (
-          <Post key={p._id} post={p} />
-        ))}
+      {!username || username === user.username}
+      {posts.map((p) => (
+        <Post key={p._id} post={p} />
+      ))}
     </div>
   );
-};
+}

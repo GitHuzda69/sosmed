@@ -7,10 +7,17 @@ import { AuthContextProvider } from "./context/authContext";
 const rootElement = document.getElementById("root");
 
 const root = ReactDOM.createRoot(rootElement);
+
+const userData = localStorage.getItem("userData");
+
+if (userData) {
+  localStorage.removeItem("userData");
+}
+
 root.render(
   <React.StrictMode>
     <AuthContextProvider>
       <App />
-      </AuthContextProvider>
+    </AuthContextProvider>
   </React.StrictMode>
 );
