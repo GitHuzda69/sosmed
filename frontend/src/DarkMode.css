@@ -1,0 +1,82 @@
+ /*style light mode*/
+ .light-mode {
+    background-color: white;
+    color: black;
+  }
+  
+   /*style dark mode*/
+  .dark-mode {
+    background-color: rgb(19, 19, 19); 
+    color: white;
+  }
+
+  /*buat home*/
+  .dark-mode .sidebar{
+    background-color: rgb(58, 58, 58);
+  }
+
+  .dark-mode .upload{
+    background-color: rgb(58, 58, 58);
+  }
+  .dark-mode .input-post textarea{
+    background-color: rgb(210, 210, 210);
+  }
+  .dark-mode .uploadItem{
+    background-color: transparent;
+    color: white;
+  }
+
+  .dark-mode .settings-popup{  
+    background-color: rgb(58, 58, 58); 
+
+  }
+
+  .dark-mode  .search-bar-container{
+    background-color: rgb(210, 210, 210);
+  }
+  .dark-mode .settings-title button{
+    background-color: transparent;   
+    color: white;
+  }
+  .dark-mode .settings-title button:hover{
+    background-color: rgb(19, 19, 19); 
+  }
+  .dark-mode .settings-content button{
+    background-color: transparent;
+    color: white;
+  }
+
+  .dark-mode .post{
+    background-color: rgb(58, 58, 58); 
+  }
+  .dark-mode .post-content{
+    background-color: rgb(58, 58, 58);
+  }
+  .dark-mode .opsi-post-button{
+    color: white;
+    background-color: transparent;
+  }
+  .dark-mode .opsi-post-button:hover{
+    background-color: rgb(40, 40, 40);
+  }
+  .dark-mode .post-option-popup-self{
+    background-color: rgb(50, 50, 50); 
+  }
+  .dark-mode .post-option-popup-self button{
+    background-color: transparent;
+    color: white;
+  }
+
+  .dark-mode .home{ 
+  }
+
+  .dark-mode .rightBar{
+    background-color: rgb(58, 58, 58);
+  }
+  .dark-mode .rightBarUser{ 
+    background-color: transparent; 
+  }
+
+  .dark-mode .homeProfile{
+    background-color: rgb(58, 58, 58);
+  }
