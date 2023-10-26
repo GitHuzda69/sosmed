@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Sidebar from "../../component/Leftbar/Leftbar.js";
 import Rightbar from "../../component/rightbar/Rightbar.js";
 import SearchBar from "../../component/search/Search";
@@ -18,6 +18,7 @@ const queryClient = new QueryClient();
 function Home() {
   const [settingOpen, setSettingOpen] = useState(false);
   const [logoutOpen, setLogoutOpen] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   const isHomePage = true;
 
@@ -29,31 +30,55 @@ function Home() {
     setLogoutOpen(!logoutOpen);
   };
 
+  useEffect(() => {
+    const storedDarkModeStatus = localStorage.getItem("isDarkMode") === "true";
+    setIsDarkMode(storedDarkModeStatus);
+
+    setDarkMode(storedDarkModeStatus);
+  }, []);
+
+  const setDarkMode = (isDarkMode) => {
+    if (isDarkMode) {
+      document.documentElement.classList.add("dark-mode");
+    } else {
+      document.documentElement.classList.remove("dark-mode");
+    }
+  };
+
+  const toggleDarkMode = () => {
+    const newDarkModeStatus = !isDarkMode;
+    setIsDarkMode(newDarkModeStatus);
+    localStorage.setItem("isDarkMode", newDarkModeStatus.toString());
+    setDarkMode(newDarkModeStatus);
+  };
+
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="home">
-        <div className="leftbar">
-          <Sidebar
-            toggleSettings={toggleSettings}
-            toggleLogout={toggleLogout}
-            isHomePage={isHomePage}
-          />
-        </div>
-        <div className="main-content">
-          <div className="topbar">
-            <FypSwitch />
-            <SearchBar />
+      <div className={`app ${isDarkMode ? "dark-mode" : ""}`}>
+        <div className="home">
+          <div className="leftbar">
+            <Sidebar
+              toggleSettings={toggleSettings}
+              toggleLogout={toggleLogout}
+              isHomePage={isHomePage}
+            />
           </div>
-          <div className="home-content">
-            <Upload />
-            <Posts />
-          </div>
-          <div className="side-content">
-            <HomeProfile />
-            <Rightbar />
-            <h5>
-              Terms of Service Privacy Policy © 2023 Nama All rights reserved.
-            </h5>
+          <div className="main-content">
+            <div className="topbar">
+              <FypSwitch />
+              <SearchBar />
+            </div>
+            <div className="home-content">
+              <Upload />
+              <Posts />
+            </div>
+            <div className="side-content">
+              <HomeProfile />
+              <Rightbar />
+              <h5>
+                Terms of Service Privacy Policy © 2023 Nama All rights reserved.
+              </h5>
+            </div>
           </div>
         </div>
       </div>
@@ -61,7 +86,11 @@ function Home() {
         <>
           <div className="settings-overlay" />
           <div className="settings-container">
-            <Settings onClose={toggleSettings} />
+            <Settings
+              onClose={toggleSettings}
+              isDarkMode={isDarkMode}
+              toggleDarkMode={toggleDarkMode}
+            />
           </div>
         </>
       )}
