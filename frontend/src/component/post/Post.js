@@ -4,7 +4,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { makeRequest } from "../../axios.js";
 import { AuthContext } from "../../context/authContext.js";
 import { Icon } from "@iconify/react";
-import {format} from "timeago.js";
+import { format } from "timeago.js";
 import Commento from "../Commento/Commento.js";
 
 import defaultprofile from "../../assets/profile/default_avatar.png";
@@ -19,7 +19,7 @@ const Post = ({ post }) => {
   const [editedImg, setEditedImg] = useState(null);
   const [isDescEmpty, setIsDescEmpty] = useState(false);
   const descInputRef = useRef(null);
-  
+
   const [originalDesc, setOriginalDesc] = useState(post.desc);
   const [postOptionButtonPosition, setPostOptionButtonPosition] =
     useState(null);
@@ -27,8 +27,8 @@ const Post = ({ post }) => {
   const [isLiked, setIsLiked] = useState(false);
   const [user, setUser] = useState({});
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-  const { user: currentUser } = useContext(AuthContext)
-  const eek = post.userId
+  const { user: currentUser } = useContext(AuthContext);
+  const eek = post.userId;
 
   useEffect(() => {
     setIsLiked(post.likes && post.likes.includes(currentUser._id));
@@ -47,7 +47,7 @@ const Post = ({ post }) => {
       fetchUser();
     }
   }, [post.userId]);
-  
+
   const upload = async (file) => {
     try {
       const formData = new FormData();
@@ -61,7 +61,7 @@ const Post = ({ post }) => {
 
   const handleLike = () => {
     try {
-      makeRequest.put("/posts/" + post._id , { userId: currentUser._id });
+      makeRequest.put("/posts/" + post._id, { userId: currentUser._id });
     } catch (err) {}
     setLike(isLiked ? like - 1 : like + 1);
     setIsLiked(!isLiked);
@@ -69,12 +69,14 @@ const Post = ({ post }) => {
 
   const handleDelete = async () => {
     try {
-      makeRequest.delete(`/posts/${post._id}`, {data: { userId: currentUser._id }})
+      makeRequest.delete(`/posts/${post._id}`, {
+        data: { userId: currentUser._id },
+      });
       window.location.reload();
     } catch (err) {
       console.log(err);
     }
-  }
+  };
 
   const handleEdit = async (e) => {
     e.preventDefault();
@@ -348,7 +350,6 @@ const Post = ({ post }) => {
                 icon="iconamoon:like-light"
                 width={25}
                 height={25}
-                color={"black"}
                 onClick={handleLike}
               /></>}
           </div>
