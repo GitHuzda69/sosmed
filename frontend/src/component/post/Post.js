@@ -1,7 +1,6 @@
 import "./Post.css";
 import React, { useContext, useState, useRef, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { makeRequest } from "../../axios.js";
 import { AuthContext } from "../../context/authContext.js";
 import { Icon } from "@iconify/react";
@@ -24,7 +23,6 @@ const Post = ({ post }) => {
   const [originalDesc, setOriginalDesc] = useState(post.desc);
   const [postOptionButtonPosition, setPostOptionButtonPosition] =
     useState(null);
-  const queryClient = useQueryClient();
   const [like, setLike] = useState(post.likes && post.likes.length);
   const [isLiked, setIsLiked] = useState(false);
   const [user, setUser] = useState({});
@@ -49,17 +47,6 @@ const Post = ({ post }) => {
       fetchUser();
     }
   }, [post.userId]);
-
-  const messageMutation = useMutation(
-    (eek) => {
-      return makeRequest.post("/conversations", { eek });
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["conversation"]);
-      },
-    }
-  );
 
   const upload = async (file) => {
     try {
@@ -133,10 +120,18 @@ const Post = ({ post }) => {
   }, []);
 
   const navigate = useNavigate();
-  const handleMessage = () => {
-    messageMutation.mutate(eek);
-    navigate("/messages");
+  const handleMessage = async () => {
+    try {
+        await makeRequest.post(`/conversations/`, {
+        senderId: currentUser._id,
+        receiverId: post._id,
+      });
+      navigate("/messages");
+    } catch (err) {
+      console.log(err);
+    }
   };
+  
 
   const openPopup = (imgUrl) => {
     setSelectedPostImg(imgUrl);
@@ -325,38 +320,38 @@ const Post = ({ post }) => {
           </div>
         </div>
         <div className="post-content">
-          {post.desc && <p className="post-desc">{editedDesc}</p>}
+          {post?.desc && <p className="post-desc">{editedDesc}</p>}
           {post.img && (
             <div className="post-img-container">
               <button
                 className="img-button-post"
-                onClick={() => openPopup(`/data/${editedImg || post.img}`)}
+                onClick={() => openPopup(PF + `${editedImg || post.img}`)}
               >
-                <img className="post-img" src={`/data/${post.img}`} alt="" />
+                <img className="post-img" src={ PF + `${post.img}`} alt="" />
               </button>
             </div>
           )}
         </div>
         <div className="info">
           <div className="item">
-            {isLiked ? (
-              <Icon
-                className="icon"
-                icon="iconamoon:like-fill"
-                width={25}
-                height={25}
-                onClick={handleLike}
-              />
-            ) : (
+          {isLiked ? <>
+                <Icon
+                  className="icon"
+                  icon="iconamoon:like-fill"
+                  width={25}
+                  height={25}
+                  color={"black"}
+                  onClick={handleLike}
+                  /> 
+              <h3>{like} Likes</h3></>
+                  : <>
               <Icon
                 className="icon"
                 icon="iconamoon:like-light"
                 width={25}
                 height={25}
                 onClick={handleLike}
-              />
-            )}
-            <h3>{like} Likes</h3>
+              /></>}
           </div>
           <div className="item" onClick={() => setCommentOpen(!commentOpen)}>
             <Icon
