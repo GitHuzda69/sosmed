@@ -23,9 +23,9 @@ const Fyp = (post, className, username) => {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const res = await makeRequest.get(`posts/${post._id}`);
-        setPosts([res.data.sort((p1, p2) => {
-          return new Date(p2.createdAt) - new Date(p1.createdAt)})]); 
+        const res = await makeRequest.get("/posts/fyp");
+        setPosts(res.data.sort((p1, p2) => {
+          return new Date(p2.createdAt) - new Date(p1.createdAt)})); 
       } catch (err) {
         console.log(err);
       }

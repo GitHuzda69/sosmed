@@ -31,6 +31,18 @@ router.get("/timeline/:userId", async (req, res) => {
     }
   });
 
+//get fyp
+
+router.get("/fyp", async (req, res) => {
+  try {
+    const allPosts = await Post.find();
+    res.status(200).json(allPosts);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+
 //create a post
 
 router.post("/", async (req, res) => {
