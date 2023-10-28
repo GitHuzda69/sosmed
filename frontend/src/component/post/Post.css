@@ -234,15 +234,20 @@
     cursor: pointer;
   }
   
-  .post-img-container {
+  .post-img-container { 
     margin-left: 10px;
   }
   
   .img-button-post {
+    background-color: transparent;
     padding: 0;
     z-index: 1;
   }
+  .img-button-post:hover {
+    background-color: transparent;
+  }
   .img-button-post:hover img {
+    background-color: transparent;
     filter: brightness(0.5);
     z-index: 0;
     border-radius: 10px;

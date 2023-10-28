@@ -19,7 +19,7 @@
 }
 
 .button-info {
-  color: white;
+  color: black;
   border: 1px black solid;
   border-radius: 10px;
   padding: 3px 6px;
@@ -56,15 +56,15 @@
 }
 
 .friendlist::-webkit-scrollbar-track {
-  background-color: #f1f1f1;
+  background-color: transparent;
 }
 
 .friendlist::-webkit-scrollbar-thumb {
-  background-color: #000000;
+  background-color: transparent;
   border-radius: 4px;
 }
 .friendlist::-webkit-scrollbar-thumb:hover {
-  background-color: #555;
+  background-color: transparent;
 }
 .friend {
   width: 550px; 

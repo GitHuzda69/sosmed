@@ -21,6 +21,7 @@ function Notif() {
   const [showAll, setShowAll] = useState(true);
   const [showMentions, setShowMentions] = useState(false);
   const [showUnread, setShowUnread] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   const isNotifPage = true;
 
@@ -111,103 +112,129 @@ function Notif() {
     setShowUnread(true);
   };
 
+  useEffect(() => {
+    const storedDarkModeStatus = localStorage.getItem("isDarkMode") === "true";
+    setIsDarkMode(storedDarkModeStatus);
+
+    setDarkMode(storedDarkModeStatus);
+  }, []);
+
+  const setDarkMode = (isDarkMode) => {
+    if (isDarkMode) {
+      document.documentElement.classList.add("dark-mode");
+    } else {
+      document.documentElement.classList.remove("dark-mode");
+    }
+  };
+
+  const toggleDarkMode = () => {
+    const newDarkModeStatus = !isDarkMode;
+    setIsDarkMode(newDarkModeStatus);
+    localStorage.setItem("isDarkMode", newDarkModeStatus.toString());
+    setDarkMode(newDarkModeStatus);
+  };
+
   return (
-    <div className="main-notif">
-      <h1>Notifications</h1>
-      <button className="mark-read-button">
-        <Icon icon="solar:check-read-linear" width={30} height={30} />
-        Mark all as read
-      </button>
-      <div className="notif-container">
-        <div className="notif-border">
-          <div className="notif-buttons">
-            <button
-              onClick={toggleAll}
-              className={`all-button ${showAll ? "bold-button" : ""}`}
-            >
-              All
-            </button>
-            <button
-              onClick={toggleMentions}
-              className={`mentions-button ${showMentions ? "bold-button" : ""}`}
-            >
-              Mentions
-            </button>
-            <button
-              onClick={toggleUnread}
-              className={`unread-button ${showUnread ? "bold-button" : ""}`}
-            >
-              Unread
-            </button>
+    <div className={`app ${isDarkMode ? "dark-mode" : ""}`}>
+      <div className="main-notif">
+        <h1>Notifications</h1>
+        <button className="mark-read-button">
+          <Icon icon="solar:check-read-linear" width={30} height={30} />
+          Mark all as read
+        </button>
+        <div className="notif-container">
+          <div className="notif-border">
+            <div className="notif-buttons">
+              <button
+                onClick={toggleAll}
+                className={`all-button ${showAll ? "bold-button" : ""}`}
+              >
+                All
+              </button>
+              <button
+                onClick={toggleMentions}
+                className={`mentions-button ${
+                  showMentions ? "bold-button" : ""
+                }`}
+              >
+                Mentions
+              </button>
+              <button
+                onClick={toggleUnread}
+                className={`unread-button ${showUnread ? "bold-button" : ""}`}
+              >
+                Unread
+              </button>
+            </div>
           </div>
-        </div>
-        <div className="notif-content">
-          {showAll && (
-            <div className="all-notif-container">
-              {notification.map((notification) => (
-                <div className="notif" key={notification.id}>
-                  <span className="notif-date">{notification.date}</span>
-                  <div className="notif-user">
-                    <img
-                      className="notif-avatar"
-                      src={notification.avatar}
-                      alt={notification.name}
-                    />
-                    <div className="notif-text">
-                      <p>
-                        <strong>{notification.name}</strong>{" "}
-                        {notification.notif}
-                      </p>
+          <div className="notif-content">
+            {showAll && (
+              <div className="all-notif-container">
+                {notification.map((notification) => (
+                  <div className="notif" key={notification.id}>
+                    <span className="notif-date">{notification.date}</span>
+                    <div className="notif-user">
+                      <img
+                        className="notif-avatar"
+                        src={notification.avatar}
+                        alt={notification.name}
+                      />
+                      <div className="notif-text">
+                        <p>
+                          <strong>{notification.name}</strong>{" "}
+                          {notification.notif}
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          )}
-          {showMentions && (
-            <div className="mentions-notif-container">
-              {notification.map((notification) => (
-                <div className="notif" key={notification.id}>
-                  <span className="notif-date">{notification.date}</span>
-                  <div className="notif-user">
-                    <img
-                      className="notif-avatar"
-                      src={notification.avatar}
-                      alt={notification.name}
-                    />
-                    <div className="notif-text">
-                      <p>
-                        <strong>{notification.name}</strong>{" "}
-                        {notification.notif}
-                      </p>
+                ))}
+              </div>
+            )}
+            {showMentions && (
+              <div className="mentions-notif-container">
+                {notification.map((notification) => (
+                  <div className="notif" key={notification.id}>
+                    <span className="notif-date">{notification.date}</span>
+                    <div className="notif-user">
+                      <img
+                        className="notif-avatar"
+                        src={notification.avatar}
+                        alt={notification.name}
+                      />
+                      <div className="notif-text">
+                        <p>
+                          <strong>{notification.name}</strong>{" "}
+                          {notification.notif}
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          )}
-          {showUnread && (
-            <div className="unread-notif-container">
-              {notification.map((notification) => (
-                <div className="notif" key={notification.id}>
-                  <span className="notif-date">{notification.date}</span>
-                  <div className="notif-user">
-                    <img
-                      className="notif-avatar"
-                      src={notification.avatar}
-                      alt={notification.name}
-                    />
-                    <div className="notif-text">
-                      <p>
-                        <strong>{notification.name}</strong>{" "}
-                        {notification.notif}
-                      </p>
+                ))}
+              </div>
+            )}
+            {showUnread && (
+              <div className="unread-notif-container">
+                {notification.map((notification) => (
+                  <div className="notif" key={notification.id}>
+                    <span className="notif-date">{notification.date}</span>
+                    <div className="notif-user">
+                      <img
+                        className="notif-avatar"
+                        src={notification.avatar}
+                        alt={notification.name}
+                      />
+                      <div className="notif-text">
+                        <p>
+                          <strong>{notification.name}</strong>{" "}
+                          {notification.notif}
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          )}
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </div>
       <HomeProfile />
@@ -221,7 +248,11 @@ function Notif() {
         <>
           <div className="settings-overlay" />
           <div className="settings-container">
-            <Settings onClose={toggleSettings} />
+            <Settings
+              onClose={toggleSettings}
+              isDarkMode={isDarkMode}
+              toggleDarkMode={toggleDarkMode}
+            />
           </div>
         </>
       )}

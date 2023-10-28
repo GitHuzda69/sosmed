@@ -193,104 +193,144 @@
 
 /*code buat responsive*/
 
+@media screen and (max-width: 1500px) {
+  .upload {
+    width: 1000px; 
+  } 
+}
+@media screen and (max-width: 1480px) {
+  .upload {
+    width: 985px; 
+  } 
+}
+@media screen and (max-width: 1460px) {
+  .upload {
+    width: 970px; 
+  } 
+}
+@media screen and (max-width: 1440px) {
+  .upload {
+    width: 950px; 
+  } 
+}
+@media screen and (max-width: 1420px) {
+  .upload {
+    width: 925px; 
+  } 
+}
+@media screen and (max-width: 1400px) {
+  .upload {
+    width: 910px; 
+  } 
+}
+@media screen and (max-width: 1380px) {
+  .upload {
+    width: 890px; 
+  } 
+}
+@media screen and (max-width: 1360px) {
+  .upload {
+    width: 875px; 
+  } 
+} 
 @media screen and (max-width: 1340px) {
   .upload{
-    width: 868px;
+    width: 860px;
   }
 }
 @media screen and (max-width: 1320px) {
   .upload{
-    width: 858px;
+    width: 840px;
   }
 }
 @media screen and (max-width: 1300px) {
   .upload{
-    width: 838px;
+    width: 820px;
   }
 }
 @media screen and (max-width: 1260px) {
   .upload{
-    width: 818px;
+    width: 800px;
   }
 }
 @media screen and (max-width: 1245px) {
   .upload{
-    width: 798px;
+    width: 785px;
   }
 }
 @media screen and (max-width: 1220px) {
   .upload{
-    width: 777px;
+    width: 765px;
   }
 }
 @media screen and (max-width: 1200px) {
   .upload{
-    width: 768px;
+    width: 750px;
   }
 }
 @media screen and (max-width: 1185px) {
   .upload{
-    width: 745px;
+    width: 735px;
   }
 }
 @media screen and (max-width: 1160px) {
   .upload{
-    width: 735px;
+    width: 720px;
   }
 }
 @media screen and (max-width: 1145px) {
   .upload{
-    width: 715px;
+    width: 705px;
   }
 }
 @media screen and (max-width: 1125px) {
   .upload{
-    width: 703px;
+    width: 690px;
   }
 }
 @media screen and (max-width: 1105px) {
   .upload{
-    width: 690px;
+    width: 675px;
   }
 }
 @media screen and (max-width: 1085px) {
   .upload{
-    width: 670px;
+    width: 660px;
   }
 }
 @media screen and (max-width: 1065px) {
   .upload{
-    width: 655px;
+    width: 640px;
   }
 }
 @media screen and (max-width: 1045px) {
   .upload{
-    width: 640px;
+    width: 630px;
   }
 } 
 @media screen and (max-width: 1025px) {
   .upload {
-    width: 625px; 
+    width: 615px; 
   } 
 }
 @media screen and (max-width: 1005px) {
   .upload {
-    width: 615px; 
+    width: 605px; 
   } 
 }
 @media screen and (max-width: 985px) {
   .upload {
-    width: 595px; 
+    width: 585px; 
   } 
 }
 @media screen and (max-width: 965px) {
   .upload {
-    width: 585px; 
+    width: 575px; 
   } 
 }
 @media screen and (max-width: 945px) {
   .upload {
-    width: 570px; 
+    width: 560px; 
   } 
 }
 @media screen and (max-width: 925px) {
