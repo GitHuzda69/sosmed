@@ -28,7 +28,6 @@ const Post = ({ post }) => {
   const [user, setUser] = useState({});
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const { user: currentUser } = useContext(AuthContext);
-  const eek = post.userId;
 
   useEffect(() => {
     setIsLiked(post.likes && post.likes.includes(currentUser._id));

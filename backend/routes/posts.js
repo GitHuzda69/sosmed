@@ -5,9 +5,9 @@ const User = require("../models/User");
 
 //get a post
 
-router.get("/:id", async (req, res) => {
+router.get("/", async (req, res) => {
     try {
-      const post = await Post.findById(req.params.id);
+      const post = await Post.find();
       res.status(200).json(post);
     } catch (err) {
       res.status(500).json(err);
@@ -35,10 +35,16 @@ router.get("/timeline/:userId", async (req, res) => {
 
 router.get("/fyp", async (req, res) => {
   try {
-    const allPosts = await Post.find();
-    res.status(200).json(allPosts);
+    const posts = await Post.find(); 
+
+    posts.forEach(post => {
+      const words = post.desc.split(' ').map(word => word.startsWith('#') ? word.slice(1) : word);
+      post.desc = words.join(' '); 
+    });
+
+    res.status(200).json(posts);
   } catch (err) {
-    res.status(500).json(err);
+    res.status(500).json({ error: "Failed to fetch posts or apply social media algorithm" });
   }
 });
 

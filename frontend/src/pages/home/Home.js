@@ -6,14 +6,12 @@ import Settings from "../../component/Settings/Settings.js";
 import "./Home.css";
 import "../../component/Settings/Settings.css";
 import "../../component/Logout/Logout.css";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Posts from "../../component/posts/Posts";
 import Upload from "../../component/Upload/Upload.js";
 import Logout from "../../component/Logout/Logout.js";
 import FypSwitch from "../../component/fyp-button/fyp-switch.js";
 import HomeProfile from "../../component/home-profile/home-profile.js";
 
-const queryClient = new QueryClient();
 
 function Home() {
   const [settingOpen, setSettingOpen] = useState(false);
@@ -53,7 +51,7 @@ function Home() {
   };
 
   return (
-    <QueryClientProvider client={queryClient}>
+    <>
       <div className={`app ${isDarkMode ? "dark-mode" : ""}`}>
         <div className="home">
           <div className="leftbar">
@@ -102,7 +100,7 @@ function Home() {
           </div>
         </>
       )}
-    </QueryClientProvider>
+      </>
   );
 }
 
