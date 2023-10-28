@@ -1,10 +1,10 @@
  html{ 
   overflow-y: hidden;
   overflow-x: hidden;
-  background-color: #DDDDDD;
+  background-color: #DDDDDD; 
  }
  .app{     
-  min-width: 600px;
+  min-width: 800px;
   margin-top: -10px;  
   margin-right: -7px; 
   padding-bottom: 0px; 
