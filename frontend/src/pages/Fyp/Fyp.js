@@ -20,26 +20,27 @@ const Fyp = (post, className, username) => {
   const [settingOpen, setSettingOpen] = useState(false);
   const [logoutOpen, setLogoutOpen] = useState(false);
   const { user: currentUser } = useContext(AuthContext);
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   useEffect(() => {
     const fetchPost = async () => {
       try {
         const res = await makeRequest.get("/posts/fyp");
         const postsData = res.data;
-  
+
         // Fungsi untuk menghitung jumlah hashtag pada suatu postingan
         const countHashtags = (desc) => {
           return (desc.match(/#/g) || []).length;
         };
-  
+
         // Mengurutkan postingan berdasarkan jumlah hashtag dari yang terbanyak
         postsData.sort((post1, post2) => {
           const post1Hashtags = countHashtags(post1.desc);
           const post2Hashtags = countHashtags(post2.desc);
-  
+
           return post2Hashtags - post1Hashtags;
         });
-  
+
         setPosts(postsData);
       } catch (err) {
         console.log(err);
@@ -47,7 +48,6 @@ const Fyp = (post, className, username) => {
     };
     fetchPost();
   }, []);
-  
 
   useEffect(() => {
     if (post.userId) {
@@ -62,7 +62,28 @@ const Fyp = (post, className, username) => {
       fetchUser();
     }
   }, [post.userId]);
-  
+
+  useEffect(() => {
+    const storedDarkModeStatus = localStorage.getItem("isDarkMode") === "true";
+    setIsDarkMode(storedDarkModeStatus);
+
+    setDarkMode(storedDarkModeStatus);
+  }, []);
+
+  const setDarkMode = (isDarkMode) => {
+    if (isDarkMode) {
+      document.documentElement.classList.add("dark-mode");
+    } else {
+      document.documentElement.classList.remove("dark-mode");
+    }
+  };
+
+  const toggleDarkMode = () => {
+    const newDarkModeStatus = !isDarkMode;
+    setIsDarkMode(newDarkModeStatus);
+    localStorage.setItem("isDarkMode", newDarkModeStatus.toString());
+    setDarkMode(newDarkModeStatus);
+  };
 
   const toggleSettings = () => {
     setSettingOpen(!settingOpen);
@@ -71,36 +92,38 @@ const Fyp = (post, className, username) => {
   const toggleLogout = () => {
     setLogoutOpen(!logoutOpen);
   };
-  console.log(posts)
+  console.log(posts);
   return (
     <>
-      <div className="home">
-        <div className="leftbar-fyp">
-          <Sidebar
-            toggleSettings={toggleSettings}
-            toggleLogout={toggleLogout}
-          />
-        </div>
-        <div className="main-content">
-          <div className="topbar-fyp">
-            <FypSwitch />
-            <SearchBar />
+      <div className={`app ${isDarkMode ? "dark-mode" : ""}`}>
+        <div className="home">
+          <div className="leftbar-fyp">
+            <Sidebar
+              toggleSettings={toggleSettings}
+              toggleLogout={toggleLogout}
+            />
           </div>
-          <div className="home-content">
-            <Upload />
-            <div className={`posts ${className}`}>
-            {(!username || username === user.username)}
-              {posts.map((p) => (
-                <Post key={p._id} post={p} />
-              ))}
+          <div className="main-content">
+            <div className="topbar-fyp">
+              <FypSwitch />
+              <SearchBar />
             </div>
-          </div>
-          <div className="side-content">
-            <HomeProfile />
-            <Rightbar />
-            <h5>
-              Terms of Service Privacy Policy © 2023 Nama All rights reserved.
-            </h5>
+            <div className="home-content">
+              <Upload />
+              <div className={`posts ${className}`}>
+                {!username || username === user.username}
+                {posts.map((p) => (
+                  <Post key={p._id} post={p} />
+                ))}
+              </div>
+            </div>
+            <div className="side-content">
+              <HomeProfile />
+              <Rightbar />
+              <h5>
+                Terms of Service Privacy Policy © 2023 Nama All rights reserved.
+              </h5>
+            </div>
           </div>
         </div>
       </div>
@@ -108,7 +131,11 @@ const Fyp = (post, className, username) => {
         <>
           <div className="settings-overlay" />
           <div className="settings-container">
-            <Settings onClose={toggleSettings} />
+            <Settings
+              onClose={toggleSettings}
+              isDarkMode={isDarkMode}
+              toggleDarkMode={toggleDarkMode}
+            />
           </div>
         </>
       )}
@@ -120,7 +147,7 @@ const Fyp = (post, className, username) => {
           </div>
         </>
       )}
-      </>
+    </>
   );
 };
 

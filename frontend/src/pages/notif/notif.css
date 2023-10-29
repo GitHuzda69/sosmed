@@ -11,6 +11,7 @@
 }
 .main-notif h1{
   font-size: 25px;
+  padding-top: 10px;
   margin-left: 15px;
 }
 
@@ -24,6 +25,7 @@
   font-weight: 500;
   margin-top: -50px;
   margin-left: 740px;
+  background-color: transparent;
 }
 
 .notif-container{
@@ -36,7 +38,7 @@
 
 .notif-buttons{
   margin-left: 15px;  
-  margin-bottom: -5px;
+  margin-bottom: -5px; 
 }
 .notif-buttons button{
   font-size: 15px;
@@ -49,7 +51,30 @@
 .bold-button{
   font-weight: bold;
   border-bottom: 2px black solid;
+  background-color: transparent;
 }
+
+.all-button{
+  background-color: transparent;
+}
+.all-button:hover{
+  background-color: transparent;
+}
+
+.mentions-button{
+  background-color: transparent;
+}
+.mentions-button:hover{
+  background-color: transparent;
+}
+
+.unread-button{
+  background-color: transparent;
+}
+.unread-button:hover{
+  background-color: transparent;
+}
+
 
 .notif-content{
   height: 470px; 
@@ -66,16 +91,16 @@
 }
 
 .notif-content::-webkit-scrollbar-thumb {
-  background-color: #999999;
+  background-color: transparent;
   border-radius: 10px;
 }
 
 .notif-content::-webkit-scrollbar-thumb:hover {
-  background-color: #777777;
+  background-color: transparent;
 }
 
 .notif-content::-webkit-scrollbar-track {
-  background-color: #ffffff;
+  background-color: transparent;
   border-radius: 10px;
 
 }

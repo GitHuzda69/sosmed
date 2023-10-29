@@ -76,3 +76,39 @@
   .dark-mode .homeProfile{
     background-color: rgb(58, 58, 58);
   }
+
+  /*buat notif*/
+  .dark-mode .main-notif{
+    background-color: rgb(58, 58, 58);
+  }
+
+  .dark-mode .mark-read-button{
+    color: white;
+  }
+
+  .dark-mode .bold-button{
+    border-bottom: 2px white solid;
+  }
+
+  .dark-mode .all-button{
+    color: white;
+  }
+
+  .dark-mode .mentions-button{
+    color: white;
+  }
+
+  .dark-mode .unread-button{
+    color: white;
+  }
+
+  /*buat frendlist*/
+  .dark-mode .friendlist-main{
+    background-color: rgb(58, 58, 58);
+  }
+
+  .dark-mode .button-info{
+    background-color: transparent;
+    color: white;
+    border: 1px white solid;
+  }
