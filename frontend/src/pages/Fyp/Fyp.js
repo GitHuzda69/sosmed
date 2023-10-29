@@ -27,20 +27,8 @@ const Fyp = (post, className, username) => {
       try {
         const res = await makeRequest.get("/posts/fyp");
         const postsData = res.data;
-
-        // Fungsi untuk menghitung jumlah hashtag pada suatu postingan
-        const countHashtags = (desc) => {
-          return (desc.match(/#/g) || []).length;
-        };
-
-        // Mengurutkan postingan berdasarkan jumlah hashtag dari yang terbanyak
-        postsData.sort((post1, post2) => {
-          const post1Hashtags = countHashtags(post1.desc);
-          const post2Hashtags = countHashtags(post2.desc);
-
-          return post2Hashtags - post1Hashtags;
-        });
-
+        
+        postsData.sort((post1, post2) => post2.desc.length - post1.desc.length);
         setPosts(postsData);
       } catch (err) {
         console.log(err);
@@ -48,6 +36,7 @@ const Fyp = (post, className, username) => {
     };
     fetchPost();
   }, []);
+  
 
   useEffect(() => {
     if (post.userId) {

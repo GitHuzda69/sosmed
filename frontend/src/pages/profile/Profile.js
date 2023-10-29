@@ -1,9 +1,10 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { useLocation, Link } from "react-router-dom";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useParams } from "react-router";
 import { makeRequest } from "../../axios.js";
 import { AuthContext } from "../../context/authContext.js";
 import { Icon } from "@iconify/react";
+import { format } from "timeago.js";
 
 import "./Profile.css";
 import Posts from "../../component/posts/Posts.js";
@@ -25,37 +26,41 @@ const Profile = () => {
   const [imagePopupOpenbanner, setImagePopupOpenBanner] = useState(false);
   const [imagePopupOpenprofile, setImagePopupOpenProfile] = useState(false);
   const [isUpdateOpen, setIsUpdateOpen] = useState(false);
-  const { currentUser } = useContext(AuthContext);
-  const userId = parseInt(useLocation().pathname.split("/")[2]);
+  const [user, setUser] = useState({});
   const [settingOpen, setSettingOpen] = useState(false);
   const [logoutOpen, setLogoutOpen] = useState(false);
-  const { isLoading, error, data } = useQuery(["user"], () =>
-    makeRequest.get("/users/find/" + userId).then((res) => {
-      return res.data;
-    })
+  const { user : currentUser, dispatch } = useContext(AuthContext);
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+  const username = useParams().username;
+  const [followed, setFollowed] = useState(
+    currentUser.followings.includes(user?._id)
   );
-  const queryClient = useQueryClient();
-  const { isLoading: rIsLoading, data: relationshipData } = useQuery(
-    ["relationship"],
-    () =>
-      makeRequest.get("/relationships?followeduserid=" + userId).then((res) => {
-        return res.data;
-      })
-  );
-  const mutation = useMutation(
-    (following) => {
-      if (following)
-        return makeRequest.delete("/relationships?userId=" + userId);
-      return makeRequest.post("/relationships", { userId });
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["relationship"]);
-      },
+  
+  useEffect(() => {
+    const fetchUser = async () => {
+      const res = await makeRequest.get(`/users?username=${username}`);
+      setUser(res.data);
+    };
+    fetchUser();
+  }, [username]);
+
+  const handleFollow = async () => {
+    try {
+      if (followed) {
+        await makeRequest.put(`/relationships/${user._id}/unfollow`, {
+          userId: currentUser._id,
+        });
+        dispatch({ type: "UNFOLLOW", payload: user._id });
+      } else {
+        await makeRequest.put(`/relationships/${user._id}/follow`, {
+          userId: currentUser._id,
+        });
+        dispatch({ type: "FOLLOW", payload: user._id });
+      }
+      setFollowed(!followed);
+    } catch (err) {
+      console.log(err)
     }
-  );
-  const handleFollow = () => {
-    mutation.mutate(relationshipData.includes(currentUser.id));
   };
 
   const toggleSettings = () => {
@@ -107,10 +112,7 @@ const Profile = () => {
   ];
   return (
     <div className="profile-main">
-      {isLoading ? (
-        "loading"
-      ) : (
-        <div className="profil">
+       <div className="profil">
           <div className="profil-container">
             <div className="cover-img">
               <div className="post-img-banner">
@@ -120,9 +122,9 @@ const Profile = () => {
                 >
                   <img
                     src={
-                      data && data.coverpic
-                        ? "/data/" + data.coverpic
-                        : defaultcover
+                      user.coverPicture
+                      ? PF + user.coverPicture
+                      : defaultcover
                     }
                     alt="banner"
                   />
@@ -138,8 +140,8 @@ const Profile = () => {
                   <img
                     className="popup-img-banner"
                     src={
-                      data && data.coverpic
-                        ? "/data/" + data.coverpic
+                      user.coverPicture
+                      ? PF + user.coverPicture
                         : defaultcover
                     }
                     alt=""
@@ -157,9 +159,9 @@ const Profile = () => {
                     >
                       <img
                         src={
-                          data && data.profilepic
-                            ? "/data/" + data.profilepic
-                            : defaultprofile
+                          user.profilePicture
+                      ? PF + user.profilePicture
+                      : defaultcover
                         }
                         alt="post-profile"
                       />
@@ -175,9 +177,9 @@ const Profile = () => {
                       <img
                         className="popup-img-profil"
                         src={
-                          data && data.profilepic
-                            ? "/data/" + data.profilepic
-                            : defaultprofile
+                          user.profilePicture
+                      ? PF + user.profilePicture
+                      : defaultcover
                         }
                         alt=""
                       />
@@ -185,14 +187,12 @@ const Profile = () => {
                   </div>
                 )}
                 <div className="profil-bio">
-                  <h2>{data && data.displayname}</h2>
+                  <h2>{user && user.displayname}</h2>
                   <h4>300 follower</h4>
                 </div>
               </div>
               <div className="profiluser-button">
-                {rIsLoading ? (
-                  "Loading"
-                ) : userId === currentUser.id ? (
+                {user.username === currentUser.username ? (
                   <button
                     className="edit-profile-button"
                     onClick={openUpdateModal}
@@ -202,14 +202,14 @@ const Profile = () => {
                   </button>
                 ) : (
                   <button className="follow-button" onClick={handleFollow}>
-                    {relationshipData.includes(currentUser.id)
+                    {followed
                       ? "Following"
                       : "Follow"}
                   </button>
                 )}
               </div>
             </div>
-            <Posts userId={userId} className="posts-profile" />
+            <Posts username={username} className="posts-profile" />
           </div>
           <div className="rightProfileBar">
             <div className="search-profile">
@@ -224,15 +224,15 @@ const Profile = () => {
               <h3>
                 <Icon icon="ep:info-filled" width={25} height={25} />
                 Joined
-                <span>{data && data.joinat}</span>
+                <span>{format(user.createdAt)}</span>
               </h3>
               <h3>
                 <Icon icon="fluent:location-16-filled" width={25} height={25} />
                 From
-                <span>{data?.city || "Earth"}</span>
+                <span>{user?.city || "Earth"}</span>
               </h3>
               <h4>
-                {data?.biodata ||
+                {user?.desc ||
                   "This is your biodata, You can update it on the edit profile."}
               </h4>
             </div>
@@ -262,7 +262,6 @@ const Profile = () => {
             </div>
           </div>
         </div>
-      )}
       <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} />
       {settingOpen && (
         <>
@@ -283,7 +282,7 @@ const Profile = () => {
       {isUpdateOpen && (
         <div>
           <div className="settings-overlay" />
-          <Update onClose={closeUpdateModal} user={data} />
+          <Update onClose={closeUpdateModal} user={user} />
         </div>
       )}
     </div>

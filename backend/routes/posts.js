@@ -31,6 +31,22 @@ router.get("/timeline/:userId", async (req, res) => {
     }
   });
 
+router.get("/profile/:username", async (req, res) => {
+  try {
+    const currentUser = await User.findOne({ username: req.params.username });
+    if (!currentUser) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const userPosts = await Post.find({ userId: currentUser._id });
+
+    res.status(200).json(userPosts);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to fetch timeline posts" });
+  }
+});
+
+
 //get fyp
 
 router.get("/fyp", async (req, res) => {

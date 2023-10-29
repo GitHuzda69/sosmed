@@ -162,14 +162,14 @@ const Post = ({ post }) => {
           <div className="user">
             <div className="userinfo">
               <Link
-                to={`/profile/${post.username}`}
+                to={`/profile/${user.username}`}
                 style={{ textDecoration: "none", color: "inherit" }}
               >
                 <img
                   className="profile"
                   src={
-                    post.profilePicture
-                      ? PF + post.profilePicture
+                    user.profilePicture
+                      ? PF + user.profilePicture
                       : defaultprofile
                   }
                   alt=""
