@@ -1,31 +1,36 @@
    /*style dark mode*/
   .dark-mode {
-    background-color: rgb(19, 19, 19); 
+    background-color: #101010; 
     color: white;
   }
 
-  /*buat home*/
-  .dark-mode .sidebar{
-    background-color: rgb(58, 58, 58);
+
+  /*buat topbar*/ 
+  .dark-mode .topbar .link-following{ 
+    background-color: #1E1E1E;
+  }
+
+  .dark-mode .search-bar-container{
+    background-color: #1E1E1E;
+  }
+  .dark-mode .searchbar-button{ 
+    color: white;
   }
 
   .dark-mode .upload{
-    background-color: rgb(58, 58, 58);
+    background-color: #1E1E1E;
   }
   .dark-mode .input-post textarea{
-    background-color: rgb(210, 210, 210);
+    background-color: #2F2F2F;
   }
   .dark-mode .uploadItem{
     background-color: transparent;
     color: white;
   }
 
+  /*buat setting*/ 
   .dark-mode .settings-popup{  
     background-color: rgb(58, 58, 58); 
-  }
-
-  .dark-mode  .search-bar-container{
-    background-color: rgb(210, 210, 210);
   }
   .dark-mode .settings-title button{
     background-color: transparent;   
@@ -39,11 +44,12 @@
     color: white;
   }
 
+    /*buat post*/ 
   .dark-mode .post{
-    background-color: rgb(58, 58, 58); 
+    background-color: #1E1E1E; 
   }
   .dark-mode .post-content{
-    background-color: rgb(58, 58, 58);
+    background-color: #1E1E1E;
   }
   .dark-mode .opsi-post-button{
     color: white;
@@ -62,42 +68,53 @@
   .dark-mode .icon{
     color: white;
   } 
+  .dark-mode .item{ 
+  }
 
+    /*buat home*/ 
   .dark-mode .home{ 
   }
 
+    /*buat rightbar*/ 
+  .dark-mode .homeProfile{
+    background-color: #1E1E1E;
+  }
+  .dark-mode .connect-homeProfile{
+    background-color: white;
+    color: black;
+  }
+
   .dark-mode .rightBar{
-    background-color: rgb(58, 58, 58);
+    background-color: #1E1E1E;
   }
   .dark-mode .rightBarUser{ 
     background-color: transparent; 
   }
+  .dark-mode .rightBarButton{
+    background-color: #2F2F2F;
+  }
 
-  .dark-mode .homeProfile{
-    background-color: rgb(58, 58, 58);
+  /*buat fyp*/
+  .dark-mode .topbar-fyp .link-fyp{
+    background-color: #1E1E1E;
   }
 
   /*buat notif*/
   .dark-mode .main-notif{
     background-color: rgb(58, 58, 58);
   }
-
   .dark-mode .mark-read-button{
     color: white;
   }
-
   .dark-mode .bold-button{
     border-bottom: 2px white solid;
   }
-
   .dark-mode .all-button{
     color: white;
   }
-
   .dark-mode .mentions-button{
     color: white;
   }
-
   .dark-mode .unread-button{
     color: white;
   }
@@ -106,9 +123,14 @@
   .dark-mode .friendlist-main{
     background-color: rgb(58, 58, 58);
   }
-
   .dark-mode .button-info{
     background-color: transparent;
     color: white;
     border: 1px white solid;
+  }
+
+  /*buat profile*/
+
+  .dark-mode .profile-main{
+    background-color: rgb(58, 58, 58);
   }

@@ -21,13 +21,12 @@ const SearchBar = ({ onSearch }) => {
   return (
     <div>
       <div className="search-bar-container">
-      <Icon
-            icon="octicon:search-16"
-            className="searchbar-button"
-            color="black"
-            width="22"
-            height="22"
-          />
+        <Icon
+          icon="octicon:search-16"
+          className="searchbar-button"
+          width="22"
+          height="22"
+        />
         <input
           className="search-bar-input"
           type="text"

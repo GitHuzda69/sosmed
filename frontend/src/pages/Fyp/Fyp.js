@@ -22,12 +22,14 @@ const Fyp = (post, className, username) => {
   const { user: currentUser } = useContext(AuthContext);
   const [isDarkMode, setIsDarkMode] = useState(false);
 
+  const isHomePage = true;
+
   useEffect(() => {
     const fetchPost = async () => {
       try {
         const res = await makeRequest.get("/posts/fyp");
         const postsData = res.data;
-        
+
         postsData.sort((post1, post2) => post2.desc.length - post1.desc.length);
         setPosts(postsData);
       } catch (err) {
@@ -36,7 +38,6 @@ const Fyp = (post, className, username) => {
     };
     fetchPost();
   }, []);
-  
 
   useEffect(() => {
     if (post.userId) {
@@ -90,6 +91,7 @@ const Fyp = (post, className, username) => {
             <Sidebar
               toggleSettings={toggleSettings}
               toggleLogout={toggleLogout}
+              isHomePage={isHomePage}
             />
           </div>
           <div className="main-content">

@@ -12,7 +12,6 @@ import Logout from "../../component/Logout/Logout.js";
 import FypSwitch from "../../component/fyp-button/fyp-switch.js";
 import HomeProfile from "../../component/home-profile/home-profile.js";
 
-
 function Home() {
   const [settingOpen, setSettingOpen] = useState(false);
   const [logoutOpen, setLogoutOpen] = useState(false);
@@ -54,13 +53,6 @@ function Home() {
     <>
       <div className={`app ${isDarkMode ? "dark-mode" : ""}`}>
         <div className="home">
-          <div className="leftbar">
-            <Sidebar
-              toggleSettings={toggleSettings}
-              toggleLogout={toggleLogout}
-              isHomePage={isHomePage}
-            />
-          </div>
           <div className="main-content">
             <div className="topbar">
               <FypSwitch />
@@ -70,13 +62,17 @@ function Home() {
               <Upload />
               <Posts />
             </div>
-            <div className="side-content">
-              <HomeProfile />
-              <Rightbar />
-              <h5>
-                Terms of Service Privacy Policy © 2023 Nama All rights reserved.
-              </h5>
-            </div>
+          </div>
+          <div className="side-content">
+            <HomeProfile />
+            <Rightbar />
+          </div>
+          <div className="leftbar">
+            <Sidebar
+              toggleSettings={toggleSettings}
+              toggleLogout={toggleLogout}
+              isHomePage={isHomePage}
+            />
           </div>
         </div>
       </div>
@@ -100,7 +96,7 @@ function Home() {
           </div>
         </>
       )}
-      </>
+    </>
   );
 }
 

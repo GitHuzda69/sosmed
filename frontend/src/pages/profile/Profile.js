@@ -29,13 +29,15 @@ const Profile = () => {
   const [user, setUser] = useState({});
   const [settingOpen, setSettingOpen] = useState(false);
   const [logoutOpen, setLogoutOpen] = useState(false);
-  const { user : currentUser, dispatch } = useContext(AuthContext);
+  const { user: currentUser, dispatch } = useContext(AuthContext);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const username = useParams().username;
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
   const [followed, setFollowed] = useState(
     currentUser.followings.includes(user?._id)
   );
-  
+
   useEffect(() => {
     const fetchUser = async () => {
       const res = await makeRequest.get(`/users?username=${username}`);
@@ -59,7 +61,7 @@ const Profile = () => {
       }
       setFollowed(!followed);
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   };
 
@@ -78,6 +80,29 @@ const Profile = () => {
   const closeUpdateModal = () => {
     setIsUpdateOpen(false);
   };
+
+  useEffect(() => {
+    const storedDarkModeStatus = localStorage.getItem("isDarkMode") === "true";
+    setIsDarkMode(storedDarkModeStatus);
+
+    setDarkMode(storedDarkModeStatus);
+  }, []);
+
+  const setDarkMode = (isDarkMode) => {
+    if (isDarkMode) {
+      document.documentElement.classList.add("dark-mode");
+    } else {
+      document.documentElement.classList.remove("dark-mode");
+    }
+  };
+
+  const toggleDarkMode = () => {
+    const newDarkModeStatus = !isDarkMode;
+    setIsDarkMode(newDarkModeStatus);
+    localStorage.setItem("isDarkMode", newDarkModeStatus.toString());
+    setDarkMode(newDarkModeStatus);
+  };
+
   const friend = [
     {
       id: 1,
@@ -111,8 +136,9 @@ const Profile = () => {
     },
   ];
   return (
-    <div className="profile-main">
-       <div className="profil">
+    <div className={`app ${isDarkMode ? "dark-mode" : ""}`}>
+      <div className="profile-main">
+        <div className="profil">
           <div className="profil-container">
             <div className="cover-img">
               <div className="post-img-banner">
@@ -122,9 +148,7 @@ const Profile = () => {
                 >
                   <img
                     src={
-                      user.coverPicture
-                      ? PF + user.coverPicture
-                      : defaultcover
+                      user.coverPicture ? PF + user.coverPicture : defaultcover
                     }
                     alt="banner"
                   />
@@ -140,9 +164,7 @@ const Profile = () => {
                   <img
                     className="popup-img-banner"
                     src={
-                      user.coverPicture
-                      ? PF + user.coverPicture
-                        : defaultcover
+                      user.coverPicture ? PF + user.coverPicture : defaultcover
                     }
                     alt=""
                   />
@@ -160,8 +182,8 @@ const Profile = () => {
                       <img
                         src={
                           user.profilePicture
-                      ? PF + user.profilePicture
-                      : defaultcover
+                            ? PF + user.profilePicture
+                            : defaultcover
                         }
                         alt="post-profile"
                       />
@@ -178,8 +200,8 @@ const Profile = () => {
                         className="popup-img-profil"
                         src={
                           user.profilePicture
-                      ? PF + user.profilePicture
-                      : defaultcover
+                            ? PF + user.profilePicture
+                            : defaultcover
                         }
                         alt=""
                       />
@@ -202,9 +224,7 @@ const Profile = () => {
                   </button>
                 ) : (
                   <button className="follow-button" onClick={handleFollow}>
-                    {followed
-                      ? "Following"
-                      : "Follow"}
+                    {followed ? "Following" : "Follow"}
                   </button>
                 )}
               </div>
@@ -262,12 +282,17 @@ const Profile = () => {
             </div>
           </div>
         </div>
+      </div>
       <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} />
       {settingOpen && (
         <>
           <div className="settings-overlay" />
           <div className="settings-container">
-            <Settings onClose={toggleSettings} />
+            <Settings
+              onClose={toggleSettings}
+              isDarkMode={isDarkMode}
+              toggleDarkMode={toggleDarkMode}
+            />
           </div>
         </>
       )}
