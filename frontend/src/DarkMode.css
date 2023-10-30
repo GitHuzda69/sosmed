@@ -101,7 +101,7 @@
 
   /*buat notif*/
   .dark-mode .main-notif{
-    background-color: rgb(58, 58, 58);
+    background-color: #1E1E1E;
   }
   .dark-mode .mark-read-button{
     color: white;
@@ -116,6 +116,16 @@
     color: white;
   }
   .dark-mode .unread-button{
+    color: white;
+  }
+
+  /*buat messages*/
+  .dark-mode .main-messages{
+    background-color: #2F2F2F;
+  }
+  .dark-mode .input-search-friend{
+    background-color: #1E1E1E;
+    border: 1px white solid;
     color: white;
   }
 

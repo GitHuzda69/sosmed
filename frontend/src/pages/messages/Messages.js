@@ -19,6 +19,8 @@ function Message() {
   const [currentChat, setCurrentChat] = useState(null);
   const [inputValue, setInputValue] = useState(null);
   const { currentUser } = useContext(AuthContext);
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
   const isMessagesPage = true;
 
   const toggleSettings = () => {
@@ -29,13 +31,21 @@ function Message() {
     setLogoutOpen(!logoutOpen);
   };
 
-  const { isLoading: cIsLoading, error: cError, data: convData } = useQuery(["conversation"], () => 
-      makeRequest.get("/conversations").then((res) => {
-        return res.data;
-      })
+  const {
+    isLoading: cIsLoading,
+    error: cError,
+    data: convData,
+  } = useQuery(["conversation"], () =>
+    makeRequest.get("/conversations").then((res) => {
+      return res.data;
+    })
   );
 
-  const { isLoading: mIsLoading, error: mError, data: messData } = useQuery(["message"], async () => {
+  const {
+    isLoading: mIsLoading,
+    error: mError,
+    data: messData,
+  } = useQuery(["message"], async () => {
     try {
       const response = await makeRequest.get("/messages/" + currentChat.id);
       return response.data;
@@ -44,9 +54,30 @@ function Message() {
       throw error;
     }
   });
-  
 
- console.log(currentChat)
+  useEffect(() => {
+    const storedDarkModeStatus = localStorage.getItem("isDarkMode") === "true";
+    setIsDarkMode(storedDarkModeStatus);
+
+    setDarkMode(storedDarkModeStatus);
+  }, []);
+
+  const setDarkMode = (isDarkMode) => {
+    if (isDarkMode) {
+      document.documentElement.classList.add("dark-mode");
+    } else {
+      document.documentElement.classList.remove("dark-mode");
+    }
+  };
+
+  const toggleDarkMode = () => {
+    const newDarkModeStatus = !isDarkMode;
+    setIsDarkMode(newDarkModeStatus);
+    localStorage.setItem("isDarkMode", newDarkModeStatus.toString());
+    setDarkMode(newDarkModeStatus);
+  };
+
+  console.log(currentChat);
 
   return (
     <div className="main-messages">
@@ -56,7 +87,6 @@ function Message() {
           <Icon
             icon="octicon:search-16"
             className="searchbar-message-friend-button"
-            color="black"
             width="22"
             height="22"
           />
@@ -67,7 +97,11 @@ function Message() {
           />
         </div>
         <div className="message-friend-bar">
-          {cIsLoading ? "Loading": cError ? "Error" : convData.map((friend) => (
+          {cIsLoading
+            ? "Loading"
+            : cError
+            ? "Error"
+            : convData.map((friend) => (
                 <button key={friend.id} onClick={() => setCurrentChat(friend)}>
                   <div className="message-friend">
                     <img
@@ -126,13 +160,17 @@ function Message() {
             <div className="chat-time">
               <h3>Today</h3>
             </div>
-            {mIsLoading ? "Loading" : mError ? "Error" : messData.map((m) => (
-            <div key={m.id} className="chat-other">
-              <h3>{m.displayname}</h3>
-              <h4>{m.desc}</h4>
-              <h5>{moment(m.createdat).fromNow()}</h5>
-            </div>
-          ))}
+            {mIsLoading
+              ? "Loading"
+              : mError
+              ? "Error"
+              : messData.map((m) => (
+                  <div key={m.id} className="chat-other">
+                    <h3>{m.displayname}</h3>
+                    <h4>{m.desc}</h4>
+                    <h5>{moment(m.createdat).fromNow()}</h5>
+                  </div>
+                ))}
           </div>
           <div className="chat-input">
             <textarea
@@ -179,7 +217,11 @@ function Message() {
         <>
           <div className="settings-overlay" />
           <div className="settings-container">
-            <Settings onClose={toggleSettings} />
+            <Settings
+              onClose={toggleSettings}
+              isDarkMode={isDarkMode}
+              toggleDarkMode={toggleDarkMode}
+            />
           </div>
         </>
       )}
