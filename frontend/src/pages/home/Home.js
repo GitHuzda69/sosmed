@@ -52,28 +52,26 @@ function Home() {
   return (
     <>
       <div className={`app ${isDarkMode ? "dark-mode" : ""}`}>
-        <div className="home">
-          <div className="main-content">
-            <div className="topbar">
-              <FypSwitch />
-              <SearchBar />
-            </div>
-            <div className="home-content">
-              <Upload />
-              <Posts />
-            </div>
+        <div className="main-content">
+          <div className="topbar">
+            <FypSwitch />
+            <SearchBar />
           </div>
-          <div className="side-content">
-            <HomeProfile />
-            <Rightbar />
+          <div className="home-content">
+            <Upload />
+            <Posts />
           </div>
-          <div className="leftbar">
-            <Sidebar
-              toggleSettings={toggleSettings}
-              toggleLogout={toggleLogout}
-              isHomePage={isHomePage}
-            />
-          </div>
+        </div>
+        <div className="side-content">
+          <HomeProfile />
+          <Rightbar />
+        </div>
+        <div className="leftbar">
+          <Sidebar
+            toggleSettings={toggleSettings}
+            toggleLogout={toggleLogout}
+            isHomePage={isHomePage}
+          />
         </div>
       </div>
       {settingOpen && (
