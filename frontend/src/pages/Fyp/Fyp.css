@@ -3,107 +3,14 @@
     grid-template-columns: auto 1fr; 
     grid-gap: 5px;
   }
-   
-.leftbar-fyp .gray-button-container{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 50px;
-    height: 70px; 
-    border-radius: 35px 0px 0px 35px; 
-  }
-  .leftbar-fyp .black-button-container{
-    display: flex; 
-    align-items: center;
-    justify-content: center;
-    width: 45px;
-    height: 45px; 
-    border-radius: 50%; 
-  }
-  
-  .leftbar-fyp .home-button{  
-    margin-top: 5px; 
-    color: white;
-  } 
-
-  
-.leftbar-fyp .notif-button-container{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 50px;
-    height: 60px;
-  }
-  .leftbar-fyp .notif-button-container{
-    display: flex; 
-    align-items: center;
-    justify-content: center;
-    width: 45px;
-    height: 45px;
-  }
-  .leftbar-fyp .notif-button{
-    color: white;
-  }
-  
-  .leftbar-fyp .messages-button-container{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 50px;
-    height: 60px;
-  }
-  .leftbar-fyp .messages-button-container{
-    display: flex; 
-    align-items: center;
-    justify-content: center;
-    width: 45px;
-    height: 45px;
-  }
-  .leftbar-fyp .messages-button{
-    color: white;
-  }
-  
-  .leftbar-fyp .friends-button-container{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 50px;
-    height: 60px;
-  }
-  .leftbar-fyp .friends-button-container{
-    display: flex; 
-    align-items: center;
-    justify-content: center;
-    width: 45px;
-    height: 45px;
-  }
-  .leftbar-fyp .friends-button{
-    color: white;
-  }
-  
-  .leftbar-fyp .settings-button-container{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 50px;
-    height: 60px;
-  }
-  .leftbar-fyp .settings-button-container{
-    display: flex; 
-    align-items: center;
-    justify-content: center;
-    width: 45px;
-    height: 45px;
-  }
-  .leftbar-fyp .settings-button{
-    color: white;
-  }
   
 .topbar-fyp{
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-    margin-top: 20px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  margin-top: 20px; 
+  margin-left: -5px; 
 }
 .topbar-fyp .link-fyp{
     background-color: black;
@@ -113,22 +20,25 @@
     background-color: white;
     color: black;
 }
- 
   
-  .main-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: flex-start;
-    }
+.main-content-fyp {
+  flex: 1; 
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;  
+  max-width: calc(100% - 350px);  
+  margin-left: 60px; 
+  padding: 0; 
+  }
   
-  .home-content{
+  .home-content-fyp{
       width: 100%;
       flex-grow: 1;
   }
-  .home-content .posts{
+  .home-content-fyp .posts{
   }
-  .home-content .post{
+  .home-content-fyp .post{
       width: 98%;
   }
   .home-content .upload{ 

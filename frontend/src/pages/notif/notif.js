@@ -237,8 +237,10 @@ function Notif() {
           </div>
         </div>
       </div>
-      <HomeProfile />
-      <Rightbar />
+      <div className="side-content">
+        <HomeProfile />
+        <Rightbar />
+      </div>
       <Sidebar
         toggleSettings={toggleSettings}
         toggleLogout={toggleLogout}

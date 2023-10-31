@@ -1,11 +1,12 @@
 .homeProfile{  
+    display: flex;
     flex-direction: column;
     top: 1%;
     right: 20px;  
     width: 270px;
     padding: 10px;
     margin-right: -5px;  
-    border-radius: 10px; 
+    border-radius: 10px;  
     background-color: #ffffff;
     overflow-y: visible;
     z-index: 99;
@@ -14,17 +15,17 @@
     font-family: "Inter" ;
     font-weight: bold;
     font-size: 16px; 
-    margin-top: 2%;
-    margin-left: 30%;
+    margin-top: 1%;
+    margin-left: 36%;
 }
 
 .banner-homeProfile{
-    width: 106%;
-    height: 40%;
+    width: 290px;
+    height: 75px; 
     object-fit: cover;
     margin-top: -10px;
-    margin-left: -9px;
-    border-radius: 10px 10px 0px 0px; 
+    margin-left: -10px;
+    border-radius: 10px 10px 0px 0px;  
 }
 .banner-homeProfile:hover{
     filter: brightness(0.7); 
@@ -34,7 +35,7 @@
     position: fixed; 
     width: 70px;
     height: 70px;
-    margin-top: -2%;
+    margin-top: -3%;
     margin-left: 1%;
     border-radius: 10px;
     border: 1px black solid; 
@@ -49,6 +50,7 @@
     justify-content: center;
     align-items: center;
     gap: 5px; 
+    margin-top: -5%;
     font-family: "Inter" ;  
 }
 .follow-homeProfile h3{
@@ -67,6 +69,8 @@
     width: 100%; 
     gap: 20px;
     padding: 5px; 
+    margin-top: -1%;
+    margin-bottom: -1px;
     border-radius: 10px;
     background-color: black;
     color: white;

@@ -19,7 +19,7 @@ const SearchBar = ({ onSearch }) => {
   };
 
   return (
-    <div>
+    <div className="search-container">
       <div className="search-bar-container">
         <Icon
           icon="octicon:search-16"

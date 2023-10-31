@@ -25,10 +25,19 @@ const Upload = () => {
 
   const handleClick = async (e) => {
     e.preventDefault();
+
+    const isTextareaEmpty = !desc.current.value.trim();
+    const isFileNotSelected = !file;
+
+    if (isTextareaEmpty && isFileNotSelected) {
+      return;
+    }
+
     const newPost = {
       userId: user._id,
       desc: desc.current.value,
     };
+
     if (file) {
       const data = new FormData();
       const fileName = Date.now() + file.name;
@@ -57,7 +66,27 @@ const Upload = () => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleClick(e);
+    } else if (e.key === "Enter" && e.shiftKey) {
+      const descElement = desc.current;
+      const startPos = descElement.selectionStart;
+      const endPos = descElement.selectionEnd;
+      const text = descElement.value;
+      const newText =
+        text.substring(0, startPos) +
+        "\n" +
+        text.substring(endPos, text.length);
+
+      descElement.value = newText;
+      descElement.setSelectionRange(startPos + 1, startPos + 1);
     }
+
+    handleAutoHeight();
+  };
+
+  const handleAutoHeight = () => {
+    const textarea = desc.current;
+    textarea.style.height = "auto";
+    textarea.style.height = `${Math.min(textarea.scrollHeight, 80)}px`;
   };
 
   return (
@@ -88,25 +117,36 @@ const Upload = () => {
       <div className="button-upload">
         <div className="uploadItem-row">
           <button className="uploadItem">
-            <Icon icon="ic:outline-poll" width={25} height={25}></Icon>
+            <Icon
+              icon="fluent:emoji-laugh-24-regular"
+              width={25}
+              height={25}
+            ></Icon>
           </button>
-          <button className="uploadItem">
-            <Icon icon="fluent:gif-16-regular" width={25} height={25}></Icon>
-          </button>
-          <button className="uploadItem" onClick={handleMediaButtonClick} type="file"
-                id="file"
-                accept=".png,.jpeg,.jpg"
-                onChange={(e) => setFile(e.target.files[0])}>
+          <button
+            className="uploadItem"
+            onClick={handleMediaButtonClick}
+            type="file"
+            id="file"
+            accept=".png,.jpeg,.jpg"
+            onChange={(e) => setFile(e.target.files[0])}
+          >
             <Icon
               icon="material-symbols:perm-media-outline"
               width={25}
               height={25}
             ></Icon>
           </button>
-          <button className="uploadButton" onClick={handleClick}>
-            Post
+          <button className="uploadItem">
+            <Icon icon="fluent:gif-16-regular" width={25} height={25}></Icon>
+          </button>
+          <button className="uploadItem">
+            <Icon icon="ic:outline-poll" width={25} height={25}></Icon>
           </button>
         </div>
+        <button className="uploadButton" onClick={handleClick}>
+          Post
+        </button>
       </div>
       <input
         className="uploadItem-popup"

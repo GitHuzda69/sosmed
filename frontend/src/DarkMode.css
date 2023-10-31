@@ -22,10 +22,17 @@
   }
   .dark-mode .input-post textarea{
     background-color: #2F2F2F;
+    color: white;
   }
   .dark-mode .uploadItem{
     background-color: transparent;
     color: white;
+  }
+  .dark-mode .uploadItem:hover{
+    background-color: #5C5C5C;
+  }
+  .dark-mode .uploadButton:hover{
+    background-color: #5C5C5C;
   }
 
   /*buat setting*/ 
