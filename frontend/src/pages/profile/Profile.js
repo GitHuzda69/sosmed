@@ -4,7 +4,7 @@ import { useParams } from "react-router";
 import { makeRequest } from "../../axios.js";
 import { AuthContext } from "../../context/authContext.js";
 import { Icon } from "@iconify/react";
-import { format } from "timeago.js";
+import moment from "moment";
 
 import "./Profile.css";
 import Posts from "../../component/posts/Posts.js";
@@ -12,12 +12,6 @@ import Sidebar from "../../component/Leftbar/Leftbar";
 import Settings from "../../component/Settings/Settings";
 import Logout from "../../component/Logout/Logout";
 import Update from "../../component/Update/Update.js";
-
-import avatar1 from "../../assets/friend/friend1.jpg";
-import avatar2 from "../../assets/friend/friend2.jpg";
-import avatar3 from "../../assets/friend/friend3.jpg";
-import avatar4 from "../../assets/friend/friend4.jpg";
-import avatar5 from "../../assets/friend/friend5.jpeg";
 
 import defaultprofile from "../../assets/profile/default_avatar.png";
 import defaultcover from "../../assets/profile/default_banner.jpg";
@@ -29,6 +23,7 @@ const Profile = () => {
   const [user, setUser] = useState({});
   const [settingOpen, setSettingOpen] = useState(false);
   const [logoutOpen, setLogoutOpen] = useState(false);
+  const [friends, setFriends] = useState([]);
   const { user: currentUser, dispatch } = useContext(AuthContext);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const username = useParams().username;
@@ -45,6 +40,18 @@ const Profile = () => {
     };
     fetchUser();
   }, [username]);
+
+  useEffect(() => {
+    const getFriends = async () => {
+      try {
+        const friendList = await makeRequest.get("/relationships/friends/" + user._id);
+        setFriends(friendList.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getFriends();
+  }, [user]);
 
   const handleFollow = async () => {
     try {
@@ -103,38 +110,6 @@ const Profile = () => {
     setDarkMode(newDarkModeStatus);
   };
 
-  const friend = [
-    {
-      id: 1,
-      name: "John Doe",
-      mutual: "19 Mutual friends",
-      avatar: avatar4,
-    },
-    {
-      id: 2,
-      name: "Jennifer",
-      mutual: "22 Mutual friends",
-      avatar: avatar3,
-    },
-    {
-      id: 3,
-      name: "Lala",
-      mutual: "10 Mutual friends",
-      avatar: avatar2,
-    },
-    {
-      id: 4,
-      name: "Johnny Doe",
-      mutual: "13 Mutual friends",
-      avatar: avatar5,
-    },
-    {
-      id: 5,
-      name: "John Doel",
-      mutual: "90 Mutual friends",
-      avatar: avatar1,
-    },
-  ];
   return (
     <div className={`app ${isDarkMode ? "dark-mode" : ""}`}>
       <div className="profile-main">
@@ -244,7 +219,7 @@ const Profile = () => {
               <h3>
                 <Icon icon="ep:info-filled" width={25} height={25} />
                 Joined
-                <span>{format(user.createdAt)}</span>
+                <span>{moment(user.createdAt).format('DD MMMM YYYY')}</span>
               </h3>
               <h3>
                 <Icon icon="fluent:location-16-filled" width={25} height={25} />
@@ -257,28 +232,25 @@ const Profile = () => {
               </h4>
             </div>
             <div className="friends-rec">
-              {friend.map((friend) => (
-                <div className="friend-profil" key={friend.id}>
-                  <div className="friend-avatar-profil">
-                    <img
-                      src={friend.avatar}
-                      alt={friend.name}
-                      className="avatar-rightBarprofile"
-                    />
-                  </div>
-                  <div className="friend-info-profil">
-                    <h3>{friend.name}</h3>
-                    <h4>{friend.mutual}</h4>
-                    <button className="button-add">
-                      <Icon
-                        icon="ion:chatbox-ellipses-outline"
-                        width={22}
-                        height={22}
-                      />
-                    </button>
-                  </div>
-                </div>
-              ))}
+            {friends.map((friend) => (
+          <div key={friend._id} className="rightBarUser">
+            <Link to={"/profile/" + friend.username} style={{ textDecoration: "none" }}>
+              <div className="rightBarUserInfo">
+                <img
+                  className="rightBarImg"
+                  src={friend.profilePicture ? PF + friend.profilePicture : defaultprofile}
+                />
+                <div className={`statusDot ${"grayDot"}`} />
+              </div>
+              <p className={`rightBarUserStatus `}>
+                <span className="rightBarName">{user && user.displayname}</span>
+              </p>
+            </Link>
+            <Link to={`/messages/${friend._id}`} className="link-rightbar">
+              <button className="rightBarButton">Chat</button>
+            </Link>
+          </div>
+        ))}
             </div>
           </div>
         </div>

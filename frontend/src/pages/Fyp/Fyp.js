@@ -98,7 +98,6 @@ const Fyp = (post, className, username) => {
   const toggleLogout = () => {
     setLogoutOpen(!logoutOpen);
   };
-  console.log(posts);
   return (
     <>
       <div className={`app ${isDarkMode ? "dark-mode" : ""}`}>

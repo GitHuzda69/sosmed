@@ -27,7 +27,10 @@ const Post = ({ post }) => {
   const [isLiked, setIsLiked] = useState(false);
   const [user, setUser] = useState({});
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-  const { user: currentUser } = useContext(AuthContext);
+  const { user: currentUser, dispatch } = useContext(AuthContext);
+  const [followed, setFollowed] = useState(
+    currentUser.followings.includes(user?._id)
+  );
 
   useEffect(() => {
     setIsLiked(post.likes && post.likes.includes(currentUser._id));
@@ -101,6 +104,30 @@ const Post = ({ post }) => {
     }
   };
 
+  const handleFollow = async () => {
+    try {
+      let isFollowing = currentUser.followings.includes(user?._id);
+  
+      if (isFollowing) {
+        await makeRequest.put(`/relationships/${user._id}/unfollow`, {
+          userId: currentUser._id,
+        });
+        dispatch({ type: "UNFOLLOW", payload: user._id });
+      } else {
+        await makeRequest.put(`/relationships/${user._id}/follow`, {
+          userId: currentUser._id,
+        });
+        dispatch({ type: "FOLLOW", payload: user._id });
+      }
+  
+      setFollowed(!isFollowing);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  
+
+
   useEffect(() => {
     const handleEnterKey = (e) => {
       if (e.key === "Enter") {
@@ -131,7 +158,6 @@ const Post = ({ post }) => {
     }
   };
   
-
   const openPopup = (imgUrl) => {
     setSelectedPostImg(imgUrl);
     setPopupOpen(true);
@@ -200,6 +226,9 @@ const Post = ({ post }) => {
                             height={20}
                           />
                           Message
+                        </button>
+                        <button onClick={handleFollow}>
+                        {followed ? "Unfollow" : "Follow"}
                         </button>
                       </div>
                     ) : (
