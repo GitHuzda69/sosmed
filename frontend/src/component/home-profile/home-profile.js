@@ -9,9 +9,6 @@ import { Icon } from "@iconify/react";
 import defaultprofile from "../../assets/profile/default_avatar.png";
 import defaultcover from "../../assets/profile/default_banner.jpg";
 
-import profil from "../../assets/profil.jpg";
-import banner from "../../assets/banner.jpg";
-
 const HomeProfile = () => {
   const { user } = useContext(AuthContext);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -25,20 +22,12 @@ const HomeProfile = () => {
       >
         <img
           className="banner-homeProfile"
-          src={
-            user.coverPicture
-              ? PF + user.coverPicture
-              : defaultcover
-          }
+          src={user.coverPicture ? PF + user.coverPicture : defaultcover}
           alt="banner"
         />
         <img
           className="profile-homeProfile"
-          src={
-            user.profilePicture
-              ? PF + user.profilePicture
-              : defaultprofile
-          }
+          src={user.profilePicture ? PF + user.profilePicture : defaultprofile}
           alt="profile"
         />
       </Link>
@@ -50,7 +39,7 @@ const HomeProfile = () => {
         <h4>Followers</h4>
       </div>
       <button className="connect-homeProfile">
-        <Icon icon="ph:link" width="25" height="25" color="white" />
+        <Icon icon="ph:link" width="25" height="25" />
         Connect Your Account
       </button>
     </div>

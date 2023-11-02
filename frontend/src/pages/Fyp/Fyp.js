@@ -21,13 +21,17 @@ const Fyp = (post, className, username) => {
   const [logoutOpen, setLogoutOpen] = useState(false);
   const { user: currentUser } = useContext(AuthContext);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [showSideContent, setShowSideContent] = useState(true);
+  const [mainContentMaxWidth, setMainContentMaxWidth] = useState("100%");
+
+  const isHomePage = true;
 
   useEffect(() => {
     const fetchPost = async () => {
       try {
         const res = await makeRequest.get("/posts/fyp");
         const postsData = res.data;
-        
+
         postsData.sort((post1, post2) => post2.desc.length - post1.desc.length);
         setPosts(postsData);
       } catch (err) {
@@ -36,7 +40,6 @@ const Fyp = (post, className, username) => {
     };
     fetchPost();
   }, []);
-  
 
   useEffect(() => {
     if (post.userId) {
@@ -55,8 +58,22 @@ const Fyp = (post, className, username) => {
   useEffect(() => {
     const storedDarkModeStatus = localStorage.getItem("isDarkMode") === "true";
     setIsDarkMode(storedDarkModeStatus);
-
     setDarkMode(storedDarkModeStatus);
+
+    const handleZoomChange = () => {
+      if (window.devicePixelRatio >= 1.5) {
+        setShowSideContent(false);
+        setMainContentMaxWidth("100%");
+      } else {
+        setShowSideContent(true);
+        setMainContentMaxWidth("calc(100% - 350px)");
+      }
+    };
+    window.addEventListener("resize", handleZoomChange);
+    handleZoomChange();
+    return () => {
+      window.removeEventListener("resize", handleZoomChange);
+    };
   }, []);
 
   const setDarkMode = (isDarkMode) => {
@@ -90,14 +107,18 @@ const Fyp = (post, className, username) => {
             <Sidebar
               toggleSettings={toggleSettings}
               toggleLogout={toggleLogout}
+              isHomePage={isHomePage}
             />
           </div>
-          <div className="main-content">
+          <div
+            className="main-content-fyp"
+            style={{ maxWidth: mainContentMaxWidth }}
+          >
             <div className="topbar-fyp">
               <FypSwitch />
               <SearchBar />
             </div>
-            <div className="home-content">
+            <div className="home-content-fyp">
               <Upload />
               <div className={`posts ${className}`}>
                 {!username || username === user.username}
@@ -106,13 +127,12 @@ const Fyp = (post, className, username) => {
                 ))}
               </div>
             </div>
-            <div className="side-content">
-              <HomeProfile />
-              <Rightbar />
-              <h5>
-                Terms of Service Privacy Policy © 2023 Nama All rights reserved.
-              </h5>
-            </div>
+            {showSideContent && (
+              <div className="side-content">
+                <HomeProfile />
+                <Rightbar />
+              </div>
+            )}
           </div>
         </div>
       </div>

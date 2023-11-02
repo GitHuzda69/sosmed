@@ -204,10 +204,12 @@
     border: 1px black solid;
   }
   .img-button{
+    background-color: transparent;
     padding: 0;
   }
   .img-button:hover{
     border-radius: 0;
+    background-color: transparent;
   }
   .img-button img:hover{
     border-radius: 0;
@@ -303,7 +305,7 @@
   .rightProfileBar{
     border: 1px black solid; 
     width: 100%; 
-    height: 610px;
+    height: 620px;
     margin-left: 11px;
     padding-right: 10px;
   }

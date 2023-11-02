@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./Settings.css";
 import "../../DarkMode.css";
 import { Icon } from "@iconify/react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/authContext.js";
 
 const Settings = ({ onClose, isDarkMode, toggleDarkMode }) => {
+  const { user } = useContext(AuthContext);
+
   const handleSliderChange = () => {
     toggleDarkMode();
   };
@@ -41,7 +44,7 @@ const Settings = ({ onClose, isDarkMode, toggleDarkMode }) => {
           Connect to Twitter
           <Icon icon="mdi:twitter" width="20" height="20" />
         </button>
-        <Link to="/update">
+        <Link to={`/profile/${user.username}`}>
           <button>Edit Profile</button>
         </Link>
       </div>

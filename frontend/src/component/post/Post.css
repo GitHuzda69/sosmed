@@ -1,20 +1,19 @@
 .post-container {
     display: flex;
     flex-direction: column;
-    margin-top: 20px;
-    margin-left: -20px;
+    margin-top: 20px; 
     margin-bottom: 5px;
     width: 100%;  
   } 
-  .post {
+  .post { 
     width: 100%;
     height: 100%;
     border-radius: 10px;
     flex-direction: column;
     display: flex;
-    flex: 1;
-    margin-left: 15px;
-    margin-top: -15px; 
+    flex: 1; 
+    margin-top: -15px;  
+    padding-right: 0;
     border: none;
     background-color: white;
   }
@@ -236,6 +235,7 @@
   
   .post-img-container { 
     margin-left: 10px;
+    margin-bottom: 10px;
   }
   
   .img-button-post {
@@ -287,124 +287,4 @@
     border-radius: 10px;
     object-fit: contain;
   }
-  
-  /*code buat responsive width*/
-   
-  @media screen and (max-width: 1500px) {
-    .post { 
-    } 
-  }
-  @media screen and (max-width: 1480px) {
-    .post { 
-    } 
-  }
-  @media screen and (max-width: 1460px) {
-    .post { 
-    } 
-  }
-  @media screen and (max-width: 1440px) {
-    .post { 
-    } 
-  }
-  @media screen and (max-width: 1420px) {
-    .post { 
-    } 
-  }
-  @media screen and (max-width: 1400px) {
-    .post { 
-    } 
-  }
-  @media screen and (max-width: 1380px) {
-    .post { 
-    } 
-  }
-  @media screen and (max-width: 1360px) {
-    .post { 
-    } 
-  }
-  @media screen and (max-width: 1340px) {
-    .post { 
-    } 
-  }
-  @media screen and (max-width: 1320px) {
-    .post { 
-    } 
-  }
-  @media screen and (max-width: 1300px) {
-    .post { 
-    } 
-  }
-  @media screen and (max-width: 1260px) {
-    .post { 
-    } 
-  }
-  @media screen and (max-width: 1245px) {
-    .post { 
-    } 
-  }
-  @media screen and (max-width: 1220px) {
-    .post { 
-    } 
-  }
-  @media screen and (max-width: 1200px) {
-    .post { 
-    } 
-  }
-  @media screen and (max-width: 1185px) {
-    .post {  
-    } 
-  }
-  @media screen and (max-width: 1160px) {
-    .post { 
-    } 
-  }
-  @media screen and (max-width: 1145px) {
-    .post { 
-    } 
-  }
-  @media screen and (max-width: 1125px) {
-    .post { 
-    } 
-  }
-  @media screen and (max-width: 1105px) {
-    .post { 
-    } 
-  }
-  @media screen and (max-width: 1085px) {
-    .post { 
-    } 
-  }
-  @media screen and (max-width: 1065px) {
-    .post { 
-    } 
-  }
-  @media screen and (max-width: 1045px) {
-    .post { 
-    } 
-  }
-  @media screen and (max-width: 1025px) {
-    .post { 
-    } 
-  }
-  @media screen and (max-width: 1005px) {
-    .post { 
-    } 
-  }
-  @media screen and (max-width: 985px) {
-    .post { 
-    } 
-  }
-  @media screen and (max-width: 965px) {
-    .post { 
-    } 
-  }
-  @media screen and (max-width: 945px) {
-    .post { 
-    } 
-  }
-  @media screen and (max-width: 925px) {
-    .post { 
-    } 
-  }
-  
    
