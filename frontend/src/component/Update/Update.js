@@ -2,7 +2,6 @@ import { useContext, useState, useRef, useEffect } from "react";
 import { Icon } from "@iconify/react";
 import "./Update.css";
 import { makeRequest } from "../../axios";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import AuthContext from "../../context/authContext";
 import { useLocation, Link } from "react-router-dom";
 
@@ -10,40 +9,36 @@ import defaultprofile from "../../assets/profile/default_avatar.png";
 import defaultcover from "../../assets/profile/default_banner.jpg";
 
 const Update = ({ user, onClose }) => {
-  const { currentUser } = useContext(AuthContext);
   const [cover, setCover] = useState(null);
   const [profile, setProfile] = useState(null);
+  const [file, setFile] = useState(null);
   const coverInputRef = useRef(null);
   const profileInputRef = useRef(null);
+  const desc = useRef();
+  const city = useRef();
   const [selectedCoverFileName, setSelectedCoverFileName] = useState("");
   const [selectedProfileFileName, setSelectedProfileFileName] = useState("");
   const [selectedCoverImage, setSelectedCoverImage] = useState(null);
   const [selectedProfileImage, setSelectedProfileImage] = useState(null);
-  const userId = parseInt(useLocation().pathname.split("/")[2]);
-  const queryClient = useQueryClient();
+  const {user: currentUser } = useContext(AuthContext)
   const [texts, setTexts] = useState({
     displayname: user.displayname,
     city: user.city,
-    biodata: user.biodata,
+    desc: user.desc,
   });
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER
 
   useEffect(() => {
     setTexts((prev) => ({
       ...prev,
       displayname: user.displayname,
       city: user.city,
-      biodata: user.biodata,
+      desc: user.desc,
     }));
   }, [user]);
 
-  const { isLoading, error, data } = useQuery(["user"], () =>
-    makeRequest.get("/users/find/" + userId).then((res) => {
-      return res.data;
-    })
-  );
-
-  const [editedName, setEditedName] = useState(data.displayname);
-  const [originalName, setOriginalName] = useState(data.displayname);
+  const [editedName, setEditedName] = useState(currentUser.displayname);
+  const [originalName, setOriginalName] = useState(currentUser.displayname);
   const [isNameEmpty, setIsNameEmpty] = useState(false);
 
   const upload = async (file) => {
@@ -56,16 +51,6 @@ const Update = ({ user, onClose }) => {
       console.log(err);
     }
   };
-  const mutation = useMutation(
-    (user) => {
-      return makeRequest.put("/users", user);
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["user"]);
-      },
-    }
-  );
 
   const handleChange = (e) => {
     setTexts((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -73,26 +58,61 @@ const Update = ({ user, onClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     if (texts.displayname.trim() === "") {
       setIsNameEmpty(true);
       return;
     }
-
-    let coverUrl;
-    let profileUrl;
-
-    coverUrl = cover ? await upload(cover) : user.coverpic;
-    profileUrl = profile ? await upload(profile) : user.profilepic;
-
-    mutation.mutate({
-      ...texts,
-      coverpic: coverUrl,
-      profilepic: profileUrl,
-      biodata: texts.biodata,
-    });
+  
+    try {
+      let coverUrl = user.coverPicture;
+      let profileUrl = user.profilePicture;
+  
+      if (cover) {
+        coverUrl = await upload(cover);
+      }
+  
+      if (profile) {
+        profileUrl = await upload(profile);
+      }
+  
+      const editUser = {
+        ...texts,
+        coverPicture: coverUrl,
+        profilePicture: profileUrl,
+        desc: texts.desc,
+      };
+  
+      if (cover || profile) {
+        const data = new FormData();
+        const fileName = Date.now() + file.name;
+        data.append("name", fileName);
+        data.append("file", file);
+        editUser.img = fileName;
+  
+        try {
+          await makeRequest.post("/upload", data);
+        } catch (uploadErr) {
+          // Handle upload error
+          console.error("Upload error:", uploadErr);
+        }
+      }
+  
+      try {
+        await makeRequest.post("/posts", editUser);
+        window.location.reload();
+      } catch (postErr) {
+        // Handle post error
+        console.error("Post error:", postErr);
+      }
+    } catch (err) {
+      // Handle other errors
+      console.error("Error:", err);
+    }
+  
     onClose();
   };
+  
 
   const handleCoverFileChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -163,8 +183,8 @@ const Update = ({ user, onClose }) => {
                 <img
                   src={
                     selectedProfileImage ||
-                    (data.profilepic
-                      ? `/data/${data.profilepic}`
+                    (user.profilePicture
+                      ? PF + (user.profilePicture)
                       : defaultprofile)
                   }
                   alt="Selected Profile Image"
@@ -191,7 +211,7 @@ const Update = ({ user, onClose }) => {
                 <img
                   src={
                     selectedCoverImage ||
-                    (data.coverpic ? `/data/${data.coverpic}` : defaultcover)
+                    (user.coverPicture ? PF + (user.coverPicture) : defaultcover)
                   }
                   alt="Selected Cover Image"
                   className="selected-image-edit-cover"
@@ -240,6 +260,7 @@ const Update = ({ user, onClose }) => {
                   name="city"
                   value={texts.city}
                   onChange={handleChange}
+                  ref={city}
                 />
               </div>
             </div>
@@ -248,9 +269,10 @@ const Update = ({ user, onClose }) => {
               <textarea
                 className="input-edit-bio"
                 type="text"
-                name="biodata"
-                value={texts.biodata}
+                name="desc"
+                value={texts.desc}
                 onChange={handleChange}
+                ref={desc}
               />
             </div>
           </form>

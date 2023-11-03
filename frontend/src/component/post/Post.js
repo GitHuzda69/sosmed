@@ -6,6 +6,8 @@ import { AuthContext } from "../../context/authContext.js";
 import { Icon } from "@iconify/react";
 import { format } from "timeago.js";
 import Commento from "../Commento/Commento.js";
+import Rightbar from "../rightbar/Rightbar.js";
+import HomeProfile from "../home-profile/home-profile";
 
 import defaultprofile from "../../assets/profile/default_avatar.png";
 
@@ -19,7 +21,6 @@ const Post = ({ post }) => {
   const [editedImg, setEditedImg] = useState(null);
   const [isDescEmpty, setIsDescEmpty] = useState(false);
   const descInputRef = useRef(null);
-
   const [originalDesc, setOriginalDesc] = useState(post.desc);
   const [postOptionButtonPosition, setPostOptionButtonPosition] =
     useState(null);
@@ -398,7 +399,7 @@ const Post = ({ post }) => {
             />
           </div>
         </div>
-        {commentOpen && <Commento postid={post._id} />}
+      {commentOpen && <Commento postid={post._id} />}
       </div>
       {popupOpen && (
         <div className="popup-overlay-post" onClick={closePopup}>

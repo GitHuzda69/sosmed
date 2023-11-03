@@ -109,7 +109,7 @@ const Profile = () => {
     localStorage.setItem("isDarkMode", newDarkModeStatus.toString());
     setDarkMode(newDarkModeStatus);
   };
-
+console.log(friends)
   return (
     <div className={`app ${isDarkMode ? "dark-mode" : ""}`}>
       <div className="profile-main">
@@ -243,7 +243,7 @@ const Profile = () => {
                 <div className={`statusDot ${"grayDot"}`} />
               </div>
               <p className={`rightBarUserStatus `}>
-                <span className="rightBarName">{user && user.displayname}</span>
+                <span className="rightBarName">{friend.displayname}</span>
               </p>
             </Link>
             <Link to={`/messages/${friend._id}`} className="link-rightbar">

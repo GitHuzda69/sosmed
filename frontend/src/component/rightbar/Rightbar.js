@@ -1,4 +1,3 @@
-
 import "./Rightbar.css";
 import { Icon } from "@iconify/react";
 import { Link } from "react-router-dom";
@@ -11,6 +10,7 @@ import AuthContext from "../../context/authContext";
 
 const Rightbar = () => {
   const [friends, setFriends] = useState([]);
+  const [user, setUser] = useState();
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
   useEffect(() => {
@@ -24,6 +24,8 @@ const Rightbar = () => {
     };
     getFriends();
   }, [user]);
+
+  console.log(friends)
 
    return (
     <div className="rightBar">
