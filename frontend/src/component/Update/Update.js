@@ -81,6 +81,7 @@ const Update = ({ user, onClose }) => {
         coverPicture: coverUrl,
         profilePicture: profileUrl,
         desc: texts.desc,
+        userId : user._id
       };
   
       if (cover || profile) {

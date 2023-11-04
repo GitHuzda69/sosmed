@@ -25,7 +25,6 @@ const Rightbar = () => {
     getFriends();
   }, [user]);
 
-  console.log(friends)
 
    return (
     <div className="rightBar">
