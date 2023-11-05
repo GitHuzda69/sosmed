@@ -1,6 +1,6 @@
 import "./Post.css";
 import React, { useContext, useState, useRef, useEffect } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { makeRequest } from "../../axios.js";
 import { AuthContext } from "../../context/authContext.js";
 import { Icon } from "@iconify/react";
@@ -54,9 +54,11 @@ const Post = ({ post }) => {
   const upload = async (file) => {
     try {
       const formData = new FormData();
+      const fileName = Date.now() + file.name;
+      formData.append("name", fileName);
       formData.append("file", file);
-      const res = await makeRequest.post("/upload", formData);
-      return res.data;
+      await makeRequest.post("/upload", formData);
+      return fileName;
     } catch (err) {
       console.log(err);
     }
@@ -127,8 +129,6 @@ const Post = ({ post }) => {
     }
   };
   
-
-
   useEffect(() => {
     const handleEnterKey = (e) => {
       if (e.key === "Enter") {
@@ -307,6 +307,7 @@ const Post = ({ post }) => {
                                 <input
                                   type="file"
                                   name="img"
+                                  id="img"
                                   onChange={(e) =>
                                     setEditedImg(e.target.files[0])
                                   }

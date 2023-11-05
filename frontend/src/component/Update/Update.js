@@ -9,9 +9,8 @@ import defaultprofile from "../../assets/profile/default_avatar.png";
 import defaultcover from "../../assets/profile/default_banner.jpg";
 
 const Update = ({ user, onClose }) => {
-  const [cover, setCover] = useState(null);
-  const [profile, setProfile] = useState(null);
-  const [file, setFile] = useState(null);
+  const [coverInput, setCover] = useState(null);
+  const [profileInput, setProfile] = useState(null);
   const coverInputRef = useRef(null);
   const profileInputRef = useRef(null);
   const desc = useRef();
@@ -44,14 +43,16 @@ const Update = ({ user, onClose }) => {
   const upload = async (file) => {
     try {
       const formData = new FormData();
+      const fileName = Date.now() + file.name;
+      formData.append("name", fileName);
       formData.append("file", file);
-      const res = await makeRequest.post("/upload", formData);
-      return res.data;
+      await makeRequest.post("/upload", formData);
+      return fileName;
     } catch (err) {
       console.log(err);
     }
   };
-
+  
   const handleChange = (e) => {
     setTexts((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
@@ -63,52 +64,31 @@ const Update = ({ user, onClose }) => {
       setIsNameEmpty(true);
       return;
     }
-  
     try {
       let coverUrl = user.coverPicture;
       let profileUrl = user.profilePicture;
   
-      if (cover) {
-        coverUrl = await upload(cover);
+      if (coverInput) {
+        coverUrl = await upload(coverInput);
       }
   
-      if (profile) {
-        profileUrl = await upload(profile);
+      if (profileInput) {
+        profileUrl = await upload(profileInput);
       }
-  
       const editUser = {
         ...texts,
         coverPicture: coverUrl,
         profilePicture: profileUrl,
-        desc: texts.desc,
         userId : user._id
-      };
-  
-      if (cover || profile) {
-        const data = new FormData();
-        const fileName = Date.now() + file.name;
-        data.append("name", fileName);
-        data.append("file", file);
-        editUser.img = fileName;
-  
-        try {
-          await makeRequest.post("/upload", data);
-        } catch (uploadErr) {
-          // Handle upload error
-          console.error("Upload error:", uploadErr);
-        }
-      }
-  
+      };  
       try {
-        await makeRequest.post("/posts", editUser);
+        await makeRequest.put("/users/" + user._id , editUser);
         window.location.reload();
-      } catch (postErr) {
-        // Handle post error
-        console.error("Post error:", postErr);
+      } catch (err) {
+        console.error(err);
       }
     } catch (err) {
-      // Handle other errors
-      console.error("Error:", err);
+      console.error(err);
     }
   
     onClose();
