@@ -110,7 +110,7 @@ const Post = ({ post }) => {
   const handleFollow = async () => {
     try {
       let isFollowing = currentUser.followings.includes(user?._id);
-  
+
       if (isFollowing) {
         await makeRequest.put(`/relationships/${user._id}/unfollow`, {
           userId: currentUser._id,
@@ -122,13 +122,13 @@ const Post = ({ post }) => {
         });
         dispatch({ type: "FOLLOW", payload: user._id });
       }
-  
+
       setFollowed(!isFollowing);
     } catch (err) {
       console.log(err);
     }
   };
-  
+
   useEffect(() => {
     const handleEnterKey = (e) => {
       if (e.key === "Enter") {
@@ -149,7 +149,7 @@ const Post = ({ post }) => {
   const navigate = useNavigate();
   const handleMessage = async () => {
     try {
-        await makeRequest.post(`/conversations/`, {
+      await makeRequest.post(`/conversations/`, {
         senderId: currentUser._id,
         receiverId: post._id,
       });
@@ -158,7 +158,7 @@ const Post = ({ post }) => {
       console.log(err);
     }
   };
-  
+
   const openPopup = (imgUrl) => {
     setSelectedPostImg(imgUrl);
     setPopupOpen(true);
@@ -228,8 +228,30 @@ const Post = ({ post }) => {
                           />
                           Message
                         </button>
-                        <button onClick={handleFollow}>
-                        {followed ? "Unfollow" : "Follow"}
+                        <button
+                          onClick={handleFollow}
+                          style={{
+                            height: "24px",
+                            display: "flex",
+                            alignItems: "center",
+                            marginTop: "2px",
+                            gap: "5px",
+                          }}
+                        >
+                          {followed ? (
+                            <Icon
+                              icon="fluent-mdl2:user-followed"
+                              width={20}
+                              height={20}
+                            />
+                          ) : (
+                            <Icon
+                              icon="fluent-mdl2:add-friend"
+                              width={20}
+                              height={20}
+                            />
+                          )}
+                          {followed ? "Unfollow" : "Follow"}
                         </button>
                       </div>
                     ) : (
@@ -357,14 +379,15 @@ const Post = ({ post }) => {
                 className="img-button-post"
                 onClick={() => openPopup(PF + `${editedImg || post.img}`)}
               >
-                <img className="post-img" src={ PF + `${post.img}`} alt="" />
+                <img className="post-img" src={PF + `${post.img}`} alt="" />
               </button>
             </div>
           )}
         </div>
         <div className="info">
           <div className="item">
-          {isLiked ? <>
+            {isLiked ? (
+              <>
                 <Icon
                   className="icon"
                   icon="iconamoon:like-fill"
@@ -372,16 +395,20 @@ const Post = ({ post }) => {
                   height={25}
                   color={"black"}
                   onClick={handleLike}
-                  /> 
-              <h3>{like} Likes</h3></>
-                  : <>
-              <Icon
-                className="icon"
-                icon="iconamoon:like-light"
-                width={25}
-                height={25}
-                onClick={handleLike}
-              /></>}
+                />
+                <h3>{like} Likes</h3>
+              </>
+            ) : (
+              <>
+                <Icon
+                  className="icon"
+                  icon="iconamoon:like-light"
+                  width={25}
+                  height={25}
+                  onClick={handleLike}
+                />
+              </>
+            )}
           </div>
           <div className="item" onClick={() => setCommentOpen(!commentOpen)}>
             <Icon
@@ -400,7 +427,7 @@ const Post = ({ post }) => {
             />
           </div>
         </div>
-      {commentOpen && <Commento postid={post._id} />}
+        {commentOpen && <Commento postid={post._id} />}
       </div>
       {popupOpen && (
         <div className="popup-overlay-post" onClick={closePopup}>

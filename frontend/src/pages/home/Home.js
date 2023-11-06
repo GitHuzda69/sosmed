@@ -16,10 +16,9 @@ function Home() {
   const [settingOpen, setSettingOpen] = useState(false);
   const [logoutOpen, setLogoutOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [showSideContent, setShowSideContent] = useState(true);
-  const [mainContentMaxWidth, setMainContentMaxWidth] = useState("100%");
 
   const isHomePage = true;
+  const isHome = true;
 
   const toggleSettings = () => {
     setSettingOpen(!settingOpen);
@@ -33,21 +32,6 @@ function Home() {
     const storedDarkModeStatus = localStorage.getItem("isDarkMode") === "true";
     setIsDarkMode(storedDarkModeStatus);
     setDarkMode(storedDarkModeStatus);
-
-    const handleZoomChange = () => {
-      if (window.devicePixelRatio >= 1.5) {
-        setShowSideContent(false);
-        setMainContentMaxWidth("100%");
-      } else {
-        setShowSideContent(true);
-        setMainContentMaxWidth("calc(100% - 360px)");
-      }
-    };
-    window.addEventListener("resize", handleZoomChange);
-    handleZoomChange();
-    return () => {
-      window.removeEventListener("resize", handleZoomChange);
-    };
   }, []);
 
   const setDarkMode = (isDarkMode) => {
@@ -68,22 +52,16 @@ function Home() {
   return (
     <>
       <div className={`app ${isDarkMode ? "dark-mode" : ""}`}>
-        <div className="main-content" style={{ maxWidth: mainContentMaxWidth }}>
+        <div className="main-content">
           <div className="topbar">
             <FypSwitch />
             <SearchBar />
           </div>
           <div className="home-content">
             <Upload />
-            <Posts />
+            <Posts isHome={true} />
           </div>
         </div>
-        {showSideContent && (
-          <div className="side-content">
-            <HomeProfile />
-            <Rightbar />
-          </div>
-        )}
         <div className="leftbar">
           <Sidebar
             toggleSettings={toggleSettings}
