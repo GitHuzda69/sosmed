@@ -34,7 +34,6 @@ const Comments = ({ postid, comment }) => {
   );
 
   const queryClient = useQueryClient();
-  const CommentID = comment.id;
   const deleteMutation = useMutation(
     (CommentID) => {
       return makeRequest.delete("/comments/" + CommentID);

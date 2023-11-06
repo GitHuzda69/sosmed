@@ -4,44 +4,43 @@ import Comments from "../comments/Comments.js";
 import "../comments/Comments.css";
 import { useContext, useState, useRef, useEffect } from "react";
 import AuthContext from "../../context/authContext.js";
-import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import { Icon } from "@iconify/react";
 
 import defaultprofile from "../../assets/profile/default_avatar.png";
 
 const Commento = ({ postid, className }) => {
-  const { currentUser } = useContext(AuthContext);
+  const { user: currentUser } = useContext(AuthContext);
+  const [comments, setComments] = useState()
   const fileInputRef = useRef(null);
-  const [desc, setDesc] = useState(undefined);
+  const [desc, setDesc] = useState(null);
   const [file, setFile] = useState(null);
   const [showFileInput, setShowFileInput] = useState(false);
-  const queryClient = useQueryClient();
-
-  const { isLoading, error, data } = useQuery(["comments"], () =>
-    makeRequest.get("/comments?postid=" + postid).then((res) => {
-      return res.data;
-    })
-  );
-  const mutation = useMutation(
-    (newComment) => {
-      return makeRequest.post("/comments", newComment);
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["comments"]);
-      },
-    }
-  );
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER
   const upload = async () => {
     try {
       const formData = new FormData();
+      const fileName = Date.now() + file.name;
+      formData.append("name", fileName);
       formData.append("file", file);
       const res = await makeRequest.post("/upload", formData);
-      return res.data;
+      return fileName;
     } catch (err) {
       console.log(err);
     }
   };
+
+  useEffect(() => {
+    const fetchComments = async () => {
+      const res = await makeRequest.get("comments/" + postid);
+      setComments(
+        res.data.sort((p1, p2) => {
+          return new Date(p2.createdAt) - new Date(p1.createdAt);
+        })
+      );
+    };
+    fetchComments();
+  }, [postid]);
+
   useEffect(() => {
     const handleKeyPress = async (e) => {
       if (e.key === "Enter") {
@@ -53,9 +52,10 @@ const Commento = ({ postid, className }) => {
 
         let imgUrl = "";
         if (file) {
-          imgUrl = await upload();
+          imgUrl = await upload(file);
         }
-        mutation.mutate({ desc, img: imgUrl, postid });
+        await makeRequest.post("/comments", { desc, img: imgUrl, postId: postid, userId: currentUser._id });
+        window.location.reload();
         setDesc("");
         setFile(null);
       }
@@ -80,7 +80,7 @@ const Commento = ({ postid, className }) => {
   const clearSelectedFile = () => {
     setFile(null);
   };
-
+console.log(comments)
   return (
     <div className={`commento ${className}`}>
       <div className="write">
@@ -88,8 +88,8 @@ const Commento = ({ postid, className }) => {
           <img
             className="comments-pic-write"
             src={
-              currentUser && currentUser.profilepic
-                ? "/data/" + currentUser.profilepic
+              currentUser && currentUser.profilePicture
+                ? PF + currentUser.profilePicture
                 : defaultprofile
             }
             alt={currentUser.displayname}
@@ -97,6 +97,7 @@ const Commento = ({ postid, className }) => {
           <input
             className="input-comment"
             type="text"
+            id="desc"
             placeholder="Write a comment . . . "
             value={desc}
             onChange={(e) => setDesc(e.target.value)}
@@ -147,11 +148,7 @@ const Commento = ({ postid, className }) => {
           )}
         </div>
       </div>
-      {error
-        ? "Something went wrong"
-        : isLoading
-        ? "loading"
-        : data.map((comment) => (
+      {comments && comments.map((comment) => (
             <Comments comment={comment} postid={postid} key={comment.id} />
           ))}
     </div>
