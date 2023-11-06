@@ -5,9 +5,9 @@ const Comment = require("../models/Comment");
 
 //get a comment
 
-router.get("/:postid", async (req, res) => {
+router.get("/:postId", async (req, res) => {
     try {
-      const comment = await Comment.findById(req.params.id);
+      const comment = await Comment.find({ postId: req.params.postId });
       res.status(200).json(comment);
     } catch (err) {
       res.status(500).json(err);
@@ -30,7 +30,7 @@ router.get("/:postid", async (req, res) => {
 router.delete("/:id", async (req, res) => {
     try {
       const comment = await Comment.findById(req.params.id);
-      if (comment.userId === req.body.id) {
+      if (comment.userId === req.body.userId) {
         await comment.deleteOne();
         res.status(200).json("the comment has been deleted");
       } else {
@@ -45,11 +45,11 @@ router.delete("/:id", async (req, res) => {
 router.put("/:id", async (req, res) => {
     try {
       const comment = await Comment.findById(req.params.id);
-      if (comment.userId === req.body.id) {
+      if (comment.userId === req.body.userId) {
         await comment.updateOne({ $set: req.body });
-        res.status(200).json("the post has been updated");
+        res.status(200).json("the comment has been updated");
       } else {
-        res.status(403).json("you can update only your post");
+        res.status(403).json("you can update only your comment");
       }
     } catch (err) {
       res.status(500).json(err);

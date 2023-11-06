@@ -17,9 +17,6 @@ const CommentSchema = new mongoose.Schema(
     img: {
       type: String,
     },
-    createdat: {
-      type: String,
-    },
     
   },
   { timestamps: true }
