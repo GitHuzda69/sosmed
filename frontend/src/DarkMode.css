@@ -13,8 +13,19 @@
   .dark-mode .search-bar-container{
     background-color: #1E1E1E;
   }
-  .dark-mode .searchbar-button{ 
+  .dark-mode .search-bar-input{
     color: white;
+  }
+  .dark-mode .searchbar-button{ 
+    background-color: transparent;
+    color: white;
+  }
+  .dark-mode .clear-search-button{
+    background-color: transparent;
+    color: white;
+  }
+  .dark-mode .clear-search-button:hover{
+    background-color: #5C5C5C;
   }
 
   .dark-mode .upload{
@@ -71,11 +82,44 @@
   .dark-mode .post-option-popup-self button{
     background-color: transparent;
     color: white;
+  } 
+  .dark-mode .post-option-popup-self button:hover{
+    background-color: #5C5C5C;
+  }
+  .dark-mode .post-option-popup-other{
+    background-color: rgb(50, 50, 50); 
+  }
+  .dark-mode .post-option-popup-other button{
+    background-color: transparent;
+    color: white;
+  }
+  .dark-mode .post-option-popup-other button:hover{
+    background-color: #5C5C5C;
   }
   .dark-mode .icon{
     color: white;
   } 
   .dark-mode .item{ 
+  }
+
+    /*buat comment0 & comments */
+  .dark-mode .write1{
+    background-color: #1E1E1E;
+  }
+  .dark-mode .input-comment{
+    background-color: #2F2F2F; 
+    color: white;
+    border: 1px white solid;
+  }
+  .dark-mode .input-comment::placeholder{
+    color: white;
+  }
+  .dark-mode .uploadItem-comment{
+    background-color: transparent;
+    color: white;
+  }
+  .dark-mode .button-comment-desc{
+    color: white;
   }
 
     /*buat home*/ 

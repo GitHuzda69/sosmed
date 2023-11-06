@@ -36,7 +36,7 @@ const SearchBar = ({ onSearch }) => {
         />
         {searchTerm && (
           <button className="clear-search-button" onClick={handleClearSearch}>
-            <Icon icon="ph:x-bold" color="black" width="22" height="22" />
+            <Icon icon="ph:x-bold" width="22" height="22" />
           </button>
         )}
       </div>

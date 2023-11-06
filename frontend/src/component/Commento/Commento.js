@@ -10,12 +10,12 @@ import defaultprofile from "../../assets/profile/default_avatar.png";
 
 const Commento = ({ postid, className }) => {
   const { user: currentUser } = useContext(AuthContext);
-  const [comments, setComments] = useState()
+  const [comments, setComments] = useState();
   const fileInputRef = useRef(null);
   const [desc, setDesc] = useState(null);
   const [file, setFile] = useState(null);
   const [showFileInput, setShowFileInput] = useState(false);
-  const PF = process.env.REACT_APP_PUBLIC_FOLDER
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const upload = async () => {
     try {
       const formData = new FormData();
@@ -54,7 +54,12 @@ const Commento = ({ postid, className }) => {
         if (file) {
           imgUrl = await upload(file);
         }
-        await makeRequest.post("/comments", { desc, img: imgUrl, postId: postid, userId: currentUser._id });
+        await makeRequest.post("/comments", {
+          desc,
+          img: imgUrl,
+          postId: postid,
+          userId: currentUser._id,
+        });
         window.location.reload();
         setDesc("");
         setFile(null);
@@ -80,7 +85,7 @@ const Commento = ({ postid, className }) => {
   const clearSelectedFile = () => {
     setFile(null);
   };
-console.log(comments)
+  console.log(comments);
   return (
     <div className={`commento ${className}`}>
       <div className="write">
@@ -148,9 +153,10 @@ console.log(comments)
           )}
         </div>
       </div>
-      {comments && comments.map((comment) => (
-            <Comments comment={comment} postid={postid} key={comment.id} />
-          ))}
+      {comments &&
+        comments.map((comment) => (
+          <Comments comment={comment} postid={postid} key={comment.id} />
+        ))}
     </div>
   );
 };

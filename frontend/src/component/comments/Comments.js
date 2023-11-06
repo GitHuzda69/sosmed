@@ -151,7 +151,7 @@ const Comments = ({ postid, comment }) => {
             }
             alt={comment.displayname}
           />
-          <span>{comment.displayname}</span>
+          <span>{comment.displayname}cerfgvretfbvrt</span>
           <h3>{moment(comment.createdat).fromNow()}</h3>
           <button
             className="button-comment-desc"

@@ -1,10 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import Post from "../post/Post.js";
+import HomeProfile from "../../component/home-profile/home-profile.js";
+import Rightbar from "../../component/rightbar/Rightbar.js";
 import "./Posts.css";
 import { makeRequest } from "../../axios";
 import AuthContext from "../../context/authContext.js";
 
-export default function Posts({ username, className }) {
+export default function Posts({ username, className, isHome }) {
   const [posts, setPosts] = useState([""]);
   const { user } = useContext(AuthContext);
 
@@ -23,11 +25,19 @@ export default function Posts({ username, className }) {
   }, [username, user._id]);
 
   return (
-    <div className={`posts ${className}`}>
-      {!username || username === user.username}
-      {posts.map((p) => (
-        <Post key={p._id} post={p} />
-      ))}
-    </div>
+    <>
+      <div className={`posts ${className}`}>
+        {!username || username === user.username}
+        {posts.map((p) => (
+          <Post key={p._id} post={p} />
+        ))}
+      </div>
+      {isHome && (
+        <div className="side-content">
+          <HomeProfile />
+          <Rightbar />
+        </div>
+      )}
+    </>
   );
 }

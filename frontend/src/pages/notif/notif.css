@@ -1,12 +1,14 @@
-
-.main-notif{
-  width: 920px;
+.main-notif{ 
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: calc(100% - 400px);
   height: 580px; 
   margin-top: 20px;
   margin-left: 80px;
   margin-bottom: 10px;
   border-radius: 10px;
-  background-color: white; 
+  background-color: rgb(221, 19, 19); 
   font-family: "Inter";  
 }
 .main-notif h1{
@@ -17,14 +19,13 @@
 
 .mark-read-button{
   display: flex;
-  flex-direction: row;
-  justify-content: center;
+  align-self: flex-end;
   align-items: center;
   gap: 5px;
   font-size: 16px;
   font-weight: 500;
-  margin-top: -50px;
-  margin-left: 740px;
+  margin-top: -50px; 
+  margin-right: 10px;
   background-color: transparent;
 }
 
