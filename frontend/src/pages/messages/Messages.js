@@ -18,9 +18,10 @@ function Message() {
   const [logoutOpen, setLogoutOpen] = useState(false);
   const [currentChat, setCurrentChat] = useState(null);
   const [inputValue, setInputValue] = useState(null);
-  const { currentUser } = useContext(AuthContext);
+  const [user, setUser] = useState();
+  const { user: currentUser } = useContext(AuthContext);
   const [isDarkMode, setIsDarkMode] = useState(false);
-
+  const [conversations, setConversations] = useState();
   const isMessagesPage = true;
 
   const toggleSettings = () => {
@@ -31,15 +32,19 @@ function Message() {
     setLogoutOpen(!logoutOpen);
   };
 
-  const {
-    isLoading: cIsLoading,
-    error: cError,
-    data: convData,
-  } = useQuery(["conversation"], () =>
-    makeRequest.get("/conversations").then((res) => {
-      return res.data;
-    })
-  );
+  useEffect(() => {
+    const getConversation = async () => {
+      try {
+        const res = await makeRequest.get(`/users?userId=${members}`);
+        const conversationList = await makeRequest.get("/conversations/" + currentUser._id);
+        setUser(res.data);
+        setConversations(conversationList.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getConversation();
+  }, []);
 
   const {
     isLoading: mIsLoading,
@@ -97,25 +102,21 @@ function Message() {
           />
         </div>
         <div className="message-friend-bar">
-          {cIsLoading
-            ? "Loading"
-            : cError
-            ? "Error"
-            : convData.map((friend) => (
+          {conversations.map((friend) => (
                 <button key={friend.id} onClick={() => setCurrentChat(friend)}>
                   <div className="message-friend">
                     <img
                       className="message-friend-avatar"
                       src={
-                        friend.profilepic
-                          ? `/data/${friend.profilepic}`
+                        user.profilePicture
+                          ? PF + user.friend.profilePicture
                           : defaultprofile
                       }
                       alt={friend.displayname}
                     />
                     <div className="message-friend-bio">
-                      <h2>{friend.displayname}</h2>
-                      <h3>{friend.biodata}</h3>
+                      <h2>{user.displayname}</h2>
+                      <h3>{user.desc}</h3>
                     </div>
                   </div>
                 </button>
@@ -129,8 +130,8 @@ function Message() {
             <img
               className="chat-avatar"
               src={
-                currentChat.profilepic
-                  ? `/data/${currentChat.profilepic}`
+                currentChat.profilePicture
+                  ? PF + currentChat.profilePicture
                   : defaultprofile
               }
               alt={currentChat.displayname}

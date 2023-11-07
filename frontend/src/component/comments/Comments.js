@@ -5,7 +5,7 @@ import AuthContext from "../../context/authContext.js";
 import { Icon } from "@iconify/react";
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import { makeRequest } from "../../axios";
-import moment from "moment";
+import { format } from "timeago.js";
 
 import defaultprofile from "../../assets/profile/default_avatar.png";
 
@@ -15,6 +15,7 @@ const Comments = ({ postid, comment }) => {
   const [popupOpen, setPopupOpen] = useState(false);
   const [selectedCommentImg, setSelectedCommentImg] = useState(null);
   const [img, setImg] = useState(null);
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [texts, setTexts] = useState({ desc: comment.desc });
   const [commentEditOpen, setCommentEditOpen] = useState(null);
   const [commentOptionOpen, setCommentOptionOpen] = useState({});
@@ -145,14 +146,14 @@ const Comments = ({ postid, comment }) => {
           <img
             className="comments-pic"
             src={
-              comment && comment.profilepic
-                ? "/data/" + comment.profilepic
+              comment && comment.profilePicture
+                ? PF + comment.profilePicture
                 : defaultprofile
             }
             alt={comment.displayname}
           />
           <span>{comment.displayname}cerfgvretfbvrt</span>
-          <h3>{moment(comment.createdat).fromNow()}</h3>
+          <h3>{format(comment.createdAt)}</h3>
           <button
             className="button-comment-desc"
             onClick={() => {
