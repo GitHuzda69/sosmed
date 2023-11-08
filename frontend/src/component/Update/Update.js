@@ -19,13 +19,13 @@ const Update = ({ user, onClose }) => {
   const [selectedProfileFileName, setSelectedProfileFileName] = useState("");
   const [selectedCoverImage, setSelectedCoverImage] = useState(null);
   const [selectedProfileImage, setSelectedProfileImage] = useState(null);
-  const {user: currentUser } = useContext(AuthContext)
+  const { user: currentUser } = useContext(AuthContext);
   const [texts, setTexts] = useState({
     displayname: user.displayname,
     city: user.city,
     desc: user.desc,
   });
-  const PF = process.env.REACT_APP_PUBLIC_FOLDER
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
   useEffect(() => {
     setTexts((prev) => ({
@@ -52,14 +52,14 @@ const Update = ({ user, onClose }) => {
       console.log(err);
     }
   };
-  
+
   const handleChange = (e) => {
     setTexts((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     if (texts.displayname.trim() === "") {
       setIsNameEmpty(true);
       return;
@@ -67,11 +67,11 @@ const Update = ({ user, onClose }) => {
     try {
       let coverUrl = user.coverPicture;
       let profileUrl = user.profilePicture;
-  
+
       if (coverInput) {
         coverUrl = await upload(coverInput);
       }
-  
+
       if (profileInput) {
         profileUrl = await upload(profileInput);
       }
@@ -79,10 +79,10 @@ const Update = ({ user, onClose }) => {
         ...texts,
         coverPicture: coverUrl,
         profilePicture: profileUrl,
-        userId : user._id
-      };  
+        userId: user._id,
+      };
       try {
-        await makeRequest.put("/users/" + user._id , editUser);
+        await makeRequest.put("/users/" + user._id, editUser);
         window.location.reload();
       } catch (err) {
         console.error(err);
@@ -90,10 +90,9 @@ const Update = ({ user, onClose }) => {
     } catch (err) {
       console.error(err);
     }
-  
+
     onClose();
   };
-  
 
   const handleCoverFileChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -157,7 +156,7 @@ const Update = ({ user, onClose }) => {
           <h2>Edit Profile</h2>
           <form className="edit-content">
             <button className="edit-close" onClick={handleBackClick}>
-              <Icon icon="ph:x-bold" color="black" width={30} height={30} />
+              <Icon icon="ph:x-bold" width={30} height={30} />
             </button>
             <div className="edit-image">
               <div className="edit-image-profile">
@@ -165,7 +164,7 @@ const Update = ({ user, onClose }) => {
                   src={
                     selectedProfileImage ||
                     (user.profilePicture
-                      ? PF + (user.profilePicture)
+                      ? PF + user.profilePicture
                       : defaultprofile)
                   }
                   alt="Selected Profile Image"
@@ -192,7 +191,7 @@ const Update = ({ user, onClose }) => {
                 <img
                   src={
                     selectedCoverImage ||
-                    (user.coverPicture ? PF + (user.coverPicture) : defaultcover)
+                    (user.coverPicture ? PF + user.coverPicture : defaultcover)
                   }
                   alt="Selected Cover Image"
                   className="selected-image-edit-cover"
@@ -201,7 +200,6 @@ const Update = ({ user, onClose }) => {
                   <label htmlFor="coverInput" className="file-label">
                     <Icon
                       icon="material-symbols:add-a-photo-outline"
-                      color="black"
                       width={25}
                       height={25}
                     />

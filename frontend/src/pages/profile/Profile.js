@@ -200,7 +200,41 @@ const Profile = () => {
                   </button>
                 ) : (
                   <button className="follow-button" onClick={handleFollow}>
-                    {followed ? "Following" : "Follow"}
+                    {followed ? (
+                      <div className="following-profile">
+                        <div className="followed-profile">
+                          <Icon
+                            icon="bi:person-check-fill"
+                            width={20}
+                            height={20}
+                          />
+                          Following
+                        </div>
+                        <div className="message-profile">
+                          <Icon
+                            icon="ion:chatbox-ellipses-outline"
+                            width={20}
+                            height={20}
+                          />
+                        </div>
+                        <div className="share-profile">
+                          <Icon
+                            icon="basil:share-outline"
+                            width={20}
+                            height={20}
+                          />
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="follow-profile">
+                        <Icon
+                          icon="bi:person-plus-fill"
+                          width={20}
+                          height={20}
+                        />
+                        Follow
+                      </div>
+                    )}
                   </button>
                 )}
               </div>
