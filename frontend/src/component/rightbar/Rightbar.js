@@ -8,23 +8,12 @@ import defaultprofile from "../../assets/profile/default_avatar.png";
 import { useContext, useEffect, useState } from "react";
 import AuthContext from "../../context/authContext";
 
-const Rightbar = () => {
+const Rightbar = (post) => {
   const [friends, setFriends] = useState([]);
   const [user, setUser] = useState();
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
-  useEffect(() => {
-    const getFriends = async () => {
-      try {
-        const friendList = await makeRequest.get("/relationships/friends/" + user._id);
-        setFriends(friendList.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getFriends();
-  }, [user]);
-
+  console.log(post)
 
    return (
     <div className="rightBar">

@@ -8,7 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import { makeRequest } from "../../axios.js";
 import { AuthContext } from "../../context/authContext.js";
 import { Icon } from "@iconify/react";
-import moment from "moment";
+import {format } from "timeago.js";
 
 import defaultprofile from "../../assets/profile/default_avatar.png";
 import Chat from "../../component/Chat/Chat";
@@ -17,11 +17,14 @@ function Message() {
   const [settingOpen, setSettingOpen] = useState(false);
   const [logoutOpen, setLogoutOpen] = useState(false);
   const [currentChat, setCurrentChat] = useState(null);
+  const [conversations, setConversations] = useState([]);
+  const [messages, setMessages] = useState([]);
+  const [user, setUser] = useState([]);
   const [inputValue, setInputValue] = useState(null);
-  const [user, setUser] = useState();
   const { user: currentUser } = useContext(AuthContext);
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [conversations, setConversations] = useState();
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER
+
   const isMessagesPage = true;
 
   const toggleSettings = () => {
@@ -33,32 +36,42 @@ function Message() {
   };
 
   useEffect(() => {
-    const getConversation = async () => {
+    const getConversations = async () => {
       try {
-        const res = await makeRequest.get(`/users?userId=${members}`);
-        const conversationList = await makeRequest.get("/conversations/" + currentUser._id);
-        setUser(res.data);
-        setConversations(conversationList.data);
+        const res = await makeRequest.get("/conversations/" + currentUser._id);
+        setConversations(res.data);
       } catch (err) {
         console.log(err);
       }
     };
-    getConversation();
-  }, []);
+    getConversations();
+  }, [currentUser._id]);
 
-  const {
-    isLoading: mIsLoading,
-    error: mError,
-    data: messData,
-  } = useQuery(["message"], async () => {
-    try {
-      const response = await makeRequest.get("/messages/" + currentChat.id);
-      return response.data;
-    } catch (error) {
-      console.error("Error fetching data:", error);
-      throw error;
-    }
-  });
+  useEffect(() => {
+    const getMessages = async () => {
+      try {
+        const res = await makeRequest.get("/messages/" + currentChat?._id);
+        setMessages(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getMessages();
+  }, [currentChat]);
+
+  useEffect(() => {
+    const friendId = conversations.members.find((m) => m !== currentUser._id);
+
+    const getUser = async () => {
+      try {
+        const res = await makeRequest("/users?userId=" + friendId);
+        setUser(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getUser();
+  }, [currentUser, conversations]);
 
   useEffect(() => {
     const storedDarkModeStatus = localStorage.getItem("isDarkMode") === "true";
@@ -102,21 +115,21 @@ function Message() {
           />
         </div>
         <div className="message-friend-bar">
-          {conversations.map((friend) => (
-                <button key={friend.id} onClick={() => setCurrentChat(friend)}>
+          {conversations.map((c) => (
+                <button onClick={() => setCurrentChat(c)}>
                   <div className="message-friend">
                     <img
                       className="message-friend-avatar"
                       src={
                         user.profilePicture
-                          ? PF + user.friend.profilePicture
+                          ? PF + user.profilePicture
                           : defaultprofile
                       }
-                      alt={friend.displayname}
+                      alt={user.displayname}
                     />
                     <div className="message-friend-bio">
                       <h2>{user.displayname}</h2>
-                      <h3>{user.desc}</h3>
+                      <h3>{user.biodata}</h3>
                     </div>
                   </div>
                 </button>
@@ -130,15 +143,15 @@ function Message() {
             <img
               className="chat-avatar"
               src={
-                currentChat.profilePicture
-                  ? PF + currentChat.profilePicture
+                user.profilePicture
+                  ? user.profilePicture
                   : defaultprofile
               }
-              alt={currentChat.displayname}
+              alt={user.displayname}
             />
             <div className="chat-status">
-              <h2>{currentChat.displayname}</h2>
-              <h3>{currentChat.biodata}</h3>
+              <h2>{user.displayname}</h2>
+              <h3>{user.biodata}</h3>
             </div>
             <div className="chat-profile-button">
               <button>
@@ -161,15 +174,11 @@ function Message() {
             <div className="chat-time">
               <h3>Today</h3>
             </div>
-            {mIsLoading
-              ? "Loading"
-              : mError
-              ? "Error"
-              : messData.map((m) => (
+            {messages.map((m) => (
                   <div key={m.id} className="chat-other">
                     <h3>{m.displayname}</h3>
                     <h4>{m.desc}</h4>
-                    <h5>{moment(m.createdat).fromNow()}</h5>
+                    <h5>{format(m.createdAt)}</h5>
                   </div>
                 ))}
           </div>

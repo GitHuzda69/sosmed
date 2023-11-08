@@ -11,6 +11,7 @@ import defaultprofile from "../../assets/profile/default_avatar.png";
 const Commento = ({ postid, className }) => {
   const { user: currentUser } = useContext(AuthContext);
   const [comments, setComments] = useState();
+  const [user, setUser] = useState();
   const fileInputRef = useRef(null);
   const [desc, setDesc] = useState(null);
   const [file, setFile] = useState(null);
@@ -45,33 +46,56 @@ const Commento = ({ postid, className }) => {
     const handleKeyPress = async (e) => {
       if (e.key === "Enter") {
         e.preventDefault();
-
+  
         if (!desc && !file) {
           return;
         }
-
+  
         let imgUrl = "";
         if (file) {
           imgUrl = await upload(file);
         }
-        await makeRequest.post("/comments", {
-          desc,
-          img: imgUrl,
-          postId: postid,
-          userId: currentUser._id,
-        });
-        window.location.reload();
-        setDesc("");
-        setFile(null);
+  
+        try {
+          const newComment = {
+            desc,
+            img: imgUrl,
+            postId: postid,
+            userId: currentUser._id,
+          };
+          await makeRequest.post("/comments", newComment);
+  
+          // Mengupdate state 'comments' dengan menambahkan komentar baru
+          setComments(prevComments => [...prevComments, newComment]);
+          setDesc("");
+          setFile(null);
+        } catch (error) {
+          console.error(error);
+        }
       }
     };
-
+  
     document.addEventListener("keydown", handleKeyPress);
-
+  
     return () => {
       document.removeEventListener("keydown", handleKeyPress);
     };
-  });
+  }, [desc, file, postid, currentUser._id, setComments]);
+  
+  useEffect(() => {
+    if (comments) {
+      const fetchUser = async () => {
+        try {
+          const res = await makeRequest.get(`/users?userId=${comments.userId}`);
+          setUser(res.data);
+        } catch (err) {
+          console.error(err);
+        }
+      };
+      fetchUser();
+    }
+  }, [comments]);
+
   const handleMediaButtonClick = () => {
     setShowFileInput(!showFileInput);
     if (!showFileInput && fileInputRef.current) {
@@ -85,7 +109,6 @@ const Commento = ({ postid, className }) => {
   const clearSelectedFile = () => {
     setFile(null);
   };
-  console.log(comments);
   return (
     <div className={`commento ${className}`}>
       <div className="write">
@@ -155,7 +178,7 @@ const Commento = ({ postid, className }) => {
       </div>
       {comments &&
         comments.map((comment) => (
-          <Comments comment={comment} postid={postid} key={comment.id} />
+          <Comments comment={comment} postid={postid} key={comment.id} user={user} />
         ))}
     </div>
   );

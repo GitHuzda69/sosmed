@@ -5,35 +5,27 @@ import AuthContext from "../../context/authContext.js";
 import { Icon } from "@iconify/react";
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import { makeRequest } from "../../axios";
-import { format } from "timeago.js";
+import {format} from "timeago.js";
 
 import defaultprofile from "../../assets/profile/default_avatar.png";
 
-const Comments = ({ postid, comment }) => {
-  const { currentUser } = useContext(AuthContext);
+const Comments = ({ postid, comment, user }) => {
+  const { user: currentUser } = useContext(AuthContext);
   const userId = parseInt(useLocation().pathname.split("/")[2]);
   const [popupOpen, setPopupOpen] = useState(false);
   const [selectedCommentImg, setSelectedCommentImg] = useState(null);
   const [img, setImg] = useState(null);
-  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [texts, setTexts] = useState({ desc: comment.desc });
   const [commentEditOpen, setCommentEditOpen] = useState(null);
   const [commentOptionOpen, setCommentOptionOpen] = useState({});
   const [editedDescComment, setEditedDescComment] = useState(comment.desc);
   const [editedImgComment, setEditedImgComment] = useState(null);
   const [isDescCommentEmpty, setIsDescCommentEmpty] = useState(false);
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER
   const [originalDescComment, setOriginalDescComment] = useState(comment.desc);
   const [commentOptionButtonPosition, setCommentOptionButtonPosition] =
     useState(null);
-
-  const { isLoading: rIsLoading, data: relationshipData } = useQuery(
-    ["relationship"],
-    () =>
-      makeRequest.get("/relationships?followeduserid=" + userId).then((res) => {
-        return res.data;
-      })
-  );
-
+  console.log(comment)
   const queryClient = useQueryClient();
   const deleteMutation = useMutation(
     (CommentID) => {
@@ -45,18 +37,7 @@ const Comments = ({ postid, comment }) => {
       },
     }
   );
-  const followMutation = useMutation(
-    (following) => {
-      if (following)
-        return makeRequest.delete("/relationships?userId=" + userId);
-      return makeRequest.post("/relationships", { userId });
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["relationship"]);
-      },
-    }
-  );
+
   const upload = async (file) => {
     try {
       const formData = new FormData();
@@ -67,24 +48,11 @@ const Comments = ({ postid, comment }) => {
       console.log(err);
     }
   };
-  const editMutation = useMutation(
-    (comment) => {
-      return makeRequest.put("/comments/" + comment.id, comment.id);
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["comments"]);
-      },
-    }
-  );
-
-  const handleFollow = () => {
-    followMutation.mutate(relationshipData.includes(currentUser.id));
-  };
 
   const handleDelete = () => {
-    deleteMutation.mutate(comment.id);
+    deleteMutation.mutate(comment._id);
   };
+
   const toggleCommentOptions = (commentId) => {
     setCommentOptionButtonPosition(commentId);
     setCommentOptionOpen((prevOptions) => ({
@@ -109,9 +77,6 @@ const Comments = ({ postid, comment }) => {
 
     try {
       await makeRequest.put("/comments/" + editedComment.id, editedComment);
-      setCommentEditOpen(false);
-
-      window.location.reload();
     } catch (error) {
       console.error(error);
     }
@@ -133,12 +98,13 @@ const Comments = ({ postid, comment }) => {
         img: null,
       };
 
-      await makeRequest.put(`/comments/${comment.id}`, updatedComment);
+      await makeRequest.put(`/comments/${comment._id}`, updatedComment);
       setEditedImgComment(null);
     } catch (error) {
       console.error(error);
     }
   };
+  console.log(user)
   return (
     <div className="comments">
       <div className="comment" key={comment.id}>
@@ -146,26 +112,25 @@ const Comments = ({ postid, comment }) => {
           <img
             className="comments-pic"
             src={
-              comment && comment.profilePicture
-                ? PF + comment.profilePicture
+              user && user.profilepic
+                ? PF + user.profilepic
                 : defaultprofile
             }
-            alt={comment.displayname}
           />
-          <span>{comment.displayname}cerfgvretfbvrt</span>
-          <h3>{format(comment.createdAt)}</h3>
+          <span>{user && user.username}cerfgvretfbvrt</span>
+          <h3>{format(user.createdAt)}</h3>
           <button
             className="button-comment-desc"
             onClick={() => {
-              toggleCommentOptions(comment.id);
+              toggleCommentOptions(comment._id);
               setCommentEditOpen(false);
             }}
           >
             <Icon icon="tabler:dots" width={20} height={20} />
           </button>
-          {commentOptionOpen[comment.id] ? (
+          {commentOptionOpen[comment._id] ? (
             <div>
-              {comment.userid !== currentUser.id ? (
+              {comment.userId !== currentUser._id ? (
                 <div className="post-option-popup-other-comment">
                   <button
                     style={{
@@ -182,24 +147,6 @@ const Comments = ({ postid, comment }) => {
                       height={20}
                     />
                     Message
-                  </button>
-                  <button
-                    onClick={handleFollow}
-                    style={{
-                      height: "24px",
-                      display: "flex",
-                      alignItems: "center",
-                      marginTop: "-3px",
-                      gap: "5px",
-                    }}
-                  >
-                    <Icon
-                      icon="ic:round-person-add"
-                      hFlip={true}
-                      width={20}
-                      height={20}
-                    />
-                    Follow
                   </button>
                 </div>
               ) : (

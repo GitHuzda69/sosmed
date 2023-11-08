@@ -23,19 +23,18 @@ export default function Posts({ username, className, isHome }) {
     };
     fetchPosts();
   }, [username, user._id]);
-
   return (
     <>
       <div className={`posts ${className}`}>
         {!username || username === user.username}
         {posts.map((p) => (
           <Post key={p._id} post={p} />
-        ))}
+          ))}
       </div>
       {isHome && (
         <div className="side-content">
           <HomeProfile />
-          <Rightbar />
+          <Rightbar key={posts._id} post={posts} />
         </div>
       )}
     </>
