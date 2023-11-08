@@ -1,41 +1,47 @@
-.profile-main{
-  background-color: white;
-  padding-right: 20px;
+.profile-main{  
+  width: 100%;
+   height: 100%;
+  background-color: #DDDDDD; 
 }
 .profil {
+    max-width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: row;
-    margin-top: -8px;
-    margin-left: 70px;
+    margin-top: -8px; 
+    margin-left: 60px;
     margin-right: -5px;
     margin-bottom: 60px;
+    padding-bottom: 40px; 
   }
   
-  .profil-container {
-    width: 900px;
+  .profil-container { 
+    width: 100%;
+    position: relative;    
+  }
+  
+  .cover-img {
+    width: 100%;
+    margin-right: -12px; 
     position: relative;
-    border-bottom: none;
-    border-left: none;
   }
   
-  .cover-img{
-    border-left: 1px black solid;
-    border-right: 1px black solid;
-    margin-right: -12px;
-  }
   .cover-img img {
-    width: 910px;
-    height: 180px;
+    width: 100%;
+    max-height: 160px; 
     object-fit: cover;
-  }
+    position: absolute;
+    top: 0;
+    left: 0;
+  }  
   
   .profil-user{
     display: flex;
     flex-direction: row;
     align-items: start;
-    margin-right: -12px;
-    border-left: 1px black solid;
-    border-right: 1px black solid;
+    justify-content: space-between;
+    margin-top: 142px; 
+    background-color: white;
   }
   .profil-info{
     width: 70%;
@@ -43,22 +49,22 @@
   .profilePic {
     width: 130px;
     position: relative;
-    margin-top: -40px;
+    margin-top: -75px;
     margin-left: 30px;
-    text-align: flex-start;
+    text-align: flex-start; 
   }
   
   .profilePic img {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    border: 1px solid black;
+    width: 140px;
+    height: 140px;
+    border: 1px white solid;
+    border-radius: 10px; 
     object-fit: cover;
   }
   .profil-bio{
     height: 110px;
-    margin-top: -120px;
-    margin-left: 170px;
+    margin-top: -105px;
+    margin-left: 190px; 
   }
   .profil-bio h2 {
     font-family: "Inter";
@@ -67,14 +73,14 @@
   }
   
   .profil-bio h4{
-    margin-top: -20px;
+    margin-top: -13px;
     font-family: "Inter";
     font-weight: 500;
     font-size: 18px;
   }
   .profiluser-button {
-    margin-top: 5px;
-    margin-left: 135px;
+    margin-top: 10px; 
+    margin-right: 30px;
     display: flex;
     flex-direction: row;
     align-items: end;
@@ -82,8 +88,7 @@
     text-decoration: none;
     gap: 5px;
   }
-  .edit-profile-button{
-    border: 1px black solid;
+  .edit-profile-button{ 
     border-radius: 10px;
     display: flex;
     align-items: center;
@@ -96,8 +101,7 @@
     border-radius: 11px;
     background-color: lightgray;
   }
-  .follow-button{
-    border: 1px black solid;
+  .follow-button{ 
     border-radius: 10px;
     display: flex;
     align-items: center;
@@ -113,8 +117,7 @@
     background-color: lightgray;
   }
   .add-button{
-    padding: 5px 12px;
-    border: 1px black solid;
+    padding: 5px 12px; 
     border-radius: 50px;
     display: flex;
     align-items: center;
@@ -130,8 +133,7 @@
     font-size: 15px;
   }
   
-  .post-profil {
-    border: 1px black solid;
+  .post-profil { 
     margin-right: -1px;
     margin-top: -1px;
     height: auto;
@@ -200,8 +202,7 @@
     height: auto;
     max-width: 400px;
     max-height: 400px;
-    margin-left: 20px;
-    border: 1px black solid;
+    margin-left: 20px; 
   }
   .img-button{
     background-color: transparent;
@@ -302,12 +303,10 @@
     font-size: 15px;
     font-weight: bold;
   }
-  .rightProfileBar{
-    border: 1px black solid; 
-    width: 100%; 
-    height: 620px;
-    margin-left: 11px;
-    padding-right: 10px;
+  .rightProfileBar{ 
+    width: 450px;   
+    height: 100%; 
+    background-color: white;
   }
   .search-profile{
     display: flex;
@@ -315,8 +314,7 @@
     margin-top: 30px;
   }
   .input-profile{
-    width: 300px;
-    border: 1px black solid;
+    width: 300px; 
     border-radius: 20px;
     display: flex;
     text-indent: 10px;
@@ -345,13 +343,14 @@
     margin-right: 30px;
   }
   .friends-rec {
-    height: 350px;
+    height: 100%;
     display: flex; 
     flex-direction: column;
     overflow-y: scroll;
     overflow-x: hidden;
+    padding-bottom: 20px;
     margin-left: 25px;
-    margin-bottom: 20px;
+    margin-bottom: 20px; 
     scrollbar-width: thin;
     scrollbar-color: #999999 #ffffff; 
     }
@@ -361,16 +360,16 @@
     }
     
     .friends-rec::-webkit-scrollbar-thumb {
-      background-color: #999999;
+      background-color: transparent;
       border-radius: 10px;
     }
     
     .friends-rec::-webkit-scrollbar-thumb:hover {
-      background-color: #777777;
+      background-color: transparent;
     }
     
     .friends-rec::-webkit-scrollbar-track {
-      background-color: #ffffff;
+      background-color: transparent;
       border-radius: 10px;
     }
   .friend-profil{
@@ -379,9 +378,8 @@
   flex-direction: column;
   margin-bottom: 10px;
   margin-right: 10px;
-  margin-left: 10px;
-  border: 1px black solid;
-  border-radius: 8px;
+  margin-left: 10px; 
+  border-radius: 8px; 
   }
 .friend-avatar-profil{
     margin-top: 10px;
@@ -399,7 +397,7 @@
     align-items: top;
     margin-top: -50px;
     margin-left: 75px;
-    margin-bottom: 10px;
+    margin-bottom: 10px; 
   }
   .friend-info-profil h3{
     font-family: "Inter";
@@ -418,8 +416,7 @@
     display: flex;
     justify-content: center;
     height: 35px;
-    width: 35px;
-    border: 1px black solid;
+    width: 35px; 
     border-radius: 50%;
     margin-top: -45px;
     margin-left: 160px;
@@ -427,33 +424,100 @@
   .button-add:hover{
     border-radius: 50%;
     background-color: lightgray;
-  }
+  } 
+
+  
+.rightBarUserProfile {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;  
+  margin-left: 10px;
+  margin-bottom: 6px;    
+}
+.LinkUserProfile{
+  padding: 10px;
+}
+.LinkUserProfile:hover{ 
+  border-radius: 10px;
+  background-color: #5C5C5C;
+}
+.rightBarUserInfoProfile {
+  width: 60px;
+  display: flex;
+  align-items: center;
+  margin-top: -5px;
+}
+.rightBarImgProfile {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.rightBarImgProfile:hover{
+filter: brightness(0.7);
+}
+.statusDot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-top: 40px;
+  margin-left: -15px;
+  z-index: 10;
+}
+
+.greenDot {
+  background-color: rgb(2, 255, 2);
+}
+
+.grayDot {
+  background-color: gray;
+} 
+.rightBarNameProfile {  
+  font-size: 16px;
+  font-weight: bold;
+  font-family: "Inter" ;   
+  color: black;
+}
+.link-rightbarProfile{
+text-decoration: none;
+}
+.rightBarButtonProfile{
+  display: flex;
+  padding: 8px 16px;
+  margin-top: 20px;
+  margin-right: 15px;
+  margin-bottom: 20px;
+  color: white;
+  background-color: black;
+  border-radius: 5px;
+  cursor: pointer; 
+  font-size: 15px;
+}
+.rightBarButtonProfile:hover{
+color: white;
+background-color: rgb(54, 54, 54);
+border-radius: 7px;
+}
+
 
   /*css posts profile*/
 
   .posts-profile{
-    width: 890px;
-    height: 319px;
-    margin-top: -10px;
-    margin-left: 0px;
+    width: 100%; 
+    margin-top: 10px;
+    margin-left: 10px;
     padding-top: 0px;
-    padding-bottom: 0px;
-    border-top: 1px black solid;
-    border-left: 1px black solid;
-    border-right: 1px black solid;
-    border-bottom: 1px black solid;
-    overflow-x: hidden;
+    padding-bottom: 0px; 
+    overflow-x: hidden; 
   }
   .posts-profile .post-container{ 
-    margin-bottom: 0px;
-    border-bottom: 1px black solid;
-    margin-left: -32px;
-    width: 1000px;
+    margin-bottom: 0px; 
+    margin-left: -32px; 
   }
   .posts-profile .post{
-    width: 848px;
-    border: none;
-    margin-left: 25px;
+    width: 97%; 
+    margin-left: 25px; 
   }
   .posts-profile .user{ 
     margin-left: 0px;
@@ -465,104 +529,7 @@
     margin-top: -15px;
   }
 
-  .posts-profile .commento{
-    margin-left: -13px;
-    width: 910px;
+  .posts-profile .commento{ 
+    width: 100%;
   }
-
-  /*buat leftbar */
-   
-.profile-main .gray-button-container{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 50px;
-  height: 70px; 
-  border-radius: 35px 0px 0px 35px; 
-}
-.profile-main .black-button-container{
-  display: flex; 
-  align-items: center;
-  justify-content: center;
-  width: 45px;
-  height: 45px; 
-  border-radius: 50%; 
-}
-
-.profile-main .home-button{  
-  margin-top: 5px; 
-  color: white;
-} 
-
-
-.profile-main .notif-button-container{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 50px;
-  height: 60px;
-}
-.profile-main .notif-button-container{
-  display: flex; 
-  align-items: center;
-  justify-content: center;
-  width: 45px;
-  height: 45px;
-}
-.profile-main .notif-button{
-  color: white;
-}
-
-.profile-main .messages-button-container{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 50px;
-  height: 60px;
-}
-.profile-main .messages-button-container{
-  display: flex; 
-  align-items: center;
-  justify-content: center;
-  width: 45px;
-  height: 45px;
-}
-.profile-main .messages-button{
-  color: white;
-}
-
-.profile-main .friends-button-container{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 50px;
-  height: 60px;
-}
-.profile-main .friends-button-container{
-  display: flex; 
-  align-items: center;
-  justify-content: center;
-  width: 45px;
-  height: 45px;
-}
-.profile-main .friends-button{
-  color: white;
-}
-
-.profile-main .settings-button-container{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 50px;
-  height: 60px;
-}
-.profile-main .settings-button-container{
-  display: flex; 
-  align-items: center;
-  justify-content: center;
-  width: 45px;
-  height: 45px;
-}
-.profile-main .settings-button{
-  color: white;
-}
+ 

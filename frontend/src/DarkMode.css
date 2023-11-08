@@ -195,3 +195,12 @@
   .dark-mode .profile-main{
     background-color: rgb(58, 58, 58);
   }
+  .dark-mode .profil-user{
+    background-color: #1E1E1E;
+  }
+  .dark-mode .rightProfileBar{ 
+    background-color: #1E1E1E;
+  }
+  .dark-mode .rightBarNameProfile{
+    color: white;
+  }

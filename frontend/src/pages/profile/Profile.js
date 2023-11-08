@@ -44,7 +44,9 @@ const Profile = () => {
   useEffect(() => {
     const getFriends = async () => {
       try {
-        const friendList = await makeRequest.get("/relationships/friends/" + user._id);
+        const friendList = await makeRequest.get(
+          "/relationships/friends/" + user._id
+        );
         setFriends(friendList.data);
       } catch (err) {
         console.log(err);
@@ -218,7 +220,7 @@ const Profile = () => {
               <h3>
                 <Icon icon="ep:info-filled" width={25} height={25} />
                 Joined
-                <span>{moment(user.createdAt).format('DD MMMM YYYY')}</span>
+                <span>{moment(user.createdAt).format("DD MMMM YYYY")}</span>
               </h3>
               <h3>
                 <Icon icon="fluent:location-16-filled" width={25} height={25} />
@@ -231,25 +233,41 @@ const Profile = () => {
               </h4>
             </div>
             <div className="friends-rec">
-            {friends.map((friend) => (
-          <div key={friend._id} className="rightBarUser">
-            <Link to={"/profile/" + friend.username} style={{ textDecoration: "none" }}>
-              <div className="rightBarUserInfo">
-                <img
-                  className="rightBarImg"
-                  src={friend.profilePicture ? PF + friend.profilePicture : defaultprofile}
-                />
-                <div className={`statusDot ${"grayDot"}`} />
-              </div>
-              <p className={`rightBarUserStatus `}>
-                <span className="rightBarName">{friend.displayname}</span>
-              </p>
-            </Link>
-            <Link to={`/messages/${friend._id}`} className="link-rightbar">
-              <button className="rightBarButton">Chat</button>
-            </Link>
-          </div>
-        ))}
+              {friends.map((friend) => (
+                <div key={friend._id} className="rightBarUserProfile">
+                  <Link
+                    className="LinkUserProfile"
+                    to={"/profile/" + friend.username}
+                    style={{
+                      textDecoration: "none",
+                      display: "flex",
+                      flexDirection: "row",
+                    }}
+                  >
+                    <div className="rightBarUserInfoProfile">
+                      <img
+                        className="rightBarImgProfile"
+                        src={
+                          friend.profilePicture
+                            ? PF + friend.profilePicture
+                            : defaultprofile
+                        }
+                        alt=""
+                      />
+                      <div className={`statusDot ${"grayDot"}`} />
+                    </div>
+                    <span className="rightBarNameProfile">
+                      {friend.displayname}
+                    </span>
+                  </Link>
+                  <Link
+                    to={`/messages/${friend._id}`}
+                    className="link-rightbarProfile"
+                  >
+                    <button className="rightBarButtonProfile">Chat</button>
+                  </Link>
+                </div>
+              ))}
             </div>
           </div>
         </div>
