@@ -2,13 +2,13 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  max-width: calc(100% - 400px);
-  height: 580px; 
+  max-width: calc(100% - 390px);
+  height: 100%; 
   margin-top: 20px;
   margin-left: 80px;
   margin-bottom: 10px;
   border-radius: 10px;
-  background-color: rgb(221, 19, 19); 
+  background-color: #ffffff; 
   font-family: "Inter";  
 }
 .main-notif h1{
@@ -78,7 +78,7 @@
 
 
 .notif-content{
-  height: 470px; 
+  height: 100%; 
   border-radius: 0px 0px 0px 10px;
   margin-left: 15px;
   margin-right: 15px;   

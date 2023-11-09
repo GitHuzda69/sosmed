@@ -126,7 +126,7 @@
   .dark-mode .home{ 
   }
 
-    /*buat rightbar*/ 
+    /*buat homeprofile*/ 
   .dark-mode .homeProfile{
     background-color: #1E1E1E;
   }
@@ -135,6 +135,7 @@
     color: black;
   }
 
+  /*buat rightbar*/
   .dark-mode .rightBar{
     background-color: #1E1E1E;
   }
@@ -143,6 +144,9 @@
   }
   .dark-mode .rightBarButton{
     background-color: #2F2F2F;
+  }
+  .dark-mode .rightBarName{
+    color: white;
   }
 
   /*buat fyp*/

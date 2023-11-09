@@ -14,6 +14,7 @@ const Commento = ({ postid, className }) => {
   const fileInputRef = useRef(null);
   const [desc, setDesc] = useState(null);
   const [file, setFile] = useState(null);
+  const [user, setUser] = useState();
   const [showFileInput, setShowFileInput] = useState(false);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const upload = async () => {
@@ -66,7 +67,7 @@ const Commento = ({ postid, className }) => {
           };
           await makeRequest.post("/comments", newComment);
 
-          setComments(prevComments => [...prevComments, newComment]);
+          setComments((prevComments) => [...prevComments, newComment]);
 
           setDesc("");
           setFile(null);
@@ -105,8 +106,8 @@ const Commento = ({ postid, className }) => {
           <img
             className="comments-pic-write"
             src={
-              currentUser && currentUser.profilePicture
-                ? PF + currentUser.profilePicture
+              user && user.profilePicture
+                ? PF + user.profilePicture
                 : defaultprofile
             }
             alt={currentUser.displayname}
