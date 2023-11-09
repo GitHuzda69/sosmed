@@ -16,6 +16,7 @@ const Post = ({
   openPostOption,
   handleOpenPostOption,
   handleClosePostOption,
+  friends,
 }) => {
   const [commentOpen, setCommentOpen] = useState(false);
   const [popupOpen, setPopupOpen] = useState(false);
@@ -34,6 +35,9 @@ const Post = ({
   const [user, setUser] = useState({});
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const { user: currentUser, dispatch } = useContext(AuthContext);
+  const following = friends
+    ? friends.some((friend) => friend._id === post.userId)
+    : false;
   const [followed, setFollowed] = useState(
     currentUser.followings.includes(user?._id)
   );
@@ -243,7 +247,7 @@ const Post = ({
                             gap: "5px",
                           }}
                         >
-                          {followed ? (
+                          {following ? (
                             <Icon
                               icon="bi:person-check-fill"
                               width={20}
@@ -256,7 +260,7 @@ const Post = ({
                               height={20}
                             />
                           )}
-                          {followed ? "Unfollow" : "Follow"}
+                          {following ? "Unfollow" : "Follow"}
                         </button>
                       </div>
                     ) : (

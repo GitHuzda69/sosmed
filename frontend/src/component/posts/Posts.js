@@ -10,6 +10,7 @@ export default function Posts({ username, className, isHome }) {
   const [posts, setPosts] = useState([""]);
   const { user } = useContext(AuthContext);
   const [openPostOption, setOpenPostOption] = useState(null);
+  const [friends, setFriends] = useState([]);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -25,13 +26,25 @@ export default function Posts({ username, className, isHome }) {
     fetchPosts();
   }, [username, user._id]);
 
+  useEffect(() => {
+    const getFriends = async () => {
+      try {
+        const friendList = await makeRequest.get(
+          "/relationships/friends/" + user._id
+        );
+        setFriends(friendList.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getFriends();
+  }, [user._id]);
+
   const handleOpenPostOption = (postId) => {
-    // Open post option for the specified post
     setOpenPostOption(postId);
   };
 
   const handleClosePostOption = () => {
-    // Close the post option popup
     setOpenPostOption(null);
   };
 
@@ -46,6 +59,7 @@ export default function Posts({ username, className, isHome }) {
             openPostOption={openPostOption}
             handleOpenPostOption={handleOpenPostOption}
             handleClosePostOption={handleClosePostOption}
+            friends={friends}
           />
         ))}
       </div>
