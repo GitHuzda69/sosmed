@@ -22,12 +22,14 @@ const HomeProfile = () => {
       >
         <img
           className="banner-homeProfile"
-          src={user.profilePicture ? PF + user.profilePicture : defaultprofile}
-          alt="banner"
+          src={user.coverPicture ? PF + user.coverPicture : defaultprofile}
+          alt={user.displayname}
         />
         <img
           className="profile-homeProfile"
-          src={user.profilePicture ? PF + user.profilePicture : defaultprofile}
+          src={user.profilePicture
+            ? PF + user.profilePicture
+            : defaultprofile}
           alt="profile"
         />
       </Link>

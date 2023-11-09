@@ -52,17 +52,28 @@ const Commento = ({ postid, className }) => {
 
         let imgUrl = "";
         if (file) {
-          imgUrl = await upload(file);
+          imgUrl = await upload(file).catch((uploadError) => {
+            console.log(uploadError.message);
+          });
         }
-        await makeRequest.post("/comments", {
-          desc,
-          img: imgUrl,
-          postId: postid,
-          userId: currentUser._id,
-        });
-        window.location.reload();
-        setDesc("");
-        setFile(null);
+
+        try {
+          const newComment = {
+            desc,
+            img: imgUrl,
+            postId: postid,
+            userId: currentUser._id,
+          };
+          await makeRequest.post("/comments", newComment);
+
+          setComments(prevComments => [...prevComments, newComment]);
+
+          setDesc("");
+          setFile(null);
+        } catch (error) {
+          console.error(error);
+          console.log(error.message);
+        }
       }
     };
 
@@ -71,7 +82,8 @@ const Commento = ({ postid, className }) => {
     return () => {
       document.removeEventListener("keydown", handleKeyPress);
     };
-  });
+  }, [desc, file, postid, currentUser._id, setComments]);
+
   const handleMediaButtonClick = () => {
     setShowFileInput(!showFileInput);
     if (!showFileInput && fileInputRef.current) {

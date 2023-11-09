@@ -10,21 +10,20 @@ import AuthContext from "../../context/authContext";
 
 const Rightbar = () => {
   const [friends, setFriends] = useState([]);
-  const [user, setUser] = useState();
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+  const { user: currentUser } = useContext(AuthContext);
 
   useEffect(() => {
     const getFriends = async () => {
       try {
-        const friendList = await makeRequest.get("/relationships/friends/" + user._id);
+        const friendList = await makeRequest.get("/relationships/friends/" + currentUser._id);
         setFriends(friendList.data);
       } catch (err) {
         console.log(err);
       }
     };
     getFriends();
-  }, [user]);
-
+  }, []);
 
    return (
     <div className="rightBar">
