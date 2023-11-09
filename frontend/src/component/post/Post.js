@@ -240,13 +240,13 @@ const Post = ({ post }) => {
                         >
                           {followed ? (
                             <Icon
-                              icon="fluent-mdl2:user-followed"
+                              icon="bi:person-check-fill"
                               width={20}
                               height={20}
                             />
                           ) : (
                             <Icon
-                              icon="fluent-mdl2:add-friend"
+                              icon="bi:person-plus-fill"
                               width={20}
                               height={20}
                             />

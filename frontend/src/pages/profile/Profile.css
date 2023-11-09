@@ -93,6 +93,7 @@
     display: flex;
     align-items: center;
     padding: 8px 15px;
+    background-color: #DDDDDD;
     color: black;
     cursor: pointer;
     gap: 8px;
@@ -101,20 +102,71 @@
     border-radius: 11px;
     background-color: lightgray;
   }
-  .follow-button{ 
-    border-radius: 10px;
+  .follow-button{  
     display: flex;
     align-items: center;
-    padding: 8px 15px;
+    justify-content: center;
     color: black;
-    cursor: pointer;
-    gap: 8px;
-    font-size: 16px;
-    font-weight: bold;
+    cursor: pointer; 
+    font-size: 16px; 
+    font-weight: bold; 
+    background-color: transparent;
   }
   .follow-button:hover{
     border-radius: 11px;
-    background-color: lightgray;
+    background-color: transparent;
+  }
+  .follow-profile{
+    display: flex;
+    align-items: center;
+    gap: 10px; 
+    padding: 8px 15px;
+    border-radius: 10px;
+    background-color: #DDDDDD;
+  }
+  .follow-profile:hover{
+    background-color: #999999;
+  }
+  .following-profile{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center; 
+    gap: 8px;
+  }
+  .followed-profile{
+    display: flex;
+    align-items: center;
+    gap: 10px; 
+    padding: 8px 15px;
+    border-radius: 10px;
+    background-color: #000000;
+    color: white;
+  }
+  .followed-profile:hover{ 
+    background-color: #5C5C5C;
+  }
+  .message-profile{
+    display: flex;
+    align-items: center;
+    gap: 10px; 
+    padding: 8px 15px;
+    border-radius: 10px;
+    background-color: #DDDDDD;
+  }
+  .message-profile:hover{
+    background-color: #999999;
+  }
+  .share-profile{
+    display: flex;
+    align-items: center;
+    gap: 10px; 
+    padding: 8px 15px;
+    border-radius: 10px;
+    background-color: #DDDDDD;
+  }
+  .share-profile:hover{
+    background-color: #999999;
   }
   .add-button{
     padding: 5px 12px; 
