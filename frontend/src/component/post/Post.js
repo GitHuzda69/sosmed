@@ -11,7 +11,13 @@ import HomeProfile from "../home-profile/home-profile";
 
 import defaultprofile from "../../assets/profile/default_avatar.png";
 
-const Post = ({ post }) => {
+const Post = ({
+  post,
+  openPostOption,
+  handleOpenPostOption,
+  handleClosePostOption,
+  friends,
+}) => {
   const [commentOpen, setCommentOpen] = useState(false);
   const [popupOpen, setPopupOpen] = useState(false);
   const [selectedPostImg, setSelectedPostImg] = useState(null);
@@ -27,8 +33,12 @@ const Post = ({ post }) => {
   const [like, setLike] = useState(post.likes && post.likes.length);
   const [isLiked, setIsLiked] = useState(false);
   const [user, setUser] = useState({});
+  const [posts, setPosts] = useState();
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const { user: currentUser, dispatch } = useContext(AuthContext);
+  const following = friends
+    ? friends.some((friend) => friend._id === post.userId)
+    : false;
   const [followed, setFollowed] = useState(
     currentUser.followings.includes(user?._id)
   );
@@ -74,38 +84,43 @@ const Post = ({ post }) => {
 
   const handleDelete = async () => {
     try {
-      makeRequest.delete(`/posts/${post._id}`, {
+      await makeRequest.delete(`/posts/${post._id}`, {
         data: { userId: currentUser._id },
       });
-      window.location.reload();
+  
+      if (post && post._id) {
+        setPosts(prevPosts => prevPosts.filter(p => p._id !== post._id));
+      }
     } catch (err) {
       console.log(err);
     }
   };
-
+  
+  
+  
   const handleEdit = async (e) => {
     e.preventDefault();
-
+  
     if (!post.img && editedDesc.trim() === "") {
       setIsDescEmpty(true);
       return;
     }
-
+  
     const editedPost = {
       ...post,
       desc: editedDesc,
       img: editedImg ? await upload(editedImg) : post.img,
     };
-
+  
     try {
-      await makeRequest.put("/posts/" + editedPost._id, editedPost);
+      const updatedPost = await makeRequest.put("/posts/" + editedPost._id, editedPost);
+      setPosts(updatedPost); 
       setPostEditOpen(false);
-
-      window.location.reload();
     } catch (error) {
       console.error(error);
     }
   };
+  
 
   const handleFollow = async () => {
     try {
@@ -207,7 +222,7 @@ const Post = ({ post }) => {
                 <span className="date">{format(post.createdAt)}</span>
               </div>
               <div className="options">
-                {postOptionOpen ? (
+                {openPostOption === post._id ? (
                   <div className="post-option-popup">
                     {post.userId !== currentUser._id ? (
                       <div className="post-option-popup-other">
@@ -238,20 +253,20 @@ const Post = ({ post }) => {
                             gap: "5px",
                           }}
                         >
-                          {followed ? (
+                          {following ? (
                             <Icon
-                              icon="fluent-mdl2:user-followed"
+                              icon="bi:person-check-fill"
                               width={20}
                               height={20}
                             />
                           ) : (
                             <Icon
-                              icon="fluent-mdl2:add-friend"
+                              icon="bi:person-plus-fill"
                               width={20}
                               height={20}
                             />
                           )}
-                          {followed ? "Unfollow" : "Follow"}
+                          {following ? "Unfollow" : "Follow"}
                         </button>
                       </div>
                     ) : (
@@ -357,11 +372,12 @@ const Post = ({ post }) => {
                 ) : null}
                 <button
                   className="opsi-post-button"
-                  onClick={(e) => {
-                    setPostOptionButtonPosition(
-                      e.target.getBoundingClientRect()
-                    );
-                    setpostOptionOpen(!postOptionOpen);
+                  onClick={() => {
+                    if (openPostOption === post._id) {
+                      handleClosePostOption();
+                    } else {
+                      handleOpenPostOption(post._id);
+                    }
                     setPostEditOpen(false);
                   }}
                 >

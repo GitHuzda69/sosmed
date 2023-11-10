@@ -27,9 +27,9 @@ router.get("/:postId", async (req, res) => {
 
   //delete a comment
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:userId", async (req, res) => {
     try {
-      const comment = await Comment.findById(req.params.id);
+      const comment = await Comment.findById(req.params.userId);
       if (comment.userId === req.body.userId) {
         await comment.deleteOne();
         res.status(200).json("the comment has been deleted");

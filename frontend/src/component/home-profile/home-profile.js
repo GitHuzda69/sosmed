@@ -23,7 +23,7 @@ const HomeProfile = () => {
         <img
           className="banner-homeProfile"
           src={user.coverPicture ? PF + user.coverPicture : defaultprofile}
-          alt="banner"
+          alt={user.displayname}
         />
         <img
           className="profile-homeProfile"
@@ -33,9 +33,9 @@ const HomeProfile = () => {
       </Link>
       <h2>{user.displayname}</h2>
       <div className="follow-homeProfile">
-        <h3>123</h3>
+        <h3>{user.followings.length}</h3>
         <h4>Following</h4>
-        <h3>456</h3>
+        <h3>{user.followers.length}</h3>
         <h4>Followers</h4>
       </div>
       <button className="connect-homeProfile">

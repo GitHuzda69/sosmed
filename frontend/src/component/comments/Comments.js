@@ -9,10 +9,12 @@ import {format} from "timeago.js";
 
 import defaultprofile from "../../assets/profile/default_avatar.png";
 
-const Comments = ({ postid, comment, user }) => {
+const Comments = ({ postid, comment }) => {
   const { user: currentUser } = useContext(AuthContext);
   const userId = parseInt(useLocation().pathname.split("/")[2]);
   const [popupOpen, setPopupOpen] = useState(false);
+  const [user, setUser] = useState();
+  const [comments, setComments] = useState();
   const [selectedCommentImg, setSelectedCommentImg] = useState(null);
   const [img, setImg] = useState(null);
   const [texts, setTexts] = useState({ desc: comment.desc });
@@ -21,24 +23,25 @@ const Comments = ({ postid, comment, user }) => {
   const [editedDescComment, setEditedDescComment] = useState(comment.desc);
   const [editedImgComment, setEditedImgComment] = useState(null);
   const [isDescCommentEmpty, setIsDescCommentEmpty] = useState(false);
-  const PF = process.env.REACT_APP_PUBLIC_FOLDER
   const [originalDescComment, setOriginalDescComment] = useState(comment.desc);
-  const [commentOptionButtonPosition, setCommentOptionButtonPosition] =
-    useState(null);
-  console.log(comment)
-  const queryClient = useQueryClient();
-  const deleteMutation = useMutation(
-    (CommentID) => {
-      return makeRequest.delete("/comments/" + CommentID);
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["comments"]);
-      },
-    }
-  );
+  const [commentOptionButtonPosition, setCommentOptionButtonPosition] = useState(null);
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER
 
-  const upload = async (file) => {
+    useEffect(() => {
+      if (comment.userId) {
+        const fetchUser = async () => {
+          try {
+            const res = await makeRequest.get(`/users?userId=${comment.userId}`);
+            setUser(res.data);
+          } catch (err) {
+            console.error(err);
+          }
+        };
+        fetchUser();
+      }
+    }, [comment.userId]);
+
+   const upload = async (file) => {
     try {
       const formData = new FormData();
       formData.append("file", file);
@@ -49,10 +52,19 @@ const Comments = ({ postid, comment, user }) => {
     }
   };
 
-  const handleDelete = () => {
-    deleteMutation.mutate(comment._id);
+  const handleDelete = async () => {
+    try {
+      await makeRequest.delete("/comments/" + comment._id, { data: { userId: currentUser._id } });
+      if (comments) {
+        const updatedComments = comments.filter(commentItem => commentItem._id !== comment._id);
+        setComments(updatedComments);
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
-
+  
+  
   const toggleCommentOptions = (commentId) => {
     setCommentOptionButtonPosition(commentId);
     setCommentOptionOpen((prevOptions) => ({
@@ -63,20 +75,26 @@ const Comments = ({ postid, comment, user }) => {
 
   const handleEdit = async (e) => {
     e.preventDefault();
-
+  
     if (!comment.img && editedDescComment.trim() === "") {
       setIsDescCommentEmpty(true);
       return;
     }
-
+  
     const editedComment = {
       ...comment,
       desc: editedDescComment,
       img: editedImgComment ? await upload(editedImgComment) : comment.img,
     };
-
+  
     try {
-      await makeRequest.put("/comments/" + editedComment.id, editedComment);
+      const updatedComment = await makeRequest.put("/comments/" + editedComment._id, editedComment);
+  
+      const updatedComments = comments.map(commentItem =>
+        commentItem.id === updatedComment.id ? updatedComment : commentItem
+      );
+      setCommentEditOpen(false);
+      setComments(updatedComments); 
     } catch (error) {
       console.error(error);
     }
@@ -104,7 +122,6 @@ const Comments = ({ postid, comment, user }) => {
       console.error(error);
     }
   };
-  console.log(user)
   return (
     <div className="comments">
       <div className="comment" key={comment.id}>
@@ -112,13 +129,13 @@ const Comments = ({ postid, comment, user }) => {
           <img
             className="comments-pic"
             src={
-              user && user.profilepic
-                ? PF + user.profilepic
+              user && user.profilePicture
+                ? PF + user.profilePicture
                 : defaultprofile
             }
           />
-          <span>{user && user.username}cerfgvretfbvrt</span>
-          <h3>{format(user.createdAt)}</h3>
+          <span>{user && user.displayname}</span>
+          <h3>{format(comment.createdAt)}</h3>
           <button
             className="button-comment-desc"
             onClick={() => {
@@ -242,7 +259,7 @@ const Comments = ({ postid, comment, user }) => {
               >
                 <img
                   className="comments-image"
-                  src={"/data/" + comment.img}
+                  src={PF + comment.img}
                   alt="comment-img"
                 />
               </button>

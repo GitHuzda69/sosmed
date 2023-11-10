@@ -23,6 +23,8 @@ const Fyp = (post, className, username) => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [showSideContent, setShowSideContent] = useState(true);
   const [mainContentMaxWidth, setMainContentMaxWidth] = useState("100%");
+  const [openPostOption, setOpenPostOption] = useState(null);
+  const [friends, setFriends] = useState([]);
 
   const isHomePage = true;
 
@@ -76,6 +78,22 @@ const Fyp = (post, className, username) => {
     };
   }, []);
 
+  useEffect(() => {
+    if (currentUser && currentUser._id) {
+      const getFriends = async () => {
+        try {
+          const friendList = await makeRequest.get(
+            "/relationships/friends/" + currentUser._id
+          );
+          setFriends(friendList.data);
+        } catch (err) {
+          console.log(err);
+        }
+      };
+      getFriends();
+    }
+  }, [currentUser]);
+
   const setDarkMode = (isDarkMode) => {
     if (isDarkMode) {
       document.documentElement.classList.add("dark-mode");
@@ -98,6 +116,15 @@ const Fyp = (post, className, username) => {
   const toggleLogout = () => {
     setLogoutOpen(!logoutOpen);
   };
+
+  const handleOpenPostOption = (postId) => {
+    setOpenPostOption(postId);
+  };
+
+  const handleClosePostOption = () => {
+    setOpenPostOption(null);
+  };
+
   return (
     <>
       <div className={`app ${isDarkMode ? "dark-mode" : ""}`}>
@@ -122,7 +149,14 @@ const Fyp = (post, className, username) => {
               <div className={`posts ${className}`}>
                 {!username || username === user.username}
                 {posts.map((p) => (
-                  <Post key={p._id} post={p} />
+                  <Post
+                    key={p._id}
+                    post={p}
+                    openPostOption={openPostOption}
+                    handleOpenPostOption={handleOpenPostOption}
+                    handleClosePostOption={handleClosePostOption}
+                    friends={friends}
+                  />
                 ))}
               </div>
             </div>
