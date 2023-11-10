@@ -5,7 +5,7 @@
   max-height: max-content;
   flex-direction: row;
   margin-top: -10px;
-  margin-left: 53px; 
+  margin-left: 65px; 
   margin-bottom: 3px;
   padding-bottom: 30px;
   font-family: "Inter";
@@ -13,7 +13,7 @@
   background-color: white;   
 }   
 
-.message-friend-container{ 
+.message-friend-container{  
   padding: 10px;
   margin-bottom: 600px; 
 }

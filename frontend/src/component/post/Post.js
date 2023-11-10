@@ -11,7 +11,13 @@ import HomeProfile from "../home-profile/home-profile";
 
 import defaultprofile from "../../assets/profile/default_avatar.png";
 
-const Post = ({ post }) => {
+const Post = ({
+  post,
+  openPostOption,
+  handleOpenPostOption,
+  handleClosePostOption,
+  friends,
+}) => {
   const [commentOpen, setCommentOpen] = useState(false);
   const [popupOpen, setPopupOpen] = useState(false);
   const [selectedPostImg, setSelectedPostImg] = useState(null);
@@ -29,6 +35,9 @@ const Post = ({ post }) => {
   const [user, setUser] = useState({});
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const { user: currentUser, dispatch } = useContext(AuthContext);
+  const following = friends
+    ? friends.some((friend) => friend._id === post.userId)
+    : false;
   const [followed, setFollowed] = useState(
     currentUser.followings.includes(user?._id)
   );
@@ -207,7 +216,7 @@ const Post = ({ post }) => {
                 <span className="date">{format(post.createdAt)}</span>
               </div>
               <div className="options">
-                {postOptionOpen ? (
+                {openPostOption === post._id ? (
                   <div className="post-option-popup">
                     {post.userId !== currentUser._id ? (
                       <div className="post-option-popup-other">
@@ -238,7 +247,7 @@ const Post = ({ post }) => {
                             gap: "5px",
                           }}
                         >
-                          {followed ? (
+                          {following ? (
                             <Icon
                               icon="bi:person-check-fill"
                               width={20}
@@ -251,7 +260,7 @@ const Post = ({ post }) => {
                               height={20}
                             />
                           )}
-                          {followed ? "Unfollow" : "Follow"}
+                          {following ? "Unfollow" : "Follow"}
                         </button>
                       </div>
                     ) : (
@@ -357,11 +366,12 @@ const Post = ({ post }) => {
                 ) : null}
                 <button
                   className="opsi-post-button"
-                  onClick={(e) => {
-                    setPostOptionButtonPosition(
-                      e.target.getBoundingClientRect()
-                    );
-                    setpostOptionOpen(!postOptionOpen);
+                  onClick={() => {
+                    if (openPostOption === post._id) {
+                      handleClosePostOption();
+                    } else {
+                      handleOpenPostOption(post._id);
+                    }
                     setPostEditOpen(false);
                   }}
                 >

@@ -27,9 +27,7 @@ const HomeProfile = () => {
         />
         <img
           className="profile-homeProfile"
-          src={user.profilePicture
-            ? PF + user.profilePicture
-            : defaultprofile}
+          src={user.profilePicture ? PF + user.profilePicture : defaultprofile}
           alt="profile"
         />
       </Link>
