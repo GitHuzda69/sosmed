@@ -102,7 +102,7 @@
   .dark-mode .item{ 
   }
 
-    /*buat comment0 & comments */
+    /*buat commento & comments */
   .dark-mode .write1{
     background-color: #1E1E1E;
   }
@@ -120,6 +120,26 @@
   }
   .dark-mode .button-comment-desc{
     color: white;
+  }
+  .dark-mode .post-option-popup-self-comment{
+    background-color: rgb(50, 50, 50); 
+  }
+  .dark-mode .post-option-popup-self-comment button{
+    background-color: transparent;
+    color: white;
+  } 
+  .dark-mode .post-option-popup-self-comment button:hover{
+    background-color: #5C5C5C;
+  }
+  .dark-mode .post-option-popup-other-comment{
+    background-color: rgb(50, 50, 50); 
+  }
+  .dark-mode .post-option-popup-other-comment button{
+    background-color: transparent;
+    color: white;
+  }
+  .dark-mode .post-option-popup-other-comment button:hover{
+    background-color: #5C5C5C;
   }
 
     /*buat home*/ 

@@ -138,6 +138,7 @@
   margin-left: 40px;
 }
 .comment-info{
+  position: relative;
   flex: 5;
   display: flex;
   flex-wrap: wrap;
@@ -247,13 +248,12 @@
 }
 
 .post-option-popup-other-comment,
-.post-option-popup-self-comment {
-  position: absolute;
-  left: 700px; 
+.post-option-popup-self-comment { 
+  position: relative;
   background-color: white;
   border: 1px solid #ccc;
   padding: 5px;
-  margin-top: 5px;
+  margin-top: -10px;
   z-index: 1;
   display: flex;
   flex-direction: column;
@@ -298,14 +298,15 @@
   border-radius: 5px;
 }
 
-.edit-comment{
-  position: absolute;
-  left: -290px;
-  margin-top: -10px;
+.edit-comment{     
   padding: 10px;
   background-color: white;
   border: 1px black solid;
   border-radius: 10px;
+  width: 300px; /* Sesuaikan dengan lebar yang diinginkan */
+  margin-top: 10px; /* Sesuaikan dengan jarak dari elemen di atasnya */
+  margin-left: -230px; /* Sesuaikan dengan jarak dari elemen sebelah kirinya */
+  z-index: 2;
 }
 .edit-comment-content{
   display: flex;
