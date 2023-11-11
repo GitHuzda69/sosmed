@@ -97,7 +97,7 @@ const Commento = ({ postid, className }) => {
   const clearSelectedFile = () => {
     setFile(null);
   };
-  
+
   return (
     <div className={`commento ${className}`}>
       <div className="write">

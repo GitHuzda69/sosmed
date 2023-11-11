@@ -5,7 +5,7 @@ import AuthContext from "../../context/authContext.js";
 import { Icon } from "@iconify/react";
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import { makeRequest } from "../../axios";
-import {format} from "timeago.js";
+import { format } from "timeago.js";
 
 import defaultprofile from "../../assets/profile/default_avatar.png";
 
@@ -24,24 +24,25 @@ const Comments = ({ postid, comment }) => {
   const [editedImgComment, setEditedImgComment] = useState(null);
   const [isDescCommentEmpty, setIsDescCommentEmpty] = useState(false);
   const [originalDescComment, setOriginalDescComment] = useState(comment.desc);
-  const [commentOptionButtonPosition, setCommentOptionButtonPosition] = useState(null);
-  const PF = process.env.REACT_APP_PUBLIC_FOLDER
+  const [commentOptionButtonPosition, setCommentOptionButtonPosition] =
+    useState(null);
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
-    useEffect(() => {
-      if (comment.userId) {
-        const fetchUser = async () => {
-          try {
-            const res = await makeRequest.get(`/users?userId=${comment.userId}`);
-            setUser(res.data);
-          } catch (err) {
-            console.error(err);
-          }
-        };
-        fetchUser();
-      }
-    }, [comment.userId]);
+  useEffect(() => {
+    if (comment.userId) {
+      const fetchUser = async () => {
+        try {
+          const res = await makeRequest.get(`/users?userId=${comment.userId}`);
+          setUser(res.data);
+        } catch (err) {
+          console.error(err);
+        }
+      };
+      fetchUser();
+    }
+  }, [comment.userId]);
 
-   const upload = async (file) => {
+  const upload = async (file) => {
     try {
       const formData = new FormData();
       formData.append("file", file);
@@ -54,17 +55,20 @@ const Comments = ({ postid, comment }) => {
 
   const handleDelete = async () => {
     try {
-      await makeRequest.delete("/comments/" + comment._id, { data: { userId: currentUser._id } });
+      await makeRequest.delete("/comments/" + comment._id, {
+        data: { userId: currentUser._id },
+      });
       if (comments) {
-        const updatedComments = comments.filter(commentItem => commentItem._id !== comment._id);
+        const updatedComments = comments.filter(
+          (commentItem) => commentItem._id !== comment._id
+        );
         setComments(updatedComments);
       }
     } catch (err) {
       console.log(err);
     }
   };
-  
-  
+
   const toggleCommentOptions = (commentId) => {
     setCommentOptionButtonPosition(commentId);
     setCommentOptionOpen((prevOptions) => ({
@@ -74,27 +78,32 @@ const Comments = ({ postid, comment }) => {
   };
 
   const handleEdit = async (e) => {
-    e.preventDefault();
-  
+    if (e) {
+      e.preventDefault();
+    }
+
     if (!comment.img && editedDescComment.trim() === "") {
       setIsDescCommentEmpty(true);
       return;
     }
-  
+
     const editedComment = {
       ...comment,
       desc: editedDescComment,
       img: editedImgComment ? await upload(editedImgComment) : comment.img,
     };
-  
+
     try {
-      const updatedComment = await makeRequest.put("/comments/" + editedComment._id, editedComment);
-  
-      const updatedComments = comments.map(commentItem =>
+      const updatedComment = await makeRequest.put(
+        "/comments/" + editedComment._id,
+        editedComment
+      );
+
+      const updatedComments = comments.map((commentItem) =>
         commentItem.id === updatedComment.id ? updatedComment : commentItem
       );
       setCommentEditOpen(false);
-      setComments(updatedComments); 
+      setComments(updatedComments);
     } catch (error) {
       console.error(error);
     }
@@ -122,6 +131,12 @@ const Comments = ({ postid, comment }) => {
       console.error(error);
     }
   };
+
+  const handleEditButtonClick = () => {
+    setCommentEditOpen(!commentEditOpen);
+    handleEdit();
+  };
+
   return (
     <div className="comments">
       <div className="comment" key={comment.id}>
@@ -136,15 +151,50 @@ const Comments = ({ postid, comment }) => {
           />
           <span>{user && user.displayname}</span>
           <h3>{format(comment.createdAt)}</h3>
-          <button
-            className="button-comment-desc"
-            onClick={() => {
-              toggleCommentOptions(comment._id);
-              setCommentEditOpen(false);
-            }}
-          >
-            <Icon icon="tabler:dots" width={20} height={20} />
-          </button>
+          {commentEditOpen && (
+            <div className="edit-comment">
+              {isDescCommentEmpty && (
+                <div className="edit-comment-warn">
+                  <button
+                    className="close-warn-comment"
+                    onClick={() => {
+                      setEditedDescComment(originalDescComment);
+                      setIsDescCommentEmpty(false);
+                    }}
+                  >
+                    <Icon icon="ph:x-bold" width={15} height={15} />
+                  </button>
+                  <p>Deskripsi tidak boleh kosong.</p>
+                </div>
+              )}
+              <form className="edit-comment-content">
+                <input
+                  type="text"
+                  name="desc"
+                  value={editedDescComment}
+                  onChange={(e) => setEditedDescComment(e.target.value)}
+                />
+                <input
+                  type="file"
+                  name="img"
+                  onChange={(e) => setEditedImgComment(e.target.files[0])}
+                />
+                {comment.img && comment.desc && (
+                  <div className="add-empty-desc-button">
+                    <button onClick={handleRemoveImgComment}>
+                      Hapus Gambar
+                    </button>
+                  </div>
+                )}
+                <button
+                  onClick={handleEditButtonClick}
+                  disabled={isDescCommentEmpty}
+                >
+                  Save
+                </button>
+              </form>
+            </div>
+          )}
           {commentOptionOpen[comment._id] ? (
             <div>
               {comment.userId !== currentUser._id ? (
@@ -196,56 +246,19 @@ const Comments = ({ postid, comment }) => {
                     <Icon icon="tabler:edit" height={20} width={20} />
                     Edit Comment
                   </button>
-                  {commentEditOpen && (
-                    <div className="edit-comment">
-                      {isDescCommentEmpty && (
-                        <div className="edit-comment-warn">
-                          <button
-                            className="close-warn-comment"
-                            onClick={() => {
-                              setEditedDescComment(originalDescComment);
-                              setIsDescCommentEmpty(false);
-                            }}
-                          >
-                            <Icon icon="ph:x-bold" width={15} height={15} />
-                          </button>
-                          <p>Deskripsi tidak boleh kosong.</p>
-                        </div>
-                      )}
-                      <form className="edit-comment-content">
-                        <input
-                          type="text"
-                          name="desc"
-                          value={editedDescComment}
-                          onChange={(e) => setEditedDescComment(e.target.value)}
-                        />
-                        <input
-                          type="file"
-                          name="img"
-                          onChange={(e) =>
-                            setEditedImgComment(e.target.files[0])
-                          }
-                        />
-                        {comment.img && comment.desc && (
-                          <div className="add-empty-desc-button">
-                            <button onClick={handleRemoveImgComment}>
-                              Hapus Gambar
-                            </button>
-                          </div>
-                        )}
-                        <button
-                          onClick={handleEdit}
-                          disabled={isDescCommentEmpty}
-                        >
-                          Post
-                        </button>
-                      </form>
-                    </div>
-                  )}
                 </div>
               )}
             </div>
           ) : null}
+          <button
+            className="button-comment-desc"
+            onClick={() => {
+              toggleCommentOptions(comment._id);
+              setCommentEditOpen(false);
+            }}
+          >
+            <Icon icon="tabler:dots" width={20} height={20} />
+          </button>
         </div>
         <div className="comments-content">
           {comment.desc && <h4>{editedDescComment}</h4>}
