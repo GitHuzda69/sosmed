@@ -9,8 +9,8 @@ import { format } from "timeago.js";
 
 import defaultprofile from "../../assets/profile/default_avatar.png";
 
-const Comments = ({ postid, comment }) => {
-  const { user: currentUser } = useContext(AuthContext);
+const Comments = ({ postid, comment, friends }) => {
+  const { user: currentUser, dispatch } = useContext(AuthContext);
   const userId = parseInt(useLocation().pathname.split("/")[2]);
   const [popupOpen, setPopupOpen] = useState(false);
   const [user, setUser] = useState();
@@ -27,6 +27,9 @@ const Comments = ({ postid, comment }) => {
   const [commentOptionButtonPosition, setCommentOptionButtonPosition] =
     useState(null);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+  const [followed, setFollowed] = useState(
+    currentUser.followings.includes(user?._id)
+  );
 
   useEffect(() => {
     if (comment.userId) {
@@ -137,6 +140,32 @@ const Comments = ({ postid, comment }) => {
     handleEdit();
   };
 
+  const handleFollow = async () => {
+    try {
+      let isFollowing = currentUser.followings.includes(user?._id);
+
+      if (isFollowing) {
+        await makeRequest.put(`/relationships/${user._id}/unfollow`, {
+          userId: currentUser._id,
+        });
+        dispatch({ type: "UNFOLLOW", payload: user._id });
+      } else {
+        await makeRequest.put(`/relationships/${user._id}/follow`, {
+          userId: currentUser._id,
+        });
+        dispatch({ type: "FOLLOW", payload: user._id });
+      }
+
+      setFollowed(!isFollowing);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const following = friends
+    ? friends.some((friend) => friend._id === comment.userId)
+    : false;
+
   return (
     <div className="comments">
       <div className="comment" key={comment.id}>
@@ -169,6 +198,7 @@ const Comments = ({ postid, comment }) => {
               )}
               <form className="edit-comment-content">
                 <input
+                  className="comment-content-text"
                   type="text"
                   name="desc"
                   value={editedDescComment}
@@ -214,6 +244,27 @@ const Comments = ({ postid, comment }) => {
                       height={20}
                     />
                     Message
+                  </button>
+                  <button
+                    onClick={handleFollow}
+                    style={{
+                      height: "24px",
+                      display: "flex",
+                      alignItems: "center",
+                      marginTop: "-4px",
+                      gap: "5px",
+                    }}
+                  >
+                    {following ? (
+                      <Icon
+                        icon="bi:person-check-fill"
+                        width={20}
+                        height={20}
+                      />
+                    ) : (
+                      <Icon icon="bi:person-plus-fill" width={20} height={20} />
+                    )}
+                    {following ? "Unfollow" : "Follow"}
                   </button>
                 </div>
               ) : (
