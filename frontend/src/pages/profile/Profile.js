@@ -111,7 +111,15 @@ const Profile = () => {
     localStorage.setItem("isDarkMode", newDarkModeStatus.toString());
     setDarkMode(newDarkModeStatus);
   };
-  console.log(user)
+
+  const truncateText = (text, maxLength) => {
+    if (!text) return "";
+    return text.length > maxLength
+      ? text.substring(0, maxLength) + "..."
+      : text;
+  };
+
+  console.log(user);
   return (
     <div className={`app ${isDarkMode ? "dark-mode" : ""}`}>
       <div className="profile-main">
@@ -187,7 +195,10 @@ const Profile = () => {
                 )}
                 <div className="profil-bio">
                   <h2>{user && user.displayname}</h2>
-                  <h4>{user.followers ? user.followers.length : "Loading"} Follower</h4>
+                  <h4>
+                    {user.followers ? user.followers.length : "Loading"}{" "}
+                    Follower
+                  </h4>
                 </div>
               </div>
               <div className="profiluser-button">
@@ -242,67 +253,74 @@ const Profile = () => {
             </div>
             <Posts username={username} className="posts-profile" />
           </div>
-          <div className="rightProfileBar">
-            <div className="search-profile">
-              <input
-                className="input-profile"
-                type="text"
-                placeholder="Search on Your profile"
-              />
-            </div>
-            <div className="intro">
-              <h2>Intro</h2>
-              <h3>
-                <Icon icon="ep:info-filled" width={25} height={25} />
-                Joined
-                <span>{moment(user.createdAt).format("DD MMMM YYYY")}</span>
-              </h3>
-              <h3>
-                <Icon icon="fluent:location-16-filled" width={25} height={25} />
-                From
-                <span>{user?.city || "Earth"}</span>
-              </h3>
-              <h4>
-                {user?.desc ||
-                  "This is your biodata, You can update it on the edit profile."}
-              </h4>
-            </div>
-            <div className="friends-rec">
-              {friends.map((friend) => (
-                <div key={friend._id} className="rightBarUserProfile">
-                  <Link
-                    className="LinkUserProfile"
-                    to={"/profile/" + friend.username}
-                    style={{
-                      textDecoration: "none",
-                      display: "flex",
-                      flexDirection: "row",
-                    }}
-                  >
-                    <div className="rightBarUserInfoProfile">
-                      <img
-                        className="rightBarImgProfile"
-                        src={
-                          friend.profilePicture
-                            ? PF + friend.profilePicture
-                            : defaultprofile
-                        }
-                        alt=""
-                      />
-                      <div className={`statusDot ${"grayDot"}`} />
-                    </div>
-                    <span className="rightBarNameProfile">
-                      {friend.displayname}
-                    </span>
-                  </Link>
-                  <Link
-                    to={`/messages/${friend._id}`}
-                    className="link-rightbarProfile"
-                  >
-                    <button className="rightBarButtonProfile">Chat</button>
-                  </Link>
-                </div>
-              ))}
+          <div>
+            <div className="rightProfileBar">
+              <div className="search-profile">
+                <input
+                  className="input-profile"
+                  type="text"
+                  placeholder="Search on Your profile"
+                />
+              </div>
+              <div className="intro">
+                <h2>Intro</h2>
+                <h3>
+                  <Icon icon="ep:info-filled" width={25} height={25} />
+                  Joined
+                  <span>{moment(user.createdAt).format("DD MMMM YYYY")}</span>
+                </h3>
+                <h3>
+                  <Icon
+                    icon="fluent:location-16-filled"
+                    width={25}
+                    height={25}
+                  />
+                  From
+                  <span>{user?.city || "Earth"}</span>
+                </h3>
+                <h4>
+                  {user?.desc ||
+                    "This is your biodata, You can update it on the edit profile."}
+                </h4>
+              </div>
+              <div className="friends-rec">
+                {friends.map((friend) => (
+                  <div key={friend._id} className="rightBarUserProfile">
+                    <Link
+                      className="LinkUserProfile"
+                      to={"/profile/" + friend.username}
+                      style={{
+                        textDecoration: "none",
+                        display: "flex",
+                        flexDirection: "row",
+                      }}
+                    >
+                      <div className="rightBarUserInfoProfile">
+                        <img
+                          className="rightBarImgProfile"
+                          src={
+                            friend.profilePicture
+                              ? PF + friend.profilePicture
+                              : defaultprofile
+                          }
+                          alt=""
+                        />
+                        <div className={`statusDot ${"grayDot"}`} />
+                      </div>
+                      <div className="rightBarNameProfile">
+                        <span>{friend.displayname}</span>
+                        <p>{friend && truncateText(friend.desc, 20)}</p>
+                      </div>
+                    </Link>
+                    <Link
+                      to={`/messages/${friend._id}`}
+                      className="link-rightbarProfile"
+                    >
+                      <button className="rightBarButtonProfile">Chat</button>
+                    </Link>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
