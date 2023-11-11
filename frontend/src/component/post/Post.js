@@ -92,30 +92,32 @@ const Post = ({
       console.log(err);
     }
   };
-  
+
   const handleEdit = async (e) => {
     e.preventDefault();
-  
+
     if (!post.img && editedDesc.trim() === "") {
       setIsDescEmpty(true);
       return;
     }
-  
+
     const editedPost = {
       ...post,
       desc: editedDesc,
       img: editedImg ? await upload(editedImg) : post.img,
     };
-  
+
     try {
-      const updatedPost = await makeRequest.put("/posts/" + editedPost._id, editedPost);
-      setPosts(updatedPost); 
+      const updatedPost = await makeRequest.put(
+        "/posts/" + editedPost._id,
+        editedPost
+      );
+      setPosts(updatedPost);
       setPostEditOpen(false);
     } catch (error) {
       console.error(error);
     }
   };
-  
 
   const handleFollow = async () => {
     try {
@@ -328,6 +330,7 @@ const Post = ({
                               )}
                               <form className="edit-post-content">
                                 <input
+                                  className="edit-post-text"
                                   type="text"
                                   name="desc"
                                   value={editedDesc}

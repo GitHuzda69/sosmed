@@ -10,12 +10,15 @@ import defaultprofile from "../../assets/profile/default_avatar.png";
 
 const Commento = ({ postid, className }) => {
   const { user: currentUser } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [comments, setComments] = useState();
   const fileInputRef = useRef(null);
   const [desc, setDesc] = useState(null);
   const [file, setFile] = useState(null);
   const [showFileInput, setShowFileInput] = useState(false);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+  const [friends, setFriends] = useState([]);
+
   const upload = async () => {
     try {
       const formData = new FormData();
@@ -40,6 +43,20 @@ const Commento = ({ postid, className }) => {
     };
     fetchComments();
   }, [postid]);
+
+  useEffect(() => {
+    const getFriends = async () => {
+      try {
+        const friendList = await makeRequest.get(
+          "/relationships/friends/" + user._id
+        );
+        setFriends(friendList.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getFriends();
+  }, [user._id]);
 
   useEffect(() => {
     const handleKeyPress = async (e) => {
@@ -167,7 +184,12 @@ const Commento = ({ postid, className }) => {
       </div>
       {comments &&
         comments.map((comment) => (
-          <Comments comment={comment} postid={postid} key={comment.id} />
+          <Comments
+            comment={comment}
+            postid={postid}
+            key={comment.id}
+            friends={friends}
+          />
         ))}
     </div>
   );

@@ -102,6 +102,22 @@
   .dark-mode .item{ 
   }
 
+  .dark-mode .edit-post{
+    background-color: #1E1E1E;
+  }
+  .dark-mode .edit-post-text{
+    background-color: #5C5C5C;
+    border: 1px white solid;
+    color: white;
+  }
+  .dark-mode .edit-post-content button{
+    background-color: #5C5C5C;
+    border-radius: 10px;
+  }
+  .dark-mode .edit-post-content button:hover{
+    background-color: #2F2F2F;
+  }
+
     /*buat commento & comments */
   .dark-mode .write1{
     background-color: #1E1E1E;
@@ -140,6 +156,21 @@
   }
   .dark-mode .post-option-popup-other-comment button:hover{
     background-color: #5C5C5C;
+  }
+  .dark-mode .edit-comment{
+    background-color: #1E1E1E;
+  }
+  .dark-mode .comment-content-text{
+    background-color: #5C5C5C;
+    color: white;
+    border: 1px white solid;
+  }
+  .dark-mode .edit-comment-content button{
+    background-color: #5C5C5C;
+    border-radius: 10px;
+  }
+  .dark-mode .edit-comment-content button:hover{
+    background-color: #2F2F2F;
   }
 
     /*buat home*/ 
