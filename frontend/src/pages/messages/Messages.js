@@ -16,11 +16,16 @@ import Chat from "../../component/Chat/Chat";
 function Message() {
   const [settingOpen, setSettingOpen] = useState(false);
   const [logoutOpen, setLogoutOpen] = useState(false);
+  const [conversations, setConversations] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
+  const [user, setUser] = useState(null);
+  const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState(null);
-  const { currentUser } = useContext(AuthContext);
+  const { user: currentUser } = useContext(AuthContext);
   const [isDarkMode, setIsDarkMode] = useState(false);
-
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER
+  const friendid = conversations.map((friend) => ( friend.members ))
+  console.log(friendid)
   const isMessagesPage = true;
 
   const toggleSettings = () => {
@@ -31,29 +36,41 @@ function Message() {
     setLogoutOpen(!logoutOpen);
   };
 
-  const {
-    isLoading: cIsLoading,
-    error: cError,
-    data: convData,
-  } = useQuery(["conversation"], () =>
-    makeRequest.get("/conversations").then((res) => {
-      return res.data;
-    })
-  );
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        const res = await makeRequest.get("/users?userId=" + friendid);
+        setUser(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getUser();
+  }, [currentUser, conversations]);
 
-  const {
-    isLoading: mIsLoading,
-    error: mError,
-    data: messData,
-  } = useQuery(["message"], async () => {
-    try {
-      const response = await makeRequest.get("/messages/" + currentChat.id);
-      return response.data;
-    } catch (error) {
-      console.error("Error fetching data:", error);
-      throw error;
-    }
-  });
+  useEffect(() => {
+    const getConversations = async () => {
+      try {
+        const res = await makeRequest.get("/conversations/" + currentUser._id);
+        setConversations(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getConversations();
+  }, [currentUser._id]);
+
+  useEffect(() => {
+    const getMessages = async () => {
+      try {
+        const res = await makeRequest.get("/messages/" + currentChat?._id);
+        setMessages(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getMessages();
+  }, [currentChat]);
 
   useEffect(() => {
     const storedDarkModeStatus = localStorage.getItem("isDarkMode") === "true";
@@ -77,8 +94,6 @@ function Message() {
     setDarkMode(newDarkModeStatus);
   };
 
-  console.log(currentChat);
-
   return (
     <div className="main-messages">
       <div className="message-friend-container">
@@ -97,25 +112,20 @@ function Message() {
           />
         </div>
         <div className="message-friend-bar">
-          {cIsLoading
-            ? "Loading"
-            : cError
-            ? "Error"
-            : convData.map((friend) => (
-                <button key={friend.id} onClick={() => setCurrentChat(friend)}>
+          {conversations.map((friend) => (
+                <button key={friend._id} onClick={() => setCurrentChat(friend)}>
                   <div className="message-friend">
                     <img
                       className="message-friend-avatar"
-                      src={
-                        friend.profilepic
-                          ? `/data/${friend.profilepic}`
+                      src={user &&
+                        user.profilePicture
+                          ? PF + user.profilePicture
                           : defaultprofile
                       }
-                      alt={friend.displayname}
                     />
                     <div className="message-friend-bio">
-                      <h2>{friend.displayname}</h2>
-                      <h3>{friend.biodata}</h3>
+                      <h2>{user && user.displayname}</h2>
+                      <h3>{user && user.desc}</h3>
                     </div>
                   </div>
                 </button>
@@ -129,15 +139,15 @@ function Message() {
             <img
               className="chat-avatar"
               src={
-                currentChat.profilepic
-                  ? `/data/${currentChat.profilepic}`
+                currentChat.profilePicture
+                  ? PF + currentChat.profilePicture
                   : defaultprofile
               }
               alt={currentChat.displayname}
             />
             <div className="chat-status">
               <h2>{currentChat.displayname}</h2>
-              <h3>{currentChat.biodata}</h3>
+              <h3>{currentChat.desc}</h3>
             </div>
             <div className="chat-profile-button">
               <button>
@@ -160,11 +170,7 @@ function Message() {
             <div className="chat-time">
               <h3>Today</h3>
             </div>
-            {mIsLoading
-              ? "Loading"
-              : mError
-              ? "Error"
-              : messData.map((m) => (
+            {messages.map((m) => (
                   <div key={m.id} className="chat-other">
                     <h3>{m.displayname}</h3>
                     <h4>{m.desc}</h4>

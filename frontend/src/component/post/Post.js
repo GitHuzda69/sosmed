@@ -87,16 +87,11 @@ const Post = ({
       await makeRequest.delete(`/posts/${post._id}`, {
         data: { userId: currentUser._id },
       });
-  
-      if (post && post._id) {
-        setPosts(prevPosts => prevPosts.filter(p => p._id !== post._id));
-      }
+      window.location.reload();
     } catch (err) {
       console.log(err);
     }
   };
-  
-  
   
   const handleEdit = async (e) => {
     e.preventDefault();

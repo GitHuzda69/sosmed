@@ -111,6 +111,7 @@ const Profile = () => {
     localStorage.setItem("isDarkMode", newDarkModeStatus.toString());
     setDarkMode(newDarkModeStatus);
   };
+  console.log(user)
   return (
     <div className={`app ${isDarkMode ? "dark-mode" : ""}`}>
       <div className="profile-main">
@@ -186,7 +187,7 @@ const Profile = () => {
                 )}
                 <div className="profil-bio">
                   <h2>{user && user.displayname}</h2>
-                  <h4>300 follower</h4>
+                  <h4>{user.followers ? user.followers.length : "Loading"} Follower</h4>
                 </div>
               </div>
               <div className="profiluser-button">
