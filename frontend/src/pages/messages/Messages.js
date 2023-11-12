@@ -8,24 +8,26 @@ import { useQuery } from "@tanstack/react-query";
 import { makeRequest } from "../../axios.js";
 import { AuthContext } from "../../context/authContext.js";
 import { Icon } from "@iconify/react";
-import moment from "moment";
+import {io} from "socket.io-client"
 
 import defaultprofile from "../../assets/profile/default_avatar.png";
-import Chat from "../../component/Chat/Chat";
+import { format } from "timeago.js";
 
 function Message() {
   const [settingOpen, setSettingOpen] = useState(false);
   const [logoutOpen, setLogoutOpen] = useState(false);
   const [conversations, setConversations] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
+  const [newMessage, setNewMessage] = useState("");
+  const [socket, setSocket] = useState(null);
   const [user, setUser] = useState(null);
+  const [info, setInfo] = useState(null);
   const [messages, setMessages] = useState([]);
-  const [inputValue, setInputValue] = useState(null);
   const { user: currentUser } = useContext(AuthContext);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER
   const friendid = conversations.map((friend) => ( friend.members ))
-  console.log(friendid)
+  const idSolo = friendid.find((member) => (member) );
   const isMessagesPage = true;
 
   const toggleSettings = () => {
@@ -39,7 +41,7 @@ function Message() {
   useEffect(() => {
     const getUser = async () => {
       try {
-        const res = await makeRequest.get("/users?userId=" + friendid);
+        const res = await makeRequest.get("/users?userId[0]=" + idSolo[0] + "&userId[1]=" + idSolo[1]);
         setUser(res.data);
       } catch (err) {
         console.log(err);
@@ -48,7 +50,7 @@ function Message() {
     getUser();
   }, [currentUser, conversations]);
 
-  useEffect(() => {
+   useEffect(() => {
     const getConversations = async () => {
       try {
         const res = await makeRequest.get("/conversations/" + currentUser._id);
@@ -73,6 +75,10 @@ function Message() {
   }, [currentChat]);
 
   useEffect(() => {
+    setSocket(io("ws://localhost:8900"))
+  }, [])
+
+  useEffect(() => {
     const storedDarkModeStatus = localStorage.getItem("isDarkMode") === "true";
     setIsDarkMode(storedDarkModeStatus);
 
@@ -92,6 +98,24 @@ function Message() {
     setIsDarkMode(newDarkModeStatus);
     localStorage.setItem("isDarkMode", newDarkModeStatus.toString());
     setDarkMode(newDarkModeStatus);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const message = {
+      sender: user._id,
+      text: newMessage,
+      conversationId: currentChat._id,
+    };
+
+
+    try {
+      const res = await makeRequest.post("/messages", message);
+      setMessages([...messages, res.data]);
+      setNewMessage("");
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -171,19 +195,18 @@ function Message() {
               <h3>Today</h3>
             </div>
             {messages.map((m) => (
-                  <div key={m.id} className="chat-other">
-                    <h3>{m.displayname}</h3>
-                    <h4>{m.desc}</h4>
-                    <h5>{moment(m.createdat).fromNow()}</h5>
+                  <div key={m.id} className={m.sender !== currentUser._id ? "chat-other" : "chat-self"}>
+                    <h3>{m.sender}</h3>
+                    <h4>{m.text}</h4>
+                    <h5>{format(m.createdAt)}</h5>
                   </div>
                 ))}
           </div>
           <div className="chat-input">
             <textarea
-              type="text"
               placeholder={`Tuliskan sesuatu `}
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
+              value={newMessage}
+              onChange={(e) => setNewMessage(e.target.value)}
             />
             <div className="chat-input-button">
               <button className="chat-button">
@@ -205,6 +228,7 @@ function Message() {
                   width={23}
                   height={23}
                   color="white"
+                  onClick={handleSubmit}
                 />
               </button>
             </div>

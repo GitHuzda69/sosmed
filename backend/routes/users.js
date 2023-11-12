@@ -18,6 +18,28 @@ router.get("/", async (req, res) => {
     }
   });
 
+//get 2 user
+router.get("/", async (req, res) => {
+  try {
+    const userIds = req.query.userId;
+
+    if (!userIds || !Array.isArray(userIds)) {
+      return res.status(400).json({ message: "Invalid userId parameter" });
+    }
+
+    const users = await User.find({ _id: { $in: userIds } });
+
+    const result = users.map((user) => {
+      const { password, updatedAt, ...other } = user._doc;
+      return other;
+    });
+
+    res.status(200).json(result);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 
   // update user   
   router.put("/:id", async (req, res) => {
