@@ -225,14 +225,73 @@
     color: white;
   }
 
-  /*buat messages*/
+  /*buat messages*/ 
   .dark-mode .main-messages{
     background-color: #2F2F2F;
-  }
+  } 
   .dark-mode .input-search-friend{
     background-color: #1E1E1E;
     border: 1px white solid;
     color: white;
+  }
+  .dark-mode .message-friend-container{
+    background-color: #1E1E1E;
+  }
+  .dark-mode .search-message-friend{
+    background-color: #2F2F2F;
+  } 
+  .dark-mode .message-friend-bar button{
+    background-color: transparent;
+    color: white;
+  }
+  .dark-mode .chat-profile{
+    background-color: #2F2F2F;
+    color: white;
+  }
+  .dark-mode .chat-status{
+    color: white;
+  }
+  .dark-mode .chat-profile-button button{
+    color: white;
+  }
+  .dark-mode .message-chat-container{
+    background-color: #000000;
+  }
+  .dark-mode .chat-self{
+    background-color: white;
+    color: black;
+  }
+  .dark-mode .chat-other{
+    background-color: #2F2F2F;
+    color: white;
+  }
+
+  .dark-mode .chat-input{
+    background-color: transparent;
+  }
+  .dark-mode .chat-input textarea{
+    background-color: #2F2F2F;
+    border: none;
+  }
+  .dark-mode .chat-input-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #2F2F2F;
+    border-radius: 15px;
+    margin-top: 0px;
+    margin-left: 10px;
+    padding-top: 10px;
+    padding-right: 5px;
+  }
+  .dark-mode .chat-button{
+    color: white;
+  }
+  .dark-mode .chat-button:hover{
+    background-color: #5C5C5C;
+  }
+  .dark-mode .post-chat:hover{
+    background-color: #5C5C5C;
   }
 
   /*buat frendlist*/
