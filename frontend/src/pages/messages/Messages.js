@@ -155,21 +155,23 @@ function Message() {
         </div>
         <div className="message-friend-bar">
           {conversations.map((friend) => (
-            <button key={friend._id} onClick={() => setCurrentChat(friend)}>
-              <div className="message-friend">
-                <img
-                  className="message-friend-avatar"
-                  src={
-                    user && user.profilePicture
-                      ? PF + user.profilePicture
-                      : defaultprofile
-                  }
-                  alt="nana"
-                />
-                <div className="message-friend-bio">
-                  <h2>{user && user.displayname}</h2>
-                  <h3>{user && user.desc}</h3>
-                </div>
+            <button
+              className="message-friend"
+              key={friend._id}
+              onClick={() => setCurrentChat(friend)}
+            >
+              <img
+                className="message-friend-avatar"
+                src={
+                  user && user.profilePicture
+                    ? PF + user.profilePicture
+                    : defaultprofile
+                }
+                alt="nana"
+              />
+              <div className="message-friend-bio">
+                <h2>{user && user.displayname}</h2>
+                <h3>{user && user.desc}</h3>
               </div>
             </button>
           ))}
@@ -260,7 +262,9 @@ function Message() {
           </div>
         </div>
       ) : (
-        <span className="not-chat">Open a Conversation</span>
+        <div className="pick-chat">
+          <span className="not-chat">Open a Conversation</span>
+        </div>
       )}
 
       <Sidebar

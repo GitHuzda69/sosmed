@@ -401,19 +401,18 @@ const Post = ({
         <div className="info">
           <div className="item">
             {isLiked ? (
-              <>
+              <div className="liked-post">
                 <Icon
                   className="icon"
                   icon="iconamoon:like-fill"
                   width={25}
                   height={25}
-                  color={"black"}
                   onClick={handleLike}
                 />
-                <h3>{like} Likes</h3>
-              </>
+                <h3>{like}</h3>
+              </div>
             ) : (
-              <>
+              <div className="like-post">
                 <Icon
                   className="icon"
                   icon="iconamoon:like-light"
@@ -421,7 +420,8 @@ const Post = ({
                   height={25}
                   onClick={handleLike}
                 />
-              </>
+                <h3>{like}</h3>
+              </div>
             )}
           </div>
           <div className="item" onClick={() => setCommentOpen(!commentOpen)}>
