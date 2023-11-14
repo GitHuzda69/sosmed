@@ -8,7 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import { makeRequest } from "../../axios.js";
 import { AuthContext } from "../../context/authContext.js";
 import { Icon } from "@iconify/react";
-import {io} from "socket.io-client"
+import { io } from "socket.io-client";
 
 import defaultprofile from "../../assets/profile/default_avatar.png";
 import { format } from "timeago.js";
@@ -25,10 +25,11 @@ function Message() {
   const [messages, setMessages] = useState([]);
   const { user: currentUser } = useContext(AuthContext);
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const PF = process.env.REACT_APP_PUBLIC_FOLDER
-  const friendid = conversations.map((friend) => ( friend.members ))
-  const idSolo = friendid.find((member) => (member) );
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+  const friendid = conversations.map((friend) => friend.members);
+  const idSolo = friendid.find((member) => member);
   const isMessagesPage = true;
+  const [chatHeight, setChatHeight] = useState("80vh");
 
   const toggleSettings = () => {
     setSettingOpen(!settingOpen);
@@ -41,7 +42,9 @@ function Message() {
   useEffect(() => {
     const getUser = async () => {
       try {
-        const res = await makeRequest.get("/users?userId[0]=" + idSolo[0] + "&userId[1]=" + idSolo[1]);
+        const res = await makeRequest.get(
+          "/users?userId[0]=" + idSolo[0] + "&userId[1]=" + idSolo[1]
+        );
         setUser(res.data);
       } catch (err) {
         console.log(err);
@@ -50,7 +53,7 @@ function Message() {
     getUser();
   }, [currentUser, conversations]);
 
-   useEffect(() => {
+  useEffect(() => {
     const getConversations = async () => {
       try {
         const res = await makeRequest.get("/conversations/" + currentUser._id);
@@ -75,14 +78,30 @@ function Message() {
   }, [currentChat]);
 
   useEffect(() => {
-    setSocket(io("ws://localhost:8900"))
-  }, [])
+    setSocket(io("ws://localhost:8900"));
+  }, []);
 
   useEffect(() => {
     const storedDarkModeStatus = localStorage.getItem("isDarkMode") === "true";
     setIsDarkMode(storedDarkModeStatus);
 
     setDarkMode(storedDarkModeStatus);
+  }, []);
+
+  useEffect(() => {
+    const updateChatHeight = () => {
+      const windowHeight = window.innerHeight;
+      const headerHeight = 0;
+      const newChatHeight = windowHeight - headerHeight + "px";
+      setChatHeight(newChatHeight);
+    };
+
+    window.addEventListener("resize", updateChatHeight);
+    updateChatHeight();
+
+    return () => {
+      window.removeEventListener("resize", updateChatHeight);
+    };
   }, []);
 
   const setDarkMode = (isDarkMode) => {
@@ -108,7 +127,6 @@ function Message() {
       conversationId: currentChat._id,
     };
 
-
     try {
       const res = await makeRequest.post("/messages", message);
       setMessages([...messages, res.data]);
@@ -119,10 +137,10 @@ function Message() {
   };
 
   return (
-    <div className="main-messages">
+    <div className="main-messages" style={{ height: chatHeight }}>
       <div className="message-friend-container">
-        <h1>Messages</h1>
         <div className="search-message-friend">
+          <h1>Messages</h1>
           <Icon
             icon="octicon:search-16"
             className="searchbar-message-friend-button"
@@ -137,41 +155,46 @@ function Message() {
         </div>
         <div className="message-friend-bar">
           {conversations.map((friend) => (
-                <button key={friend._id} onClick={() => setCurrentChat(friend)}>
-                  <div className="message-friend">
-                    <img
-                      className="message-friend-avatar"
-                      src={user &&
-                        user.profilePicture
-                          ? PF + user.profilePicture
-                          : defaultprofile
-                      }
-                    />
-                    <div className="message-friend-bio">
-                      <h2>{user && user.displayname}</h2>
-                      <h3>{user && user.desc}</h3>
-                    </div>
-                  </div>
-                </button>
-              ))}
+            <button
+              className="message-friend"
+              key={friend._id}
+              onClick={() => setCurrentChat(friend)}
+            >
+              <img
+                className="message-friend-avatar"
+                src={
+                  user && user.profilePicture
+                    ? PF + user.profilePicture
+                    : defaultprofile
+                }
+                alt="nana"
+              />
+              <div className="message-friend-bio">
+                <h2>{user && user.displayname}</h2>
+                <h3>{user && user.desc}</h3>
+              </div>
+            </button>
+          ))}
         </div>
       </div>
 
       {currentChat ? (
         <div className="message-chat-container">
           <div className="chat-profile">
-            <img
-              className="chat-avatar"
-              src={
-                currentChat.profilePicture
-                  ? PF + currentChat.profilePicture
-                  : defaultprofile
-              }
-              alt={currentChat.displayname}
-            />
-            <div className="chat-status">
-              <h2>{currentChat.displayname}</h2>
-              <h3>{currentChat.desc}</h3>
+            <div className="avatar-status-container">
+              <img
+                className="chat-avatar"
+                src={
+                  currentChat.profilePicture
+                    ? PF + currentChat.profilePicture
+                    : defaultprofile
+                }
+                alt={currentChat.displayname}
+              />
+              <div className="chat-status">
+                <h2>{currentChat.displayname}fevtrvr</h2>
+                <h3>{currentChat.desc}fdcd</h3>
+              </div>
             </div>
             <div className="chat-profile-button">
               <button>
@@ -195,12 +218,17 @@ function Message() {
               <h3>Today</h3>
             </div>
             {messages.map((m) => (
-                  <div key={m.id} className={m.sender !== currentUser._id ? "chat-other" : "chat-self"}>
-                    <h3>{m.sender}</h3>
-                    <h4>{m.text}</h4>
-                    <h5>{format(m.createdAt)}</h5>
-                  </div>
-                ))}
+              <div
+                key={m.id}
+                className={
+                  m.sender !== currentUser._id ? "chat-self" : "chat-other"
+                }
+              >
+                <h3>{m.sender}</h3>
+                <h4>{format(m.createdAt)}</h4>
+                <h5>{m.text}</h5>
+              </div>
+            ))}
           </div>
           <div className="chat-input">
             <textarea
@@ -222,20 +250,21 @@ function Message() {
                   height={25}
                 />
               </button>
-              <button className="post-chat">
+              <button className="post-chat" onClick={handleSubmit}>
                 <Icon
                   icon="icon-park-outline:send-one"
                   width={23}
                   height={23}
                   color="white"
-                  onClick={handleSubmit}
                 />
               </button>
             </div>
           </div>
         </div>
       ) : (
-        <span className="not-chat">Open a Conversation</span>
+        <div className="pick-chat">
+          <span className="not-chat">Open a Conversation</span>
+        </div>
       )}
 
       <Sidebar
