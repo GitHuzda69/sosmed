@@ -45,6 +45,10 @@
   .dark-mode .uploadButton:hover{
     background-color: #5C5C5C;
   }
+  .dark-mode .selected-file-info{
+    background-color: white;
+    color: black;
+  }
 
   /*buat setting*/ 
   .dark-mode .settings-popup{  
@@ -74,18 +78,11 @@
     background-color: transparent;
   }
   .dark-mode .opsi-post-button:hover{
-    background-color: rgb(40, 40, 40);
-  }
+    background-color: #5C5C5C;
+  } 
   .dark-mode .post-option-popup-self{
     background-color: rgb(50, 50, 50); 
-  }
-  .dark-mode .post-option-popup-self button{
-    background-color: transparent;
-    color: white;
   } 
-  .dark-mode .post-option-popup-self button:hover{
-    background-color: #5C5C5C;
-  }
   .dark-mode .post-option-popup-other{
     background-color: rgb(50, 50, 50); 
   }
@@ -109,18 +106,73 @@
     background-color: #5C5C5C;
     border: 1px white solid;
     color: white;
+  } 
+  .edit-post1{
+    color: white;
   }
-  .dark-mode .edit-post-content button{
-    background-color: #5C5C5C;
+
+  .dark-mode .del-img-edit-post{
     border-radius: 10px;
+    background-color: darkred;
+    color: white;
   }
-  .dark-mode .edit-post-content button:hover{
-    background-color: #2F2F2F;
+  .dark-mode .del-img-edit-post:hover{
+    border-radius: 10px;
+    background-color: red;
+    color: white;
+  }
+  .dark-mode .save-edit-post{
+    margin-top: -10px;
+    border-radius: 10px;
+    background-color: white;
+    color: black;
+  }
+  .dark-mode .save-edit-post:hover{
+    border-radius: 10px;
+    background-color: #5C5C5C;
+    color: white;
+  }
+  .dark-mode .close-edit-post{
+    margin-top: -10px;
+    border-radius: 10px;
+    background-color: white;
+    color: black;
+  }
+  .dark-mode .close-edit-post:hover{
+    border-radius: 10px;
+    background-color: #5C5C5C;
+    color: white;
   }
 
     /*buat commento & comments */
+  .dark-mode .write{
+    background-color: #1E1E1E;
+  }
   .dark-mode .write1{
     background-color: #1E1E1E;
+  }
+  .dark-mode .uploadItem-comment:hover{
+    background-color: #5C5C5C;
+  }
+  .dark-mode .selected-file-comment{
+    background-color: #1E1E1E;
+  }
+  .dark-mode .selected-image-comment{
+    border: 1px white solid;
+  }
+  .dark-mode .clear-file-button-comment{
+    color: white;
+  }
+  .dark-mode .img-button-comments{
+    background-color: transparent;
+  } 
+  .dark-mode .save-edit-comment{
+    background-color: white;
+    color: black;
+  }
+  .dark-mode .close-edit-comment{
+    background-color: white;
+    color: black;
   }
   .dark-mode .input-comment{
     background-color: #2F2F2F; 
@@ -136,6 +188,9 @@
   }
   .dark-mode .button-comment-desc{
     color: white;
+  }
+  .dark-mode .button-comment-desc:hover{
+    background-color: #5C5C5C;
   }
   .dark-mode .post-option-popup-self-comment{
     background-color: rgb(50, 50, 50); 
@@ -164,14 +219,7 @@
     background-color: #5C5C5C;
     color: white;
     border: 1px white solid;
-  }
-  .dark-mode .edit-comment-content button{
-    background-color: #5C5C5C;
-    border-radius: 10px;
-  }
-  .dark-mode .edit-comment-content button:hover{
-    background-color: #2F2F2F;
-  }
+  }  
 
     /*buat home*/ 
   .dark-mode .home{ 
@@ -240,7 +288,7 @@
   .dark-mode .search-message-friend{
     background-color: #2F2F2F;
   } 
-  .dark-mode .message-friend-bar button{
+  .dark-mode .message-friend{
     background-color: transparent;
     color: white;
   }
@@ -271,6 +319,7 @@
   }
   .dark-mode .chat-input textarea{
     background-color: #2F2F2F;
+    color: white;
     border: none;
   }
   .dark-mode .chat-input-button{
