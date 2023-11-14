@@ -43,15 +43,17 @@ function Message() {
     const getUser = async () => {
       try {
         const res = await makeRequest.get(
-          "/users?userId[0]=" + idSolo[0] + "&userId[1]=" + idSolo[1]
+          `/users/touser?userId1=${idSolo[0]}&userId2=${idSolo[1]}`, 
+          { data: { currentUser: currentUser._id } } 
         );
-        setUser(res.data);
+        setUser(res.data); 
+        console.log(res.data);
       } catch (err) {
         console.log(err);
       }
     };
     getUser();
-  }, [currentUser, conversations]);
+  }, [currentUser, idSolo]);
 
   useEffect(() => {
     const getConversations = async () => {
@@ -70,6 +72,7 @@ function Message() {
       try {
         const res = await makeRequest.get("/messages/" + currentChat?._id);
         setMessages(res.data);
+
       } catch (err) {
         console.log(err);
       }
@@ -122,7 +125,7 @@ function Message() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const message = {
-      sender: user._id,
+      sender: currentUser._id,
       text: newMessage,
       conversationId: currentChat._id,
     };
@@ -135,7 +138,7 @@ function Message() {
       console.log(err);
     }
   };
-
+  console.log(currentUser._id)
   return (
     <div className="main-messages" style={{ height: chatHeight }}>
       <div className="message-friend-container">
@@ -154,7 +157,7 @@ function Message() {
           />
         </div>
         <div className="message-friend-bar">
-          {conversations.map((friend) => (
+          {conversations ? conversations.map((friend) => (
             <button
               className="message-friend"
               key={friend._id}
@@ -174,7 +177,7 @@ function Message() {
                 <h3>{user && user.desc}</h3>
               </div>
             </button>
-          ))}
+          )) : <h1>Go make conversations with someone</h1>}
         </div>
       </div>
 
@@ -185,15 +188,15 @@ function Message() {
               <img
                 className="chat-avatar"
                 src={
-                  currentChat.profilePicture
-                    ? PF + currentChat.profilePicture
+                  user.profilePicture
+                    ? PF + user.profilePicture
                     : defaultprofile
                 }
-                alt={currentChat.displayname}
+                alt={user.displayname}
               />
               <div className="chat-status">
-                <h2>{currentChat.displayname}fevtrvr</h2>
-                <h3>{currentChat.desc}fdcd</h3>
+                <h2>{user.displayname}</h2>
+                <h3>{user.desc}</h3>
               </div>
             </div>
             <div className="chat-profile-button">
@@ -221,12 +224,11 @@ function Message() {
               <div
                 key={m.id}
                 className={
-                  m.sender !== currentUser._id ? "chat-self" : "chat-other"
+                  m.sender === currentUser._id ? "chat-self" : "chat-other"
                 }
               >
-                <h3>{m.sender}</h3>
                 <h4>{format(m.createdAt)}</h4>
-                <h5>{m.text}</h5>
+                <h3>{m.text}</h3>
               </div>
             ))}
           </div>

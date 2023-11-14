@@ -48,9 +48,11 @@ const Comments = ({ postid, comment, friends }) => {
   const upload = async (file) => {
     try {
       const formData = new FormData();
+      const fileName = Date.now() + file.name;
+      formData.append("name", fileName);
       formData.append("file", file);
-      const res = await makeRequest.post("/upload", formData);
-      return res.data;
+      await makeRequest.post("/upload", formData);
+      return fileName;
     } catch (err) {
       console.log(err);
     }
@@ -98,7 +100,7 @@ const Comments = ({ postid, comment, friends }) => {
 
     try {
       const updatedComment = await makeRequest.put(
-        "/comments/" + editedComment._id,
+        "/comments/" + comment._id,
         editedComment
       );
 

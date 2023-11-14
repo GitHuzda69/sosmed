@@ -18,28 +18,34 @@ router.get("/", async (req, res) => {
     }
   });
 
-//get 2 user
-router.get("/", async (req, res) => {
-  try {
-    const userIds = req.query.userId;
+// get 2 user
+router.get("/touser", async (req, res) => {
+  const userId1 = req.query.userId1;
+  const userId2 = req.query.userId2;
 
-    if (!userIds || !Array.isArray(userIds)) {
-      return res.status(400).json({ message: "Invalid userId parameter" });
+  if (req.query.userId1 === req.body.currentUser) {
+    try {
+      const user2 = await User.findById(userId2);
+      const { password: password2, updatedAt: updatedAt2, ...other2 } = user2._doc;
+      res.status(200).json(other2);
+    } catch (err) {
+      return res.status(500).json(err);
     }
-
-    const users = await User.find({ _id: { $in: userIds } });
-
-    const result = users.map((user) => {
-      const { password, updatedAt, ...other } = user._doc;
-      return other;
-    });
-
-    res.status(200).json(result);
-  } catch (err) {
-    res.status(500).json(err);
+  } else if (req.query.userId2 === req.body.currentUser) {  
+    try {
+      const user1 = await User.findById(userId1);
+      const { password: password1, updatedAt: updatedAt1, ...other1 } = user1._doc;
+      res.status(200).json(other1);
+    } catch (err) {
+      return res.status(500).json(err);
+    }
+  } else {
+    const user2 = await User.findById(userId2);
+      const { password: password2, updatedAt: updatedAt2, ...other2 } = user2._doc;
+      res.status(200).json(other2);
+    // return res.status(403).json("UserId Not Found");
   }
 });
-
 
   // update user   
   router.put("/:id", async (req, res) => {

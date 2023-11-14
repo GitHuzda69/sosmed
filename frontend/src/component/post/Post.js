@@ -76,7 +76,7 @@ const Post = ({
 
   const handleLike = () => {
     try {
-      makeRequest.put("/posts/" + post._id, { userId: currentUser._id });
+      makeRequest.put("/likes/" + post._id + "/like", { userId: currentUser._id });
     } catch (err) {}
     setLike(isLiked ? like - 1 : like + 1);
     setIsLiked(!isLiked);
@@ -163,7 +163,7 @@ const Post = ({
     try {
       await makeRequest.post(`/conversations/`, {
         senderId: currentUser._id,
-        receiverId: post._id,
+        receiverId: post.userId,
       });
       navigate("/messages");
     } catch (err) {
@@ -202,17 +202,13 @@ const Post = ({
             <div className="userinfo">
               <Link
                 to={`/profile/${user.username}`}
-                style={{ textDecoration: "none", color: "inherit" }}
-              >
+                style={{ textDecoration: "none", color: "inherit" }}>
                 <img
                   className="profile"
                   src={
                     user.profilePicture
                       ? PF + user.profilePicture
-                      : defaultprofile
-                  }
-                  alt=""
-                />
+                      : defaultprofile}/>
               </Link>
               <div className="details">
                 <span className="name">{user.displayname}</span>
