@@ -176,7 +176,7 @@ const Commento = ({ postid, className }) => {
                 className="clear-file-button-comment"
                 onClick={clearSelectedFile}
               >
-                <Icon icon="ph:x-bold" color="black" width={15} height={15} />
+                <Icon icon="ph:x-bold" width={15} height={15} />
               </button>
             </div>
           )}

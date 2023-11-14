@@ -124,16 +124,27 @@
     padding: 5px;
     padding-top: 2px;
     margin-right: 20px;
+  }  
+  .delete-post{
+    background-color: transparent;
+    color: red;
   }
-  .post-option-popup-self button:hover{
-    background-color: lightgray;
-    border-radius: 5px;
+  .delete-post:hover{
+    background-color: red;
+    color: white;
+    border-radius: 10px;
   }
   .edit-post1{
-    z-index: 200;
+    background-color: transparent;
+    z-index: 20;
   }
   .edit-post2{
     z-index: 10;
+  } 
+  .edit-post1:hover, .edit-post2:hover{
+    background-color: #5c5c5c;
+    color: white;
+    border-radius: 10px;
   }
   
   .edit-post{
@@ -150,7 +161,7 @@
     flex-direction: column;
     gap: 10px; 
     z-index: 30;
-  }
+  } 
   .edit-post-warn{
     position: absolute;
     padding: 10px;
@@ -248,6 +259,8 @@
   }
   .like-post:hover{
     background-color: #82c3eb;
+    border-radius: 10px;
+    cursor: pointer;
   }
   .liked-post{
     height: 35px;
@@ -259,6 +272,7 @@
     gap: 10px; 
     border-radius: 10px;
     background-color: #24A0ED;
+    cursor: pointer;
   }
   
   .img-button-post {
@@ -310,4 +324,36 @@
     border-radius: 10px;
     object-fit: contain;
   }
-   
+
+  .del-img-edit-post{
+    border-radius: 10px;
+    background-color: darkred;
+    color: white;
+  }
+  .del-img-edit-post:hover{
+    border-radius: 10px;
+    background-color: red;
+    color: white;
+  }
+  .save-edit-post{
+    margin-top: -10px;
+    border-radius: 10px;
+    background-color: black;
+    color: white;
+  }
+  .save-edit-post:hover{
+    border-radius: 10px;
+    background-color: #5C5C5C;
+    color: white;
+  }
+  .close-edit-post{
+    margin-top: -10px;
+    border-radius: 10px;
+    background-color: black;
+    color: white;
+  }
+  .close-edit-post:hover{
+    border-radius: 10px;
+    background-color: #5C5C5C;
+    color: white;
+  }

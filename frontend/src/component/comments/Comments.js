@@ -212,17 +212,29 @@ const Comments = ({ postid, comment, friends }) => {
                   onChange={(e) => setEditedImgComment(e.target.files[0])}
                 />
                 {comment.img && comment.desc && (
-                  <div className="add-empty-desc-button">
-                    <button onClick={handleRemoveImgComment}>
-                      Hapus Gambar
-                    </button>
-                  </div>
+                  <button
+                    className="del-img-edit-comment"
+                    onClick={handleRemoveImgComment}
+                  >
+                    Hapus Gambar
+                  </button>
                 )}
                 <button
+                  className="save-edit-comment"
                   onClick={handleEditButtonClick}
                   disabled={isDescCommentEmpty}
                 >
                   Save
+                </button>
+                <button
+                  className="close-edit-comment"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setCommentEditOpen(false);
+                    setIsDescCommentEmpty(false);
+                  }}
+                >
+                  Close
                 </button>
               </form>
             </div>

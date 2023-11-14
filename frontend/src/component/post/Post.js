@@ -76,7 +76,9 @@ const Post = ({
 
   const handleLike = () => {
     try {
-      makeRequest.put("/likes/" + post._id + "/like", { userId: currentUser._id });
+      makeRequest.put("/likes/" + post._id + "/like", {
+        userId: currentUser._id,
+      });
     } catch (err) {}
     setLike(isLiked ? like - 1 : like + 1);
     setIsLiked(!isLiked);
@@ -202,13 +204,16 @@ const Post = ({
             <div className="userinfo">
               <Link
                 to={`/profile/${user.username}`}
-                style={{ textDecoration: "none", color: "inherit" }}>
+                style={{ textDecoration: "none", color: "inherit" }}
+              >
                 <img
                   className="profile"
                   src={
                     user.profilePicture
                       ? PF + user.profilePicture
-                      : defaultprofile}/>
+                      : defaultprofile
+                  }
+                />
               </Link>
               <div className="details">
                 <span className="name">{user.displayname}</span>
@@ -265,9 +270,9 @@ const Post = ({
                     ) : (
                       <div className="post-option-popup-self">
                         <button
+                          className="delete-post"
                           onClick={handleDelete}
                           style={{
-                            color: "red",
                             height: "24px",
                             display: "flex",
                             alignItems: "center",
@@ -285,25 +290,15 @@ const Post = ({
                             display: "flex",
                             alignItems: "center",
                             marginTop: "-4px",
+                            marginLeft: "1px",
                             gap: "5px",
                           }}
+                          onClick={() => {
+                            setPostEditOpen(!postEditOpen);
+                          }}
                         >
-                          <button
-                            className="edit-post2"
-                            style={{
-                              height: "14px",
-                              display: "flex",
-                              alignItems: "center",
-                              marginTop: "5px",
-                              gap: "5px",
-                            }}
-                            onClick={() => {
-                              setPostEditOpen(!postEditOpen);
-                            }}
-                          >
-                            <Icon icon="tabler:edit" height={20} width={20} />
-                            Edit Post
-                          </button>
+                          <Icon icon="tabler:edit" height={20} width={20} />
+                          Edit Post
                           {postEditOpen && (
                             <div className="edit-post">
                               {isDescEmpty && (
@@ -344,17 +339,29 @@ const Post = ({
                                   }
                                 />
                                 {post.img && post.desc && (
-                                  <div className="add-empty-desc-button">
-                                    <button onClick={handleRemoveImg}>
-                                      Hapus Gambar
-                                    </button>
-                                  </div>
+                                  <button
+                                    className="del-img-edit-post"
+                                    onClick={handleRemoveImg}
+                                  >
+                                    Hapus Gambar
+                                  </button>
                                 )}
                                 <button
+                                  className="save-edit-post"
                                   onClick={handleEdit}
                                   disabled={isDescEmpty}
                                 >
-                                  Post
+                                  Save
+                                </button>
+                                <button
+                                  className="close-edit-post"
+                                  onClick={(e) => {
+                                    e.preventDefault();
+                                    setPostEditOpen(false);
+                                    setIsDescEmpty(false);
+                                  }}
+                                >
+                                  Close
                                 </button>
                               </form>
                             </div>

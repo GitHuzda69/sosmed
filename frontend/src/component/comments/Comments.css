@@ -44,7 +44,7 @@
 .uploadItem-comment-row{
   display: flex;
   flex-direction: row;
-  margin-left: 5px;
+  margin-left: 5px; 
 }
 .uploadItem-comment {
   display: flex;
@@ -179,7 +179,7 @@
   background-color: lightgray;
 }
 .comments-content{
-  margin-top: 15px;
+  margin-top: 0px;
   margin-left: 50px;
 }
 .comments-content h4{
@@ -279,6 +279,7 @@
   border-radius: 5px;
 }
 .post-option-popup-self-comment {
+  position: relative;
   top: 0;
   width: 130px;
   height: 60px;
@@ -292,21 +293,23 @@
   padding: 5px;
   padding-top: 2px;
   margin-right: 20px;
-}
+} 
+
 .post-option-popup-self-comment button:hover{
   background-color: lightgray;
   border-radius: 5px;
 }
 
-.edit-comment{     
+.edit-comment {
+  position: absolute;
+  left: 500px;
   padding: 10px;
   background-color: white;
   border: 1px black solid;
   border-radius: 10px;
-  width: 300px; /* Sesuaikan dengan lebar yang diinginkan */
-  margin-top: 10px; /* Sesuaikan dengan jarak dari elemen di atasnya */
-  margin-left: -230px; /* Sesuaikan dengan jarak dari elemen sebelah kirinya */
-  z-index: 2;
+  width: 300px;
+  margin-top: 90px; 
+  z-index: 12;
 }
 .edit-comment-content{
   display: flex;
@@ -337,6 +340,38 @@
 .close-warn-comment:hover{
   width: 25px;
   height: 25px;
+}
+.del-img-edit-comment{
+  border-radius: 10px;
+  background-color: darkred;
+  color: white;
+}
+.del-img-edit-comment:hover{
+  border-radius: 10px;
+  background-color: red;
+  color: white;
+}
+.save-edit-comment{
+  margin-top: -5px;
+  border-radius: 10px;
+  background-color: black;
+  color: white;
+}
+.save-edit-comment:hover{
+  border-radius: 10px;
+  background-color: #5C5C5C;
+  color: white;
+}
+.close-edit-comment{
+  margin-top: -5px;
+  border-radius: 10px;
+  background-color: black;
+  color: white;
+}
+.close-edit-comment:hover{
+  border-radius: 10px;
+  background-color: #5C5C5C;
+  color: white;
 }
 .info-comment{
   display: flex;
