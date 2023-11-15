@@ -8,7 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import { makeRequest } from "../../axios.js";
 import { AuthContext } from "../../context/authContext.js";
 import { Icon } from "@iconify/react";
-import { io } from "socket.io-client";
+// import { io } from "socket.io-client";
 
 import defaultprofile from "../../assets/profile/default_avatar.png";
 import { format } from "timeago.js";
@@ -27,7 +27,7 @@ function Message() {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const friendid = conversations.map((friend) => friend.members);
-  const idSolo = friendid.find((member) => member);
+  const idSolo = friendid.find((m) => m);
   const isMessagesPage = true;
   const [chatHeight, setChatHeight] = useState("80vh");
 
@@ -43,8 +43,7 @@ function Message() {
     const getUser = async () => {
       try {
         const res = await makeRequest.get(
-          `/users/touser?userId1=${idSolo[0]}&userId2=${idSolo[1]}`,
-          { data: { currentUser: currentUser._id } }
+          `/users/${idSolo[0]}/${idSolo[1]}/${currentUser._id}`
         );
         setUser(res.data);
         console.log(res.data);
@@ -79,9 +78,9 @@ function Message() {
     getMessages();
   }, [currentChat]);
 
-  useEffect(() => {
-    setSocket(io("ws://localhost:8900"));
-  }, []);
+  // useEffect(() => {
+  //   setSocket(io("ws://localhost:8900"));
+  // }, []);
 
   useEffect(() => {
     const storedDarkModeStatus = localStorage.getItem("isDarkMode") === "true";
@@ -147,7 +146,8 @@ function Message() {
     }
   };
 
-  console.log(currentUser._id);
+  console.log(friendid);
+  console.log(idSolo);
   return (
     <div className="main-messages" style={{ height: chatHeight }}>
       <div className="message-friend-container">
