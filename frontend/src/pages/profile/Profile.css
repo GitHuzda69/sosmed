@@ -15,8 +15,8 @@
     padding-bottom: 40px;  
   }
   
-  .profil-container { 
-    width: 100%;
+  .profil-container {  
+    width: calc(100% - 320px);  
     position: relative;     
   }
   
@@ -71,12 +71,22 @@
     font-weight: bold;
     font-size: 28px;
   }
-  
   .profil-bio h4{
-    margin-top: -13px;
+    margin-top: -20px;
     font-family: "Inter";
     font-weight: 500;
     font-size: 18px;
+  }
+  .profil-bio button{
+    color: black; 
+    background-color: transparent;
+    font-family: "Inter";
+    font-weight: 500;
+    font-size: 18px;
+  }
+  .profil-bio button:hover{
+    background-color: #D5D5D5;
+    border-radius: 10px;
   }
   .profiluser-button {
     margin-top: 10px; 
@@ -90,7 +100,7 @@
   }
   .edit-profile-button{ 
     border-radius: 10px;
-    display: flex;
+    display: flex; 
     align-items: center;
     padding: 8px 15px;
     background-color: #DDDDDD;
@@ -355,10 +365,17 @@
     font-size: 15px;
     font-weight: bold;
   } 
+
+  .rightProfile-Container{
+    position: fixed;
+    height: 100%;
+    top: 0;
+    right: 0;
+  }
   .rightProfileBar{ 
     display: flex;
     flex-direction: column;
-    width: 330px;
+    width: 320px;
     height: 100%;
     background-color: white;
   }
@@ -566,23 +583,55 @@ background-color: rgb(54, 54, 54);
 border-radius: 7px;
 }
 
+.profile-switch-buttons{
+  margin-left: 45px;  
+  margin-bottom: -5px; 
+  background-color: transparent;  
+}
+.profile-switch-buttons button{
+  font-size: 20px;
+  margin-right: 30px;
+}
+.profile-switch-buttons button:hover{
+  border-radius: 5px 5px 0px 0px;
+}
+.bold-button-profile{
+  font-weight: bold;
+  font-family: "Inter"; 
+  border-bottom: 2px black solid;
+  background-color: transparent;
+} 
+.posts-profile-switch-button{ 
+  background-color: transparent; 
+}
+.posts-profile-switch-button:hover{
+  background-color: #D5D5D5; 
+}
+
+.following-profile-switch-button{
+  background-color: transparent;
+}
+.following-profile-switch-button:hover{
+  background-color: #D5D5D5;
+}
 
   /*css posts profile*/
 
   .posts-profile{
-    width: 100%; 
+    width: calc(100% - 35px);  
     margin-top: 10px;
     margin-left: 10px;
     padding-top: 0px;
+    padding-right: 5px;
     padding-bottom: 0px; 
-    overflow-x: hidden; 
+    overflow-x: hidden;  
   }
   .posts-profile .post-container{ 
     margin-bottom: 0px; 
     margin-left: -32px; 
   }
   .posts-profile .post{
-    width: 97%; 
+    width: 100%; 
     margin-left: 25px; 
   }
   .posts-profile .user{ 

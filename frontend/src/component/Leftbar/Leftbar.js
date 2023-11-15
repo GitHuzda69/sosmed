@@ -76,32 +76,6 @@ const Sidebar = ({
             </button>
           </Link>
         )}
-
-        {isFriendListPage ? (
-          <Link to="/friend">
-            <button className="friends-button">
-              <Icon
-                icon="ion:people"
-                hFlip={true}
-                width="35"
-                height="35"
-                color="white"
-              />
-            </button>
-          </Link>
-        ) : (
-          <Link to="/friend">
-            <button className="friends-button">
-              <Icon
-                icon="ion:people-outline"
-                hFlip={true}
-                width="35"
-                height="35"
-                color="white"
-              />
-            </button>
-          </Link>
-        )}
         <button onClick={toggleSettings}>
           <Icon
             icon="solar:settings-outline"
