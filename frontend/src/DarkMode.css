@@ -344,8 +344,8 @@
   }
 
   /*buat frendlist*/
-  .dark-mode .friendlist-main{
-    background-color: rgb(58, 58, 58);
+  .dark-mode .friendlist-container{
+    background-color: #1E1E1E;
   }
   .dark-mode .button-info{
     background-color: transparent;
@@ -361,11 +361,29 @@
   .dark-mode .profil-user{
     background-color: #1E1E1E;
   }
+  .dark-mode .profil-bio button{
+    color: white;
+  }
+  .dark-mode .profil-bio button:hover{
+    background-color: #5C5C5C;
+  }
   .dark-mode .rightProfileBar{ 
     background-color: #1E1E1E;
   }
   .dark-mode .rightBarNameProfile{
     color: white;
+  }
+  .dark-mode .profile-switch-buttons button{
+    color: white;
+  }
+  .dark-mode .bold-button-profile{
+    border-bottom: 2px white solid;
+  }
+  .dark-mode .posts-profile-switch-button:hover{
+    background-color: #5C5C5C;
+  }
+  .dark-mode .following-profile-switch-button:hover{
+    background-color: #5C5C5C;
   }
 
   /*buat update profile*/
