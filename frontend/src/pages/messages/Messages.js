@@ -11,7 +11,7 @@ import { Icon } from "@iconify/react";
 // import { io } from "socket.io-client";
 
 import defaultprofile from "../../assets/profile/default_avatar.png";
-import { format } from "timeago.js";
+import { format, isToday, isSameDay, isYesterday, isThisYear } from "date-fns";
 
 function Message() {
   const [settingOpen, setSettingOpen] = useState(false);
@@ -28,6 +28,7 @@ function Message() {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const isMessagesPage = true;
   const [chatHeight, setChatHeight] = useState("80vh");
+  const [displayedDate, setDisplayedDate] = useState(null);
 
   const toggleSettings = () => {
     setSettingOpen(!settingOpen);
@@ -36,7 +37,7 @@ function Message() {
   const toggleLogout = () => {
     setLogoutOpen(!logoutOpen);
   };
-  
+
   useEffect(() => {
     const getConversations = async () => {
       try {
@@ -48,16 +49,18 @@ function Message() {
     };
     getConversations();
   }, [currentUser._id]);
-  
+
   useEffect(() => {
     const getUser = async () => {
       try {
-        const friendids = conversations.flatMap((conversation) => conversation.members);
+        const friendids = conversations.flatMap(
+          (conversation) => conversation.members
+        );
         const userDataArray = [];
-  
+
         for (const friendId of friendids) {
           if (friendId === currentUser._id) continue;
-  
+
           const res = await makeRequest.get("/users?userId=" + friendId);
           userDataArray.push(res.data);
           setUser(userDataArray);
@@ -66,11 +69,10 @@ function Message() {
         console.log(err);
       }
     };
-  
+
     getUser();
   }, [conversations, currentUser]);
-  
-  
+
   useEffect(() => {
     const getMessages = async () => {
       try {
@@ -150,6 +152,17 @@ function Message() {
       }
     }
   };
+
+  useEffect(() => {
+    // Find the first message with a valid date
+    const firstMessageWithDate = messages.find((m) => m.createdAt);
+
+    // Update displayed date if it exists
+    if (firstMessageWithDate) {
+      setDisplayedDate(new Date(firstMessageWithDate.createdAt));
+    }
+  }, [messages]);
+
   return (
     <div className="main-messages" style={{ height: chatHeight }}>
       <div className="message-friend-container">
@@ -168,13 +181,15 @@ function Message() {
           />
         </div>
         <div className="message-friend-bar">
-            {user && user.length > 0 ? (
-            conversations.map((conversation) =>  {
+          {user && user.length > 0 ? (
+            conversations.map((conversation) => {
               // Mendapatkan anggota pertama dari percakapan
-              const friendId = conversation.members.find((member) => member !== currentUser._id);
+              const friendId = conversation.members.find(
+                (member) => member !== currentUser._id
+              );
 
               // Mendapatkan data pengguna berdasarkan friendId
-              const friendUser =  user.find((u) => u._id === friendId);
+              const friendUser = user.find((u) => u._id === friendId);
 
               return (
                 <button
@@ -241,20 +256,37 @@ function Message() {
             </div>
           </div>
           <div className="chat">
-            <div className="chat-time">
-              <h3>Today</h3>
-            </div>
-            {messages.map((m) => (
-              <div
-                key={m.id}
-                className={
-                  m.sender === currentUser._id ? "chat-self" : "chat-other"
-                }
-              >
-                <h3>{m.text}</h3>
-                <h4>{format(m.createdAt)}</h4>
-              </div>
-            ))}
+            {messages.map((m, index) => {
+              const previousMessage = messages[index - 1];
+              const showDate =
+                !previousMessage ||
+                !isSameDay(
+                  new Date(previousMessage.createdAt),
+                  new Date(m.createdAt)
+                );
+
+              return (
+                <React.Fragment key={m.id}>
+                  {showDate && (
+                    <div className="chat-time">
+                      <h3>
+                        {isToday(new Date(m.createdAt))
+                          ? "Today"
+                          : format(new Date(m.createdAt), "MMMM dd, yyyy")}
+                      </h3>
+                    </div>
+                  )}
+                  <div
+                    className={
+                      m.sender === currentUser._id ? "chat-self" : "chat-other"
+                    }
+                  >
+                    <h3>{m.text}</h3>
+                    <h4>{format(new Date(m.createdAt), "hh:mm a")}</h4>
+                  </div>
+                </React.Fragment>
+              );
+            })}
           </div>
           <div className="chat-input">
             <textarea
