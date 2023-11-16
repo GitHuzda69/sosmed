@@ -12,6 +12,7 @@ import Sidebar from "../../component/Leftbar/Leftbar";
 import Settings from "../../component/Settings/Settings";
 import Logout from "../../component/Logout/Logout";
 import Update from "../../component/Update/Update.js";
+import FriendList from "../../component/friendlist/FriendsList.js";
 
 import defaultprofile from "../../assets/profile/default_avatar.png";
 import defaultcover from "../../assets/profile/default_banner.jpg";
@@ -28,6 +29,8 @@ const Profile = () => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const username = useParams().username;
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [showPosts, setShowPosts] = useState(true);
+  const [showFollowing, setShowFollowing] = useState(false);
 
   const [followed, setFollowed] = useState(
     currentUser.followings.includes(user?._id)
@@ -119,6 +122,16 @@ const Profile = () => {
       : text;
   };
 
+  const togglePosts = () => {
+    setShowPosts(true);
+    setShowFollowing(false);
+  };
+
+  const toggleFollowing = () => {
+    setShowPosts(false);
+    setShowFollowing(true);
+  };
+
   return (
     <div className={`app ${isDarkMode ? "dark-mode" : ""}`}>
       <div className="profile-main">
@@ -195,9 +208,29 @@ const Profile = () => {
                 <div className="profil-bio">
                   <h2>{user && user.displayname}</h2>
                   <h4>
-                    {user.followers ? user.followers.length : "Loading"}{" "}
-                    Follower
+                    <button onClick={toggleFollowing}>
+                      {user.followers ? user.followers.length : "Loading"}{" "}
+                      Follower
+                    </button>
                   </h4>
+                </div>
+                <div className="profile-switch-buttons">
+                  <button
+                    onClick={togglePosts}
+                    className={`posts-profile-switch-button ${
+                      showPosts ? "bold-button-profile" : ""
+                    }`}
+                  >
+                    Posts
+                  </button>
+                  <button
+                    onClick={toggleFollowing}
+                    className={`following-profile-switch-button ${
+                      showFollowing ? "bold-button-profile" : ""
+                    }`}
+                  >
+                    Follower
+                  </button>
                 </div>
               </div>
               <div className="profiluser-button">
@@ -250,9 +283,12 @@ const Profile = () => {
                 )}
               </div>
             </div>
-            <Posts username={username} className="posts-profile" />
+            {showPosts && (
+              <Posts username={username} className="posts-profile" />
+            )}
+            {showFollowing && <FriendList />}
           </div>
-          <div>
+          <div className="rightProfile-Container">
             <div className="rightProfileBar">
               <div className="search-profile">
                 <input
