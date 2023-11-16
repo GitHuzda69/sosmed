@@ -119,7 +119,6 @@ const Profile = () => {
       : text;
   };
 
-  console.log(user);
   return (
     <div className={`app ${isDarkMode ? "dark-mode" : ""}`}>
       <div className="profile-main">

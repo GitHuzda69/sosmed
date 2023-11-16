@@ -26,8 +26,6 @@ function Message() {
   const { user: currentUser } = useContext(AuthContext);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-  const friendid = conversations.map((friend) => friend.members);
-  const idSolo = friendid.find((m) => m);
   const isMessagesPage = true;
   const [chatHeight, setChatHeight] = useState("80vh");
 
@@ -38,22 +36,7 @@ function Message() {
   const toggleLogout = () => {
     setLogoutOpen(!logoutOpen);
   };
-
-  useEffect(() => {
-    const getUser = async () => {
-      try {
-        const res = await makeRequest.get(
-          `/users/${idSolo[0]}/${idSolo[1]}/${currentUser._id}`
-        );
-        setUser(res.data);
-        console.log(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getUser();
-  }, [currentUser, idSolo]);
-
+  
   useEffect(() => {
     const getConversations = async () => {
       try {
@@ -65,7 +48,29 @@ function Message() {
     };
     getConversations();
   }, [currentUser._id]);
-
+  
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        const friendids = conversations.flatMap((conversation) => conversation.members);
+        const userDataArray = [];
+  
+        for (const friendId of friendids) {
+          if (friendId === currentUser._id) continue;
+  
+          const res = await makeRequest.get("/users?userId=" + friendId);
+          userDataArray.push(res.data);
+          setUser(userDataArray);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+  
+    getUser();
+  }, [conversations, currentUser]);
+  
+  
   useEffect(() => {
     const getMessages = async () => {
       try {
@@ -145,9 +150,6 @@ function Message() {
       }
     }
   };
-
-  console.log(friendid);
-  console.log(idSolo);
   return (
     <div className="main-messages" style={{ height: chatHeight }}>
       <div className="message-friend-container">
@@ -166,30 +168,37 @@ function Message() {
           />
         </div>
         <div className="message-friend-bar">
-          {conversations ? (
-            conversations.map((friend) => (
-              <button
-                className="message-friend"
-                key={friend._id}
-                onClick={() => setCurrentChat(friend)}
-              >
-                <img
-                  className="message-friend-avatar"
-                  src={
-                    user && user.profilePicture
-                      ? PF + user.profilePicture
-                      : defaultprofile
-                  }
-                  alt="nana"
-                />
-                <div className="message-friend-bio">
-                  <h2>{user && user.displayname}</h2>
-                  <h3>{user && user.desc}</h3>
-                </div>
-              </button>
-            ))
+            {user && user.length > 0 ? (
+            conversations.map((conversation) =>  {
+              // Mendapatkan anggota pertama dari percakapan
+              const friendId = conversation.members.find((member) => member !== currentUser._id);
+
+              // Mendapatkan data pengguna berdasarkan friendId
+              const friendUser =  user.find((u) => u._id === friendId);
+
+              return (
+                <button
+                  className="message-friend"
+                  onClick={() => setCurrentChat(conversation)}
+                >
+                  <img
+                    className="message-friend-avatar"
+                    src={
+                      friendUser && friendUser.profilePicture
+                        ? PF + friendUser.profilePicture
+                        : defaultprofile
+                    }
+                    alt="nana"
+                  />
+                  <div className="message-friend-bio">
+                    <h2>{friendUser && friendUser.displayname}</h2>
+                    <h3>{friendUser && friendUser.desc}</h3>
+                  </div>
+                </button>
+              );
+            })
           ) : (
-            <h1>Go make conversations with someone</h1>
+            <h1>Loading...</h1>
           )}
         </div>
       </div>

@@ -19,22 +19,18 @@ router.get("/", async (req, res) => {
   });
 
 // get 2 user
-router.get("/:userId1/:userId2/:currentUser", async (req, res) => {
-  console.log(req.params.userId1)
-  console.log(req.params.userId2)
-  console.log(req.params.currentUser)
-  if (req.params.userId1 === req.params.currentUser) {
-      const user2 = await User.findById(req.params.userId2);
-      const { password: password2, updatedAt: updatedAt2, ...other2 } = user2._doc;
-      res.status(200).json(other2);
-    } else if (req.params.userId2 === req.params.currentUser) {  
-      const user1 = await User.findById(req.params.userId1);
-      const { password: password1, updatedAt: updatedAt1, ...other1 } = user1._doc;
-      res.status(200).json(other1); 
+router.get("/:userId/:currentUser", async (req, res) => {
+  const cleanUrl = req.params.userId.replace(/^\/|\/$/g, '');
+  const idsArray = cleanUrl.split(",");
+  if (idsArray[0] !== req.params.currentUser) {
+      const user = await User.findById(idsArray[0]);
+      const { password , updatedAt, ...other } = user._doc;
+      res.status(200).json(other);
+    } else if (idsArray[1] !== req.params.currentUser) {  
+      const user = await User.findById(idsArray[1]);
+      const { password, updatedAt, ...other } = user._doc;
+      res.status(200).json(other); 
   } else {
-    // const user2 = await User.findById(userId2);
-    //   const { password: password2, updatedAt: updatedAt2, ...other2 } = user2._doc;
-    //   res.status(200).json(other2);
     return res.status(403).json("UserId Not Found");
   }
 });
