@@ -7,18 +7,16 @@ router.post("/login", async (req, res) => {
   try {
     const user = await User.findOne({ username: req.body.username });
     if (!user) {
-      return res.status(400).json({ error: "Invalid credentials" });
+      return res.status(404).json("Wrong Username");
     }
 
     const validPassword = await bcrypt.compare(req.body.password, user.password);
     if (!validPassword) {
-      return res.status(400).json({ error: "Invalid credentials" });
+      return res.status(404).json("Wrong Password");
     }
-
     res.status(200).json(user);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Internal Server Error" });
+  } catch (err) {
+    return res.status(500).json({ err });
   }
 });
 

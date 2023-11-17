@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { makeRequest } from "../../axios.js";
 import { AuthContext } from "../../context/authContext.js";
 import { Icon } from "@iconify/react";
-import { format } from "timeago.js";
+import moment from "moment";
 import Commento from "../Commento/Commento.js";
 import Rightbar from "../rightbar/Rightbar.js";
 import HomeProfile from "../home-profile/home-profile";
@@ -217,7 +217,7 @@ const Post = ({
               </Link>
               <div className="details">
                 <span className="name">{user.displayname}</span>
-                <span className="date">{format(post.createdAt)}</span>
+                <span className="date">{moment(post.createdAt).fromNow()}</span>
               </div>
               <div className="options">
                 {openPostOption === post._id ? (

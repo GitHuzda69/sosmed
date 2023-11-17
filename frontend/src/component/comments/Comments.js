@@ -5,7 +5,7 @@ import AuthContext from "../../context/authContext.js";
 import { Icon } from "@iconify/react";
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import { makeRequest } from "../../axios";
-import { format } from "timeago.js";
+import moment from "moment";
 
 import defaultprofile from "../../assets/profile/default_avatar.png";
 
@@ -181,7 +181,7 @@ const Comments = ({ postid, comment, friends }) => {
             }
           />
           <span>{user && user.displayname}</span>
-          <h3>{format(comment.createdAt)}</h3>
+          <h3>{moment(comment.createdAt).fromNow()}</h3>
           {commentEditOpen && (
             <div className="edit-comment">
               {isDescCommentEmpty && (

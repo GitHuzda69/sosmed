@@ -11,7 +11,6 @@ const Login = () => {
   const { isFetching, dispatch } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
-  const [err, setErrors] = useState(null);
   const navigate = useNavigate();
 
   const handleLogin = (e) => {
@@ -28,7 +27,6 @@ const Login = () => {
       localStorage.removeItem("rememberMe");
       localStorage.removeItem("userData");
     }
-
     loginCall(userData, dispatch);
   };
 
@@ -125,9 +123,6 @@ const Login = () => {
               <button type="button" className="forgot-password-button">
                 Forgot Password
               </button>
-              <span className="loginError">
-                {err && err.response.statusText}
-              </span>
               <button
                 type="submit"
                 className="login"
