@@ -187,16 +187,16 @@
 }
 
 .chat::-webkit-scrollbar-thumb {
-  background-color: #999999;
+  background-color: transparent;
   border-radius: 10px;
 }
 
 .chat::-webkit-scrollbar-thumb:hover {
-  background-color: #777777;
+  background-color: transparent;
 }
 
 .chat::-webkit-scrollbar-track {
-  background-color: #ffffff;
+  background-color: transparent;
   border-radius: 10px;
 }
 

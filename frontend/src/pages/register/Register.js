@@ -10,7 +10,7 @@ const Register = () => {
   const displayname = useRef();
   const password = useRef();
   const history = useNavigate();
-  const [rememberMe, setRememberMe] = useState(false);
+  const [agreeStatus, setAgreeStatus] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
   const [inputs, setInputs] = useState({
@@ -22,9 +22,9 @@ const Register = () => {
   const [err, setErrors] = useState(null);
 
   useEffect(() => {
-    const rememberMeStatus = localStorage.getItem("rememberMe");
-    if (rememberMeStatus === "true") {
-      setRememberMe(true);
+    const agreeStatusFromLocalStorage = localStorage.getItem("agreeStatus");
+    if (agreeStatusFromLocalStorage === "true") {
+      setAgreeStatus(true);
     }
   }, []);
 
@@ -34,19 +34,30 @@ const Register = () => {
 
   const handleClick = async (e) => {
     e.preventDefault();
-      const user = {
-        username: username.current.value,
-        email: email.current.value,
-        displayname: displayname.current.value,
-        password: password.current.value,
-      };
-      try {
-        await axios.post("http://localhost:8800/api/auth/register", user);
-        history("/login");
-      } catch (err) {
-        console.log(err);
+
+    if (!agreeStatus) {
+      alert("Please agree to the Terms & Services Policy.");
+      return;
+    }
+
+    const user = {
+      username: username.current.value,
+      email: email.current.value,
+      displayname: displayname.current.value,
+      password: password.current.value,
+    };
+
+    try {
+      if (!agreeStatus) {
+        alert("Please agree to the Terms & Services Policy.");
+        return;
       }
-    
+
+      await axios.post("http://localhost:8800/api/auth/register", user);
+      history("/login");
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -159,18 +170,22 @@ const Register = () => {
               <input
                 type="checkbox"
                 className="checkbox-input-signup"
-                checked={rememberMe}
-                onChange={() => setRememberMe(!rememberMe)}
+                checked={agreeStatus}
+                onChange={() => setAgreeStatus(!agreeStatus)}
               />
               <h4>
-                I Agree with{" "}
+                I Agree with
                 <button type="button" className="terms-button">
                   Terms & Services
-                </button>{" "}
+                </button>
                 Policy
               </h4>
             </label>
-            <button className="sign-up" onClick={handleClick}>
+            <button
+              className="sign-up"
+              onClick={handleClick}
+              disabled={!agreeStatus}
+            >
               Sign Up
             </button>
             <div

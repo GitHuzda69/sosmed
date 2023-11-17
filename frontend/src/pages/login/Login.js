@@ -16,16 +16,34 @@ const Login = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    loginCall(
-      { username: username.current.value, password: password.current.value },
-      dispatch
-    );
+    const userData = {
+      username: username.current.value,
+      password: password.current.value,
+    };
+
+    if (rememberMe) {
+      localStorage.setItem("rememberMe", "true");
+      localStorage.setItem("userData", JSON.stringify(userData));
+    } else {
+      localStorage.removeItem("rememberMe");
+      localStorage.removeItem("userData");
+    }
+
+    loginCall(userData, dispatch);
   };
 
   useEffect(() => {
     const rememberMeStatus = localStorage.getItem("rememberMe");
     if (rememberMeStatus === "true") {
       setRememberMe(true);
+
+      const storedUserData = localStorage.getItem("userData");
+      if (storedUserData) {
+        const { username: storedUsername, password: storedPassword } =
+          JSON.parse(storedUserData);
+        username.current.value = storedUsername;
+        password.current.value = storedPassword;
+      }
     }
   }, []);
 
