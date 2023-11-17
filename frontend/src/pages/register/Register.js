@@ -12,6 +12,8 @@ const Register = () => {
   const history = useNavigate();
   const [agreeStatus, setAgreeStatus] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [popupVisible, setPopupVisible] = useState(false);
+  const [dataPopupVisible, setDataPopupVisible] = useState(false);
 
   const [inputs, setInputs] = useState({
     username: "",
@@ -36,7 +38,17 @@ const Register = () => {
     e.preventDefault();
 
     if (!agreeStatus) {
-      alert("Please agree to the Terms & Services Policy.");
+      setPopupVisible(true);
+      return;
+    }
+
+    if (
+      !inputs.username ||
+      !inputs.email ||
+      !inputs.displayname ||
+      !inputs.password
+    ) {
+      setDataPopupVisible(true);
       return;
     }
 
@@ -48,16 +60,19 @@ const Register = () => {
     };
 
     try {
-      if (!agreeStatus) {
-        alert("Please agree to the Terms & Services Policy.");
-        return;
-      }
-
       await axios.post("http://localhost:8800/api/auth/register", user);
       history("/login");
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const handleClosePopup = () => {
+    setPopupVisible(false);
+  };
+
+  const handleDataPopupClose = () => {
+    setDataPopupVisible(false);
   };
 
   return (
@@ -181,11 +196,7 @@ const Register = () => {
                 Policy
               </h4>
             </label>
-            <button
-              className="sign-up"
-              onClick={handleClick}
-              disabled={!agreeStatus}
-            >
+            <button className="sign-up" onClick={handleClick}>
               Sign Up
             </button>
             <div
@@ -205,6 +216,22 @@ const Register = () => {
           </form>
         </div>
       </div>
+      {popupVisible && (
+        <div className="popup-logout-container">
+          <div className="popup-register">
+            <p>Please agree to the Terms & Services Policy.</p>
+            <button onClick={handleClosePopup}>Close</button>
+          </div>
+        </div>
+      )}
+      {dataPopupVisible && (
+        <div className="popup-logout-container">
+          <div className="popup-register">
+            <p>Please enter all required information.</p>
+            <button onClick={handleDataPopupClose}>Close</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -73,17 +73,17 @@
   margin-left: 10px;
   margin-bottom: 6px;
   background-color: white;
-}
+} 
 .rightBarLinkProfile{
   display: flex;
-  flex-direction: row;
-  text-decoration: none;
+  flex-direction: row; 
   background-color: transparent;
-  padding: 5px; 
+  padding: 5px;  
+  text-decoration: none;
+  color: inherit;
 }
-.rightBarLinkProfile:hover{
-  border-radius: 10px;
-  background-color: #5C5C5C;
+.rightBarLinkProfile:hover {
+  text-decoration: underline;
 }
 .rightBarUserInfo {
     width: 60px;
@@ -135,9 +135,8 @@
     font-weight: bold;
     font-family: "Inter" ; 
     color: black;
-}
-.link-rightbar{
-  text-decoration: none;
+} 
+.link-rightbar{ 
   margin-left: auto;
 }
 .rightBarButton {
