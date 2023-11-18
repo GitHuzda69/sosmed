@@ -1,4 +1,4 @@
-<h1 align="center" >Project SMD ()</h1>
+<h1 align="center" >Project SMD (Sync, Manage, and Direct)</h1>
 
 ### Sebelum memulai PASTIKAN
 
@@ -20,7 +20,7 @@ MONGO_URL = <your_database_ link>
 
 
 
-# Dokumentasi
+### Dokumentasi
 
 [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started)
 
