@@ -510,3 +510,33 @@
     background: #f1f1f1;
     border-radius: 40px;
   }
+
+  .popup-register {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: Black;
+    color: white;
+    padding: 20px; 
+    border-radius: 20px; 
+    z-index: 200;
+    font-family: "Inter"; 
+    font-size: 18px;
+  }
+  
+  .popup-register-content {
+    text-align: center;
+  }
+  
+  .popup-register button {
+    margin-top: 10px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .popup-register button:hover{ 
+    background-color: #DBDBDB;
+    border-radius: 10px;
+  }
+  

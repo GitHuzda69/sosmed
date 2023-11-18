@@ -190,6 +190,12 @@ function Message() {
 
               // Mendapatkan data pengguna berdasarkan friendId
               const friendUser = user.find((u) => u._id === friendId);
+              const truncatedDesc =
+                friendUser && friendUser.desc
+                  ? friendUser.desc.length > 30
+                    ? friendUser.desc.slice(0, 30) + "..."
+                    : friendUser.desc
+                  : "";
 
               return (
                 <button
@@ -207,7 +213,7 @@ function Message() {
                   />
                   <div className="message-friend-bio">
                     <h2>{friendUser && friendUser.displayname}</h2>
-                    <h3>{friendUser && friendUser.desc}</h3>
+                    <h3>{truncatedDesc}</h3>
                   </div>
                 </button>
               );
