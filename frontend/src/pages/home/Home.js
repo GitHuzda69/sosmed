@@ -1,41 +1,96 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Sidebar from "../../component/Leftbar/Leftbar.js";
 import Rightbar from "../../component/rightbar/Rightbar.js";
 import SearchBar from "../../component/search/Search";
 import Settings from "../../component/Settings/Settings.js";
 import "./Home.css";
 import "../../component/Settings/Settings.css";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import "../../component/Logout/Logout.css";
 import Posts from "../../component/posts/Posts";
 import Upload from "../../component/Upload/Upload.js";
-
-const queryClient = new QueryClient();
+import Logout from "../../component/Logout/Logout.js";
+import FypSwitch from "../../component/fyp-button/fyp-switch.js";
+import HomeProfile from "../../component/home-profile/home-profile.js";
 
 function Home() {
   const [settingOpen, setSettingOpen] = useState(false);
+  const [logoutOpen, setLogoutOpen] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  const isHomePage = true;
+  const isHome = true;
 
   const toggleSettings = () => {
     setSettingOpen(!settingOpen);
   };
 
+  const toggleLogout = () => {
+    setLogoutOpen(!logoutOpen);
+  };
+
+  useEffect(() => {
+    const storedDarkModeStatus = localStorage.getItem("isDarkMode") === "true";
+    setIsDarkMode(storedDarkModeStatus);
+    setDarkMode(storedDarkModeStatus);
+  }, []);
+
+  const setDarkMode = (isDarkMode) => {
+    if (isDarkMode) {
+      document.documentElement.classList.add("dark-mode");
+    } else {
+      document.documentElement.classList.remove("dark-mode");
+    }
+  };
+
+  const toggleDarkMode = () => {
+    const newDarkModeStatus = !isDarkMode;
+    setIsDarkMode(newDarkModeStatus);
+    localStorage.setItem("isDarkMode", newDarkModeStatus.toString());
+    setDarkMode(newDarkModeStatus);
+  };
+
   return (
-    <QueryClientProvider client={queryClient}>
-      <div className="app">
-        <Sidebar toggleSettings={toggleSettings} />
-        <SearchBar />
-        <Rightbar />
-        <Upload />
-        <Posts />
-        {settingOpen && (
-          <>
-            <div className="settings-overlay" />
-            <div className="settings-container">
-              <Settings onClose={toggleSettings} />
-            </div>
-          </>
-        )}
+    <>
+      <div className={`app ${isDarkMode ? "dark-mode" : ""}`}>
+        <div className="main-content">
+          <div className="topbar">
+            <FypSwitch />
+            <SearchBar />
+          </div>
+          <div className="home-content">
+            <Upload />
+            <Posts isHome={true} />
+          </div>
+        </div>
+        <div className="leftbar">
+          <Sidebar
+            toggleSettings={toggleSettings}
+            toggleLogout={toggleLogout}
+            isHomePage={isHomePage}
+          />
+        </div>
       </div>
-    </QueryClientProvider>
+      {settingOpen && (
+        <>
+          <div className="settings-overlay" />
+          <div className="settings-container">
+            <Settings
+              onClose={toggleSettings}
+              isDarkMode={isDarkMode}
+              toggleDarkMode={toggleDarkMode}
+            />
+          </div>
+        </>
+      )}
+      {logoutOpen && (
+        <>
+          <div className="popup-logout-container" />
+          <div className="popup-logout">
+            <Logout onClose={toggleLogout} />
+          </div>
+        </>
+      )}
+    </>
   );
 }
 

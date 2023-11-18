@@ -1,12 +1,15 @@
 .sidebar {
     width: 50px;
     height: 100%;
-    background-color: #ffffff;
+    background-color: black;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     padding: 10px;
     top: 0;
+    left: 0;
     position: fixed;
+    border-right: 1px black solid;
   }
   
   button {
@@ -23,17 +26,45 @@
     transition: all 0.3s ease;
   }
 
-.profileavatar{
-  margin-top: 60px;
-  margin-left: -10px;
-}
+  .content-sidebar{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  .content-sidebar button{
+    background-color: transparent;
+  }
+  .content-sidebar button:hover{
+    background-color: rgb(54, 54, 54);
+  }
+  .sidebar-logo{
+    height: 50px;
+    width: 50px;
+    margin-left: 3px;
+    margin-bottom: 20px;
+  }
+  .sidebar-user{
+    margin-left: 5px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-right: 10px;
+  }
+  .sidebar-user span {
+    align-items: center;
+    margin-top: 3px;
+    font-size: 16px;
+    font-family: "Inter" ;
+    color: white;
+  }
 .profile2{
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  
+  object-fit: cover;
 }
- 
   .leftBarUser{
     width: 60px;
     display: flex;
@@ -43,6 +74,11 @@
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    object-fit: cover;
   }
 
+/*code buat responsive*/
+
+@media screen and (max-height: 560px) {
+  .profile2 {
+  }
+}

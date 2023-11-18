@@ -1,19 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./Settings.css";
+import "../../DarkMode.css";
 import { Icon } from "@iconify/react";
+import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/authContext.js";
 
-const Settings = ({ onClose }) => {
-  const [isSliderOn, setIsSliderOn] = useState(false);
+const Settings = ({ onClose, isDarkMode, toggleDarkMode }) => {
+  const { user } = useContext(AuthContext);
 
   const handleSliderChange = () => {
-    setIsSliderOn(!isSliderOn);
+    toggleDarkMode();
   };
+
   return (
     <div className="settings-popup">
       <div className="settings-title">
         <h2>Settings</h2>
         <button onClick={onClose}>
-          <Icon icon="ph:x-bold" color="black" width={25} height={25} />
+          <Icon icon="ph:x-bold" width={25} height={25} />
         </button>
       </div>
       <div className="settings-content">
@@ -22,7 +26,7 @@ const Settings = ({ onClose }) => {
           <label className="switch">
             <input
               type="checkbox"
-              checked={isSliderOn}
+              checked={isDarkMode}
               onChange={handleSliderChange}
             />
             <span className="slider round"></span>
@@ -40,7 +44,9 @@ const Settings = ({ onClose }) => {
           Connect to Twitter
           <Icon icon="mdi:twitter" width="20" height="20" />
         </button>
-        <button>Edit Profile</button>
+        <Link to={`/profile/${user.username}`}>
+          <button>Edit Profile</button>
+        </Link>
       </div>
     </div>
   );

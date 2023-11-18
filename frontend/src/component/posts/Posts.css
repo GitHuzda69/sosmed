@@ -1,37 +1,40 @@
-.posts-main{
-    scrollbar-width: thin;
-    scrollbar-color: gray transparent;
-  }
-  .comment-list::-webkit-scrollbar {
-    width: 8px; 
-  }
-  
-  .comment-list::-webkit-scrollbar-thumb {
-    background-color: gray; 
-    border-radius: 5px; 
-  }
-  
-  .comment-list::-webkit-scrollbar-track {
-    background: transparent; 
-  }
-
 .posts{
-  margin-left: 90px;
-  font-family: "Inter", sans-serif;
-  font-weight: bold;
-  font-size: 40px;
-  margin-top: 10px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start; 
+  align-items: flex-start;    
+  font-family: "Inter" ;
+  font-weight: bold; 
+  font-size: 40px;
+  margin-top: 5px;  
+  margin-left: 0px; 
+  margin-bottom: 0px;  
   border-radius: 0;
-  border: 1px whitesmoke solid;
-  padding: 10px;
-  padding-bottom: 30px;
-  width: 800px;
-  margin-bottom: 100px;
-  overflow-y: hidden;
-}
+  border: none;
+  padding: 10px; 
+  padding-right: 0;
+  padding-bottom: 40px;    
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: #999999 #ffffff; 
+  }
+  
+  .posts::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  .posts::-webkit-scrollbar-thumb {
+    background-color: transparent;
+    border-radius: 10px;
+  }
+  
+  .posts::-webkit-scrollbar-thumb:hover {
+    background-color: transparent;
+  }
+  
+  .posts::-webkit-scrollbar-track {
+    background-color: transparent;
+    border-radius: 10px;
+  }
 .posts-form{
   position: fixed;
   bottom: 0;
@@ -57,6 +60,16 @@
   outline: none; 
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
 }
+.userinfo{
+  display: flex;
+  flex-direction: row;
+}
+.details{
+  margin-top: 3px;
+  margin-left: 15px;
+  gap: 5px;
+}
+
 .content{
   height: 40px;
   margin-left: 100px;
@@ -118,16 +131,14 @@
 .posts-content h2{
   margin-top: 5px;
   font-size: 30px;
-  font-family: "Inter", sans-serif;
+  font-family: "Inter" ;
   font-weight: bold;
-  text-decoration: underline;
 }
 .posts-content p{
   margin-top: -15px;
   font-size: 20px;
   font-weight: normal;
-  text-decoration: underline;
-  font-family: "Inter", sans-serif;
+  font-family: "Inter" ;
 }
 .posts-content p.medium-font {
     font-size: 18px;
@@ -295,7 +306,7 @@
     flex: 1;
     max-height: 100%;
     border-bottom: 2px black solid;
-    font-family: "Inter", sans-serif;
+    font-family: "Inter" ;
     font-weight: bold;
     width: 355px;
   }
@@ -327,17 +338,15 @@
   .comment-content h5{
     margin-top: -30px;
     font-size: 20px;
-    font-family: "Inter", sans-serif;
+    font-family: "Inter" ;
     font-weight: bold;
-    text-decoration: underline;
   }
   .comment-content p{
     margin-top: -35px;
     margin-bottom: 5px;
     font-size: 15px;
-    font-family: "Inter", sans-serif;
+    font-family: "Inter" ;
     font-weight: 500;
-    text-decoration: underline;
   }
 
   .comment-form {
@@ -414,4 +423,5 @@
   .comment-cancel-button span {
     margin-right: 5px; 
   }
-  
+
+ 

@@ -1,0 +1,144 @@
+.main-notif{ 
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: calc(100% - 390px);
+  height: 100%; 
+  margin-top: 20px;
+  margin-left: 80px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  background-color: #ffffff; 
+  font-family: "Inter";  
+}
+.main-notif h1{
+  font-size: 25px;
+  padding-top: 10px;
+  margin-left: 15px;
+}
+
+.mark-read-button{
+  display: flex;
+  align-self: flex-end;
+  align-items: center;
+  gap: 5px;
+  font-size: 16px;
+  font-weight: 500;
+  margin-top: -50px; 
+  margin-right: 10px;
+  background-color: transparent;
+}
+
+.notif-container{
+  margin-bottom: 20px; 
+}
+
+.notif-border{  
+  border-bottom: 1px gray solid;
+}
+
+.notif-buttons{
+  margin-left: 15px;  
+  margin-bottom: -5px; 
+}
+.notif-buttons button{
+  font-size: 15px;
+  margin-right: 30px;
+}
+.notif-buttons button:hover{
+  border-radius: 0;
+}
+
+.bold-button{
+  font-weight: bold;
+  border-bottom: 2px black solid;
+  background-color: transparent;
+}
+
+.all-button{
+  background-color: transparent;
+}
+.all-button:hover{
+  background-color: transparent;
+}
+
+.mentions-button{
+  background-color: transparent;
+}
+.mentions-button:hover{
+  background-color: transparent;
+}
+
+.unread-button{
+  background-color: transparent;
+}
+.unread-button:hover{
+  background-color: transparent;
+}
+
+
+.notif-content{
+  height: 100%; 
+  border-radius: 0px 0px 0px 10px;
+  margin-left: 15px;
+  margin-right: 15px;   
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: #999999 #ffffff;
+}
+
+.notif-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.notif-content::-webkit-scrollbar-thumb {
+  background-color: transparent;
+  border-radius: 10px;
+}
+
+.notif-content::-webkit-scrollbar-thumb:hover {
+  background-color: transparent;
+}
+
+.notif-content::-webkit-scrollbar-track {
+  background-color: transparent;
+  border-radius: 10px;
+
+}
+
+.all-notif-container{ 
+  margin-top: 10px; 
+}
+
+.notif{
+  display: flex; 
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 15px 0px; 
+  margin-top: -10px;
+  margin-right: 10px;
+  border-bottom: 1px gray solid;
+  overflow-x: hidden;
+}
+.notif-user{
+  display: flex;
+  flex-direction: row;
+}
+.notif-avatar{
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+  margin-right: 15px;
+}
+.notif-text{
+  display: flex;
+  align-items: center;
+  flex-direction: row; 
+  margin-top: -10px; 
+}
+.notif-date {
+  font-size: 12px;
+  color: #777;  
+  margin-left: auto;
+}
+ 

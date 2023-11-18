@@ -7,25 +7,13 @@ import { makeRequest } from "../../axios.js";
 import { useNavigate } from "react-router";
 
 const Upload = () => {
-  
-  const navigate = useNavigate();
   const [file, setFile] = useState(null);
-  const [desc, setDesc] = useState(undefined);
   const fileInputRef = useRef(null);
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+  const desc = useRef();
   const [showFileInput, setShowFileInput] = useState(false);
 
-  const upload = async () => {
-    try {
-      const formData = new FormData();
-      formData.append("file", file);
-      const res = await makeRequest.post("/upload", formData);
-      return res.data;
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const { currentUser } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const handleFileInputChange = (e) => {
     const selectedFile = e.target.files[0];
     setFile(selectedFile);
@@ -35,18 +23,37 @@ const Upload = () => {
     setFile(null);
   };
 
-  const queryClient = useQueryClient();
+  const handleClick = async (e) => {
+    e.preventDefault();
 
-  const mutation = useMutation(
-    (newPost) => {
-      return makeRequest.post("/posts", newPost);
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["posts"]);
-      },
+    const isTextareaEmpty = !desc.current.value.trim();
+    const isFileNotSelected = !file;
+
+    if (isTextareaEmpty && isFileNotSelected) {
+      return;
     }
-  );
+
+    const newPost = {
+      userId: user._id,
+      desc: desc.current.value,
+    };
+
+    if (file) {
+      const data = new FormData();
+      const fileName = Date.now() + file.name;
+      data.append("name", fileName);
+      data.append("file", file);
+      newPost.img = fileName;
+      console.log(newPost);
+      try {
+        await makeRequest.post("/upload", data);
+      } catch (err) {}
+    }
+    try {
+      await makeRequest.post("/posts", newPost);
+      window.location.reload();
+    } catch (err) {}
+  };
 
   const handleMediaButtonClick = () => {
     setShowFileInput(!showFileInput);
@@ -55,29 +62,31 @@ const Upload = () => {
     }
   };
 
-  const handleClick = async (e) => {
-    e.preventDefault();
-  
-    if (!desc && !file) {
-      return;
-    }
-  
-    let imgUrl = "";
-    if (file) {
-      imgUrl = await upload();
-    }
-  
-    mutation.mutate({ desc, img: imgUrl });
-    setDesc("");
-    setFile(null);
-  };
-
   const handleEnterKey = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleClick(e);
+    } else if (e.key === "Enter" && e.shiftKey) {
+      const descElement = desc.current;
+      const startPos = descElement.selectionStart;
+      const endPos = descElement.selectionEnd;
+      const text = descElement.value;
+      const newText =
+        text.substring(0, startPos) +
+        "\n" +
+        text.substring(endPos, text.length);
+
+      descElement.value = newText;
+      descElement.setSelectionRange(startPos + 1, startPos + 1);
     }
 
+    handleAutoHeight();
+  };
+
+  const handleAutoHeight = () => {
+    const textarea = desc.current;
+    textarea.style.height = "auto";
+    textarea.style.height = `${Math.min(textarea.scrollHeight, 80)}px`;
   };
 
   return (
@@ -92,35 +101,47 @@ const Upload = () => {
             />
             <span className="file-name">{file.name}</span>
             <button className="clear-file-button" onClick={clearSelectedFile}>
-              <Icon icon="ph:x-bold" color="black" width={15} height={15} />
+              <Icon icon="ph:x-bold" color="white" width={15} height={15} />
             </button>
           </div>
         )}
-
       </div>
       <div className="input-post">
         <textarea
           type="text"
-          placeholder={`Tuliskan sesuatu ${currentUser.username}`}
-          onChange={(e) => setDesc(e.target.value)}
+          placeholder={"What's in your mind " + user.username + "?"}
+          ref={desc}
           onKeyDown={handleEnterKey}
-          value={desc}
         />
       </div>
       <div className="button-upload">
         <div className="uploadItem-row">
           <button className="uploadItem">
-            <Icon icon="ic:outline-poll" width={25} height={25}></Icon>
+            <Icon
+              icon="fluent:emoji-laugh-24-regular"
+              width={25}
+              height={25}
+            ></Icon>
           </button>
-          <button className="uploadItem">
-            <Icon icon="fluent:gif-16-regular" width={25} height={25}></Icon>
-          </button>
-          <button className="uploadItem" onClick={handleMediaButtonClick}>
+          <button
+            className="uploadItem"
+            onClick={handleMediaButtonClick}
+            type="file"
+            id="file"
+            accept=".png,.jpeg,.jpg"
+            onChange={(e) => setFile(e.target.files[0])}
+          >
             <Icon
               icon="material-symbols:perm-media-outline"
               width={25}
               height={25}
             ></Icon>
+          </button>
+          <button className="uploadItem">
+            <Icon icon="fluent:gif-16-regular" width={25} height={25}></Icon>
+          </button>
+          <button className="uploadItem">
+            <Icon icon="ic:outline-poll" width={25} height={25}></Icon>
           </button>
         </div>
         <button className="uploadButton" onClick={handleClick}>
@@ -134,7 +155,6 @@ const Upload = () => {
         ref={fileInputRef}
         onChange={handleFileInputChange}
         style={{ display: "none" }}
-
       />
     </div>
   );

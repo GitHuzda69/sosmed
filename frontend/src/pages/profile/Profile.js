@@ -1,318 +1,392 @@
-import "./Profile.css";
+import React, { useContext, useState, useEffect } from "react";
+import { useLocation, Link } from "react-router-dom";
+import { useParams } from "react-router";
+import { makeRequest } from "../../axios.js";
+import { AuthContext } from "../../context/authContext.js";
 import { Icon } from "@iconify/react";
-import React, { useState } from "react";
-import profileimg from "../../assets/profil.jpg";
-import banner from "../../assets/banner.jpg";
-import avatar1 from "../../assets/friend/friend1.jpg";
-import avatar2 from "../../assets/friend/friend2.jpg";
-import avatar3 from "../../assets/friend/friend3.jpg";
-import avatar4 from "../../assets/friend/friend4.jpg";
-import avatar5 from "../../assets/friend/friend5.jpeg";
+import moment from "moment";
+
+import "./Profile.css";
+import Posts from "../../component/posts/Posts.js";
+import Sidebar from "../../component/Leftbar/Leftbar";
+import Settings from "../../component/Settings/Settings";
+import Logout from "../../component/Logout/Logout";
+import Update from "../../component/Update/Update.js";
+import FriendList from "../../component/friendlist/FriendsList.js";
+
+import defaultprofile from "../../assets/profile/default_avatar.png";
+import defaultcover from "../../assets/profile/default_banner.jpg";
 
 const Profile = () => {
-  const [imagePopupOpen, setImagePopupOpen] = useState(false);
   const [imagePopupOpenbanner, setImagePopupOpenBanner] = useState(false);
   const [imagePopupOpenprofile, setImagePopupOpenProfile] = useState(false);
-  const friend = [
-    {
-      id: 1,
-      name: "John Doe",
-      mutual: "19 Mutual friends",
-      avatar: avatar4,
-    },
-    {
-      id: 2,
-      name: "Jennifer",
-      mutual: "22 Mutual friends",
-      avatar: avatar3,
-    },
-    {
-      id: 3,
-      name: "Lala",
-      mutual: "10 Mutual friends",
-      avatar: avatar2,
-    },
-    {
-      id: 4,
-      name: "Johnny Doe",
-      mutual: "13 Mutual friends",
-      avatar: avatar5,
-    },
-    {
-      id: 5,
-      name: "John Doel",
-      mutual: "90 Mutual friends",
-      avatar: avatar1,
-    },
-  ];
+  const [isUpdateOpen, setIsUpdateOpen] = useState(false);
+  const [user, setUser] = useState({});
+  const [settingOpen, setSettingOpen] = useState(false);
+  const [logoutOpen, setLogoutOpen] = useState(false);
+  const [friends, setFriends] = useState([]);
+  const { user: currentUser, dispatch } = useContext(AuthContext);
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+  const username = useParams().username;
+  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [showPosts, setShowPosts] = useState(true);
+  const [showFollowing, setShowFollowing] = useState(false);
 
-  const posts = [
-    {
-      id: 1,
-      name: "Jeou",
-      date: "12 hours ago",
-      userId: 1,
-      profilePic: profileimg,
-      pinned: 1,
-      img: "",
-      desc: "Lorem ipsum dolor sit amet asioasdios aosidjas asdpoasd po poadjpoasd ",
-    },
-    {
-      id: 2,
-      name: "Bukan",
-      date: "2 days ago",
-      userId: 2,
-      profilePic: profileimg,
-      pinned: 0,
-      desc: "Lorem ipsum dolor sit amet asioasdios aosidjas asdpoasd po poadjpoasd asdkas a;askjhnd oiasdoiasoa isasdoi asoidh asoidihasoid ",
-      img: "",
-    },
-    {
-      id: 3,
-      name: "Orang",
-      date: "4 days ago",
-      userId: 3,
-      profilePic: profileimg,
-      pinned: 0,
-      desc: "Lorem ipsum dolor sit amet asioasdios aosidjas asdpoasd po poadjpoasd asdkas Lorem ipsum dolor sit amet asioasdios aosidjas asdpoasd po poadjpoasd asdkas Lorem ipsum dolor sit amet asioasdios aosidjas asdpoasd po poadjpoasd asdkas Lorem ipsum dolor sit amet asioasdios aosidjas asdpoasd po poadjpoasd asdkas a;askjhnd oiasdoiasoa isasdoi asoidh asoidihasoid ",
-      img: avatar2,
-    },
-  ];
+  const [followed, setFollowed] = useState(
+    currentUser.followings.includes(user?._id)
+  );
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const res = await makeRequest.get(`/users?username=${username}`);
+      setUser(res.data);
+    };
+    fetchUser();
+  }, [username]);
+
+  useEffect(() => {
+    const getFriends = async () => {
+      try {
+        const friendList = await makeRequest.get(
+          "/relationships/friends/" + user._id
+        );
+        setFriends(friendList.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getFriends();
+  }, [user]);
+
+  const handleFollow = async () => {
+    try {
+      if (followed) {
+        await makeRequest.put(`/relationships/${user._id}/unfollow`, {
+          userId: currentUser._id,
+        });
+        dispatch({ type: "UNFOLLOW", payload: user._id });
+      } else {
+        await makeRequest.put(`/relationships/${user._id}/follow`, {
+          userId: currentUser._id,
+        });
+        dispatch({ type: "FOLLOW", payload: user._id });
+      }
+      setFollowed(!followed);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const toggleSettings = () => {
+    setSettingOpen(!settingOpen);
+  };
+
+  const toggleLogout = () => {
+    setLogoutOpen(!logoutOpen);
+  };
+
+  const openUpdateModal = () => {
+    setIsUpdateOpen(true);
+  };
+
+  const closeUpdateModal = () => {
+    setIsUpdateOpen(false);
+  };
+
+  useEffect(() => {
+    const storedDarkModeStatus = localStorage.getItem("isDarkMode") === "true";
+    setIsDarkMode(storedDarkModeStatus);
+
+    setDarkMode(storedDarkModeStatus);
+  }, []);
+
+  const setDarkMode = (isDarkMode) => {
+    if (isDarkMode) {
+      document.documentElement.classList.add("dark-mode");
+    } else {
+      document.documentElement.classList.remove("dark-mode");
+    }
+  };
+
+  const toggleDarkMode = () => {
+    const newDarkModeStatus = !isDarkMode;
+    setIsDarkMode(newDarkModeStatus);
+    localStorage.setItem("isDarkMode", newDarkModeStatus.toString());
+    setDarkMode(newDarkModeStatus);
+  };
+
+  const truncateText = (text, maxLength) => {
+    if (!text) return "";
+    return text.length > maxLength
+      ? text.substring(0, maxLength) + "..."
+      : text;
+  };
+
+  const togglePosts = () => {
+    setShowPosts(true);
+    setShowFollowing(false);
+  };
+
+  const toggleFollowing = () => {
+    setShowPosts(false);
+    setShowFollowing(true);
+  };
 
   return (
-    <div>
-      <div className="profil">
-        <div className="profil-container">
-          <div className="cover-img">
-            <div className="post-img-banner">
-              <button
-                className="img-button"
-                onClick={() => setImagePopupOpenBanner(true)}
-              >
-                <img src={banner} alt="banner" />
-              </button>
+    <div className={`app ${isDarkMode ? "dark-mode" : ""}`}>
+      <div className="profile-main">
+        <div className="profil">
+          <div className="profil-container">
+            <div className="cover-img">
+              <div className="post-img-banner">
+                <button
+                  className="img-button"
+                  onClick={() => setImagePopupOpenBanner(true)}
+                >
+                  <img
+                    src={
+                      user.coverPicture ? PF + user.coverPicture : defaultcover
+                    }
+                    alt="banner"
+                  />
+                </button>
+              </div>
             </div>
-          </div>
-          {imagePopupOpenbanner && (
-            <div className="image-popup-profil">
-              <button
-                className="close-button"
+            {imagePopupOpenbanner && (
+              <div
+                className="image-popup-profil"
                 onClick={() => setImagePopupOpenBanner(false)}
               >
-                <Icon icon="ph:x-bold" color="black" width={40} height={40} />
-              </button>
-              <img className="popup-img" src={banner} alt="" />
-            </div>
-          )}
-          <div className="profil-user">
-            <div className="profil-info">
-              <div className="profilePic">
-                <div className="post-img-profile">
-                  <button
-                    className="img-button-profile"
-                    onClick={() => setImagePopupOpenProfile(true)}
-                  >
-                    <img src={profileimg} alt="post-profile" />
-                  </button>
+                <div className="popup-banner">
+                  <img
+                    className="popup-img-banner"
+                    src={
+                      user.coverPicture ? PF + user.coverPicture : defaultcover
+                    }
+                    alt=""
+                  />
                 </div>
               </div>
-              {imagePopupOpenprofile && (
-                <div className="image-popup-profil">
-                  <button
-                    className="close-button"
-                    onClick={() => setImagePopupOpenProfile(false)}
-                  >
-                    <Icon
-                      icon="ph:x-bold"
-                      color="black"
-                      width={40}
-                      height={40}
-                    />
-                  </button>
-                  <img className="popup-img" src={profileimg} alt="" />
-                </div>
-              )}
-              <div className="profil-bio">
-                <h2>Jeou Balaraja</h2>
-                <h4>300 friends (90 mutual) </h4>
-              </div>
-            </div>
-            <div className="profiluser-button">
-              <button className="add-button">
-                <Icon
-                  icon="ic:sharp-person-add"
-                  color="black"
-                  width={20}
-                  height={20}
-                />
-                <span>Add friend</span>
-              </button>
-              <button className="message-user-button">
-                <Icon
-                  icon="ion:chatbox-ellipses-outline"
-                  color="black"
-                  width={20}
-                  height={20}
-                />
-              </button>
-              <button className="share-user-button">
-                <Icon
-                  icon="basil:share-outline"
-                  color="black"
-                  width={20}
-                  height={20}
-                />
-              </button>
-            </div>
-          </div>
-          {posts.map((posts) => (
-            <div className="post-profil">
-              <div className="post-avatar-profil">
-                <img
-                  src={posts.profilePic}
-                  alt={posts.name}
-                  className="avatar-post"
-                />
-                <div className="post-profil-info">
-                  <h2>{posts.name}</h2>
-                  <h3>{posts.date}</h3>
-                </div>
-                {posts.pinned === 1 ? (
-                  <>
-                    <button className="button-post-profil-pinned">
-                      <Icon icon="tabler:dots" width={22} height={22} />
-                    </button>
-                    <div className="pinned-post">
-                      <Icon icon="typcn:pin" width={25} height={25} />
-                      <h5>Pinned post</h5>
-                    </div>
-                  </>
-                ) : (
-                  <button className="button-post-profil">
-                    <Icon icon="tabler:dots" width={22} height={22} />
-                  </button>
-                )}
-              </div>
-              <div className="posts-profil-content">
-                <h4>{posts.desc}</h4>
-                {/* css e ini sama bawah e sebagian ada di post */}
-                {posts.img && (
-                  <div className="post-img-container">
+            )}
+            <div className="profil-user">
+              <div className="profil-info">
+                <div className="profilePic">
+                  <div className="post-img-profile">
                     <button
-                      className="img-button"
-                      onClick={() => setImagePopupOpen(true)}
+                      className="img-button-profile"
+                      onClick={() => setImagePopupOpenProfile(true)}
                     >
                       <img
-                        className="posts-profil-img"
-                        src={posts.img}
-                        alt="posts-img"
+                        src={
+                          user.profilePicture
+                            ? PF + user.profilePicture
+                            : defaultcover
+                        }
+                        alt="post-profile"
                       />
                     </button>
                   </div>
-                )}
-                {imagePopupOpen && (
-                  <div className="image-popup-profil">
-                    <button
-                      className="close-button"
-                      onClick={() => setImagePopupOpen(false)}
-                    >
-                      <Icon
-                        icon="ph:x-bold"
-                        color="black"
-                        width={40}
-                        height={40}
+                </div>
+                {imagePopupOpenprofile && (
+                  <div
+                    className="image-popup-profil"
+                    onClick={() => setImagePopupOpenProfile(false)}
+                  >
+                    <div className="popup-profil">
+                      <img
+                        className="popup-img-profil"
+                        src={
+                          user.profilePicture
+                            ? PF + user.profilePicture
+                            : defaultcover
+                        }
+                        alt=""
                       />
-                    </button>
-                    <img className="popup-img" src={posts.img} alt="" />
+                    </div>
                   </div>
                 )}
-              </div>
-              <div className="button-posts-profil">
-                <div className="button-posts">
-                  <Icon
-                    className="icon"
-                    icon="mdi:heart-outline"
-                    width={20}
-                    height={20}
-                    color={"black"}
-                  />
-
-                  <h3>12 Likes</h3>
+                <div className="profil-bio">
+                  <h2>{user && user.displayname}</h2>
+                  <h4>
+                    <button onClick={toggleFollowing}>
+                      {user.followers ? user.followers.length : "Loading"}{" "}
+                      Follower
+                    </button>
+                  </h4>
                 </div>
-                <div className="button-posts">
-                  <Icon
-                    className="icon"
-                    icon="ant-design:message-filled"
-                    width={20}
-                    height={20}
-                  />
-                  <h3>12 Comments</h3>
-                </div>
-                <div className="button-posts">
-                  <Icon
-                    className="icon"
-                    icon="mdi:share"
-                    width={20}
-                    height={20}
-                  />
-                  <h3>449 Share</h3>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-        <div className="rightProfileBar">
-          <div className="search-profile">
-            <input
-              className="input-profile"
-              type="text"
-              placeholder="Search on profile"
-            />
-          </div>
-          <div className="intro">
-            <h2>Intro</h2>
-            <h3>
-              <Icon icon="ep:info-filled" width={25} height={25} />
-              Joined
-              <span>32 Agustus 2032</span>
-            </h3>
-            <h3>
-              <Icon icon="fluent:location-16-filled" width={25} height={25} />
-              From
-              <span>Sleman, Yogyakarta</span>
-            </h3>
-            <h4>
-              Etiam libero dui, varius tempor malesuada, convallis in tellus.
-              Phasellus vel risus a dui facilisis iaculis. Fusce porttitor
-              efficitur pharetra. Integer sit amet aliquam turpis.
-            </h4>
-          </div>
-          <div className="friends-rec">
-            {friend.map((friend) => (
-              <div className="friend-profil" key={friend.id}>
-                <div className="friend-avatar-profil">
-                  <img
-                    src={friend.avatar}
-                    alt={friend.name}
-                    className="avatar"
-                  />
-                </div>
-                <div className="friend-info-profil">
-                  <h3>{friend.name}</h3>
-                  <h4>{friend.mutual}</h4>
-                  <button className="button-add" >
-                    <Icon
-                      icon="ic:baseline-person-add"
-                      width={22}
-                      height={22}
-                    />
+                <div className="profile-switch-buttons">
+                  <button
+                    onClick={togglePosts}
+                    className={`posts-profile-switch-button ${
+                      showPosts ? "bold-button-profile" : ""
+                    }`}
+                  >
+                    Posts
+                  </button>
+                  <button
+                    onClick={toggleFollowing}
+                    className={`following-profile-switch-button ${
+                      showFollowing ? "bold-button-profile" : ""
+                    }`}
+                  >
+                    Follower
                   </button>
                 </div>
               </div>
-            ))}
+              <div className="profiluser-button">
+                {user.username === currentUser.username ? (
+                  <button
+                    className="edit-profile-button"
+                    onClick={openUpdateModal}
+                  >
+                    <Icon icon="bxs:edit" width={20} height={20} />
+                    Edit Profile
+                  </button>
+                ) : (
+                  <button className="follow-button" onClick={handleFollow}>
+                    {followed ? (
+                      <div className="following-profile">
+                        <div className="followed-profile">
+                          <Icon
+                            icon="bi:person-check-fill"
+                            width={20}
+                            height={20}
+                          />
+                          Following
+                        </div>
+                        <div className="message-profile">
+                          <Icon
+                            icon="ion:chatbox-ellipses-outline"
+                            width={20}
+                            height={20}
+                          />
+                        </div>
+                        <div className="share-profile">
+                          <Icon
+                            icon="basil:share-outline"
+                            width={20}
+                            height={20}
+                          />
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="follow-profile">
+                        <Icon
+                          icon="bi:person-plus-fill"
+                          width={20}
+                          height={20}
+                        />
+                        Follow
+                      </div>
+                    )}
+                  </button>
+                )}
+              </div>
+            </div>
+            {showPosts && (
+              <Posts username={username} className="posts-profile" />
+            )}
+            {showFollowing && <FriendList />}
+          </div>
+          <div className="rightProfile-Container">
+            <div className="rightProfileBar">
+              <div className="search-profile">
+                <input
+                  className="input-profile"
+                  type="text"
+                  placeholder="Search on Your profile"
+                />
+              </div>
+              <div className="intro">
+                <h2>Intro</h2>
+                <h3>
+                  <Icon icon="ep:info-filled" width={25} height={25} />
+                  Joined
+                  <span>{moment(user.createdAt).format("DD MMMM YYYY")}</span>
+                </h3>
+                <h3>
+                  <Icon
+                    icon="fluent:location-16-filled"
+                    width={25}
+                    height={25}
+                  />
+                  From
+                  <span>{user?.city || "Earth"}</span>
+                </h3>
+                <h4>
+                  {user?.desc ||
+                    "This is your biodata, You can update it on the edit profile."}
+                </h4>
+              </div>
+              <div className="friends-rec">
+                {friends.map((friend) => (
+                  <div key={friend._id} className="rightBarUserProfile">
+                    <Link
+                      className="LinkUserProfile"
+                      to={"/profile/" + friend.username}
+                      style={{
+                        textDecoration: "none",
+                        display: "flex",
+                        flexDirection: "row",
+                      }}
+                    >
+                      <div className="rightBarUserInfoProfile">
+                        <img
+                          className="rightBarImgProfile"
+                          src={
+                            friend.profilePicture
+                              ? PF + friend.profilePicture
+                              : defaultprofile
+                          }
+                          alt=""
+                        />
+                        <div className={`statusDot ${"grayDot"}`} />
+                      </div>
+                      <div className="rightBarNameProfile">
+                        <span>{friend.displayname}</span>
+                        <p>{friend && truncateText(friend.desc, 20)}</p>
+                      </div>
+                    </Link>
+                    <Link
+                      to={`/messages/${friend._id}`}
+                      className="link-rightbarProfile"
+                    >
+                      <button className="rightBarButtonProfile">Chat</button>
+                    </Link>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>
+      <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} />
+      {settingOpen && (
+        <>
+          <div className="settings-overlay" />
+          <div className="settings-container">
+            <Settings
+              onClose={toggleSettings}
+              isDarkMode={isDarkMode}
+              toggleDarkMode={toggleDarkMode}
+            />
+          </div>
+        </>
+      )}
+      {logoutOpen && (
+        <>
+          <div className="popup-logout-container" />
+          <div className="popup-logout">
+            <Logout onClose={toggleLogout} />
+          </div>
+        </>
+      )}
+      {isUpdateOpen && (
+        <div>
+          <div className="settings-overlay" />
+          <Update onClose={closeUpdateModal} user={user} />
+        </div>
+      )}
     </div>
   );
 };

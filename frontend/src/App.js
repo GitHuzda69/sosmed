@@ -2,83 +2,39 @@ import Login from "./pages/login/Login.js";
 import Signup from "./pages/register/Register.js";
 import Home from "./pages/home/Home.js";
 import Message from "./pages/messages/Messages.js";
-import Friends from "./pages/friendlist/FriendsList.js";
+import Friends from "./component/friendlist/FriendsList.js";
 import Profile from "./pages/profile/Profile.js";
-import {
-  RouterProvider,
-  createBrowserRouter,
-  Navigate,
-  Outlet,
-} from "react-router-dom";
-import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
-import Sidebar from "./component/Leftbar/Leftbar.js";
+import Fyp from "./pages/Fyp/Fyp.js";
+import Notif from "./pages/notif/notif.js";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import "./pages/home/Home.css";
 import AuthContext from "./context/authContext.js";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
+import WebFont from "webfontloader";
 
 function App() {
-  const queryClient = new QueryClient();
-  const Layout = () => {
-    return (
-      <QueryClientProvider client={queryClient}>
-        <div>
-          <div style={{ display: "flex" }}>
-            <Sidebar />
-            <Outlet />
-          </div>
-        </div>
-      </QueryClientProvider>
-    );
-  };
-  const { currentUser } = useContext(AuthContext);
-  const ProtectedRoute = ({ children }) => {
-    if (!currentUser) {
-      return <Navigate to="/login" />;
-    }
+  useEffect(() => {
+    WebFont.load({
+      google: {
+        families: ["Inter"],
+      },
+    });
+  }, []);
 
-    return children;
-  };
-
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: (
-        <ProtectedRoute>
-          <Layout />
-        </ProtectedRoute>
-      ),
-      children: [
-        {
-          path: "/",
-          element: <Home />,
-        },
-        {
-          path: "/profile/:id",
-          element: <Profile />,
-        },
-        {
-          path: "/messages",
-          element: <Message />,
-        },
-        {
-          path: "/friend",
-          element: <Friends />,
-        },
-      ],
-    },
-    {
-      path: "/login",
-      element: <Login />,
-    },
-    {
-      path: "/signup",
-      element: <Signup />,
-    },
-  ]);
-
+  const { user } = useContext(AuthContext);
   return (
-    <div>
-      <RouterProvider router={router} />
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={user ? <Home /> : <Login />} />
+        <Route path="/messages" element={user ? <Message /> : <Login />} />
+        <Route path="/profile/:username" element={<Profile />} />
+        <Route path="/friend" element={user ? <Friends /> : <Login />} />
+        <Route path="/fyp" element={user ? <Fyp /> : <Login />} />
+        <Route path="/notif" element={user ? <Notif /> : <Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={user ? <Home /> : <Login />} />
+      </Routes>
+    </Router>
   );
 }
 

@@ -1,0 +1,456 @@
+   /*style dark mode*/
+  .dark-mode {
+    background-color: #101010; 
+    color: white;
+  }
+
+
+  /*buat topbar*/ 
+  .dark-mode .topbar .link-following{ 
+    background-color: #1E1E1E;
+  }
+
+  .dark-mode .search-bar-container{
+    background-color: #1E1E1E;
+  }
+  .dark-mode .search-bar-input{
+    color: white;
+  }
+  .dark-mode .searchbar-button{ 
+    background-color: transparent;
+    color: white;
+  }
+  .dark-mode .clear-search-button{
+    background-color: transparent;
+    color: white;
+  }
+  .dark-mode .clear-search-button:hover{
+    background-color: #5C5C5C;
+  }
+
+  .dark-mode .upload{
+    background-color: #1E1E1E;
+  }
+  .dark-mode .input-post textarea{
+    background-color: #2F2F2F;
+    color: white;
+  }
+  .dark-mode .uploadItem{
+    background-color: transparent;
+    color: white;
+  }
+  .dark-mode .uploadItem:hover{
+    background-color: #5C5C5C;
+  }
+  .dark-mode .uploadButton:hover{
+    background-color: #5C5C5C;
+  }
+  .dark-mode .selected-file-info{
+    background-color: white;
+    color: black;
+  }
+
+  /*buat setting*/ 
+  .dark-mode .settings-popup{  
+    background-color: rgb(58, 58, 58); 
+  }
+  .dark-mode .settings-title button{
+    background-color: transparent;   
+    color: white;
+  }
+  .dark-mode .settings-title button:hover{
+    background-color: rgb(19, 19, 19); 
+  }
+  .dark-mode .settings-content button{
+    background-color: transparent;
+    color: white;
+  }
+
+    /*buat post*/ 
+  .dark-mode .post{
+    background-color: #1E1E1E; 
+  }
+  .dark-mode .post-content{
+    background-color: #1E1E1E;
+  }
+  .dark-mode .opsi-post-button{
+    color: white;
+    background-color: transparent;
+  }
+  .dark-mode .opsi-post-button:hover{
+    background-color: #5C5C5C;
+  } 
+  .dark-mode .post-option-popup-self{
+    background-color: rgb(50, 50, 50); 
+  } 
+  .dark-mode .post-option-popup-other{
+    background-color: rgb(50, 50, 50); 
+  }
+  .dark-mode .post-option-popup-other button{
+    background-color: transparent;
+    color: white;
+  }
+  .dark-mode .post-option-popup-other button:hover{
+    background-color: #5C5C5C;
+  }
+  .dark-mode .icon{
+    color: white;
+  } 
+  .dark-mode .item{ 
+  }
+
+  .dark-mode .edit-post{
+    background-color: #1E1E1E;
+  }
+  .dark-mode .edit-post-text{
+    background-color: #5C5C5C;
+    border: 1px white solid;
+    color: white;
+  } 
+  .edit-post1{
+    color: white;
+  }
+
+  .dark-mode .del-img-edit-post{
+    border-radius: 10px;
+    background-color: darkred;
+    color: white;
+  }
+  .dark-mode .del-img-edit-post:hover{
+    border-radius: 10px;
+    background-color: red;
+    color: white;
+  }
+  .dark-mode .save-edit-post{
+    margin-top: -10px;
+    border-radius: 10px;
+    background-color: white;
+    color: black;
+  }
+  .dark-mode .save-edit-post:hover{
+    border-radius: 10px;
+    background-color: #5C5C5C;
+    color: white;
+  }
+  .dark-mode .close-edit-post{
+    margin-top: -10px;
+    border-radius: 10px;
+    background-color: white;
+    color: black;
+  }
+  .dark-mode .close-edit-post:hover{
+    border-radius: 10px;
+    background-color: #5C5C5C;
+    color: white;
+  }
+
+    /*buat commento & comments */
+  .dark-mode .write{
+    background-color: #1E1E1E;
+  }
+  .dark-mode .write1{
+    background-color: #1E1E1E;
+  }
+  .dark-mode .uploadItem-comment:hover{
+    background-color: #5C5C5C;
+  }
+  .dark-mode .selected-file-comment{
+    background-color: #1E1E1E;
+  }
+  .dark-mode .selected-image-comment{
+    border: 1px white solid;
+  }
+  .dark-mode .clear-file-button-comment{
+    color: white;
+  }
+  .dark-mode .img-button-comments{
+    background-color: transparent;
+  } 
+  .dark-mode .save-edit-comment{
+    background-color: white;
+    color: black;
+  }
+  .dark-mode .close-edit-comment{
+    background-color: white;
+    color: black;
+  }
+  .dark-mode .input-comment{
+    background-color: #2F2F2F; 
+    color: white;
+    border: 1px white solid;
+  }
+  .dark-mode .input-comment::placeholder{
+    color: white;
+  }
+  .dark-mode .uploadItem-comment{
+    background-color: transparent;
+    color: white;
+  }
+  .dark-mode .button-comment-desc{
+    color: white;
+  }
+  .dark-mode .button-comment-desc:hover{
+    background-color: #5C5C5C;
+  }
+  .dark-mode .post-option-popup-self-comment{
+    background-color: rgb(50, 50, 50); 
+  }
+  .dark-mode .post-option-popup-self-comment button{
+    background-color: transparent;
+    color: white;
+  } 
+  .dark-mode .post-option-popup-self-comment button:hover{
+    background-color: #5C5C5C;
+  }
+  .dark-mode .post-option-popup-other-comment{
+    background-color: rgb(50, 50, 50); 
+  }
+  .dark-mode .post-option-popup-other-comment button{
+    background-color: transparent;
+    color: white;
+  }
+  .dark-mode .post-option-popup-other-comment button:hover{
+    background-color: #5C5C5C;
+  }
+  .dark-mode .edit-comment{
+    background-color: #1E1E1E;
+  }
+  .dark-mode .comment-content-text{
+    background-color: #5C5C5C;
+    color: white;
+    border: 1px white solid;
+  }  
+
+    /*buat home*/ 
+  .dark-mode .home{ 
+  }
+
+    /*buat homeprofile*/ 
+  .dark-mode .homeProfile{
+    background-color: #1E1E1E;
+  }
+  .dark-mode .connect-homeProfile{
+    background-color: white;
+    color: black;
+  }
+
+  /*buat rightbar*/
+  .dark-mode .rightBar{
+    background-color: #1E1E1E;
+  }
+  .dark-mode .rightBarUser{ 
+    background-color: transparent; 
+  }
+  .dark-mode .rightBarButton{
+    background-color: #2F2F2F;
+  }
+  .dark-mode .rightBarName{
+    color: white;
+  }
+
+  /*buat fyp*/
+  .dark-mode .topbar-fyp .link-fyp{
+    background-color: #1E1E1E;
+  }
+
+  /*buat notif*/
+  .dark-mode .main-notif{
+    background-color: #1E1E1E;
+  }
+  .dark-mode .mark-read-button{
+    color: white;
+  }
+  .dark-mode .bold-button{
+    border-bottom: 2px white solid;
+  }
+  .dark-mode .all-button{
+    color: white;
+  }
+  .dark-mode .mentions-button{
+    color: white;
+  }
+  .dark-mode .unread-button{
+    color: white;
+  }
+
+  /*buat messages*/ 
+  .dark-mode .main-messages{
+    background-color: #2F2F2F;
+  } 
+  .dark-mode .input-search-friend{
+    background-color: #1E1E1E;
+    border: 1px white solid;
+    color: white;
+  }
+  .dark-mode .message-friend-container{
+    background-color: #1E1E1E;
+  }
+  .dark-mode .search-message-friend{
+    background-color: #2F2F2F;
+  } 
+  .dark-mode .message-friend{
+    background-color: transparent;
+    color: white;
+  }
+  .dark-mode .chat-profile{
+    background-color: #2F2F2F;
+    color: white;
+  }
+  .dark-mode .chat-status{
+    color: white;
+  }
+  .dark-mode .chat-profile-button button{
+    color: white;
+  }
+  .dark-mode .message-chat-container{
+    background-color: #000000;
+  }
+  .dark-mode .chat-self{
+    background-color: white;
+    color: black;
+  }
+  .dark-mode .chat-other{
+    background-color: #2F2F2F;
+    color: white;
+  }
+
+  .dark-mode .chat-input{
+    background-color: transparent;
+  }
+  .dark-mode .chat-input textarea{
+    background-color: #2F2F2F;
+    color: white;
+    border: none;
+  }
+  .dark-mode .chat-input-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #2F2F2F;
+    border-radius: 15px;
+    margin-top: 0px;
+    margin-left: 10px;
+    padding-top: 10px;
+    padding-right: 5px;
+  }
+  .dark-mode .chat-button{
+    color: white;
+  }
+  .dark-mode .chat-button:hover{
+    background-color: #5C5C5C;
+  }
+  .dark-mode .post-chat:hover{
+    background-color: #5C5C5C;
+  }
+
+  /*buat frendlist*/
+  .dark-mode .friendlist-container{
+    background-color: #1E1E1E;
+  }
+  .dark-mode .button-info{
+    background-color: transparent;
+    color: white;
+    border: 1px white solid;
+  }
+
+  /*buat profile*/
+
+  .dark-mode .profile-main{
+    background-color: rgb(58, 58, 58);
+  }
+  .dark-mode .profil-user{
+    background-color: #1E1E1E;
+  }
+  .dark-mode .profil-bio button{
+    color: white;
+  }
+  .dark-mode .profil-bio button:hover{
+    background-color: #5C5C5C;
+  }
+  .dark-mode .rightProfileBar{ 
+    background-color: #1E1E1E;
+  }
+  .dark-mode .rightBarNameProfile{
+    color: white;
+  }
+  .dark-mode .profile-switch-buttons button{
+    color: white;
+  }
+  .dark-mode .bold-button-profile{
+    border-bottom: 2px white solid;
+  }
+  .dark-mode .posts-profile-switch-button:hover{
+    background-color: #5C5C5C;
+  }
+  .dark-mode .following-profile-switch-button:hover{
+    background-color: #5C5C5C;
+  }
+
+  /*buat update profile*/
+
+  .dark-mode .edit-profile-container{
+    background-color: #1E1E1E;
+  } 
+  .dark-mode .edit-close{
+    background-color: transparent;
+    color: white;
+  }
+  .dark-mode .edit-close:hover{
+    background-color: #5C5C5C;
+  }
+  .dark-mode .selected-image-edit-profile{
+    background-color: #1E1E1E;
+    border: 1px white solid;
+  }
+  .dark-mode .clear-image-edit{
+    background-color: #1E1E1E;
+    border: 1px white solid;
+  }
+  .dark-mode .clear-image-edit:hover{ 
+    background-color: #5C5C5C;
+  }
+  .dark-mode .file-label{
+    background-color: #2F2F2F;
+    color: white;
+    border: 1px white solid;
+  }
+  .dark-mode .file-label:hover{ 
+    background-color: #5C5C5C;
+  }
+  .dark-mode .selected-image-edit-cover{
+    background-color: #1E1E1E;
+    border: 1px white solid;
+  }
+  .dark-mode .input-edit-name{
+    background-color: #2F2F2F;
+    color: white;
+  }
+  .dark-mode .input-edit-city{
+    background-color: #2F2F2F;
+    color: white;
+  }
+  .dark-mode .city-icon{
+    color: white;
+  }
+  .dark-mode .input-edit-bio{
+    background-color: #2F2F2F;
+    color: white;
+  }
+  .dark-mode .edit-save{
+    background-color: white;
+    color: black;
+  }
+
+  /*buat logout*/
+
+  .dark-mode .logout-popup{
+    background-color: #1E1E1E;
+  }
+  .dark-mode .logout-button-logout{
+    background-color: white;
+    color: black;
+  }
+  .dark-mode .logout-button-close{
+    background-color: black;
+    color: white;
+  }

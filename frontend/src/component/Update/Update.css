@@ -1,0 +1,257 @@
+.edit{
+    position: fixed;
+    display: flex;
+    flex-direction: row;
+    z-index: 1000;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.clear-image-edit{
+    position: fixed;
+    top: 212px;
+    right: 78px;
+    width: 38px;
+    height: 38px; 
+    z-index: 999;
+    border: 1px red solid;
+    border-radius: 10px;
+}
+.edit-profile-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 720px;
+    height: 525px;
+    border: 1px black solid;
+    border-radius: 10px;
+    padding: 5px;
+    font-family: "Inter";    
+    background-color: white;
+}
+.edit-profile{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 20px 10px 20px ;
+}
+.edit-profile h2{
+    position: fixed;
+    top: 0px;
+    font-size: 30px;
+    font-weight: bold;
+}
+.edit-close{
+    position: fixed;
+    top: 15px;
+    right: 20px;
+    border-radius: 6px;
+}
+.edit-close:hover{
+    background-color: lightgray;
+    border-radius: 10px;
+}
+.edit-content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.edit-image{
+    position: fixed;
+    display: flex;
+    flex-direction: row;
+    top: 65px;
+    left: 60px;
+    margin-top: 30px;
+}
+.button-profile{
+    position: fixed;
+    top: 212px;
+    left: 175px;
+}
+.button-cover{
+    position: fixed;
+    display: flex;
+    flex-direction: row;
+    top: 212px;
+    right: 123px;
+    gap: 5px;
+}
+.file-label{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+    width: 30px;
+    padding: 3px;
+    font-family: "Inter";
+    font-size: 18px;
+    cursor: pointer;
+    border: 1px black solid;
+    border-radius: 10px;
+    background-color: white;
+}
+.file-label:hover{
+    background-color: lightgray;
+}
+
+.popup-edit-container{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-top: 30px;
+    margin-left: 10px;
+    font-family: "Inter";
+}
+.popup-edit h2{
+    font-size: 20px;
+}
+.popup-edit-profile{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 5px;
+    margin-left: 80px;
+}
+.close-popup{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 37px;
+    height: 37px;
+    padding: 2px;
+    border: 1px red solid;
+    border-radius: 10px;
+    background-color: white;
+}
+.close-popup:hover{
+    border-radius: 12px;
+}
+.selected-image-edit-cover{
+    width: auto;
+    height: auto;
+    width: 450px;
+    height: 160px;
+    object-fit: contain;
+    border: 1px black solid;
+    border-radius: 0px 10px 10px 0px;
+    margin-left: -1px;
+    background-color: white;
+}
+.selected-image-edit-profile{
+    width: 160px;
+    height: 160px;
+    border-radius: 10px 0px 0px 10px;
+    object-fit: cover;
+    border: 1px black solid;
+}
+
+.edit-profile-popup{
+    position: fixed;
+    bottom: 190px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+.edit-name{
+    position: fixed;
+    left: 25px;
+    bottom: 190px;
+}
+.input-edit-name{
+    width: 335px;
+    height: 35px;
+    border: 1px black solid;
+    border-radius: 10px;
+    margin-top: -16px;
+    padding-left: 15px;
+    font-family: "Inter";
+    font-size: 18px; 
+}
+.input-edit-name::placeholder{
+    font-size: 18px;
+}
+
+.edit-city{
+    position: fixed;
+    bottom: 190px;
+    right: 25px;
+}
+.input-edit-city{
+    width: 285px;
+    height: 35px;
+    border: 1px black solid;
+    border-radius: 10px;
+    margin-top: -16px;
+    padding-left: 30px;
+    font-family: "Inter";
+    font-size: 18px; 
+}
+.input-edit-city::placeholder{
+    font-size: 18px;
+}
+.city-icon{
+    position: fixed;
+    bottom: 198px;
+    right: 315px;
+}
+
+.edit-bio{
+    position: fixed;
+    bottom: 70px;
+    left: 25px;
+}
+.input-edit-bio{
+    width: 660px;
+    height: 55px;
+    border: 1px black solid;
+    border-radius: 10px;
+    margin-top: -10px;
+    padding: 10px;
+    resize: none;
+    font-family: "Inter";
+}
+.input-edit-bio::placeholder{
+    font-size: 18px;
+}
+.edit-save{
+    position: fixed;
+    bottom: 15px;
+    left: 25px;
+    width: 685px;
+    padding: 12px;
+    margin-top: 10px;   
+    border-radius: 10px;
+    color: white;
+    background-color: black;
+}
+.edit-save:hover{
+    background-color: gray;
+    border-radius: 13px;
+}
+
+.edit-profile-warn{
+    position: absolute;
+    display: flex;
+    justify-content: center; 
+    width: 300px;
+    height: 60px;
+    background-color: white;
+    border:1px black solid;
+    border-radius: 10px;
+}
+.edit-profile-warn p{
+    font-family: "Inter";
+    font-size: 18px;
+    font-weight: bold;
+}
+.close-warn-profile{
+    background-color: transparent;
+    position: fixed;
+    right: 217px; 
+}
+.close-warn-profile:hover{
+    background-color: lightgray;
+    border-radius: 10px;
+}

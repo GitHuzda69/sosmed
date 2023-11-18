@@ -19,8 +19,14 @@ const SearchBar = ({ onSearch }) => {
   };
 
   return (
-    <div>
+    <div className="search-container">
       <div className="search-bar-container">
+        <Icon
+          icon="octicon:search-16"
+          className="searchbar-button"
+          width="22"
+          height="22"
+        />
         <input
           className="search-bar-input"
           type="text"
@@ -30,18 +36,9 @@ const SearchBar = ({ onSearch }) => {
         />
         {searchTerm && (
           <button className="clear-search-button" onClick={handleClearSearch}>
-            <Icon icon="ph:x-bold" color="white" width="22" height="22" />
+            <Icon icon="ph:x-bold" width="22" height="22" />
           </button>
         )}
-        <button className="search-bar-button" onClick={handleSearch}>
-          <Icon
-            icon="cil:search"
-            color="white"
-            rotate={1}
-            width="22"
-            height="22"
-          />
-        </button>
       </div>
     </div>
   );

@@ -1,3 +1,6 @@
+.signup-main{
+  background-color: white;
+}
 .signup-container {
   display: flex;
   justify-content: flex-end; 
@@ -10,7 +13,7 @@
   top: 15px;
   left: 40px;
   width: 790px;
-  font-family: "Inter", sans-serif;
+  font-family: "Inter" ;
   font-size: 35px;
   font-weight: 600;
 }  
@@ -26,7 +29,7 @@
   .signup-form h3{
     margin-top: -5px;
     font-size: 30px; 
-    font-family: "Inter", sans-serif;
+    font-family: "Inter";
   }
   
   .form-group {
@@ -36,13 +39,16 @@
   .form-group label{
     margin-left: -150px;
     font-size: 15px;
-    font-family: "Inter", sans-serif;
+    font-family: "Inter";
     font-weight: bold;
   }
 
   .input-signup{
+    width: 300px;
+    height: 15px;
     border-radius: 8px;
     border: 1px black solid;
+    padding: 10px;
   }
   .show-password-signup-button {
     margin-top: -30px;
@@ -58,7 +64,8 @@
   
   .checkbox-container-signup {
     margin-right: 43px;
-    margin-top: -20px;
+    margin-top: -25px;
+    margin-bottom: 10px;
     display: flex;
     align-items: center;
   }
@@ -66,8 +73,8 @@
   .checkbox-input-signup {
     border: 1px black solid;
     appearance: none;
-    width: 19px;
-    height: 19px;
+    width: 20px;
+    height: 20px;
     border-radius: 5px;
     margin-top: -10px;
     margin-right: 8px;
@@ -81,8 +88,8 @@
   .checkbox-input-signup:checked::before {
     content: '\2713'; 
     position: fixed;
-    margin-top: -12px;
-    margin-left: -6px;
+    margin-top: -4px;
+    margin-left: 1px;
     font-size: 18px;
     font-weight: bold;
     color: rgb(0, 0, 0);
@@ -91,12 +98,12 @@
   .checkbox-label-signup h4{
     font-size: 15px;
     font-weight: normal;
-    font-family: "Inter", sans-serif;
+    font-family: "Inter";
   }
   .terms-button {
     background-color: transparent;
     font-size: 14px;
-    font-family: "Inter", sans-serif;
+    font-family: "Inter";
     font-weight: bold;
     border: none;
     cursor: pointer;
@@ -120,14 +127,14 @@
     margin-left: -5px;
     border-radius: 8px;
     cursor: pointer;
-    font-family: "Inter", sans-serif;
+    font-family: "Inter";
     font-size: 18px;
     font-weight: bold;
     transition: background-color 0.5s;
   }
   
   .sign-up:hover {
-    font-family: "Inter", sans-serif;
+    font-family: "Inter";
     font-size: 18px;
     font-weight: bold;
     background-color: lightgray;
@@ -137,7 +144,7 @@
   .log-in p{
     margin-right: 0px;
     font-size: 13px;
-    font-family: "Inter", sans-serif;
+    font-family: "Inter";
     font-weight: normal;
   }
   .button-log-in {
@@ -146,17 +153,16 @@
     padding: 6px 12px;
     border-radius: 4px;
     text-align: center;
-    text-decoration: none;
     display: inline-block;
     cursor: pointer;
     font-size: 14px;
-    font-family: "Inter", sans-serif;
+    font-family: "Inter";
     font-weight: bold;
   }
   
   .button-log-in:hover {
     font-size: 15px;
-    font-family: "Inter", sans-serif;
+    font-family: "Inter";
     font-weight: bold;
   }
   
@@ -258,14 +264,12 @@
   }
   .post-content h2{
     margin-top: 0px;
-    font-family: "Inter", sans-serif;
+    font-family: "Inter";
     font-weight: bold;
-    text-decoration: underline;
   }
   .post-content p{
     margin-top: -10px;
-    text-decoration: underline;
-    font-family: "Inter", sans-serif;
+    font-family: "Inter";
   }
   .content-form{
     position: fixed;
@@ -348,9 +352,8 @@
     margin-left: 10px;
     margin-top: 10px;
     margin-bottom: -5px;
-    font-family: "Inter", sans-serif;
+    font-family: "Inter";
     font-weight: bold;
-    text-decoration: underline;
   }
   .comment-avatar {
     width: 50px;
@@ -379,15 +382,13 @@
   
   .comment h2 {
     margin-bottom: -35px;
-    font-family: "Inter", sans-serif;
+    font-family: "Inter";
     font-weight: bold;
-    text-decoration: underline;
   }
   
   .comment p {
     margin-top: 40px;
-    font-family: "Inter", sans-serif;
-    text-decoration: underline;
+    font-family: "Inter";
   }
   
   
@@ -509,3 +510,33 @@
     background: #f1f1f1;
     border-radius: 40px;
   }
+
+  .popup-register {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: Black;
+    color: white;
+    padding: 20px; 
+    border-radius: 20px; 
+    z-index: 200;
+    font-family: "Inter"; 
+    font-size: 18px;
+  }
+  
+  .popup-register-content {
+    text-align: center;
+  }
+  
+  .popup-register button {
+    margin-top: 10px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .popup-register button:hover{ 
+    background-color: #DBDBDB;
+    border-radius: 10px;
+  }
+  
