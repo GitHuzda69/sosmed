@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { useLocation, Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useParams } from "react-router";
 import { makeRequest } from "../../axios.js";
 import { AuthContext } from "../../context/authContext.js";
@@ -76,6 +76,20 @@ const Profile = () => {
       console.log(err);
     }
   };
+  const navigate = useNavigate();
+  const handleMessage = async () => {
+    try {
+      const friend = friends.map((id) => console.log(id._id))
+      await makeRequest.post(`/conversations/`, {
+        senderId: currentUser._id,
+        receiverId: friend._id,
+      });
+      navigate("/messages");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+    
 
   const toggleSettings = () => {
     setSettingOpen(!settingOpen);
@@ -319,7 +333,12 @@ const Profile = () => {
                 </h4>
               </div>
               <div className="friends-rec">
-                {friends.map((friend) => (
+                {friends && friends.length === 0 ? ( 
+            <span className="friendlist-empty">
+              Didn't follow anyone yet.
+            </span>
+          ) : friends && friends.length > 0 ? (
+            friends.map((friend) => (
                   <div key={friend._id} className="rightBarUserProfile">
                     <Link
                       className="LinkUserProfile"
@@ -347,14 +366,9 @@ const Profile = () => {
                         <p>{friend && truncateText(friend.desc, 20)}</p>
                       </div>
                     </Link>
-                    <Link
-                      to={`/messages/${friend._id}`}
-                      className="link-rightbarProfile"
-                    >
-                      <button className="rightBarButtonProfile">Chat</button>
-                    </Link>
+                      <button className="rightBarButtonProfile" onClick={handleMessage}>Chat</button>
                   </div>
-                ))}
+                ))) : ("Loading") }
               </div>
             </div>
           </div>

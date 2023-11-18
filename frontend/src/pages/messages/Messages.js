@@ -183,12 +183,10 @@ function Message() {
         <div className="message-friend-bar">
           {user && user.length > 0 ? (
             conversations.map((conversation) => {
-              // Mendapatkan anggota pertama dari percakapan
               const friendId = conversation.members.find(
                 (member) => member !== currentUser._id
               );
 
-              // Mendapatkan data pengguna berdasarkan friendId
               const friendUser = user.find((u) => u._id === friendId);
               const truncatedDesc =
                 friendUser && friendUser.desc

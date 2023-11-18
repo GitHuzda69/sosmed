@@ -2,40 +2,53 @@ import React, { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../context/authContext.js";
 import { Icon } from "@iconify/react";
 import "./FriendsList.css";
+import { useParams } from "react-router";
 import Sidebar from "../../component/Leftbar/Leftbar";
 import Settings from "../../component/Settings/Settings";
 import Logout from "../../component/Logout/Logout";
-import { useQuery } from "@tanstack/react-query";
 import { makeRequest } from "../../axios.js";
 import { useLocation, Link } from "react-router-dom";
 
 import defaultprofile from "../../assets/profile/default_avatar.png";
 import defaultcover from "../../assets/profile/default_banner.jpg";
 
-const FriendList = ({ relationships }) => {
-  const { currentUser } = useContext(AuthContext);
+const FriendList = () => {
+  const { user: currentUser } = useContext(AuthContext);
   const [isDarkMode, setIsDarkMode] = useState(false);
-
+  const [user, setUser] = useState({});
+  const [friends, setFriends] = useState([]);
+  const username = useParams().username;
+  const [settingOpen, setSettingOpen] = useState(false);
+  const [logoutOpen, setLogoutOpen] = useState(false);
+  const isFriendListPage = true;
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER
   const [popupPosition, setPopupPosition] = useState({
     visible: false,
     top: 0,
     left: 0,
   });
 
-  const {
-    isLoading,
-    error,
-    data: friendData,
-  } = useQuery(["friend"], () =>
-    makeRequest.get("/friends").then((res) => {
-      return res.data;
-    })
-  );
+  useEffect(() => {
+    const fetchUser = async () => {
+      const res = await makeRequest.get(`/users?username=${username}`);
+      setUser(res.data);
+    };
+    fetchUser();
+  }, [username]);
 
-  const [settingOpen, setSettingOpen] = useState(false);
-  const [logoutOpen, setLogoutOpen] = useState(false);
-
-  const isFriendListPage = true;
+  useEffect(() => {
+    const getFriends = async () => {
+      try {
+        const friendList = await makeRequest.get(
+          "/relationships/friends/" + user._id
+        );
+        setFriends(friendList.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getFriends();
+  }, [user]);
 
   const toggleSettings = () => {
     setSettingOpen(!settingOpen);
@@ -65,7 +78,7 @@ const FriendList = ({ relationships }) => {
     localStorage.setItem("isDarkMode", newDarkModeStatus.toString());
     setDarkMode(newDarkModeStatus);
   };
-
+console.log(friends)
   return (
     <div className="friendlist-main">
       <div className="friendlist-container">
@@ -76,17 +89,13 @@ const FriendList = ({ relationships }) => {
           </button>
         </div>
         <div className="friendlist">
-          {error ? (
-            `Something went wrong`
-          ) : isLoading ? (
-            "Loading"
-          ) : friendData.length === 0 ? (
+          {friends && friends.length === 0 ? (
             <span className="friendlist-empty">
-              You didn't follow anyone yet. You can find someone in FYP pages.
+              Didn't follow anyone yet.
             </span>
-          ) : (
-            friendData.map((friend) => (
-              <div className="friend" key={friend.userid}>
+          ) : friends && friends.length > 0 ? (
+            friends && friends.map((friend) => (
+              <div className="friend" key={friend.userId}>
                 <Link
                   to={`/profile/${friend.userid}`}
                   style={{ textDecoration: "none", color: "inherit" }}
@@ -95,8 +104,8 @@ const FriendList = ({ relationships }) => {
                   <img
                     className="friend-cover"
                     src={
-                      friend && friend.coverpic
-                        ? "/data/" + friend.coverpic
+                      friend && friend.coverPicture
+                        ? PF + friend.coverPicture
                         : defaultcover
                     }
                     alt={friend.displayname}
@@ -104,8 +113,8 @@ const FriendList = ({ relationships }) => {
                   <div>
                     <img
                       src={
-                        friend && friend.profilepic
-                          ? "/data/" + friend.profilepic
+                        friend && friend.profilePicture
+                          ? PF + friend.profilePicture
                           : defaultprofile
                       }
                       alt={friend.displayname}
@@ -119,18 +128,18 @@ const FriendList = ({ relationships }) => {
                     <Icon icon="tabler:dots" width={20} height={20} />
                   </button>
                   <div className="friend-follower">
-                    <h3>234</h3>
+                    <h3>{friends.followers}</h3>
                     <h4>Following</h4>
                     <h3>4334</h3>
                     <h4>Followers</h4>
                   </div>
                 </div>
                 <div className="friend-desc">
-                  <p>{friend.biodata}</p>
+                  <p>{friend.desc}</p>
                 </div>
               </div>
             ))
-          )}
+          ) : ( "Loading" )}
         </div>
         {popupPosition.visible && (
           <div
