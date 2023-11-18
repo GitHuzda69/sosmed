@@ -79,7 +79,7 @@ const Profile = () => {
   const navigate = useNavigate();
   const handleMessage = async () => {
     try {
-      const friend = friends.map((id) => console.log(id._id))
+      const friend = friends.map((id) => console.log(id._id));
       await makeRequest.post(`/conversations/`, {
         senderId: currentUser._id,
         receiverId: friend._id,
@@ -89,7 +89,6 @@ const Profile = () => {
       console.log(err);
     }
   };
-    
 
   const toggleSettings = () => {
     setSettingOpen(!settingOpen);
@@ -150,7 +149,13 @@ const Profile = () => {
     <div className={`app ${isDarkMode ? "dark-mode" : ""}`}>
       <div className="profile-main">
         <div className="profil">
-          <div className="profil-container">
+          <div
+            className={`profil-container ${
+              showPosts
+                ? "profile-container-posts-view"
+                : "profile-container-friends-view"
+            }`}
+          >
             <div className="cover-img">
               <div className="post-img-banner">
                 <button
@@ -333,42 +338,50 @@ const Profile = () => {
                 </h4>
               </div>
               <div className="friends-rec">
-                {friends && friends.length === 0 ? ( 
-            <span className="friendlist-empty">
-              Didn't follow anyone yet.
-            </span>
-          ) : friends && friends.length > 0 ? (
-            friends.map((friend) => (
-                  <div key={friend._id} className="rightBarUserProfile">
-                    <Link
-                      className="LinkUserProfile"
-                      to={"/profile/" + friend.username}
-                      style={{
-                        textDecoration: "none",
-                        display: "flex",
-                        flexDirection: "row",
-                      }}
-                    >
-                      <div className="rightBarUserInfoProfile">
-                        <img
-                          className="rightBarImgProfile"
-                          src={
-                            friend.profilePicture
-                              ? PF + friend.profilePicture
-                              : defaultprofile
-                          }
-                          alt=""
-                        />
-                        <div className={`statusDot ${"grayDot"}`} />
-                      </div>
-                      <div className="rightBarNameProfile">
-                        <span>{friend.displayname}</span>
-                        <p>{friend && truncateText(friend.desc, 20)}</p>
-                      </div>
-                    </Link>
-                      <button className="rightBarButtonProfile" onClick={handleMessage}>Chat</button>
-                  </div>
-                ))) : ("Loading") }
+                {friends && friends.length === 0 ? (
+                  <span className="friendlist-empty">
+                    Didn't follow anyone yet.
+                  </span>
+                ) : friends && friends.length > 0 ? (
+                  friends.map((friend) => (
+                    <div key={friend._id} className="rightBarUserProfile">
+                      <Link
+                        className="LinkUserProfile"
+                        to={"/profile/" + friend.username}
+                        style={{
+                          textDecoration: "none",
+                          display: "flex",
+                          flexDirection: "row",
+                        }}
+                      >
+                        <div className="rightBarUserInfoProfile">
+                          <img
+                            className="rightBarImgProfile"
+                            src={
+                              friend.profilePicture
+                                ? PF + friend.profilePicture
+                                : defaultprofile
+                            }
+                            alt=""
+                          />
+                          <div className={`statusDot ${"grayDot"}`} />
+                        </div>
+                        <div className="rightBarNameProfile">
+                          <span>{friend.displayname}</span>
+                          <p>{friend && truncateText(friend.desc, 20)}</p>
+                        </div>
+                      </Link>
+                      <button
+                        className="rightBarButtonProfile"
+                        onClick={handleMessage}
+                      >
+                        Chat
+                      </button>
+                    </div>
+                  ))
+                ) : (
+                  "Loading"
+                )}
               </div>
             </div>
           </div>

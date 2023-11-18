@@ -21,7 +21,7 @@ const FriendList = () => {
   const [settingOpen, setSettingOpen] = useState(false);
   const [logoutOpen, setLogoutOpen] = useState(false);
   const isFriendListPage = true;
-  const PF = process.env.REACT_APP_PUBLIC_FOLDER
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [popupPosition, setPopupPosition] = useState({
     visible: false,
     top: 0,
@@ -78,7 +78,7 @@ const FriendList = () => {
     localStorage.setItem("isDarkMode", newDarkModeStatus.toString());
     setDarkMode(newDarkModeStatus);
   };
-console.log(friends)
+  console.log(friends);
   return (
     <div className="friendlist-main">
       <div className="friendlist-container">
@@ -90,11 +90,10 @@ console.log(friends)
         </div>
         <div className="friendlist">
           {friends && friends.length === 0 ? (
-            <span className="friendlist-empty">
-              Didn't follow anyone yet.
-            </span>
+            <span className="friendlist-empty">Didn't follow anyone yet.</span>
           ) : friends && friends.length > 0 ? (
-            friends && friends.map((friend) => (
+            friends &&
+            friends.map((friend) => (
               <div className="friend" key={friend.userId}>
                 <Link
                   to={`/profile/${friend.userid}`}
@@ -122,24 +121,28 @@ console.log(friends)
                     />
                   </div>
                 </Link>
-                <div className="friend-info-details">
-                  <h3>{friend.displayname}</h3>
+                <div className="friend-info-container">
+                  <div className="friend-info-details">
+                    <h3>{friend.displayname}</h3>
+                    <div className="friend-follower">
+                      <h3>{friends.followers}</h3>
+                      <h4>Following</h4>
+                      <h3>4334</h3>
+                      <h4>Followers</h4>
+                    </div>
+                  </div>
                   <button className="button-popup">
                     <Icon icon="tabler:dots" width={20} height={20} />
                   </button>
-                  <div className="friend-follower">
-                    <h3>{friends.followers}</h3>
-                    <h4>Following</h4>
-                    <h3>4334</h3>
-                    <h4>Followers</h4>
-                  </div>
                 </div>
                 <div className="friend-desc">
                   <p>{friend.desc}</p>
                 </div>
               </div>
             ))
-          ) : ( "Loading" )}
+          ) : (
+            "Loading"
+          )}
         </div>
         {popupPosition.visible && (
           <div

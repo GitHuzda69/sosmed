@@ -183,10 +183,12 @@ function Message() {
         <div className="message-friend-bar">
           {user && user.length > 0 ? (
             conversations.map((conversation) => {
+              // Mendapatkan anggota pertama dari percakapan
               const friendId = conversation.members.find(
                 (member) => member !== currentUser._id
               );
 
+              // Mendapatkan data pengguna berdasarkan friendId
               const friendUser = user.find((u) => u._id === friendId);
               const truncatedDesc =
                 friendUser && friendUser.desc
@@ -197,7 +199,9 @@ function Message() {
 
               return (
                 <button
-                  className="message-friend"
+                  className={`message-friend ${
+                    currentChat === conversation ? "selected" : ""
+                  }`}
                   onClick={() => setCurrentChat(conversation)}
                 >
                   <img
@@ -224,41 +228,6 @@ function Message() {
 
       {currentChat ? (
         <div className="message-chat-container">
-          <div className="chat-profile">
-            <Link to={`/profile/${user.username}`}>
-              <div className="avatar-status-container">
-                <img
-                  className="chat-avatar"
-                  src={
-                    user.profilePicture
-                      ? PF + user.profilePicture
-                      : defaultprofile
-                  }
-                  alt={user.displayname}
-                />
-                <div className="chat-status">
-                  <h2>{user.displayname}</h2>
-                  <h3>{user.desc}</h3>
-                </div>
-              </div>
-            </Link>
-            <div className="chat-profile-button">
-              <button>
-                <Icon icon="octicon:search-16" width={25} height={25} />
-              </button>
-              <button>
-                <Icon icon="clarity:pinned-solid" width={25} height={25} />
-              </button>
-              <button>
-                <Icon
-                  icon="solar:menu-dots-bold"
-                  rotate={1}
-                  width={25}
-                  height={25}
-                />
-              </button>
-            </div>
-          </div>
           <div className="chat">
             {messages.map((m, index) => {
               const previousMessage = messages[index - 1];
