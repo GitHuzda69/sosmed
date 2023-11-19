@@ -8,7 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import { makeRequest } from "../../axios.js";
 import { AuthContext } from "../../context/authContext.js";
 import { Icon } from "@iconify/react";
-// import { io } from "socket.io-client";
+import { io } from "socket.io-client";
 
 import defaultprofile from "../../assets/profile/default_avatar.png";
 import { format, isToday, isSameDay, isYesterday, isThisYear } from "date-fns";
@@ -19,7 +19,7 @@ function Message() {
   const [conversations, setConversations] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
   const [newMessage, setNewMessage] = useState("");
-  const [socket, setSocket] = useState(null);
+  const socket = useRef(io("ws://localhost:8900"))
   const [user, setUser] = useState(null);
   const [info, setInfo] = useState(null);
   const [messages, setMessages] = useState([]);
@@ -85,9 +85,18 @@ function Message() {
     getMessages();
   }, [currentChat]);
 
-  // useEffect(() => {
-  //   setSocket(io("ws://localhost:8900"));
-  // }, []);
+  useEffect( () =>  {
+    const online = async () => {
+      try{
+      socket.current.emit("addUser", user._id);
+      socket.current.on("getUsers", users =>{
+      console.log(users)
+      })
+    } catch (err) {
+      console.log(err)
+    }};
+    online();
+  }, [user]);
 
   useEffect(() => {
     const storedDarkModeStatus = localStorage.getItem("isDarkMode") === "true";
