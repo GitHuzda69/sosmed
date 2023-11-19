@@ -1,7 +1,6 @@
 import "./Rightbar.css";
 import { Icon } from "@iconify/react";
-import { Link } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
+import { Link, useNavigate } from "react-router-dom";
 import { makeRequest } from "../../axios.js";
 
 import defaultprofile from "../../assets/profile/default_avatar.png";
@@ -26,6 +25,23 @@ const Rightbar = () => {
     };
     getFriends();
   }, []);
+  
+  const navigate = useNavigate();
+  const handleMessage = async () => {
+    try {
+      const friendids = friends.flatMap((id) => (id._id));
+      const userDataArray = [];
+
+      for (const friendId of friendids) {
+      if (friendId === currentUser._id) continue;
+
+      console.log(friendids)
+      await makeRequest.post(`/conversations/`, { senderId: currentUser._id,  receiverId: friendids });
+      navigate("/messages");
+    }} catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <div className="rightBar">
@@ -48,9 +64,7 @@ const Rightbar = () => {
                     <span className="rightBarName">{friend.displayname}</span>
                   </p>
                 </Link>
-                <Link to={`/messages/${friend._id}`} className="link-rightbar">
-                  <button className="rightBarButton">Chat</button>
-                </Link>
+                  <button className="rightBarButton" onClick={handleMessage}>Chat</button>
               </div>
             ))
           ) : (

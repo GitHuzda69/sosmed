@@ -78,7 +78,6 @@ const FriendList = () => {
     localStorage.setItem("isDarkMode", newDarkModeStatus.toString());
     setDarkMode(newDarkModeStatus);
   };
-  console.log(friends);
   return (
     <div className="friendlist-main">
       <div className="friendlist-container">
