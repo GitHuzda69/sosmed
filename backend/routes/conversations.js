@@ -4,8 +4,30 @@ const Conversation = require("../models/Conversation");
 //new conv
 
 router.post("/", async (req, res) => {
+  const senderId = req.body.senderId;
+  const receiverId = req.body.receiverId;
+  if (senderId === receiverId) {
+    res.status(409).json("Cannot create message")
+  }
+  const existingConversation = await Conversation.findOne({
+    members: {
+      $all: [senderId, receiverId],
+    },
+  });
+
+  const anotherConversation = await Conversation.findOne({
+    members: {
+      $all: [receiverId, senderId],
+    },
+  });
+  if (existingConversation) {
+    return res.status(200).json(existingConversation);
+  }
+  if (anotherConversation) {
+    return res.status(200).json(anotherConversation);
+  }
   const newConversation = new Conversation({
-    members: [req.body.senderId, req.body.receiverId],
+    members: [senderId, receiverId],
   });
 
   try {
