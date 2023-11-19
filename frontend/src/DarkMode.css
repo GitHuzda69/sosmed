@@ -292,6 +292,9 @@
     background-color: transparent;
     color: white;
   }
+  .dark-mode .message-friend.selected{
+    background-color: #5C5C5C; 
+  }
   .dark-mode .chat-profile{
     background-color: #2F2F2F;
     color: white;
@@ -369,6 +372,11 @@
   }
   .dark-mode .rightProfileBar{ 
     background-color: #1E1E1E;
+  }
+  .dark-mode .LinkUserProfile:hover {
+    border-radius: 10px;
+    text-decoration: underline !important;
+    color: white !important;
   }
   .dark-mode .rightBarNameProfile{
     color: white;
