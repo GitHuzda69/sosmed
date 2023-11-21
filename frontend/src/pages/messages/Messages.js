@@ -12,14 +12,17 @@ import { io } from "socket.io-client";
 
 import defaultprofile from "../../assets/profile/default_avatar.png";
 import { format, isToday, isSameDay, isYesterday, isThisYear } from "date-fns";
+import Conversation from "../../component/Conversations/Conversations.js";
+import Chat from "../../component/Chat/Chat.js";
 
 function Message() {
   const [settingOpen, setSettingOpen] = useState(false);
   const [logoutOpen, setLogoutOpen] = useState(false);
   const [conversations, setConversations] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
+  const [arrivalMessage, setArrivalMessage] = useState(null);
   const [newMessage, setNewMessage] = useState("");
-  const socket = useRef(io("ws://localhost:8900"))
+  const socket = useRef();
   const [user, setUser] = useState(null);
   const [info, setInfo] = useState(null);
   const [messages, setMessages] = useState([]);
@@ -51,52 +54,40 @@ function Message() {
   }, [currentUser._id]);
 
   useEffect(() => {
-    const getUser = async () => {
-      try {
-        const friendids = conversations.flatMap(
-          (conversation) => conversation.members
-        );
-        const userDataArray = [];
-
-        for (const friendId of friendids) {
-          if (friendId === currentUser._id) continue;
-
-          const res = await makeRequest.get("/users?userId=" + friendId);
-          userDataArray.push(res.data);
-          setUser(userDataArray);
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    getUser();
-  }, [conversations, currentUser]);
-
-  useEffect(() => {
     const getMessages = async () => {
       try {
         const res = await makeRequest.get("/messages/" + currentChat?._id);
-        setMessages(res.data);
+        console.log(res.data);
       } catch (err) {
         console.log(err);
       }
     };
     getMessages();
   }, [currentChat]);
+  
+  useEffect(() => {
+    socket.current = io("ws://localhost:8900");
+    socket.current.on("getMessage", data => {setArrivalMessage({
+      sender: data.senderId,
+      text: data.text,
+      createdAt: Date.now(),})
+    })
+  }, [])
+  
+  useEffect(() => {
+    arrivalMessage && currentChat?.members.includes(arrivalMessage.sender) &&
+    setMessages((prev) => [...prev, arrivalMessage])
+  }, [arrivalMessage, currentChat])
 
-  useEffect( () =>  {
-    const online = async () => {
-      try{
-      socket.current.emit("addUser", user._id);
-      socket.current.on("getUsers", users =>{
-      console.log(users)
-      })
-    } catch (err) {
-      console.log(err)
-    }};
-    online();
-  }, [user]);
+  useEffect(  () =>  {
+    try {
+      socket.current.emit("addUser", currentUser._id, socket.current.id);
+      socket.current.on("getUsers", users => {
+        console.log(users)
+      })}catch (err) {
+        console.log(err)
+      }
+  }, [currentUser]);
 
   useEffect(() => {
     const storedDarkModeStatus = localStorage.getItem("isDarkMode") === "true";
@@ -144,6 +135,14 @@ function Message() {
       conversationId: currentChat._id,
     };
 
+    const receiverId = currentChat.members.find(member => member !== currentUser._id)
+
+    socket.current.emit("sendMessage", {
+      senderId: currentUser._id,
+      receiverId: receiverId,
+      text: newMessage
+    })
+
     try {
       const res = await makeRequest.post("/messages", message);
       setMessages([...messages, res.data]);
@@ -172,10 +171,10 @@ function Message() {
     }
   }, [messages]);
 
+
   return (
     <div className="main-messages" style={{ height: chatHeight }}>
-      <div className="message-friend-container">
-        <div className="search-message-friend">
+      <div className="search-message-friend">
           <h1>Messages</h1>
           <Icon
             icon="octicon:search-16"
@@ -189,85 +188,16 @@ function Message() {
             placeholder="Search on Messages"
           />
         </div>
-        <div className="message-friend-bar">
-          {user && user.length > 0 ? (
-            conversations.map((conversation) => {
-              // Mendapatkan anggota pertama dari percakapan
-              const friendId = conversation.members.find(
-                (member) => member !== currentUser._id
-              );
-
-              // Mendapatkan data pengguna berdasarkan friendId
-              const friendUser = user.find((u) => u._id === friendId);
-              const truncatedDesc =
-                friendUser && friendUser.desc
-                  ? friendUser.desc.length > 30
-                    ? friendUser.desc.slice(0, 30) + "..."
-                    : friendUser.desc
-                  : "";
-
-              return (
-                <button
-                  className={`message-friend ${
-                    currentChat === conversation ? "selected" : ""
-                  }`}
-                  onClick={() => setCurrentChat(conversation)}
-                >
-                  <img
-                    className="message-friend-avatar"
-                    src={
-                      friendUser && friendUser.profilePicture
-                        ? PF + friendUser.profilePicture
-                        : defaultprofile
-                    }
-                    alt="nana"
-                  />
-                  <div className="message-friend-bio">
-                    <h2>{friendUser && friendUser.displayname}</h2>
-                    <h3>{truncatedDesc}</h3>
-                  </div>
-                </button>
-              );
-            })
-          ) : (
-            <h1>Loading...</h1>
-          )}
-        </div>
+      {conversations.map((c) => (
+        <div onClick={() => setCurrentChat(c)}>
+      <Conversation conversation={c} currentUser={currentUser} />
       </div>
-
+      ))}
       {currentChat ? (
         <div className="message-chat-container">
           <div className="chat">
-            {messages.map((m, index) => {
-              const previousMessage = messages[index - 1];
-              const showDate =
-                !previousMessage ||
-                !isSameDay(
-                  new Date(previousMessage.createdAt),
-                  new Date(m.createdAt)
-                );
-
-              return (
-                <React.Fragment key={m.id}>
-                  {showDate && (
-                    <div className="chat-time">
-                      <h3>
-                        {isToday(new Date(m.createdAt))
-                          ? "Today"
-                          : format(new Date(m.createdAt), "MMMM dd, yyyy")}
-                      </h3>
-                    </div>
-                  )}
-                  <div
-                    className={
-                      m.sender === currentUser._id ? "chat-self" : "chat-other"
-                    }
-                  >
-                    <h3>{m.text}</h3>
-                    <h4>{format(new Date(m.createdAt), "hh:mm a")}</h4>
-                  </div>
-                </React.Fragment>
-              );
+            {messages.map((m) => {
+                  <Chat message={m} own={m.sender === currentUser._id} />
             })}
           </div>
           <div className="chat-input">
