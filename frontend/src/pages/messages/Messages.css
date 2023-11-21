@@ -8,23 +8,13 @@
   background-color: white;
 }
 
-.message-friend-container {
-  width: 300px;
-  display: flex;
-  flex-direction: column;
-}
-
-.message-friend-container h2{
-  font-size: 18px; 
-}
-
 .search-message-friend{
   display: flex;
   flex-direction: column;
-  justify-content: center; 
+  justify-content: flex-start; 
   padding-left: 20px;
   padding-right: 20px; 
-  padding-bottom: 20px;
+  padding-bottom: 20px; 
   border-bottom: 1px gray solid;
 }
 .search-message-friend h1{
@@ -33,95 +23,25 @@
 }
 .searchbar-message-friend-button{
   position: absolute;
-  margin-top: 65px;
+  margin-top: 75px;
   margin-left: 10px;
 }
 .input-search-friend{  
   height: 40px;
   padding-left: 30px;
-  border: 1px black solid;
+  margin-bottom: 20px;
+  border: 1px black solid; 
   border-radius: 8px;
   display: flex;
   text-indent: 10px;
 }
-
-.message-friend-bar{
-  display: flex;
-  flex-direction: column;
-  height: 100%;  
-  margin-left: 0px; 
-  margin-right: -8px;
-  overflow-y: scroll;
-  overflow-x: hidden; 
-  scrollbar-width: thin;
-  scrollbar-color: #999999 #ffffff;  
-}
-
-.message-friend-bar::-webkit-scrollbar {
-  width: 8px;
-}
-
-.message-friend-bar::-webkit-scrollbar-thumb {
-  background-color: #999999;
-  border-radius: 10px;
-}
-
-.message-friend-bar::-webkit-scrollbar-thumb:hover {
-  background-color: #777777;
-}
-
-.message-friend-bar::-webkit-scrollbar-track {
-  background-color: transparent;
-  border-radius: 10px;
-}
-
-.message-friend{
-  display: flex;
-  flex-direction: row;    
-  padding: 5px 10px; 
-  border-bottom: 1px gray solid; 
-}
-.message-friend:hover{
-  border-radius: 0;
-  background-color: #999999; 
-  transition: all 0.3s ease;
-}
-
-.message-friend.selected {
-  background-color: #5C5C5C; 
-  color: white;
-}
-
-.message-friend-avatar{
-  width: 50px;
-  height: 50px;
-  border-radius: 12px;
-  margin-top: 3px;
-}
-
-.message-friend-bio{
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-  margin-top: -5px;
-  margin-left: 10px;
-} 
-
-.message-friend-bio h2{
-  font-size: 16px;
-}
-
-.message-friend-bio h3{
-  margin-top: -12px;
-  font-size: 13px;
-  font-weight: normal;
-}
+ 
 
 .message-chat-container {
   display: flex;
   flex-direction: column;
   flex: 1; 
-  padding-bottom: 20px;
+  padding-bottom: 20px;  
 }
 
 .chat-profile {
@@ -180,7 +100,7 @@
   display: flex;
   flex-direction: column;
   overflow-y: scroll;
-  padding-bottom: 70px; 
+  padding-bottom: 70px;  
   gap: 10px;
   border-left: 1px gray solid; 
   scrollbar-width: thin;
@@ -203,65 +123,6 @@
 .chat::-webkit-scrollbar-track {
   background-color: transparent;
   border-radius: 10px;
-}
-
-.chat-time{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: -10px;
-  margin-bottom: -10px;
-}
-
-.chat-other{
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  flex-direction: column;
-  width: 60%;
-  padding-left: 10px;
-  padding-right: 10px;
-  margin-top: 5px;
-  margin-left: 20px;
-  border: 1px black solid;
-  border-radius: 0px 10px 10px 10px;
-}
-
-.chat-other h3 {
-  font-size: 15px;
-}
-
-.chat-other h4 {
-  margin-top: -20px;
-  font-size: 12px;
-  align-self: flex-end; 
-  color: gray;
-}
-
-.chat-self{
-  display: flex;
-  justify-content: space-between;
-  align-self: flex-end;
-  flex-direction: column;
-  width: 60%;
-  padding-left: 10px;
-  padding-right: 10px;
-  margin-top: 5px; 
-  margin-right: 10px;
-  border: 1px black solid;
-  border-radius: 10px 10px 0px 10px;
-  background-color: #EEFFF8;
-}
-
-.chat-self h3 {
-  font-size: 15px;
-}
-
-.chat-self h4 {
-  margin-top: -20px;
-  font-size: 12px;
-  align-self: flex-end; 
-  color: gray;
 }
 
 .chat-input {
