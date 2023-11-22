@@ -288,13 +288,14 @@
   .dark-mode .search-message-friend{
     background-color: #2F2F2F;
   } 
-  .dark-mode .message-friend{
-    background-color: transparent;
+  .dark-mode .message-friend.selected-friend{
+    background-color: #5C5C5C;
     color: white;
   }
-  .dark-mode .message-friend.selected{
-    background-color: #5C5C5C; 
-  }
+  .dark-mode .message-friend{
+    background-color: #2F2F2F;
+    color: white;
+  }  
   .dark-mode .chat-profile{
     background-color: #2F2F2F;
     color: white;
