@@ -1,14 +1,14 @@
 .friendlist-main{
-  width: calc(100% - 45px);  
-  height: 100%;
+  width: calc(100% - 65px);   
   margin-top: 20px;
-  margin-left: 20px;  
+  margin-left: 20px;   
 }
 .friendlist-container{
   width: 100%;  
   height: 100%; 
   background-color: white;
   border-radius: 15px; 
+  padding-bottom: 100px;
 }
 .friendlist-container h2{
   font-size: 40px;
