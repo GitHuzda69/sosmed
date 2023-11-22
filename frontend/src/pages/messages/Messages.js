@@ -32,6 +32,7 @@ function Message() {
   const isMessagesPage = true;
   const [chatHeight, setChatHeight] = useState("80vh");
   const [displayedDate, setDisplayedDate] = useState(null);
+  const [selectedConversation, setSelectedConversation] = useState(null);
 
   const toggleSettings = () => {
     setSettingOpen(!settingOpen);
@@ -57,36 +58,42 @@ function Message() {
     const getMessages = async () => {
       try {
         const res = await makeRequest.get("/messages/" + currentChat?._id);
-        console.log(res.data);
+        setMessages(res.data);
       } catch (err) {
         console.log(err);
       }
     };
-    getMessages();
+    if (currentChat) {
+      getMessages();
+    }
   }, [currentChat]);
-  
+
   useEffect(() => {
     socket.current = io("ws://localhost:8900");
-    socket.current.on("getMessage", data => {setArrivalMessage({
-      sender: data.senderId,
-      text: data.text,
-      createdAt: Date.now(),})
-    })
-  }, [])
-  
-  useEffect(() => {
-    arrivalMessage && currentChat?.members.includes(arrivalMessage.sender) &&
-    setMessages((prev) => [...prev, arrivalMessage])
-  }, [arrivalMessage, currentChat])
+    socket.current.on("getMessage", (data) => {
+      setArrivalMessage({
+        sender: data.senderId,
+        text: data.text,
+        createdAt: Date.now(),
+      });
+    });
+  }, []);
 
-  useEffect(  () =>  {
+  useEffect(() => {
+    arrivalMessage &&
+      currentChat?.members.includes(arrivalMessage.sender) &&
+      setMessages((prev) => [...prev, arrivalMessage]);
+  }, [arrivalMessage, currentChat]);
+
+  useEffect(() => {
     try {
       socket.current.emit("addUser", currentUser._id, socket.current.id);
-      socket.current.on("getUsers", users => {
-        console.log(users)
-      })}catch (err) {
-        console.log(err)
-      }
+      socket.current.on("getUsers", (users) => {
+        console.log(users);
+      });
+    } catch (err) {
+      console.log(err);
+    }
   }, [currentUser]);
 
   useEffect(() => {
@@ -135,13 +142,15 @@ function Message() {
       conversationId: currentChat._id,
     };
 
-    const receiverId = currentChat.members.find(member => member !== currentUser._id)
+    const receiverId = currentChat.members.find(
+      (member) => member !== currentUser._id
+    );
 
     socket.current.emit("sendMessage", {
       senderId: currentUser._id,
       receiverId: receiverId,
-      text: newMessage
-    })
+      text: newMessage,
+    });
 
     try {
       const res = await makeRequest.post("/messages", message);
@@ -171,34 +180,92 @@ function Message() {
     }
   }, [messages]);
 
+  const handleConversationClick = (conversation) => {
+    if (selectedConversation === conversation) {
+      setSelectedConversation(null);
+    } else {
+      setCurrentChat(conversation);
+      setSelectedConversation(conversation);
+    }
+  };
+
+  const groupedMessages = messages.reduce((accumulator, message) => {
+    const dateKey = new Date(message.createdAt).toDateString();
+
+    if (!accumulator[dateKey]) {
+      accumulator[dateKey] = [];
+    }
+
+    accumulator[dateKey].push(message);
+
+    return accumulator;
+  }, {});
+
+  const formatDateLabel = (date) => {
+    const currentDate = new Date(date);
+    if (isToday(currentDate)) {
+      return "Today";
+    } else if (isYesterday(currentDate)) {
+      return "Yesterday";
+    } else {
+      return format(currentDate, "MMMM dd, yyyy");
+    }
+  };
 
   return (
     <div className="main-messages" style={{ height: chatHeight }}>
       <div className="search-message-friend">
-          <h1>Messages</h1>
-          <Icon
-            icon="octicon:search-16"
-            className="searchbar-message-friend-button"
-            width="22"
-            height="22"
-          />
-          <input
-            className="input-search-friend"
-            type="text"
-            placeholder="Search on Messages"
-          />
-        </div>
-      {conversations.map((c) => (
-        <div onClick={() => setCurrentChat(c)}>
-      <Conversation conversation={c} currentUser={currentUser} />
+        <h1>Messages</h1>
+        <Icon
+          icon="octicon:search-16"
+          className="searchbar-message-friend-button"
+          width="22"
+          height="22"
+        />
+        <input
+          className="input-search-friend"
+          type="text"
+          placeholder="Search on Messages"
+        />
+        <div
+          style={{
+            borderBottom: "1px gray solid",
+            marginLeft: "-20px",
+            marginRight: "-20px",
+          }}
+        />
+        {conversations.map((c) => (
+          <div key={c._id} onClick={() => handleConversationClick(c)}>
+            <Conversation
+              conversation={c}
+              currentUser={currentUser}
+              onClick={handleConversationClick}
+              isSelected={c === selectedConversation}
+            />
+          </div>
+        ))}
       </div>
-      ))}
-      {currentChat ? (
+      {selectedConversation ? (
         <div className="message-chat-container">
           <div className="chat">
-            {messages.map((m) => {
-                  <Chat message={m} own={m.sender === currentUser._id} />
-            })}
+            {Object.entries(groupedMessages).map(([date, messagesForDate]) => (
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                <p>{formatDateLabel(date)}</p>
+                {messagesForDate.map((m) => (
+                  <Chat
+                    key={m._id}
+                    message={m}
+                    own={m.sender === currentUser._id}
+                  />
+                ))}
+              </div>
+            ))}
           </div>
           <div className="chat-input">
             <textarea

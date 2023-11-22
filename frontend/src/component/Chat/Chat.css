@@ -1,224 +1,59 @@
-.message-chat-container {
-    display: flex;
-    flex-direction: column;
-    flex: 1; 
-    padding-bottom: 20px;
-  }
-  
-  .chat-profile {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 70px;
-    gap: 10px;
-    border: 1px gray solid;
-    background-color: #DBDBDB;
-  }
-  
-  .avatar-status-container {
-    display: flex;
-    align-items: center;
-  }
-  
-  .chat-avatar {
-    width: 50px;
-    height: 50px;
-    border-radius: 12px;
-    margin-left: 15px;
-  }
-  
-  .chat-status {
-    display: flex;
-    flex-direction: column;
-    text-align: left;
-    margin-left: 10px;
-  }
-  
-  .chat-status h2 {
-    font-size: 18px;
-    font-weight: bold;
-  }
-  
-  .chat-status h3 {
-    font-size: 16px;
-    font-weight: normal;
-    margin-top: -16px;
-  }
-  
-  .chat-profile-button {
-    display: flex;
-    flex-direction: row;
-    gap: 5px;
-    margin-right: 75px;
-  }
-  
-  .chat-profile-button button {
-    background-color: transparent;
-  }
-  
-  .chat{
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    overflow-y: scroll;
-    padding-bottom: 70px; 
-    gap: 10px;
-    border-left: 1px gray solid; 
-    scrollbar-width: thin;
-    scrollbar-color: #999999 #ffffff; 
-  }
-  
-  .chat::-webkit-scrollbar {
-    width: 8px;
-  }
-  
-  .chat::-webkit-scrollbar-thumb {
-    background-color: transparent;
-    border-radius: 10px;
-  }
-  
-  .chat::-webkit-scrollbar-thumb:hover {
-    background-color: transparent;
-  }
-  
-  .chat::-webkit-scrollbar-track {
-    background-color: transparent;
-    border-radius: 10px;
-  }
-  
-  .chat-time{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: -10px;
-    margin-bottom: -10px;
-  }
-  
-  .chat-other{
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    flex-direction: column;
-    width: 60%;
-    padding-left: 10px;
-    padding-right: 10px;
-    margin-top: 5px;
-    margin-left: 20px;
-    border: 1px black solid;
-    border-radius: 0px 10px 10px 10px;
-  }
-  
-  .chat-other h3 {
-    font-size: 15px;
-  }
-  
-  .chat-other h4 {
-    margin-top: -20px;
-    font-size: 12px;
-    align-self: flex-end; 
-    color: gray;
-  }
-  
-  .chat-self{
-    display: flex;
-    justify-content: space-between;
-    align-self: flex-end;
-    flex-direction: column;
-    width: 60%;
-    padding-left: 10px;
-    padding-right: 10px;
-    margin-top: 5px; 
-    margin-right: 10px;
-    border: 1px black solid;
-    border-radius: 10px 10px 0px 10px;
-    background-color: #EEFFF8;
-  }
-  
-  .chat-self h3 {
-    font-size: 15px;
-  }
-  
-  .chat-self h4 {
-    margin-top: -20px;
-    font-size: 12px;
-    align-self: flex-end; 
-    color: gray;
-  }
-  
-  .chat-input {
-    position: fixed;
-    bottom: 0;
-    left: 380px;
-    right: 0;
-    background-color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-    padding-top: 10px;
-    padding-bottom: 20px;
-  }
-  
-  
-  .chat-input textarea {
-    width: calc(100% - 185px);
-    height: 30px;
-    resize: none;
-    margin-left: 25px;
-    background-color: #DBDBDB;
-    border: none;
-    border-radius: 10px;
-    padding: 10px;
-    padding-top: 20px; 
-    font-size: 14px;
-  }
-  .chat-input textarea:focus{  
-    outline: 2px lightgray solid;
-  }
-  .chat-input textarea::-webkit-scrollbar {
-    width: 8px;
-  }
-  
-  .chat-input textarea::-webkit-scrollbar-track {
-    background-color: #f1f1f1;
-  }
-  
-  .chat-input textarea::-webkit-scrollbar-thumb {
-    background-color: gray;
-    border-radius: 5px;
-  }
-  .chat-input textarea::-webkit-scrollbar-thumb:hover {
-    background-color: #555;
-  }
-  
-  .placeholder {
-    position: absolute;
-    top: 15px;
-    left: 15px;
-    pointer-events: none;
-    color: #999;
-    transition: all 0.2s ease;
-  }
-  
-  .chat-input textarea:focus+.placeholder,
-  .chat-input textarea:not(:placeholder-shown)+.placeholder {
-    transform: translateY(-26px) scale(0.8);
-    color: #666;
-  }
-  
-  .chat-input-button {
-    display: flex;
-    flex-direction: row;
-    margin-top: 10px;
-    margin-left: auto; 
-    margin-right: 10px;
-    z-index: 69;
-    gap: 5px;
-  }
-  .chat-button{ 
-    background-color: transparent;
-    margin-left: 7px;
-  }
-  .chat-button:hover{
-    background-color: #5C5C5C;
-  }
+.chat-time{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: -10px;
+  margin-bottom: -10px;
+}
+
+.chat-other{
+  display: flex;
+  justify-content: space-between;
+  align-self: flex-start;
+  flex-direction: column;
+  width: 60%;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-top: 5px;
+  margin-left: 20px; 
+  background-color: white;
+  border: 1px black solid;
+  border-radius: 0px 10px 10px 10px;
+}
+
+.chat-other h3 {
+  font-size: 15px;
+}
+
+.chat-other h4 {
+  margin-top: -20px;
+  font-size: 12px;
+  align-self: flex-end; 
+  color: gray;
+}
+
+.chat-self{
+  display: flex;
+  justify-content: space-between;
+  align-self: flex-end;
+  flex-direction: column;
+  width: 60%;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-top: 5px; 
+  margin-right: 10px;
+  border: 1px black solid;
+  border-radius: 10px 10px 0px 10px;
+  background-color: #E0E0E0;
+}
+
+.chat-self h3 {
+  font-size: 15px;
+}
+
+.chat-self h4 {
+  margin-top: -20px;
+  font-size: 12px;
+  align-self: flex-end; 
+  color: gray;
+}
