@@ -1,29 +1,46 @@
 const router = require("express").Router();
-const Google = require("../models/Google");
 const nodemailer = require('nodemailer');
+const User = require("../models/User");
+const bcrypt = require("bcrypt");
 const { v4: uuidv4 } = require('uuid');
 
 // Konfigurasi Nodemailer
 const transporter = nodemailer.createTransport({
-  service: 'gmail',
+  host: "smtp.gmail.com",
+  port: 465,
+  secure: true,
   auth: {
-    user: 'uzudatoro002@gmail.com',
-    pass: 'Ujeck12345',
+    user: "uzudatoro002@gmail.com",
+    pass: "bjvw qtah aztn gqgl",
   },
 });
 
-// Simpan data pengguna yang telah meminta OTP
-const otpRequests = {};
+// Perbarui access token saat diperlukan
+transporter.on('token', (token) => {
+  if (token) {
+    // Perbarui token access
+    oauth2Client.setCredentials({
+      access_token: token.accessToken,
+    });
+  }
+});
+
+// Secara teratur perbarui access token (misalnya setiap 45 menit)
+setInterval(() => {
+  transporter.emit('token', {
+    accessToken: oauth2Client.getAccessToken(),
+    expires: Date.now() + 3600000, // Token akan kedaluwarsa setelah 1 jam
+  });
+}, 45 * 60 * 1000);
 
 // Endpoint untuk mengirim OTP
 router.post('/gmail/send', async (req, res) => {
-  const { email } = req.body;
   const otp = generateOTP(); // Function to generate OTP
 
   // Kirim email dengan OTP
   const mailOptions = {
     from: 'uzudatoro002@gmail.com',
-    to: email,
+    to: req.body.email,
     subject: 'Your OTP for Login',
     text: `Your OTP is: ${otp}`,
   };
@@ -31,12 +48,18 @@ router.post('/gmail/send', async (req, res) => {
   try {
     await transporter.sendMail(mailOptions);
 
-    // Simpan data pengguna di MongoDB
-    const user = new Google({ email, otp });
-    await user.save();
+    // Generate a password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(req.body.password, salt);
+    const bio = "Hello, This is my biodata";
 
-    otpRequests[email] = otp; // Simpan OTP bersama dengan alamat email pengguna
-    res.status(200).json({ message: 'OTP sent successfully' });
+    // Simpan data pengguna di MongoDB
+    const newUser = new User({ 
+      email: req.body.email,
+      otp: otp,
+     });
+     const user = await newUser.save();
+    res.status(200).json(user);
   } catch (error) {
     console.error('Error sending email:', error);
     res.status(500).json({ error: 'Failed to send OTP' });

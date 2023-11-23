@@ -30,8 +30,7 @@ const Login = () => {
   };
 
   const navigate = useNavigate();
-  const handleGoogle = (e) => {
-    navigate("/login/google")
+  const handleGoogle = () => {
   };
 
   useEffect(() => {
@@ -141,22 +140,21 @@ const Login = () => {
               <div className="divider-text">OR</div>
               <div className="divider-line"></div>
             </div>
+            <Link to="/login/google"> 
             <button
               type="submit"
               className="login-else"
               style={{ marginTop: "20px" }}
-              onClick={handleLogin}
             >
               <span className="login-else-icon">
                 <Icon icon="devicon:google" width={20} height={20} />
               </span>
               <h5>Continue with Google</h5>
-            </button>
+            </button></Link>
             <button
               type="submit"
               className="login-else"
               style={{ marginTop: "20px" }}
-              onClick={handleGoogle}
             >
               <span className="login-else-icon">
                 <Icon
