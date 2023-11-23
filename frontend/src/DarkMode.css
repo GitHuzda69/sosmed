@@ -452,6 +452,9 @@
     background-color: white;
     color: black;
   } 
+  .dark-mode .popup-follow{
+    background-color: #2F2F2F;
+  }
 
   /*buat logout*/
 
