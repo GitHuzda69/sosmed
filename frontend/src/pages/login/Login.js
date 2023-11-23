@@ -11,7 +11,6 @@ const Login = () => {
   const { isFetching, dispatch } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
-  const navigate = useNavigate();
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -28,6 +27,11 @@ const Login = () => {
       localStorage.removeItem("userData");
     }
     loginCall(userData, dispatch);
+  };
+
+  const navigate = useNavigate();
+  const handleGoogle = (e) => {
+    navigate("/login/google")
   };
 
   useEffect(() => {
@@ -152,7 +156,7 @@ const Login = () => {
               type="submit"
               className="login-else"
               style={{ marginTop: "20px" }}
-              onClick={handleLogin}
+              onClick={handleGoogle}
             >
               <span className="login-else-icon">
                 <Icon

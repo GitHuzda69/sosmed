@@ -8,7 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import { makeRequest } from "../../axios.js";
 import { AuthContext } from "../../context/authContext.js";
 import { Icon } from "@iconify/react";
-import { io } from "socket.io-client";
+// import { io } from "socket.io-client";
 
 import defaultprofile from "../../assets/profile/default_avatar.png";
 import { format, isToday, isSameDay, isYesterday, isThisYear } from "date-fns";
@@ -71,33 +71,33 @@ function Message() {
     }
   }, [currentChat]);
 
-  useEffect(() => {
-    socket.current = io("ws://localhost:8900");
-    socket.current.on("getMessage", (data) => {
-      setArrivalMessage({
-        sender: data.senderId,
-        text: data.text,
-        createdAt: Date.now(),
-      });
-    });
-  }, []);
+  // useEffect(() => {
+  //   socket.current = io("ws://localhost:8900");
+  //   socket.current.on("getMessage", (data) => {
+  //     setArrivalMessage({
+  //       sender: data.senderId,
+  //       text: data.text,
+  //       createdAt: Date.now(),
+  //     });
+  //   });
+  // }, []);
 
-  useEffect(() => {
-    arrivalMessage &&
-      currentChat?.members.includes(arrivalMessage.sender) &&
-      setMessages((prev) => [...prev, arrivalMessage]);
-  }, [arrivalMessage, currentChat]);
+  // useEffect(() => {
+  //   arrivalMessage &&
+  //     currentChat?.members.includes(arrivalMessage.sender) &&
+  //     setMessages((prev) => [...prev, arrivalMessage]);
+  // }, [arrivalMessage, currentChat]);
 
-  useEffect(() => {
-    try {
-      socket.current.emit("addUser", currentUser._id, socket.current.id);
-      socket.current.on("getUsers", (users) => {
-        console.log(users);
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  }, [currentUser]);
+  // useEffect(() => {
+  //   try {
+  //     socket.current.emit("addUser", currentUser._id, socket.current.id);
+  //     socket.current.on("getUsers", (users) => {
+  //       console.log(users);
+  //     });
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // }, [currentUser]);
 
   useEffect(() => {
     const storedDarkModeStatus = localStorage.getItem("isDarkMode") === "true";
@@ -149,11 +149,11 @@ function Message() {
       (member) => member !== currentUser._id
     );
 
-    socket.current.emit("sendMessage", {
-      senderId: currentUser._id,
-      receiverId: receiverId,
-      text: newMessage,
-    });
+    // socket.current.emit("sendMessage", {
+    //   senderId: currentUser._id,
+    //   receiverId: receiverId,
+    //   text: newMessage,
+    // });
 
     try {
       const res = await makeRequest.post("/messages", message);
