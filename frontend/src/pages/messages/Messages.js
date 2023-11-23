@@ -33,6 +33,9 @@ function Message() {
   const [chatHeight, setChatHeight] = useState("80vh");
   const [displayedDate, setDisplayedDate] = useState(null);
   const [selectedConversation, setSelectedConversation] = useState(null);
+  const [chatContainerHeight, setChatContainerHeight] = useState(0);
+
+  const chatContainerRef = useRef(null);
 
   const toggleSettings = () => {
     setSettingOpen(!settingOpen);
@@ -212,6 +215,18 @@ function Message() {
     }
   };
 
+  useEffect(() => {
+    if (chatContainerRef.current) {
+      setChatContainerHeight(chatContainerRef.current.scrollHeight);
+    }
+  }, [messages]);
+
+  useEffect(() => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerHeight;
+    }
+  }, [chatContainerHeight]);
+
   return (
     <div className="main-messages" style={{ height: chatHeight }}>
       <div className="search-message-friend">
@@ -247,7 +262,7 @@ function Message() {
       </div>
       {selectedConversation ? (
         <div className="message-chat-container">
-          <div className="chat">
+          <div className="chat" ref={chatContainerRef}>
             {Object.entries(groupedMessages).map(([date, messagesForDate]) => (
               <div
                 style={{
