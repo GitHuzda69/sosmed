@@ -14,6 +14,7 @@ const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);
   const [dataPopupVisible, setDataPopupVisible] = useState(false);
+  const [showDuplicatePopup, setShowDuplicatePopup] = useState(false);
 
   const [inputs, setInputs] = useState({
     username: "",
@@ -25,19 +26,27 @@ const Register = () => {
 
   useEffect(() => {
     const agreeStatusFromLocalStorage = localStorage.getItem("agreeStatus");
+    console.log(
+      "Agree status from local storage:",
+      agreeStatusFromLocalStorage
+    );
+
     if (agreeStatusFromLocalStorage === "true") {
       setAgreeStatus(true);
     }
   }, []);
 
   const handleChange = (e) => {
+    console.log("Inputs:", inputs);
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleClick = async (e) => {
     e.preventDefault();
+    console.log("Inputs on handleClick:", inputs);
 
     if (!agreeStatus) {
+      console.log("Agree status is false");
       setPopupVisible(true);
       return;
     }
@@ -48,6 +57,7 @@ const Register = () => {
       !inputs.displayname ||
       !inputs.password
     ) {
+      console.log("Some input is missing");
       setDataPopupVisible(true);
       return;
     }
@@ -60,11 +70,28 @@ const Register = () => {
     };
 
     try {
+      // Check for duplicate entries before making the registration request
+      const response = await axios.get(
+        `http://localhost:8800/api/auth/checkDuplicate/${user.username}`
+      );
+      console.log("Duplicate Check Response:", response);
+
+      console.log("Duplicate Check Response Data:", response.data);
+      if (response.data.duplicate) {
+        setShowDuplicatePopup(true);
+        return;
+      }
+
+      // If no duplicate, proceed with registration
       await axios.post("http://localhost:8800/api/auth/register", user);
       history("/login");
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const handleDuplicatePopupClose = () => {
+    setShowDuplicatePopup(false);
   };
 
   const handleClosePopup = () => {
@@ -97,6 +124,7 @@ const Register = () => {
                 className="input-signup"
                 placeholder="Enter Your Username"
                 required
+                name="username"
                 ref={username}
                 onChange={handleChange}
               />
@@ -116,6 +144,7 @@ const Register = () => {
                 className="input-signup"
                 placeholder="Enter Your Active Email"
                 required
+                name="email"
                 ref={email}
                 onChange={handleChange}
               />
@@ -134,6 +163,7 @@ const Register = () => {
               <input
                 className="input-signup"
                 placeholder="Enter Your Display Name "
+                name="displayname"
                 ref={displayname}
                 onChange={handleChange}
               />
@@ -154,6 +184,7 @@ const Register = () => {
                 type={showPassword ? "text" : "password"}
                 placeholder="Enter Your Password"
                 required
+                name="password"
                 ref={password}
                 onChange={handleChange}
               />
@@ -229,6 +260,14 @@ const Register = () => {
           <div className="popup-register">
             <p>Please enter all required information.</p>
             <button onClick={handleDataPopupClose}>Close</button>
+          </div>
+        </div>
+      )}
+      {showDuplicatePopup && (
+        <div className="popup-logout-container">
+          <div className="popup-register">
+            <p>Username already exists. Please choose a different username.</p>
+            <button onClick={handleDuplicatePopupClose}>Close</button>
           </div>
         </div>
       )}
