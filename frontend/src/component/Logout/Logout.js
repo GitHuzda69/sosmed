@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { makeRequest } from "../../axios.js";
+import { makeRequest } from "../../fetch.js";
 
 const Logout = ({ onClose }) => {
   const handleLogout = async () => {
-    await makeRequest.post("http://localhost:8800/api/auth/logout")
+    await makeRequest("auth/logout", "POST")
       localStorage.removeItem("user");
       window.location.reload();
     }

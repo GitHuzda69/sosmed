@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { makeRequest } from "../../axios.js";
+import { makeRequest } from "../../fetch.js";
 import "./Login.css";
 import { loginCall } from "../apiCalls.js";
 import { Icon } from "@iconify/react";
@@ -16,7 +16,7 @@ const Google = () => {
 
   const sendOTP = async () => {
     try {
-      await makeRequest.post('/auth/gmail/send', { email });
+      await makeRequest('auth/gmail/send', "POST", { email });
       setIsEmailSent(true);
     } catch (error) {
       console.error('Error sending OTP:', error);

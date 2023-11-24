@@ -6,7 +6,7 @@ import { useParams } from "react-router";
 import Sidebar from "../../component/Leftbar/Leftbar";
 import Settings from "../../component/Settings/Settings";
 import Logout from "../../component/Logout/Logout";
-import { makeRequest } from "../../axios.js";
+import { makeRequest } from "../../fetch.js";
 import { useLocation, Link } from "react-router-dom";
 
 import defaultprofile from "../../assets/profile/default_avatar.png";
@@ -30,8 +30,9 @@ const FriendList = () => {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const res = await makeRequest.get(`/users?username=${username}`);
-      setUser(res.data);
+      const userUrl = `users?username=${username}`;
+      const res = await makeRequest(userUrl);
+      setUser(res);
     };
     fetchUser();
   }, [username]);
@@ -39,10 +40,9 @@ const FriendList = () => {
   useEffect(() => {
     const getFriends = async () => {
       try {
-        const friendList = await makeRequest.get(
-          "/relationships/friends/" + user._id
-        );
-        setFriends(friendList.data);
+        const friendUrl = `relationships/friends/${user._id}`
+        const friendList = await makeRequest.get(friendUrl);
+        setFriends(friendList);
       } catch (err) {
         console.log(err);
       }

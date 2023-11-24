@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./Login.css";    
-import { makeRequest } from "../../axios";
+import { makeRequest } from "../../fetch";
     
 const Otp = () => {
   const [otp, setOtp] = useState();
@@ -8,7 +8,7 @@ const Otp = () => {
 
     const verifyOTP = async () => {
         try {
-          const response = await makeRequest.post('/auth/gmail/verify', { email, otp });
+          const response = await makeRequest('auth/gmail/verify', "POST", { email, otp });
           console.log(response.data);
         } catch (error) {
           console.error('Error verifying OTP:', error);

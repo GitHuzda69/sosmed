@@ -9,7 +9,7 @@ import "../../component/Logout/Logout.css";
 import Post from "../../component/post/Post.js";
 import Upload from "../../component/Upload/Upload.js";
 import Logout from "../../component/Logout/Logout.js";
-import { makeRequest } from "../../axios.js";
+import { makeRequest } from "../../fetch.js";
 import FypSwitch from "../../component/fyp-button/fyp-switch.js";
 import HomeProfile from "../../component/home-profile/home-profile.js";
 import AuthContext from "../../context/authContext.js";
@@ -31,11 +31,9 @@ const Fyp = (post, className, username) => {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const res = await makeRequest.get("/posts/fyp");
-        const postsData = res.data;
-
-        postsData.sort((post1, post2) => post2.desc.length - post1.desc.length);
-        setPosts(postsData);
+        const res = await makeRequest("posts/fyp");
+        res.sort((post1, post2) => post2.desc.length - post1.desc.length);
+        setPosts(res);
       } catch (err) {
         console.log(err);
       }
@@ -47,8 +45,8 @@ const Fyp = (post, className, username) => {
     if (post.userId) {
       const fetchUser = async () => {
         try {
-          const res = await makeRequest.get(`/users?userId=${post.userId}`);
-          setUser(res.data);
+          const res = await makeRequest(`users?userId=${post.userId}`);
+          setUser(res);
         } catch (err) {
           console.error(err);
         }
@@ -82,10 +80,10 @@ const Fyp = (post, className, username) => {
     if (currentUser && currentUser._id) {
       const getFriends = async () => {
         try {
-          const friendList = await makeRequest.get(
-            "/relationships/friends/" + currentUser._id
+          const friendList = await makeRequest(
+            "relationships/friends/" + currentUser._id
           );
-          setFriends(friendList.data);
+          setFriends(friendList);
         } catch (err) {
           console.log(err);
         }

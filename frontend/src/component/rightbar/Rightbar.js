@@ -1,7 +1,7 @@
 import "./Rightbar.css";
 import { Icon } from "@iconify/react";
 import { Link, useNavigate } from "react-router-dom";
-import { makeRequest } from "../../axios.js";
+import { makeRequest } from "../../fetch.js";
 
 import defaultprofile from "../../assets/profile/default_avatar.png";
 import { useContext, useEffect, useState } from "react";
@@ -15,10 +15,10 @@ const Rightbar = () => {
   useEffect(() => {
     const getFriends = async () => {
       try {
-        const friendList = await makeRequest.get(
-          "/relationships/friends/" + currentUser._id
+        const friendList = await makeRequest(
+          "relationships/friends/" + currentUser._id
         );
-        setFriends(friendList.data);
+        setFriends(friendList);
       } catch (err) {
         console.log(err);
       }
@@ -36,7 +36,7 @@ const Rightbar = () => {
       if (friendId === currentUser._id) continue;
 
       console.log(friendids)
-      await makeRequest.post(`/conversations/`, { senderId: currentUser._id,  receiverId: friendids });
+      await makeRequest(`conversations/`, { senderId: currentUser._id,  receiverId: friendids });
       navigate("/messages");
     }} catch (err) {
       console.log(err);

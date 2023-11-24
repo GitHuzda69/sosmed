@@ -1,5 +1,5 @@
 import React from "react";
-import { makeRequest } from "../../axios";
+import { makeRequest } from "../../fetch.js";
 import Comments from "../comments/Comments.js";
 import "../comments/Comments.css";
 import { useContext, useState, useRef, useEffect } from "react";
@@ -25,7 +25,7 @@ const Commento = ({ postid, className }) => {
       const fileName = Date.now() + file.name;
       formData.append("name", fileName);
       formData.append("file", file);
-      const res = await makeRequest.post("/upload", formData);
+      const res = await makeRequest("upload", "POST", formData);
       return fileName;
     } catch (err) {
       console.log(err);
@@ -34,22 +34,29 @@ const Commento = ({ postid, className }) => {
 
   useEffect(() => {
     const fetchComments = async () => {
-      const res = await makeRequest.get("comments/" + postid);
-      setComments(
-        res.data.sort((p1, p2) => {
-          return new Date(p2.createdAt) - new Date(p1.createdAt);
-        })
-      );
+      const commentsUrl = `comments/${postid}`;
+  
+      try {
+        const res = await makeRequest(commentsUrl);
+        setComments(
+          res.sort((p1, p2) => {
+            return new Date(p2.createdAt) - new Date(p1.createdAt);
+          })
+        );
+      } catch (error) {
+        // Handle error
+        console.error('Error fetching comments:', error.message);
+      }
     };
+  
     fetchComments();
   }, [postid]);
 
   useEffect(() => {
     const getFriends = async () => {
       try {
-        const friendList = await makeRequest.get(
-          "/relationships/friends/" + user._id
-        );
+        const friendUrl = "relationships/friends/" + user._id
+        const friendList = await makeRequest(friendUrl);
         setFriends(friendList.data);
       } catch (err) {
         console.log(err);
@@ -81,7 +88,7 @@ const Commento = ({ postid, className }) => {
             postId: postid,
             userId: currentUser._id,
           };
-          await makeRequest.post("/comments", newComment);
+          await makeRequest("comments", "POST", newComment);
 
           setComments((prevComments) => [...prevComments, newComment]);
 

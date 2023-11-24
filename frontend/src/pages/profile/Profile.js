@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useParams } from "react-router";
-import { makeRequest } from "../../axios.js";
+import { makeRequest } from "../../fetch.js";
 import { AuthContext } from "../../context/authContext.js";
 import { Icon } from "@iconify/react";
 import moment from "moment";
@@ -42,9 +42,9 @@ const Profile = () => {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const res = await makeRequest.get(`/users?username=${username}`);
-      setUser(res.data);
-      setFollowed(currentUser.followings.includes(res.data._id));
+      const res = await makeRequest(`users?username=${username}`);
+      setUser(res);
+      setFollowed(currentUser.followings.includes(res._id));
     };
     fetchUser();
   }, [username, currentUser.followings]);
@@ -52,10 +52,10 @@ const Profile = () => {
   useEffect(() => {
     const getFriends = async () => {
       try {
-        const friendList = await makeRequest.get(
-          "/relationships/friends/" + user._id
+        const friendList = await makeRequest(
+          "relationships/friends/" + user._id
         );
-        setFriends(friendList.data);
+        setFriends(friendList);
       } catch (err) {
         console.log(err);
       }
@@ -69,7 +69,7 @@ const Profile = () => {
         // If already followed, show confirmation popup
         setShowUnfollowConfirmation(true);
       } else {
-        await makeRequest.put(`/relationships/${user._id}/follow`, {
+        await makeRequest(`relationships/${user._id}/follow`, "PUT", {
           userId: currentUser._id,
         });
         dispatch({ type: "FOLLOW", payload: user._id });
@@ -83,7 +83,7 @@ const Profile = () => {
   const handleMessage = async () => {
     try {
       const friend = friends.map((id) => console.log(id._id));
-      await makeRequest.post(`/conversations/`, {
+      await makeRequest(`conversations/`, "POST", {
         senderId: currentUser._id,
         receiverId: friend._id,
       });

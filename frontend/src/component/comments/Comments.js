@@ -4,7 +4,7 @@ import { useLocation, Link } from "react-router-dom";
 import AuthContext from "../../context/authContext.js";
 import { Icon } from "@iconify/react";
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
-import { makeRequest } from "../../axios";
+import { makeRequest } from "../../fetch.js";
 import moment from "moment";
 
 import defaultprofile from "../../assets/profile/default_avatar.png";
@@ -34,11 +34,13 @@ const Comments = ({ postid, comment, friends }) => {
   useEffect(() => {
     if (comment.userId) {
       const fetchUser = async () => {
+        const userUrl = `users?userId=${comment.userId}`;
         try {
-          const res = await makeRequest.get(`/users?userId=${comment.userId}`);
-          setUser(res.data);
-        } catch (err) {
-          console.error(err);
+          const res = await makeRequest(userUrl);
+          setUser(res);
+        } catch (error) {
+          // Handle error
+          console.error('Error fetching user:', error.message);
         }
       };
       fetchUser();
@@ -51,7 +53,7 @@ const Comments = ({ postid, comment, friends }) => {
       const fileName = Date.now() + file.name;
       formData.append("name", fileName);
       formData.append("file", file);
-      await makeRequest.post("/upload", formData);
+      await makeRequest("upload", "POST" ,formData);
       return fileName;
     } catch (err) {
       console.log(err);
@@ -60,9 +62,9 @@ const Comments = ({ postid, comment, friends }) => {
 
   const handleDelete = async () => {
     try {
-      await makeRequest.delete("/comments/" + comment._id, {
-        data: { userId: currentUser._id },
-      });
+      const deleteUrl = `comments/${comment._id}`;
+      const deleteData = { userId: currentUser._id }
+      await makeRequest(deleteUrl, "DELETE", deleteData);
       if (comments) {
         const updatedComments = comments.filter(
           (commentItem) => commentItem._id !== comment._id
@@ -99,9 +101,9 @@ const Comments = ({ postid, comment, friends }) => {
     };
 
     try {
-      const updatedComment = await makeRequest.put(
-        "/comments/" + comment._id,
-        editedComment
+      const updateUrl = `comments/${comment._id}`
+      const updatedComment = await makeRequest(
+        updateUrl, "PUT", editedComment
       );
 
       const updatedComments = comments.map((commentItem) =>
@@ -130,7 +132,7 @@ const Comments = ({ postid, comment, friends }) => {
         img: null,
       };
 
-      await makeRequest.put(`/comments/${comment._id}`, updatedComment);
+      await makeRequest(`comments/${comment._id}`, "PUT", updatedComment);
       setEditedImgComment(null);
     } catch (error) {
       console.error(error);
@@ -147,12 +149,12 @@ const Comments = ({ postid, comment, friends }) => {
       let isFollowing = currentUser.followings.includes(user?._id);
 
       if (isFollowing) {
-        await makeRequest.put(`/relationships/${user._id}/unfollow`, {
+        await makeRequest(`relationships/${user._id}/unfollow`, "PUT", {
           userId: currentUser._id,
         });
         dispatch({ type: "UNFOLLOW", payload: user._id });
       } else {
-        await makeRequest.put(`/relationships/${user._id}/follow`, {
+        await makeRequest(`relationships/${user._id}/follow`, "PUT", {
           userId: currentUser._id,
         });
         dispatch({ type: "FOLLOW", payload: user._id });

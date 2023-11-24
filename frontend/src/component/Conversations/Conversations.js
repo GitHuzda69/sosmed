@@ -3,7 +3,7 @@ import "./Conversation.css";
 import { Icon } from "@iconify/react";
 import "../../DarkMode.css";
 
-import { makeRequest } from "../../axios";
+import { makeRequest } from "../../fetch";
 import defaultprofile from "../../assets/profile/default_avatar.png";
 
 export default function Conversation({
@@ -20,8 +20,9 @@ export default function Conversation({
 
     const getUser = async () => {
       try {
-        const res = await makeRequest("/users?userId=" + friendId);
-        setUser(res.data);
+        const userUrl = `users?userId=${friendId}`
+        const res = await makeRequest(userUrl);
+        setUser(res);
       } catch (err) {
         console.log(err);
       }

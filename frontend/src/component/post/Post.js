@@ -1,23 +1,15 @@
 import "./Post.css";
 import React, { useContext, useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { makeRequest } from "../../axios.js";
+import { makeRequest } from "../../fetch.js";
 import { AuthContext } from "../../context/authContext.js";
 import { Icon } from "@iconify/react";
 import moment from "moment";
 import Commento from "../Commento/Commento.js";
-import Rightbar from "../rightbar/Rightbar.js";
-import HomeProfile from "../home-profile/home-profile";
 
 import defaultprofile from "../../assets/profile/default_avatar.png";
 
-const Post = ({
-  post,
-  openPostOption,
-  handleOpenPostOption,
-  handleClosePostOption,
-  friends,
-}) => {
+const Post = ({ post, openPostOption, handleOpenPostOption, handleClosePostOption,friends }) => {
   const [commentOpen, setCommentOpen] = useState(false);
   const [popupOpen, setPopupOpen] = useState(false);
   const [selectedPostImg, setSelectedPostImg] = useState(null);
@@ -25,7 +17,7 @@ const Post = ({
   const [postEditOpen, setPostEditOpen] = useState(false);
   const [editedDesc, setEditedDesc] = useState(post.desc);
   const [editedImg, setEditedImg] = useState(null);
-  const [isDescEmpty, setIsDescEmpty] = useState(false);
+  const [isDescEmpty, setIsDescEmpty] = useState(false); 
   const descInputRef = useRef(null);
   const [originalDesc, setOriginalDesc] = useState(post.desc);
   const [postOptionButtonPosition, setPostOptionButtonPosition] =
@@ -50,45 +42,60 @@ const Post = ({
   useEffect(() => {
     if (post.userId) {
       const fetchUser = async () => {
+        const url = `users?userId=${post.userId}`;
         try {
-          const res = await makeRequest.get(`/users?userId=${post.userId}`);
-          setUser(res.data);
+          const res = await makeRequest(url);
+          setUser(res);
         } catch (err) {
-          console.error(err);
+          // Handle error
+          console.error('Error:', err.message);
         }
       };
+  
       fetchUser();
     }
   }, [post.userId]);
+  
 
   const upload = async (file) => {
     try {
       const formData = new FormData();
       const fileName = Date.now() + file.name;
-      formData.append("name", fileName);
-      formData.append("file", file);
-      await makeRequest.post("/upload", formData);
+      formData.append('name', fileName);
+      formData.append('file', file);
+  
+      await makeRequest('upload', 'POST', formData);
+  
       return fileName;
     } catch (err) {
       console.log(err);
     }
   };
 
-  const handleLike = () => {
+  const handleLike = async () => {
     try {
-      makeRequest.put("/likes/" + post._id + "/like", {
+      const likeEndpoint = `likes/${post._id}/like`;
+      const likeData = {
         userId: currentUser._id,
-      });
-    } catch (err) {}
+      };
+  
+      await makeRequest(likeEndpoint, 'POST', likeData);
+    } catch (err) {
+      // Handle error
+      console.error('Error:', err.message);
+    }
+  
     setLike(isLiked ? like - 1 : like + 1);
     setIsLiked(!isLiked);
   };
 
   const handleDelete = async () => {
     try {
-      await makeRequest.delete(`/posts/${post._id}`, {
-        data: { userId: currentUser._id },
-      });
+      const deleteEndpoint = `posts/${post._id}`
+      const deleteData = {
+        userId: currentUser._id
+      }
+      await makeRequest(deleteEndpoint, `DELETE`, deleteData);
       window.location.reload();
     } catch (err) {
       console.log(err);
@@ -126,12 +133,12 @@ const Post = ({
       let isFollowing = currentUser.followings.includes(user?._id);
 
       if (isFollowing) {
-        await makeRequest.put(`/relationships/${user._id}/unfollow`, {
+        await makeRequest(`relationships/${user._id}/unfollow`, {
           userId: currentUser._id,
         });
         dispatch({ type: "UNFOLLOW", payload: user._id });
       } else {
-        await makeRequest.put(`/relationships/${user._id}/follow`, {
+        await makeRequest(`relationships/${user._id}/follow`, {
           userId: currentUser._id,
         });
         dispatch({ type: "FOLLOW", payload: user._id });
@@ -163,7 +170,7 @@ const Post = ({
   const navigate = useNavigate();
   const handleMessage = async () => {
     try {
-      await makeRequest.post(`/conversations/`, {
+      await makeRequest(`conversations/`, {
         senderId: currentUser._id,
         receiverId: post.userId,
       });
@@ -190,7 +197,7 @@ const Post = ({
         img: null,
       };
 
-      await makeRequest.put(`/posts/${post._id}`, updatedPost);
+      await makeRequest(`posts/${post._id}`, updatedPost);
       setEditedImg(null);
     } catch (error) {
       console.error(error);
@@ -203,7 +210,7 @@ const Post = ({
           <div className="user">
             <div className="userinfo">
               <Link
-                to={`/profile/${user.username}`}
+                to={`profile/${user.username}`}
                 style={{ textDecoration: "none", color: "inherit" }}
               >
                 <img

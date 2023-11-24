@@ -1,8 +1,6 @@
 import "./home-profile.css";
 import React, { useContext, useState } from "react";
 import { useLocation, Link } from "react-router-dom";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { makeRequest } from "../../axios.js";
 import { AuthContext } from "../../context/authContext.js";
 import { Icon } from "@iconify/react";
 

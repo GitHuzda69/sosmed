@@ -5,7 +5,7 @@ import Settings from "../../component/Settings/Settings";
 import Logout from "../../component/Logout/Logout";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { makeRequest } from "../../axios.js";
+import { makeRequest } from "../../fetch.js";
 import { AuthContext } from "../../context/authContext.js";
 import { Icon } from "@iconify/react";
 // import { io } from "socket.io-client";
@@ -48,8 +48,8 @@ function Message() {
   useEffect(() => {
     const getConversations = async () => {
       try {
-        const res = await makeRequest.get("/conversations/" + currentUser._id);
-        setConversations(res.data);
+        const res = await makeRequest("conversations/" + currentUser._id);
+        setConversations(res);
       } catch (err) {
         console.log(err);
       }
@@ -60,8 +60,8 @@ function Message() {
   useEffect(() => {
     const getMessages = async () => {
       try {
-        const res = await makeRequest.get("/messages/" + currentChat?._id);
-        setMessages(res.data);
+        const res = await makeRequest("messages/" + currentChat?._id);
+        setMessages(res);
       } catch (err) {
         console.log(err);
       }
@@ -160,7 +160,7 @@ function Message() {
     // });
 
     try {
-      const res = await makeRequest.post("/messages", message);
+      const res = await makeRequest("/messages", "POST", message);
       setMessages([...messages, res.data]);
       setNewMessage("");
     } catch (err) {

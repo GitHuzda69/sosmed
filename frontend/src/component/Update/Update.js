@@ -1,7 +1,7 @@
 import { useContext, useState, useRef, useEffect } from "react";
 import { Icon } from "@iconify/react";
 import "./Update.css";
-import { makeRequest } from "../../axios";
+import { makeRequest } from "../../fetch";
 import AuthContext from "../../context/authContext";
 import { useLocation, Link } from "react-router-dom";
 
@@ -46,7 +46,7 @@ const Update = ({ user, onClose }) => {
       const fileName = Date.now() + file.name;
       formData.append("name", fileName);
       formData.append("file", file);
-      await makeRequest.post("/upload", formData);
+      await makeRequest("upload", "POST", formData);
       return fileName;
     } catch (err) {
       console.log(err);
@@ -82,7 +82,7 @@ const Update = ({ user, onClose }) => {
         userId: user._id,
       };
       try {
-        await makeRequest.put("/users/" + user._id, editUser);
+        await makeRequest("users/" + user._id, "PUT", editUser);
         window.location.reload();
       } catch (err) {
         console.error(err);

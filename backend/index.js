@@ -51,7 +51,11 @@ const storage = multer.diskStorage({
     cb(null, "public/images");
   },
   filename: (req, file, cb) => {
-    cb(null, req.body.name);
+    // Generate a unique filename for the uploaded file
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    const originalName = req.body.filename;
+    const filename = `${uniqueSuffix}-${originalName}`;
+    cb(null, filename);
   },
 });
 

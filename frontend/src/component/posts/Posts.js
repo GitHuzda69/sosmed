@@ -3,7 +3,7 @@ import Post from "../post/Post.js";
 import HomeProfile from "../../component/home-profile/home-profile.js";
 import Rightbar from "../../component/rightbar/Rightbar.js";
 import "./Posts.css";
-import { makeRequest } from "../../axios";
+import { makeRequest } from "../../fetch.js";
 import AuthContext from "../../context/authContext.js";
 
 export default function Posts({ username, className, isHome }) {
@@ -14,23 +14,31 @@ export default function Posts({ username, className, isHome }) {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const res = username
-        ? await makeRequest.get("/posts/profile/" + username)
-        : await makeRequest.get("posts/timeline/" + user._id);
-      setPosts(
-        res.data.sort((p1, p2) => {
-          return new Date(p2.createdAt) - new Date(p1.createdAt);
-        })
-      );
+      const endpoint = username
+        ? `posts/profile/${username}`
+        : `posts/timeline/${user._id}`;
+  
+      try {
+        const res = await makeRequest(endpoint);
+        setPosts(
+          res.sort((p1, p2) => {
+            return new Date(p2.createdAt) - new Date(p1.createdAt);
+          })
+        );
+      } catch (error) {
+        // Handle error
+        console.error('Error:', error.message);
+      }
     };
+  
     fetchPosts();
   }, [username, user._id]);
 
   useEffect(() => {
     const getFriends = async () => {
       try {
-        const friendList = await makeRequest.get(
-          "/relationships/friends/" + user._id
+        const friendList = await makeRequest(
+          "relationships/friends/" + user._id
         );
         setFriends(friendList.data);
       } catch (err) {

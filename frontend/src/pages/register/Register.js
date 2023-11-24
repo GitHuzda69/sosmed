@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./Register.css";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 import { Icon } from "@iconify/react";
+import {makeRequest} from "../../fetch.js";
 
 const Register = () => {
   const username = useRef();
@@ -71,8 +71,8 @@ const Register = () => {
 
     try {
       // Check for duplicate entries before making the registration request
-      const response = await axios.get(
-        `http://localhost:8800/api/auth/checkDuplicate/${user.username}`
+      const response = await makeRequest(
+        `auth/checkDuplicate/${user.username}`
       );
       console.log("Duplicate Check Response:", response);
 
@@ -83,7 +83,7 @@ const Register = () => {
       }
 
       // If no duplicate, proceed with registration
-      await axios.post("http://localhost:8800/api/auth/register", user);
+      await makeRequest("auth/register", "POST", user);
       history("/login");
     } catch (err) {
       console.log(err);
