@@ -10,8 +10,8 @@ const transporter = nodemailer.createTransport({
   port: 465,
   secure: true,
   auth: {
-    user: "uzudatoro002@gmail.com",
-    pass: "bjvw qtah aztn gqgl",
+    user: process.env.EMAIL,
+    pass: process.env.PASSWORD,
   },
 });
 
@@ -39,7 +39,8 @@ router.post('/gmail/send', async (req, res) => {
 
   // Kirim email dengan OTP
   const mailOptions = {
-    from: 'uzudatoro002@gmail.com',
+    name: `Sync, Manage, and Direct Admin`,
+    address: 'uzudatoro002@gmail.com',
     to: req.body.email,
     subject: 'Your OTP for Login',
     text: `Your OTP is: ${otp}`,

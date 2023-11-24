@@ -5,11 +5,10 @@ import { loginCall } from "../apiCalls.js";
 import { Icon } from "@iconify/react";
 import AuthContext from '../../context/authContext.js';
 
-const Login = () => {
+const Google = () => {
   const username = useRef();
   const password = useRef();
   const [email, setEmail] = useState();
-  const [otp, setOtp] = useState();
   const { isFetching, dispatch } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
@@ -24,31 +23,8 @@ const Login = () => {
     }
   };
 
-  const verifyOTP = async () => {
-    try {
-      const response = await makeRequest.post('/auth/gmail/verify', { email, otp });
-      console.log(response.data);
-    } catch (error) {
-      console.error('Error verifying OTP:', error);
-    }
-  };
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    const userData = {
-      username: username.current.value,
-      password: password.current.value,
-    };
-
-    if (rememberMe) {
-      localStorage.setItem("rememberMe", "true");
-      localStorage.setItem("userData", JSON.stringify(userData));
-    } else {
-      localStorage.removeItem("rememberMe");
-      localStorage.removeItem("userData");
-    }
-    loginCall(userData, dispatch);
-  };
+ 
 
   useEffect(() => {
     const rememberMeStatus = localStorage.getItem("rememberMe");
@@ -97,13 +73,6 @@ const Login = () => {
         placeholder="Enter Username"
         ref={username}
       />
-      {!isEmailSent ? (
-        <button onClick={sendOTP} className="login" style={{ marginTop: "20px" }}>Send OTP</button>
-      ) : (
-        <>
-          <label>OTP:</label>
-          <input type="text" onChange={(e) => setOtp(e.target.value)} value={otp} />
-          <button onClick={verifyOTP}>Verify OTP</button>
           <div
               className="form-groups"
               style={{
@@ -154,17 +123,8 @@ const Login = () => {
                   <h4>Remember Me</h4>
                 </label>
               </div>
-              <button
-                type="submit"
-                className="login"
-                style={{ marginTop: "20px" }}
-                disabled={isFetching}
-              >
-                {isFetching ? <></> : "Log In"}
-              </button>
             </div>
-        </>
-      )}
+            <button onClick={sendOTP} className="login" >Send OTP</button>
       </div>
       </form>
         </div>
@@ -173,4 +133,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Google;

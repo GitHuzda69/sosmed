@@ -89,14 +89,18 @@ function Message() {
   // }, [arrivalMessage, currentChat]);
 
   // useEffect(() => {
-  //   try {
-  //     socket.current.emit("addUser", currentUser._id, socket.current.id);
-  //     socket.current.on("getUsers", (users) => {
-  //       console.log(users);
-  //     });
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
+  //   const socketId = (socket.current.id)
+  //   const SocketEEk = async () => {
+  //     try {
+  //       socket.current.emit("addUser", currentUser._id, socketId);
+  //       socket.current.on("getUsers", (users) => {
+  //         console.log(users);
+  //       });
+  //     } catch (err) {
+  //       console.log(err);
+  //   };
+  // };
+  // SocketEEk();
   // }, [currentUser]);
 
   useEffect(() => {
