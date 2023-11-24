@@ -1,16 +1,37 @@
-import React, { useContext, useState, useEffect, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { AuthContext } from "../../context/authContext";
-import { Icon } from "@iconify/react";
-import { loginCall } from "../apiCalls.js";
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { makeRequest } from "../../axios.js";
 import "./Login.css";
+import { loginCall } from "../apiCalls.js";
+import { Icon } from "@iconify/react";
+import AuthContext from '../../context/authContext.js';
 
 const Login = () => {
   const username = useRef();
   const password = useRef();
+  const [email, setEmail] = useState();
+  const [otp, setOtp] = useState();
   const { isFetching, dispatch } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+  const [isEmailSent, setIsEmailSent] = useState(false);
+
+  const sendOTP = async () => {
+    try {
+      await makeRequest.post('/auth/gmail/send', { email });
+      setIsEmailSent(true);
+    } catch (error) {
+      console.error('Error sending OTP:', error);
+    }
+  };
+
+  const verifyOTP = async () => {
+    try {
+      const response = await makeRequest.post('/auth/gmail/verify', { email, otp });
+      console.log(response.data);
+    } catch (error) {
+      console.error('Error verifying OTP:', error);
+    }
+  };
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -27,10 +48,6 @@ const Login = () => {
       localStorage.removeItem("userData");
     }
     loginCall(userData, dispatch);
-  };
-
-  const navigate = useNavigate();
-  const handleGoogle = () => {
   };
 
   useEffect(() => {
@@ -51,29 +68,43 @@ const Login = () => {
   return (
     <div className="login-pages">
       <div className="login-containers">
-        <h1>Selamat Datang, silahkan masukkan pilih metode Log in Anda</h1>
-        <div className="login-forms">
-          <h3>Log in</h3>
-          <form action="" onSubmit={handleLogin}>
-            <div
-              className="form-groups"
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            >
-              <strong style={{ paddingBottom: "10px" }}>
-                <label>Username</label>
-              </strong>
-              <input
-                className="input-login"
-                type="username"
-                placeholder="Enter Username"
-                ref={username}
-              />
-            </div>
-            <div
+      <h1>Selamat Datang, silahkan masukkan pilih metode Log in Anda</h1>
+      <div>
+      <h2>Login</h2>
+      <form action="" >
+      <div
+        className="form-groups"
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+       <strong style={{ paddingBottom: "10px" }}>
+        <label>Email</label>
+      </strong>
+      <input type="email"
+        value={email} 
+        onChange={(e) => setEmail(e.target.value)}
+        className="input-login"
+        placeholder="Enter Email"/>
+      <strong style={{ paddingBottom: "10px" }}>
+        <label>Username</label>
+      </strong>
+      <input
+        className="input-login"
+        type="username"
+        placeholder="Enter Username"
+        ref={username}
+      />
+      {!isEmailSent ? (
+        <button onClick={sendOTP} className="login" style={{ marginTop: "20px" }}>Send OTP</button>
+      ) : (
+        <>
+          <label>OTP:</label>
+          <input type="text" onChange={(e) => setOtp(e.target.value)} value={otp} />
+          <button onClick={verifyOTP}>Verify OTP</button>
+          <div
               className="form-groups"
               style={{
                 display: "flex",
@@ -123,9 +154,6 @@ const Login = () => {
                   <h4>Remember Me</h4>
                 </label>
               </div>
-              <button type="button" className="forgot-password-button">
-                Forgot Password
-              </button>
               <button
                 type="submit"
                 className="login"
@@ -135,57 +163,10 @@ const Login = () => {
                 {isFetching ? <></> : "Log In"}
               </button>
             </div>
-            <div className="or-divider">
-              <div className="divider-line"></div>
-              <div className="divider-text">OR</div>
-              <div className="divider-line"></div>
-            </div>
-            <Link to="/login/google"> 
-            <button
-              type="submit"
-              className="login-else"
-              style={{ marginTop: "20px" }}
-            >
-              <span className="login-else-icon">
-                <Icon icon="devicon:google" width={20} height={20} />
-              </span>
-              <h5>Continue with Google</h5>
-            </button></Link>
-            <button
-              type="submit"
-              className="login-else"
-              style={{ marginTop: "20px" }}
-            >
-              <span className="login-else-icon">
-                <Icon
-                  icon="brandico:facebook-rect"
-                  width={20}
-                  height={20}
-                  color="rgb(43, 88, 209)"
-                />
-              </span>
-              <h5>Continue with Facebook</h5>
-            </button>
-            <div
-              className="signup"
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "center",
-                marginTop: "20px",
-              }}
-            >
-              <p>Doesn't have an account?</p>
-              <Link
-                to="/signup"
-                className="button-signup"
-                style={{ width: "60px" }}
-              >
-                Sign Up
-              </Link>
-            </div>
-          </form>
+        </>
+      )}
+      </div>
+      </form>
         </div>
       </div>
     </div>

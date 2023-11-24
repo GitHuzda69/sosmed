@@ -1,4 +1,5 @@
 import Login from "./pages/login/Login.js";
+import Google from "./pages/login/Google.js";
 import Signup from "./pages/register/Register.js";
 import Home from "./pages/home/Home.js";
 import Message from "./pages/messages/Messages.js";
@@ -33,6 +34,7 @@ function App() {
         <Route path="/notif" element={user ? <Notif /> : <Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={user ? <Home /> : <Login />} />
+        <Route path="/login/google" element={user ? <Home /> : <Google />} />
       </Routes>
     </Router>
   );

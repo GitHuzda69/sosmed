@@ -192,6 +192,9 @@
   .dark-mode .button-comment-desc:hover{
     background-color: #5C5C5C;
   }
+  .dark-mode .edit-post1{
+    color: white;
+  }
   .dark-mode .post-option-popup-self-comment{
     background-color: rgb(50, 50, 50); 
   }
@@ -448,6 +451,9 @@
   .dark-mode .edit-save{
     background-color: white;
     color: black;
+  } 
+  .dark-mode .popup-follow{
+    background-color: #2F2F2F;
   }
 
   /*buat logout*/

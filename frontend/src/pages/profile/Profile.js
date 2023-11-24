@@ -31,6 +31,10 @@ const Profile = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [showPosts, setShowPosts] = useState(true);
   const [showFollowing, setShowFollowing] = useState(false);
+  const [showPopupUnfollow, setShowPopupUnfollow] = useState(false);
+  const [showPopupFollow, setShowPopupFollow] = useState(false);
+  const [showUnfollowConfirmation, setShowUnfollowConfirmation] =
+    useState(false);
 
   const [followed, setFollowed] = useState(
     currentUser.followings.includes(user?._id)
@@ -40,9 +44,10 @@ const Profile = () => {
     const fetchUser = async () => {
       const res = await makeRequest.get(`/users?username=${username}`);
       setUser(res.data);
+      setFollowed(currentUser.followings.includes(res.data._id));
     };
     fetchUser();
-  }, [username]);
+  }, [username, currentUser.followings]);
 
   useEffect(() => {
     const getFriends = async () => {
@@ -61,17 +66,15 @@ const Profile = () => {
   const handleFollow = async () => {
     try {
       if (followed) {
-        await makeRequest.put(`/relationships/${user._id}/unfollow`, {
-          userId: currentUser._id,
-        });
-        dispatch({ type: "UNFOLLOW", payload: user._id });
+        // If already followed, show confirmation popup
+        setShowUnfollowConfirmation(true);
       } else {
         await makeRequest.put(`/relationships/${user._id}/follow`, {
           userId: currentUser._id,
         });
         dispatch({ type: "FOLLOW", payload: user._id });
+        setShowPopupFollow(true);
       }
-      setFollowed(!followed);
     } catch (err) {
       console.log(err);
     }
@@ -143,6 +146,23 @@ const Profile = () => {
   const toggleFollowing = () => {
     setShowPosts(false);
     setShowFollowing(true);
+  };
+
+  const handleUnfollowConfirmation = async () => {
+    try {
+      await makeRequest.put(`/relationships/${user._id}/unfollow`, {
+        userId: currentUser._id,
+      });
+      dispatch({ type: "UNFOLLOW", payload: user._id });
+      setShowUnfollowConfirmation(false);
+      setShowPopupUnfollow(true);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleCancelUnfollow = () => {
+    setShowUnfollowConfirmation(false);
   };
 
   return (
@@ -388,6 +408,30 @@ const Profile = () => {
         </div>
       </div>
       <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} />
+      {showUnfollowConfirmation && (
+        <div className="popup-follow-container">
+          <div className="popup-follow">
+            <p>
+              Are you sure you want to unfollow {user && user.displayname} ?
+            </p>
+            <button
+              onClick={handleUnfollowConfirmation}
+              style={{ marginRight: "30px" }}
+            >
+              Yes
+            </button>
+            <button onClick={handleCancelUnfollow}>Cancel</button>
+          </div>
+        </div>
+      )}
+      {showPopupFollow && (
+        <div className="popup-follow-container">
+          <div className="popup-follow">
+            <p>You are now following {user && user.displayname} !</p>
+            <button onClick={() => setShowPopupFollow(false)}>Close</button>
+          </div>
+        </div>
+      )}
       {settingOpen && (
         <>
           <div className="settings-overlay" />
