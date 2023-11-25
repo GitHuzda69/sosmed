@@ -5,6 +5,8 @@ import { Icon } from "@iconify/react";
 import { loginCall } from "../apiCalls.js";
 import "./Login.css";
 
+import loginimages from "../../assets/Background.png";
+
 const Login = () => {
   const username = useRef();
   const password = useRef();
@@ -30,8 +32,7 @@ const Login = () => {
   };
 
   const navigate = useNavigate();
-  const handleGoogle = () => {
-  };
+  const handleGoogle = () => {};
 
   useEffect(() => {
     const rememberMeStatus = localStorage.getItem("rememberMe");
@@ -51,7 +52,8 @@ const Login = () => {
   return (
     <div className="login-pages">
       <div className="login-containers">
-        <h1>Selamat Datang, silahkan masukkan pilih metode Log in Anda</h1>
+        <h1>Welcome, good to see you again.</h1>
+        <img className="login-images" src={loginimages} alt="" />
         <div className="login-forms">
           <h3>Log in</h3>
           <form action="" onSubmit={handleLogin}>
@@ -140,17 +142,18 @@ const Login = () => {
               <div className="divider-text">OR</div>
               <div className="divider-line"></div>
             </div>
-            <Link to="/google"> 
-            <button
-              type="submit"
-              className="login-else"
-              style={{ marginTop: "20px" }}
-            >
-              <span className="login-else-icon">
-                <Icon icon="devicon:google" width={20} height={20} />
-              </span>
-              <h5>Continue with Google</h5>
-            </button></Link>
+            <Link to="/google">
+              <button
+                type="submit"
+                className="login-else"
+                style={{ marginTop: "20px" }}
+              >
+                <span className="login-else-icon">
+                  <Icon icon="devicon:google" width={20} height={20} />
+                </span>
+                <h5>Continue with Google</h5>
+              </button>
+            </Link>
             <button
               type="submit"
               className="login-else"
