@@ -2,6 +2,7 @@ import Login from "./pages/login/Login.js";
 import Google from "./pages/login/Google.js";
 import OTP from "./pages/login/OTP.js";
 import Signup from "./pages/register/Register.js";
+import GSignup from "./pages/register/Google.js";
 import Home from "./pages/home/Home.js";
 import Message from "./pages/messages/Messages.js";
 import Friends from "./component/friendlist/FriendsList.js";
@@ -35,8 +36,9 @@ function App() {
         <Route path="/notif" element={user ? <Notif /> : <Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={user ? <Home /> : <Login />} />
-        <Route path="/login/google" element={user ? <Home /> : <Google />} />
-        <Route path="/login/google/otp" element={user ? <Home /> : <OTP />} />
+        <Route path="/google" element={user ? <Home /> : <Google />} />
+        <Route path="/google/signup" element={user ? <Home /> : <GSignup />} />
+        <Route path="/google/otp" element={user ? <Home /> : <OTP />} />
       </Routes>
     </Router>
   );

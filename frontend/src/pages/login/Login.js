@@ -140,7 +140,7 @@ const Login = () => {
               <div className="divider-text">OR</div>
               <div className="divider-line"></div>
             </div>
-            <Link to="/login/google"> 
+            <Link to="/google"> 
             <button
               type="submit"
               className="login-else"

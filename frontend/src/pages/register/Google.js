@@ -4,9 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import {makeRequest} from "../../fetch.js";
 
-const Register = () => {
+const Register = (email) => {
   const username = useRef();
-  const email = useRef();
   const displayname = useRef();
   const password = useRef();
   const history = useNavigate();
@@ -18,17 +17,36 @@ const Register = () => {
 
   const [inputs, setInputs] = useState({
     username: "",
-    email: "",
+    email: email,
     displayname: "",
     password: "",
   });
 
   const handleChange = (e) => {
+    console.log("Inputs:", inputs);
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleClick = async (e) => {
     e.preventDefault();
+
+    if (!agreeStatus) {
+      console.log("Agree status is false");
+      setPopupVisible(true);
+      return;
+    }
+
+    if (
+      !inputs.username ||
+      !inputs.email ||
+      !inputs.displayname ||
+      !inputs.password
+    ) {
+      console.log("Some input is missing");
+      setDataPopupVisible(true);
+      return;
+    }
+
     const user = {
       username: username.current.value,
       email: email.current.value,
@@ -37,7 +55,6 @@ const Register = () => {
     };
 
     try {
-      
       await makeRequest("auth/register", "POST", user);
       history("/login");
     } catch (err) {
@@ -95,14 +112,8 @@ const Register = () => {
               <strong style={{ paddingBottom: "5px" }}>
                 <label type="email">Email</label>
               </strong>
-              <input
-                className="input-signup"
-                placeholder="Enter Your Active Email"
-                required
-                name="email"
-                ref={email}
-                onChange={handleChange}
-              />
+                <label style={{ paddingBottom: "5px", paddingLeft: "30px"}}>Email dummy@gmail.com</label>
+
             </div>
             <div
               className="form-group"
