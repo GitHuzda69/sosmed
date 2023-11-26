@@ -2,7 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import "./Register.css";
 import { Link, useNavigate } from "react-router-dom";
 import { Icon } from "@iconify/react";
-import {makeRequest} from "../../fetch.js";
+import { makeRequest } from "../../fetch.js";
+
+import loginimages from "../../assets/Background.png";
 
 const Register = () => {
   const username = useRef();
@@ -37,7 +39,6 @@ const Register = () => {
     };
 
     try {
-      
       await makeRequest("auth/register", "POST", user);
       history("/login");
     } catch (err) {
@@ -60,7 +61,8 @@ const Register = () => {
   return (
     <div className="signup-main">
       <div className="signup-container">
-        <h1>Selamat Datang, silahkan masukkan data diri untuk membuat akun</h1>
+        <h1>Welcome, insert your information to make an account.</h1>
+        <img className="register-images" src={loginimages} alt="" />
         <div className="signup-form">
           <h3>Sign up</h3>
           <form action="">

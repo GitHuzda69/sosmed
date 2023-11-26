@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import "./Register.css";
 import { Link, useNavigate } from "react-router-dom";
 import { Icon } from "@iconify/react";
-import {makeRequest} from "../../fetch.js";
+import { makeRequest } from "../../fetch.js";
 
 const Register = (email) => {
   const username = useRef();
@@ -112,8 +112,9 @@ const Register = (email) => {
               <strong style={{ paddingBottom: "5px" }}>
                 <label type="email">Email</label>
               </strong>
-                <label style={{ paddingBottom: "5px", paddingLeft: "30px"}}>Email dummy@gmail.com</label>
-
+              <label style={{ paddingBottom: "5px", paddingLeft: "30px" }}>
+                Email dummy@gmail.com
+              </label>
             </div>
             <div
               className="form-group"

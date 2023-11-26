@@ -1,28 +1,111 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom"
-import "./Login.css";    
+import { useState, useEffect } from "react";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import { makeRequest } from "../../fetch";
-    
+import "./Login.css";
+
+import loginimages from "../../assets/Background.png";
+
 const Otp = () => {
   const [otp, setOtp] = useState();
   const [email, setEmail] = useState();
-  const navigate = useNavigate()
-    const verifyOTP = async () => {
-        try {
-          await makeRequest('auth/gmail/verify', "POST", { email, otp });
-          navigate("/google/signup")
-        } catch (error) {
-          console.error('Error verifying OTP:', error);
-        }
-      };
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [otpValues, setOtpValues] = useState(Array(6).fill(""));
+  const [allInputsFilled, setAllInputsFilled] = useState(false);
 
-    return (
+  const verifyOTP = async () => {
+    try {
+      await makeRequest("auth/gmail/verify", "POST", { email, otp });
+      navigate("/google/signup");
+    } catch (error) {
+      console.error("Error verifying OTP:", error);
+    }
+  };
+
+  const handleOtpChange = (e, index) => {
+    const newOtpValues = [...otpValues];
+    newOtpValues[index] = e.target.value;
+
+    setOtpValues(newOtpValues);
+
+    const allFilled = newOtpValues.every((value) => value !== "");
+    setAllInputsFilled(allFilled);
+
+    const nextIndex = index + 1;
+    if (e.target.value && nextIndex < 6) {
+      const nextInput = document.getElementById(`otpInput${nextIndex}`);
+      if (nextInput) {
+        nextInput.focus();
+      }
+    }
+  };
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const userEmail = searchParams.get("email");
+    if (userEmail) {
+      setEmail(userEmail);
+    }
+  }, [location.search]);
+
+  return (
+    <div className="login-pages">
+      <div className="login-containers-google">
+        <h1>Please verify the OTP code.</h1>
+        <img className="login-images-google" src={loginimages} alt="" />
         <div>
-        <label>OTP:</label>
-          <input type="text" onChange={(e) => setOtp(e.target.value)} value={otp} />
-          <button onClick={verifyOTP}>Verify OTP</button>
-          </div>
-    )
-}
+          <h2 style={{ fontFamily: "Inter", fontSize: "30px" }}>
+            Verification
+          </h2>
+          <form action="">
+            <div
+              className="form-groups-otp"
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <strong style={{ paddingBottom: "15px" }}>
+                <label style={{ display: "inline-block" }}>
+                  We have sent you a 6-digit verification code to your email{" "}
+                  <p style={{ display: "inline" }}>{email}</p>
+                </label>
+              </strong>
+              <div className="otp-input-container">
+                {[...Array(6)].map((_, index) => (
+                  <input
+                    className="otp-input"
+                    key={index}
+                    type="text"
+                    maxLength={1}
+                    onChange={(e) => handleOtpChange(e, index)}
+                    value={otpValues[index] || ""}
+                  />
+                ))}
+              </div>
 
-export default Otp
+              <Link to="/google/singup">
+                <button
+                  onClick={verifyOTP}
+                  className="login-google"
+                  disabled={!allInputsFilled}
+                >
+                  Verify OTP
+                </button>
+              </Link>
+              <div className="otp-resend">
+                <h4>Didn't receive the code?</h4>
+                <button>
+                  <h5>Resend</h5>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Otp;
