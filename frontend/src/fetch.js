@@ -4,9 +4,8 @@ export const makeRequest = async (endpoint, method , body = null) => {
     method,
     headers: {
       'Content-Type': 'application/json',
-      // You can add other headers if needed
     },
-    credentials: 'include', // This is equivalent to withCredentials: true in axios
+    credentials: 'include',
   };
 
   if (body) {
@@ -18,8 +17,7 @@ export const makeRequest = async (endpoint, method , body = null) => {
     const data = await response.json();
 
     if (!response.ok) {
-      // Handle error, you can throw an error or handle it as needed
-      throw new Error(data.message || 'Something went wrong');
+      throw new Error(data);
     }
 
     return data;

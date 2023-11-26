@@ -17,6 +17,7 @@ const Register = () => {
   const [popupVisible, setPopupVisible] = useState(false);
   const [dataPopupVisible, setDataPopupVisible] = useState(false);
   const [showDuplicatePopup, setShowDuplicatePopup] = useState(false);
+  const [errors, setErrors] = useState(null);
 
   const [inputs, setInputs] = useState({
     username: "",
@@ -24,7 +25,7 @@ const Register = () => {
     displayname: "",
     password: "",
   });
-
+  
   const handleChange = (e) => {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
@@ -42,10 +43,10 @@ const Register = () => {
       await makeRequest("auth/register", "POST", user);
       history("/login");
     } catch (err) {
-      console.log(err);
+      setErrors(err.message)
+      console.log(err.message)
     }
   };
-
   const handleDuplicatePopupClose = () => {
     setShowDuplicatePopup(false);
   };
@@ -183,6 +184,7 @@ const Register = () => {
                 Policy
               </h4>
             </label>
+            <span>{errors}</span>
             <button className="sign-up" onClick={handleClick}>
               Sign Up
             </button>

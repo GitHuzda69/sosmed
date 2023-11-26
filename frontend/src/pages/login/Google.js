@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { makeRequest } from "../../fetch.js";
 import GSignup from "../../pages/register/Google.js";
 import "./Login.css";
@@ -7,13 +7,15 @@ import "./Login.css";
 import loginimages from "../../assets/Background.png";
 
 const Google = () => {
+  const [errors, setErrors] = useState(null);
   const [email, setEmail] = useState();
-
+  const navigate = useNavigate();
   const sendOTP = async () => {
     try {
-      await makeRequest("auth/gmail/send", "POST", { email });
+      makeRequest("auth/gmail/send", "POST", { email });
+      navigate(`/google/otp?email=${email}`)
     } catch (error) {
-      console.error("Error sending OTP:", error);
+      setErrors(error.message);
     }
   };
 
@@ -46,11 +48,10 @@ const Google = () => {
                 className="input-login"
                 placeholder="Enter Email"
               />
-              <Link to={`/google/otp?email=${email}`}>
+              <span>{errors && errors}</span>
                 <button onClick={sendOTP} className="login-google">
                   Send OTP
                 </button>
-              </Link>
             </div>
           </form>
         </div>

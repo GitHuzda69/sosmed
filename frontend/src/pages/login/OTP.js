@@ -10,8 +10,17 @@ const Otp = () => {
   const [email, setEmail] = useState();
   const navigate = useNavigate();
   const location = useLocation();
+  const [errors, setErrors] = useState(null);
   const [otpValues, setOtpValues] = useState(Array(6).fill(""));
   const [allInputsFilled, setAllInputsFilled] = useState(false);
+  
+  const sendOTP = async () => {
+    try {
+      makeRequest("auth/gmail/resend", "POST", { otp: otpValues });
+    } catch (error) {
+      console.error("Error sending OTP:", error);
+    }
+  };
 
   const verifyOTP = async () => {
     try {
@@ -19,6 +28,7 @@ const Otp = () => {
       navigate("/google/signup");
     } catch (error) {
       console.error("Error verifying OTP:", error);
+      setErrors("Failed to verify OTP. Please try again.");
     }
   };
 
@@ -39,14 +49,18 @@ const Otp = () => {
       }
     }
   };
-
+  
+  const history = useNavigate();
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
     const userEmail = searchParams.get("email");
+
     if (userEmail) {
       setEmail(userEmail);
+    } else {
+      history('/google');
     }
-  }, [location.search]);
+  }, [location.search, history]);
 
   return (
     <div className="login-pages">
@@ -84,8 +98,7 @@ const Otp = () => {
                   />
                 ))}
               </div>
-
-              <Link to="/google/singup">
+                <span>{errors && errors}</span>
                 <button
                   onClick={verifyOTP}
                   className="login-google"
@@ -93,10 +106,9 @@ const Otp = () => {
                 >
                   Verify OTP
                 </button>
-              </Link>
               <div className="otp-resend">
                 <h4>Didn't receive the code?</h4>
-                <button>
+                <button onClick={sendOTP}>
                   <h5>Resend</h5>
                 </button>
               </div>
