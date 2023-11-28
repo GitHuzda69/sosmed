@@ -189,6 +189,7 @@
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-radius 0.2s ease-in-out;
+  text-decoration: none;
 }
 
 .login-else-icon {
@@ -344,4 +345,9 @@
 }
 .otp-resend button:hover{
   text-decoration: underline;
+}
+
+.login-images-google-otp{
+  margin-top: 50px; 
+  margin-right: -10px;
 }

@@ -26,7 +26,12 @@ const transporter = nodemailer.createTransport({
 
 // Endpoint untuk mengirim OTP
 router.post('/gmail/send', async (req, res) => {
-  const otp = generateOTP(); // Function to generate OTP
+  try {
+  const checkEmail = await User.findOne({ email: req.body.email });
+  if (checkEmail) {
+    res.status(200).json(checkEmail)
+  }
+  const otp = generateOTP();
 
   // Kirim email dengan OTP
   const mailOptions = {
@@ -51,7 +56,6 @@ router.post('/gmail/send', async (req, res) => {
     `,
   };
 
-  try {
     await transporter.sendMail(mailOptions);
 
     // Simpan data pengguna di MongoDB
@@ -70,7 +74,7 @@ router.post('/gmail/send', async (req, res) => {
 // Endpoint untuk mengirim ulang OTP
 router.post('/gmail/resend', async (req, res) => {
   try {
-    const user = await User.findOne({ email: req.body.email }); // Corrected the syntax for findOne
+    const user = await User.findOne({ email: req.body.email });
 
     if (!user) {
       return res.status(404).json({ error: 'User not found' });

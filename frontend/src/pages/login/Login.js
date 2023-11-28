@@ -142,7 +142,7 @@ const Login = () => {
               <div className="divider-text">OR</div>
               <div className="divider-line"></div>
             </div>
-            <Link to="/google">
+            <Link to="/google" style={{ textDecoration: "none" }}>
               <button
                 type="submit"
                 className="login-else"

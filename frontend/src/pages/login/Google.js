@@ -2,19 +2,32 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { makeRequest } from "../../fetch.js";
 import GSignup from "../../pages/register/Google.js";
+import { useAuth } from "../../context/authContext.js";
 import "./Login.css";
 
 import loginimages from "../../assets/Background.png";
 
 const Google = () => {
   const [errors, setErrors] = useState(null);
-  const [email, setEmail] = useState();
+  const [email, setEmail] = useState("");
   const navigate = useNavigate();
+  const { setAuthEmail } = useAuth();
+
   const sendOTP = async () => {
     try {
-      makeRequest("auth/gmail/send", "POST", { email });
-      navigate(`/google/otp?email=${email}`)
+      if (!email) {
+        setErrors("Please enter your email before sending OTP.");
+        return;
+      }
+      if (!email.includes("@")) {
+        setErrors("Please enter a valid email address.");
+        return;
+      }
+      await makeRequest("auth/gmail/send", "POST", { email });
+      setAuthEmail(email);
+      navigate(`/google/otp`);
     } catch (error) {
+      console.log(error)
       setErrors(error.message);
     }
   };
@@ -49,9 +62,13 @@ const Google = () => {
                 placeholder="Enter Email"
               />
               <span>{errors && errors}</span>
-                <button onClick={sendOTP} className="login-google">
-                  Send OTP
-                </button>
+              <button
+                onClick={sendOTP}
+                className="login-google"
+                disabled={!email || !email.includes("@")}
+              >
+                Send OTP
+              </button>
             </div>
           </form>
         </div>

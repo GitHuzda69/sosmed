@@ -1,22 +1,32 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { makeRequest } from "../../fetch";
+import { useAuth } from "../../context/authContext";
 import "./Login.css";
 
 import loginimages from "../../assets/Background.png";
 
 const Otp = () => {
   const [otp, setOtp] = useState();
-  const [email, setEmail] = useState();
+  const { email } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const history = useNavigate();
   const [errors, setErrors] = useState(null);
   const [otpValues, setOtpValues] = useState(Array(6).fill(""));
   const [allInputsFilled, setAllInputsFilled] = useState(false);
+  const { setAuthEmail } = useAuth();
   
+  const inputRefs = useRef(
+    Array(6)
+      .fill(null)
+      .map(() => React.createRef())
+  );
+
   const resendOTP = async () => {
     try {
       makeRequest("auth/gmail/resend", "POST", { email });
+      setAuthEmail(email);
     } catch (error) {
       console.error("Error sending OTP:", error);
     }
@@ -42,31 +52,26 @@ const Otp = () => {
     setAllInputsFilled(allFilled);
 
     const nextIndex = index + 1;
+    const prevIndex = index - 1;
+
     if (e.target.value && nextIndex < 6) {
-      const nextInput = document.getElementById(`otpInput${nextIndex}`);
-      if (nextInput) {
-        nextInput.focus();
-      }
+      inputRefs.current[nextIndex].current.focus();
+    } else if (!e.target.value && prevIndex >= 0) {
+      inputRefs.current[prevIndex].current.focus();
     }
   };
-  
-  const history = useNavigate();
-  useEffect(() => {
-    const searchParams = new URLSearchParams(location.search);
-    const userEmail = searchParams.get("email");
 
-    if (userEmail) {
-      setEmail(userEmail);
-    } else {
+  useEffect(() => {
+    if (!email) {
       history('/google');
     }
-  }, [location.search, history]);
+  }, [email, history]);
 
   return (
     <div className="login-pages">
       <div className="login-containers-google">
         <h1>Please verify the OTP code.</h1>
-        <img className="login-images-google" src={loginimages} alt="" />
+        <img className="login-images-google-otp" src={loginimages} alt="" />
         <div>
           <h2 style={{ fontFamily: "Inter", fontSize: "30px" }}>
             Verification
@@ -95,17 +100,18 @@ const Otp = () => {
                     maxLength={1}
                     onChange={(e) => handleOtpChange(e, index)}
                     value={otpValues[index] || ""}
+                    ref={inputRefs.current[index]}
                   />
                 ))}
               </div>
-                <span>{errors && errors}</span>
-                <button
-                  onClick={verifyOTP}
-                  className="login-google"
-                  disabled={!allInputsFilled}
-                >
-                  Verify OTP
-                </button>
+              <span>{errors && errors}</span>
+              <button
+                onClick={verifyOTP}
+                className="login-google"
+                disabled={!allInputsFilled}
+              >
+                Verify OTP
+              </button>
               <div className="otp-resend">
                 <h4>Didn't receive the code?</h4>
                 <button onClick={resendOTP}>
