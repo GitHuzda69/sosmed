@@ -14,9 +14,19 @@ const Upload = () => {
   const [showFileInput, setShowFileInput] = useState(false);
 
   const { user } = useContext(AuthContext);
+
   const handleFileInputChange = (e) => {
     const selectedFile = e.target.files[0];
-    setFile(selectedFile);
+    if (
+      selectedFile &&
+      (selectedFile.type === "image/jpeg" ||
+        selectedFile.type === "image/png" ||
+        selectedFile.type === "image/gif")
+    ) {
+      setFile(selectedFile);
+    } else {
+      alert("Only images (JPEG, PNG) and GIFs are allowed.");
+    }
   };
 
   const clearSelectedFile = () => {
@@ -162,6 +172,7 @@ const Upload = () => {
         id="file"
         ref={fileInputRef}
         onChange={handleFileInputChange}
+        accept=".png,.jpeg,.jpg,.gif"
         style={{ display: "none" }}
       />
     </div>
