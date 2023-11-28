@@ -29,7 +29,7 @@ router.post("/register", async (req, res) => {
     });
 
     if (existingUser) {
-      return res.status(409).json({ error: "Username or email already exists" });
+      return res.status(409).json("Username or email already exists");
     }
 
     // Generate a new password
