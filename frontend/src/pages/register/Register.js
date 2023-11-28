@@ -14,9 +14,6 @@ const Register = () => {
   const history = useNavigate();
   const [agreeStatus, setAgreeStatus] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [popupVisible, setPopupVisible] = useState(false);
-  const [dataPopupVisible, setDataPopupVisible] = useState(false);
-  const [showDuplicatePopup, setShowDuplicatePopup] = useState(false);
   const [errors, setErrors] = useState(null);
 
   const [inputs, setInputs] = useState({
@@ -25,38 +22,47 @@ const Register = () => {
     displayname: "",
     password: "",
   });
-  
+
   const handleChange = (e) => {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleClick = async (e) => {
     e.preventDefault();
+
+    /*buat ngecek kosong apa ga sama agree*/
+    if (
+      !inputs.username.trim() ||
+      !inputs.email.trim() ||
+      !inputs.password.trim()
+    ) {
+      setErrors("Please fill in all required fields.");
+      return;
+    }
+
+    if (!agreeStatus) {
+      setErrors("Please agree to the Terms & Services Policy.");
+      return;
+    }
+
     const user = {
-      username: username.current.value,
-      email: email.current.value,
-      displayname: displayname.current.value,
-      password: password.current.value,
+      username: inputs.username,
+      email: inputs.email,
+      displayname: inputs.displayname,
+      password: inputs.password,
     };
 
     try {
       await makeRequest("auth/register", "POST", user);
       history("/login");
     } catch (err) {
-      setErrors(err.message)
-      console.log(err.message)
+      setErrors(err.message);
+      console.log(err.message);
     }
   };
-  const handleDuplicatePopupClose = () => {
-    setShowDuplicatePopup(false);
-  };
 
-  const handleClosePopup = () => {
-    setPopupVisible(false);
-  };
-
-  const handleDataPopupClose = () => {
-    setDataPopupVisible(false);
+  const handleCloseError = () => {
+    setErrors(null);
   };
 
   return (
@@ -184,7 +190,12 @@ const Register = () => {
                 Policy
               </h4>
             </label>
-            <span>{errors}</span>
+            {errors && (
+              <div className="error-register">
+                <span>{errors}</span>
+                <button onClick={handleCloseError}>Close</button>
+              </div>
+            )}
             <button className="sign-up" onClick={handleClick}>
               Sign Up
             </button>
@@ -205,30 +216,6 @@ const Register = () => {
           </form>
         </div>
       </div>
-      {popupVisible && (
-        <div className="popup-logout-container">
-          <div className="popup-register">
-            <p>Please agree to the Terms & Services Policy.</p>
-            <button onClick={handleClosePopup}>Close</button>
-          </div>
-        </div>
-      )}
-      {dataPopupVisible && (
-        <div className="popup-logout-container">
-          <div className="popup-register">
-            <p>Please enter all required information.</p>
-            <button onClick={handleDataPopupClose}>Close</button>
-          </div>
-        </div>
-      )}
-      {showDuplicatePopup && (
-        <div className="popup-logout-container">
-          <div className="popup-register">
-            <p>Username already exists. Please choose a different username.</p>
-            <button onClick={handleDuplicatePopupClose}>Close</button>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

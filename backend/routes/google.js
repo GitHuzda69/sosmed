@@ -26,11 +26,14 @@ const transporter = nodemailer.createTransport({
 
 // Endpoint untuk mengirim OTP
 router.post('/gmail/send', async (req, res) => {
-  const otp = generateOTP(); 
-  // Kirim email dengan OTP
+  // const checkEmail = await User.findOne({ email: req.body.email });
+  // if (checkEmail) {
+  //   res.status(200).json(checkEmail)
+  // }
+
+  const otp = generateOTP();
   const mailOptions = {
-    name: `Sync, Manage, and Direct Admin`,
-    address: process.env.EMAIL,
+    from: `"Sync, Manage, and Direct Admin" <${process.env.EMAIL}>`, 
     to: req.body.email,
     subject: 'Your OTP for Login',
     html : `<!DOCTYPE html>
@@ -50,14 +53,7 @@ router.post('/gmail/send', async (req, res) => {
     </html>
     `,
   };
-
   try {
-    // Check if a user with the same username or email already exists
-    const existingUser = await User.findOne({ email: req.body.email })
-
-    if (existingUser) {
-      return res.status(409).json({ error: "Username or email already exists" });
-    }
     await transporter.sendMail(mailOptions);
 
     // Simpan data pengguna di MongoDB
@@ -73,36 +69,42 @@ router.post('/gmail/send', async (req, res) => {
   }
 });
 
-// Endpoint untuk mengirim OTP
+// Endpoint untuk mengirim ulang OTP
 router.post('/gmail/resend', async (req, res) => {
-  const otp = req.body.otp; 
-  // Kirim email dengan OTP
-  const mailOptions = {
-    name: `Sync, Manage, and Direct Admin`,
-    address: process.env.EMAIL,
-    to: req.body.email,
-    subject: 'Your OTP for Login',
-    html : `<!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Kode OTP Anda</title>
-    </head>
-    <body>
-        <p>Halo,</p>
-        <p>Ini adalah email konfirmasi dengan Kode OTP Anda:</p>
-        <h2 style="color:#3498db;">${otp}</h2>
-        <p>Harap gunakan kode ini untuk verifikasi.</p>
-        <p>Terima kasih!</p>
-    </body>
-    </html>
-    `,
-  };
-
   try {
+    const user = await User.findOne({ email: req.body.email });
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    const otp = user.otp;
+
+    // Kirim email dengan OTP
+    const mailOptions = {
+      from: `"Sync, Manage, and Direct Admin" <${process.env.EMAIL}>`, 
+      to: req.body.email,
+      subject: 'Your OTP for Login',
+      html: `<!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Kode OTP Anda</title>
+        </head>
+        <body>
+            <p>Halo,</p>
+            <p>Ini adalah email konfirmasi dengan Kode OTP Anda:</p>
+            <h2 style="color:#3498db;">${otp}</h2>
+            <p>Harap gunakan kode ini untuk verifikasi.</p>
+            <p>Terima kasih!</p>
+        </body>
+        </html>`,
+    };
+
     await transporter.sendMail(mailOptions);
-    res.status(200).json("Succesfully Send Email");
+
+    res.status(200).json("Email has been sent successfully");
   } catch (error) {
     console.error('Error sending email:', error);
     res.status(500).json({ error: 'Failed to send OTP' });
@@ -130,34 +132,32 @@ router.post('/gmail/verify', async (req, res) => {
 
 router.put("/gmail/register", async (req, res) => {
   try {
-    // Check if a user with the same username or email already exists
-    const existingUser = await User.findOne({
-      $or: [{ username: req.body.username }, { email: req.body.email }]
-    });
-
-    if (existingUser) {
-      return res.status(409).json({ error: "Username or email already exists" });
-    }
-
     // Generate a new password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
     const bio = "Hello, This is my biodata";
 
-    // Create a new user
-    const newUser = new User({
-      username: req.body.username,
-      email: req.body.email,
-      password: hashedPassword,
-      displayname: req.body.displayname,
-      desc: bio,
-    });
+    // Find and update user based on email
+    const user = await User.findOneAndUpdate(
+      { email: req.body.email },
+      {
+        username: req.body.username,
+        password: hashedPassword,
+        displayname: req.body.displayname,
+        desc: bio,
+      },
+      { new: true } // Return the updated user data
+    );
 
-    // Save the user and respond
-    const user = await newUser.save();
+    // Handle case where user is not found
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
     res.status(200).json(user);
   } catch (err) {
-    res.status(500).json(err);
+    console.error(err);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 

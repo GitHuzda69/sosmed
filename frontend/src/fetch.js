@@ -19,7 +19,6 @@ export const makeRequest = async (endpoint, method , body = null) => {
     if (!response.ok) {
       throw new Error(data);
     }
-
     return data;
   } catch (error) {
     console.error('Error making request:', error);
