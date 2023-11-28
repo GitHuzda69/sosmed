@@ -14,9 +14,9 @@ const Otp = () => {
   const [otpValues, setOtpValues] = useState(Array(6).fill(""));
   const [allInputsFilled, setAllInputsFilled] = useState(false);
   
-  const sendOTP = async () => {
+  const resendOTP = async () => {
     try {
-      makeRequest("auth/gmail/resend", "POST", { otp: otpValues });
+      makeRequest("auth/gmail/resend", "POST", { email });
     } catch (error) {
       console.error("Error sending OTP:", error);
     }
@@ -108,7 +108,7 @@ const Otp = () => {
                 </button>
               <div className="otp-resend">
                 <h4>Didn't receive the code?</h4>
-                <button onClick={sendOTP}>
+                <button onClick={resendOTP}>
                   <h5>Resend</h5>
                 </button>
               </div>

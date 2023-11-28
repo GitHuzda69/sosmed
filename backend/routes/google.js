@@ -30,8 +30,7 @@ router.post('/gmail/send', async (req, res) => {
 
   // Kirim email dengan OTP
   const mailOptions = {
-    name: `Sync, Manage, and Direct Admin`,
-    address: process.env.EMAIL,
+    from: `"Sync, Manage, and Direct Admin" <${process.env.EMAIL}>`, 
     to: req.body.email,
     subject: 'Your OTP for Login',
     html : `<!DOCTYPE html>
@@ -62,6 +61,48 @@ router.post('/gmail/send', async (req, res) => {
      });
      const user = await newUser.save();
     res.status(200).json(user);
+  } catch (error) {
+    console.error('Error sending email:', error);
+    res.status(500).json({ error: 'Failed to send OTP' });
+  }
+});
+
+// Endpoint untuk mengirim ulang OTP
+router.post('/gmail/resend', async (req, res) => {
+  try {
+    const user = await User.findOne({ email: req.body.email }); // Corrected the syntax for findOne
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    const otp = user.otp;
+
+    // Kirim email dengan OTP
+    const mailOptions = {
+      from: `"Sync, Manage, and Direct Admin" <${process.env.EMAIL}>`, 
+      to: req.body.email,
+      subject: 'Your OTP for Login',
+      html: `<!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Kode OTP Anda</title>
+        </head>
+        <body>
+            <p>Halo,</p>
+            <p>Ini adalah email konfirmasi dengan Kode OTP Anda:</p>
+            <h2 style="color:#3498db;">${otp}</h2>
+            <p>Harap gunakan kode ini untuk verifikasi.</p>
+            <p>Terima kasih!</p>
+        </body>
+        </html>`,
+    };
+
+    await transporter.sendMail(mailOptions);
+
+    res.status(200).json("Email has been sent successfully");
   } catch (error) {
     console.error('Error sending email:', error);
     res.status(500).json({ error: 'Failed to send OTP' });

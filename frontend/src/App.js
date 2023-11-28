@@ -16,7 +16,11 @@ import { useContext, useEffect } from "react";
 import WebFont from "webfontloader";
 
 function App() {
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER
   useEffect(() => {
+    document.title = "Sync, Manage, and Direct";
+    const favicon = document.querySelector(`link[rel="icon"]`) ;
+    favicon.href = PF + "Logo_BNW.webp";
     WebFont.load({
       google: {
         families: ["Inter"],
