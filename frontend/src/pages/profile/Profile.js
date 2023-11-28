@@ -360,7 +360,7 @@ const Profile = () => {
               <div className="friends-rec">
                 {friends && friends.length === 0 ? (
                   <span className="friendlist-empty">
-                    Didn't follow anyone yet.
+                    You hasn't follow anyone yet.
                   </span>
                 ) : friends && friends.length > 0 ? (
                   friends.map((friend) => (

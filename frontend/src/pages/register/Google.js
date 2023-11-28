@@ -15,9 +15,7 @@ const Register = () => {
   const history = useNavigate();
   const [agreeStatus, setAgreeStatus] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [popupVisible, setPopupVisible] = useState(false);
-  const [dataPopupVisible, setDataPopupVisible] = useState(false);
-  const [showDuplicatePopup, setShowDuplicatePopup] = useState(false);
+  const [errors, setErrors] = useState(null);
 
   const [inputs, setInputs] = useState({
     username: "",
@@ -34,20 +32,18 @@ const Register = () => {
   const handleClick = async (e) => {
     e.preventDefault();
 
-    if (!agreeStatus) {
-      console.log("Agree status is false");
-      setPopupVisible(true);
+    /*buat ngecek kosong apa ga sama agree*/
+    if (
+      !inputs.username.trim() ||
+      !inputs.email.trim() ||
+      !inputs.password.trim()
+    ) {
+      setErrors("Please fill in all required fields.");
       return;
     }
 
-    if (
-      !inputs.username ||
-      !inputs.email ||
-      !inputs.displayname ||
-      !inputs.password
-    ) {
-      console.log("Some input is missing");
-      setDataPopupVisible(true);
+    if (!agreeStatus) {
+      setErrors("Please agree to the Terms & Services Policy.");
       return;
     }
 
@@ -58,6 +54,11 @@ const Register = () => {
       password: password.current.value,
     };
 
+    if (inputs.password.length < 8) {
+      setErrors("Password should be at least 8 characters long.");
+      return;
+    }
+
     try {
       await makeRequest("auth/gmail/register", "PUT", user);
       history("/login");
@@ -66,16 +67,8 @@ const Register = () => {
     }
   };
 
-  const handleDuplicatePopupClose = () => {
-    setShowDuplicatePopup(false);
-  };
-
-  const handleClosePopup = () => {
-    setPopupVisible(false);
-  };
-
-  const handleDataPopupClose = () => {
-    setDataPopupVisible(false);
+  const handleCloseError = () => {
+    setErrors(null);
   };
 
   return (
@@ -185,7 +178,12 @@ const Register = () => {
                 )}
               </button>
             </div>
-
+            {errors && (
+              <div className="error-register">
+                <span>{errors}</span>
+                <button onClick={handleCloseError}>Close</button>
+              </div>
+            )}
             <label className="checkbox-container-signup checkbox-label-signup">
               <input
                 type="checkbox"
@@ -221,30 +219,6 @@ const Register = () => {
           </form>
         </div>
       </div>
-      {popupVisible && (
-        <div className="popup-logout-container">
-          <div className="popup-register">
-            <p>Please agree to the Terms & Services Policy.</p>
-            <button onClick={handleClosePopup}>Close</button>
-          </div>
-        </div>
-      )}
-      {dataPopupVisible && (
-        <div className="popup-logout-container">
-          <div className="popup-register">
-            <p>Please enter all required information.</p>
-            <button onClick={handleDataPopupClose}>Close</button>
-          </div>
-        </div>
-      )}
-      {showDuplicatePopup && (
-        <div className="popup-logout-container">
-          <div className="popup-register">
-            <p>Username already exists. Please choose a different username.</p>
-            <button onClick={handleDuplicatePopupClose}>Close</button>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

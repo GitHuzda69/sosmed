@@ -19,8 +19,9 @@
 }  
 
 .register-images{
-  margin-top: 50px;
-  margin-right: 340px;
+  position: fixed; 
+  top: 120px;
+  left: 50px;
 }
 
   .signup-form {

@@ -52,6 +52,11 @@ const Register = () => {
       password: inputs.password,
     };
 
+    if (inputs.password.length < 8) {
+      setErrors("Password should be at least 8 characters long.");
+      return;
+    }
+
     try {
       await makeRequest("auth/register", "POST", user);
       history("/login");
