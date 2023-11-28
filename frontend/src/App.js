@@ -23,7 +23,7 @@ function App() {
       },
     });
   }, []);
-  
+
   const { user } = useContext(AuthContext);
   return (
     <Router>
