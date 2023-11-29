@@ -4,6 +4,8 @@ import { Icon } from "@iconify/react";
 import "./FriendsList.css";
 import { useParams } from "react-router";
 import Sidebar from "../../component/Leftbar/Leftbar";
+import HomeProfile from "../home-profile/home-profile.js";
+import Rightbar from "../rightbar/Rightbar.js";
 import Settings from "../../component/Settings/Settings";
 import Logout from "../../component/Logout/Logout";
 import { makeRequest } from "../../fetch.js";
@@ -40,7 +42,7 @@ const FriendList = () => {
   useEffect(() => {
     const getFriends = async () => {
       try {
-        const friendUrl = `relationships/friends/${user._id}`
+        const friendUrl = `relationships/friends/${user._id}`;
         const friendList = await makeRequest.get(friendUrl);
         setFriends(friendList);
       } catch (err) {
@@ -82,10 +84,12 @@ const FriendList = () => {
     <div className="friendlist-main">
       <div className="friendlist-container">
         <div className="friendlist-header">
-          <h2 style={{ flex: 1 }}>Following Lists</h2>
-          <button className="button-info">
-            <Icon icon="fluent:person-alert-20-filled" width={25} height={25} />
-          </button>
+          <Link to="/profile/:username">
+            <button className="button-info">
+              <Icon icon="ic:round-arrow-back" width={35} height={35} />
+            </button>
+          </Link>
+          <h2 style={{ flex: 1 }}>{user && user.displayname} Follower's</h2>
         </div>
         <div className="friendlist">
           {friends && friends.length === 0 ? (
@@ -171,6 +175,10 @@ const FriendList = () => {
         toggleLogout={toggleLogout}
         isFriendListPage={isFriendListPage}
       />
+      <div className="side-content">
+        <HomeProfile />
+        <Rightbar />
+      </div>
       {settingOpen && (
         <>
           <div className="settings-overlay" />
