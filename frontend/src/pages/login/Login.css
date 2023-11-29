@@ -20,7 +20,9 @@
 }  
 
 .login-images{
-  margin-top: 50px;
+  position: fixed;
+  top: 120px;
+  left: 50px;
 }
 
 .login-forms {
@@ -256,8 +258,9 @@
 }  
 
 .login-images-google{
-  margin-top: 50px;
-  margin-right: 10px;
+  position: fixed;
+  top: 120px;
+  left: 50px;
 }
 
 .form-groups-google {
@@ -348,6 +351,7 @@
 }
 
 .login-images-google-otp{
-  margin-top: 50px; 
-  margin-right: -10px;
+  position: fixed;
+  top: 120px;
+  left: 50px;
 }
