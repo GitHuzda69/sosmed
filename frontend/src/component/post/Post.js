@@ -64,7 +64,7 @@ const Post = ({ post, openPostOption, handleOpenPostOption, handleClosePostOptio
       formData.append('name', fileName);
       formData.append('file', file);
   
-      await makeRequest('upload', 'POST', formData);
+      await makeRequest('upload', 'POST', {formData});
   
       return fileName;
     } catch (err) {
@@ -113,10 +113,7 @@ const Post = ({ post, openPostOption, handleOpenPostOption, handleClosePostOptio
     };
 
     try {
-      const updatedPost = await makeRequest.put(
-        "/posts/" + editedPost._id,
-        editedPost
-      );
+      const updatedPost = await makeRequest("posts/" + editedPost._id, "PUT", editedPost);
       setPosts(updatedPost);
       setPostEditOpen(false);
     } catch (error) {

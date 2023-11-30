@@ -57,7 +57,7 @@ const Upload = () => {
   
       try {
         await makeRequest('upload', 'POST', data);
-        console.log(data);
+        window.location.reload();
       } catch (err) {
         // Handle error
         console.error('Error uploading file:', err.message);
@@ -66,6 +66,7 @@ const Upload = () => {
   
     try {
       await makeRequest('posts', 'POST', newPost);
+      window.location.reload();
     } catch (err) {
       // Handle error
       console.error('Error creating post:', err.message);
