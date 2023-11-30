@@ -8,14 +8,13 @@ import loginimages from "../../assets/Background.png";
 
 const Otp = () => {
   const [otp, setOtp] = useState();
-  const { email } = useAuth();
+  const { email, setAuthEmail } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const history = useNavigate();
   const [errors, setErrors] = useState(null);
   const [otpValues, setOtpValues] = useState(Array(6).fill(""));
   const [allInputsFilled, setAllInputsFilled] = useState(false);
-  const { setAuthEmail } = useAuth();
   
   const inputRefs = useRef(
     Array(6)

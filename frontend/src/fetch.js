@@ -1,4 +1,4 @@
-export const makeRequest = async (endpoint, method , body = null) => {
+export const makeRequest = async (endpoint, method , body) => {
   const url = `http://localhost:8800/api/${endpoint}`;
   const options = {
     method,
@@ -15,13 +15,12 @@ export const makeRequest = async (endpoint, method , body = null) => {
   try {
     const response = await fetch(url, options);
     const data = await response.json();
-
     if (!response.ok) {
       throw new Error(data);
     }
     return data;
   } catch (error) {
-    console.error('Error making request:', error);
+    console.error('Ini Errornya :', error);
     throw error;
   }
 };

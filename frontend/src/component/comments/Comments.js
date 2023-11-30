@@ -65,12 +65,7 @@ const Comments = ({ postid, comment, friends }) => {
       const deleteUrl = `comments/${comment._id}`;
       const deleteData = { userId: currentUser._id }
       await makeRequest(deleteUrl, "DELETE", deleteData);
-      if (comments) {
-        const updatedComments = comments.filter(
-          (commentItem) => commentItem._id !== comment._id
-        );
-        setComments(updatedComments);
-      }
+      window.location.reload()
     } catch (err) {
       console.log(err);
     }

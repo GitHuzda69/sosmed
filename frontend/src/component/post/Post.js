@@ -74,15 +74,11 @@ const Post = ({ post, openPostOption, handleOpenPostOption, handleClosePostOptio
 
   const handleLike = async () => {
     try {
-      const likeEndpoint = `likes/${post._id}/like`;
-      const likeData = {
+      await makeRequest(`likes/${post._id}/like`, 'PUT', {
         userId: currentUser._id,
-      };
-  
-      await makeRequest(likeEndpoint, 'POST', likeData);
+      });
     } catch (err) {
-      // Handle error
-      console.error('Error:', err.message);
+      console.error(err.message);
     }
   
     setLike(isLiked ? like - 1 : like + 1);
@@ -129,26 +125,26 @@ const Post = ({ post, openPostOption, handleOpenPostOption, handleClosePostOptio
   };
 
   const handleFollow = async () => {
-    try {
-      let isFollowing = currentUser.followings.includes(user?._id);
+  try {
+    let isFollowing = currentUser.followings.includes(user?._id);
 
-      if (isFollowing) {
-        await makeRequest(`relationships/${user._id}/unfollow`, {
-          userId: currentUser._id,
-        });
-        dispatch({ type: "UNFOLLOW", payload: user._id });
-      } else {
-        await makeRequest(`relationships/${user._id}/follow`, {
-          userId: currentUser._id,
-        });
-        dispatch({ type: "FOLLOW", payload: user._id });
-      }
-
-      setFollowed(!isFollowing);
-    } catch (err) {
-      console.log(err);
+    if (isFollowing) {
+      await makeRequest(`relationships/${user._id}/unfollow`, 'PUT', {
+        userId: currentUser._id,
+      });
+      dispatch({ type: "UNFOLLOW", payload: user._id });
+    } else {
+      await makeRequest(`relationships/${user._id}/follow`, 'PUT', {
+        userId: currentUser._id,
+      });
+      dispatch({ type: "FOLLOW", payload: user._id });
     }
-  };
+
+    setFollowed(!isFollowing);
+  } catch (err) {
+    console.log(err);
+  }
+};
 
   useEffect(() => {
     const handleEnterKey = (e) => {

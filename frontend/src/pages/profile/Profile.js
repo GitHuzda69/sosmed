@@ -79,6 +79,7 @@ const Profile = () => {
       console.log(err);
     }
   };
+
   const navigate = useNavigate();
   const handleMessage = async () => {
     try {
@@ -150,7 +151,7 @@ const Profile = () => {
 
   const handleUnfollowConfirmation = async () => {
     try {
-      await makeRequest.put(`/relationships/${user._id}/unfollow`, {
+      await makeRequest(`relationships/${user._id}/unfollow`, "PUT", {
         userId: currentUser._id,
       });
       dispatch({ type: "UNFOLLOW", payload: user._id });

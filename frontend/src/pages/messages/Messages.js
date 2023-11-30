@@ -143,12 +143,6 @@ function Message() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const message = {
-      sender: currentUser._id,
-      text: newMessage,
-      conversationId: currentChat._id,
-    };
-
     const receiverId = currentChat.members.find(
       (member) => member !== currentUser._id
     );
@@ -160,7 +154,11 @@ function Message() {
     // });
 
     try {
-      const res = await makeRequest("/messages", "POST", message);
+      const res = await makeRequest("messages", "POST", {
+        sender: currentUser._id,
+        text: newMessage,
+        conversationId: currentChat._id,
+      });
       setMessages([...messages, res.data]);
       setNewMessage("");
     } catch (err) {
