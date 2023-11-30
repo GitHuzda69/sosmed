@@ -247,29 +247,13 @@ const Profile = () => {
                 <div className="profil-bio">
                   <h2>{user && user.displayname}</h2>
                   <h4>
-                    <button onClick={toggleFollowing}>
-                      {user.followers ? user.followers.length : "Loading"}{" "}
-                      Follower
-                    </button>
+                    <Link to="/friend">
+                      <button>
+                        {user.followers ? user.followers.length : "Loading"}{" "}
+                        Follower
+                      </button>
+                    </Link>
                   </h4>
-                </div>
-                <div className="profile-switch-buttons">
-                  <button
-                    onClick={togglePosts}
-                    className={`posts-profile-switch-button ${
-                      showPosts ? "bold-button-profile" : ""
-                    }`}
-                  >
-                    Posts
-                  </button>
-                  <button
-                    onClick={toggleFollowing}
-                    className={`following-profile-switch-button ${
-                      showFollowing ? "bold-button-profile" : ""
-                    }`}
-                  >
-                    Follower
-                  </button>
                 </div>
               </div>
               <div className="profiluser-button">
@@ -325,7 +309,6 @@ const Profile = () => {
             {showPosts && (
               <Posts username={username} className="posts-profile" />
             )}
-            {showFollowing && <FriendList />}
           </div>
           <div className="rightProfile-Container">
             <div className="rightProfileBar">

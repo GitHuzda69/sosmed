@@ -1,7 +1,7 @@
 .friendlist-main{
-  width: calc(100% - 65px);   
+  width: calc(100% - 400px);   
   margin-top: 20px;
-  margin-left: 20px;   
+  margin-left: 80px;   
 }
 .friendlist-container{
   width: 100%;  
@@ -18,16 +18,18 @@
 }
 .friendlist-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; 
   align-items: center; 
+}
+.friendlist-header h2{
+  font-size: 25px;
 }
 
 .button-info {
-  color: black;
-  border: 1px black solid;
-  border-radius: 10px;
+  color: black;  
   padding: 3px 6px;
-  margin-top: 40px;
+  margin-top: 10px;
+  margin-left: 20px;
   margin-right: 80px;
   cursor: pointer;
 }
@@ -39,6 +41,7 @@
   font-family: "Inter";
   font-weight: bold;
   font-size: 25px;
+  margin-top: 20px;
   margin-left: 30px;
 }
 
