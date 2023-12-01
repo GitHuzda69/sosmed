@@ -9,7 +9,13 @@ import Commento from "../Commento/Commento.js";
 
 import defaultprofile from "../../assets/profile/default_avatar.png";
 
-const Post = ({ post, openPostOption, handleOpenPostOption, handleClosePostOption,friends }) => {
+const Post = ({
+  post,
+  openPostOption,
+  handleOpenPostOption,
+  handleClosePostOption,
+  friends,
+}) => {
   const [commentOpen, setCommentOpen] = useState(false);
   const [popupOpen, setPopupOpen] = useState(false);
   const [selectedPostImg, setSelectedPostImg] = useState(null);
@@ -17,7 +23,7 @@ const Post = ({ post, openPostOption, handleOpenPostOption, handleClosePostOptio
   const [postEditOpen, setPostEditOpen] = useState(false);
   const [editedDesc, setEditedDesc] = useState(post.desc);
   const [editedImg, setEditedImg] = useState(null);
-  const [isDescEmpty, setIsDescEmpty] = useState(false); 
+  const [isDescEmpty, setIsDescEmpty] = useState(false);
   const descInputRef = useRef(null);
   const [originalDesc, setOriginalDesc] = useState(post.desc);
   const [postOptionButtonPosition, setPostOptionButtonPosition] =
@@ -48,24 +54,23 @@ const Post = ({ post, openPostOption, handleOpenPostOption, handleClosePostOptio
           setUser(res);
         } catch (err) {
           // Handle error
-          console.error('Error:', err.message);
+          console.error("Error:", err.message);
         }
       };
-  
+
       fetchUser();
     }
   }, [post.userId]);
-  
 
   const upload = async (file) => {
     try {
       const formData = new FormData();
       const fileName = Date.now() + file.name;
-      formData.append('name', fileName);
-      formData.append('file', file);
-  
-      await makeRequest('upload', 'POST', {formData});
-  
+      formData.append("name", fileName);
+      formData.append("file", file);
+
+      await makeRequest("upload", "POST", { formData });
+
       return fileName;
     } catch (err) {
       console.log(err);
@@ -74,23 +79,23 @@ const Post = ({ post, openPostOption, handleOpenPostOption, handleClosePostOptio
 
   const handleLike = async () => {
     try {
-      await makeRequest(`likes/${post._id}/like`, 'PUT', {
+      await makeRequest(`likes/${post._id}/like`, "PUT", {
         userId: currentUser._id,
       });
     } catch (err) {
       console.error(err.message);
     }
-  
+
     setLike(isLiked ? like - 1 : like + 1);
     setIsLiked(!isLiked);
   };
 
   const handleDelete = async () => {
     try {
-      const deleteEndpoint = `posts/${post._id}`
+      const deleteEndpoint = `posts/${post._id}`;
       const deleteData = {
-        userId: currentUser._id
-      }
+        userId: currentUser._id,
+      };
       await makeRequest(deleteEndpoint, `DELETE`, deleteData);
       window.location.reload();
     } catch (err) {
@@ -113,7 +118,11 @@ const Post = ({ post, openPostOption, handleOpenPostOption, handleClosePostOptio
     };
 
     try {
-      const updatedPost = await makeRequest("posts/" + editedPost._id, "PUT", editedPost);
+      const updatedPost = await makeRequest(
+        "posts/" + editedPost._id,
+        "PUT",
+        editedPost
+      );
       setPosts(updatedPost);
       setPostEditOpen(false);
     } catch (error) {
@@ -122,26 +131,26 @@ const Post = ({ post, openPostOption, handleOpenPostOption, handleClosePostOptio
   };
 
   const handleFollow = async () => {
-  try {
-    let isFollowing = currentUser.followings.includes(user?._id);
+    try {
+      let isFollowing = currentUser.followings.includes(user?._id);
 
-    if (isFollowing) {
-      await makeRequest(`relationships/${user._id}/unfollow`, 'PUT', {
-        userId: currentUser._id,
-      });
-      dispatch({ type: "UNFOLLOW", payload: user._id });
-    } else {
-      await makeRequest(`relationships/${user._id}/follow`, 'PUT', {
-        userId: currentUser._id,
-      });
-      dispatch({ type: "FOLLOW", payload: user._id });
+      if (isFollowing) {
+        await makeRequest(`relationships/${user._id}/unfollow`, "PUT", {
+          userId: currentUser._id,
+        });
+        dispatch({ type: "UNFOLLOW", payload: user._id });
+      } else {
+        await makeRequest(`relationships/${user._id}/follow`, "PUT", {
+          userId: currentUser._id,
+        });
+        dispatch({ type: "FOLLOW", payload: user._id });
+      }
+
+      setFollowed(!isFollowing);
+    } catch (err) {
+      console.log(err);
     }
-
-    setFollowed(!isFollowing);
-  } catch (err) {
-    console.log(err);
-  }
-};
+  };
 
   useEffect(() => {
     const handleEnterKey = (e) => {
@@ -325,6 +334,7 @@ const Post = ({ post, openPostOption, handleOpenPostOption, handleClosePostOptio
                                   type="text"
                                   name="desc"
                                   value={editedDesc}
+                                  onClick={(e) => e.stopPropagation()}
                                   onChange={(e) =>
                                     setEditedDesc(e.target.value)
                                   }
@@ -334,6 +344,7 @@ const Post = ({ post, openPostOption, handleOpenPostOption, handleClosePostOptio
                                   type="file"
                                   name="img"
                                   id="img"
+                                  onClick={(e) => e.stopPropagation()}
                                   onChange={(e) =>
                                     setEditedImg(e.target.files[0])
                                   }

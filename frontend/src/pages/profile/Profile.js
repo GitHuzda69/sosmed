@@ -344,7 +344,9 @@ const Profile = () => {
               <div className="friends-rec">
                 {friends && friends.length === 0 ? (
                   <span className="friendlist-empty">
-                    You hasn't follow anyone yet.
+                    {user.username === currentUser.username
+                      ? "You haven't followed anyone yet."
+                      : `This user hasn't followed anyone yet.`}
                   </span>
                 ) : friends && friends.length > 0 ? (
                   friends.map((friend) => (
