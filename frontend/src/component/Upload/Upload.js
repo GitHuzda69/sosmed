@@ -11,6 +11,9 @@ const Upload = () => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const desc = useRef();
   const [showFileInput, setShowFileInput] = useState(false);
+  const [audioRecording, setAudioRecording] = useState(null);
+  const [isRecording, setIsRecording] = useState(false);
+  const mediaRecorder = useRef(null);
 
   const { user } = useContext(AuthContext);
 
@@ -34,44 +37,43 @@ const Upload = () => {
 
   const handleClick = async (e) => {
     e.preventDefault();
-  
+
     const isTextareaEmpty = !desc.current.value.trim();
     const isFileNotSelected = !file;
-  
+
     if (isTextareaEmpty && isFileNotSelected) {
       return;
     }
-  
+
     const newPost = {
       userId: user._id,
       desc: desc.current.value,
     };
-  
+
     if (file) {
       const data = new FormData();
       const fileName = Date.now() + file.name;
-      data.append('name', fileName);
-      data.append('file', file);
+      data.append("name", fileName);
+      data.append("file", file);
       newPost.img = fileName;
-  
+
       try {
-        await makeAxios.post('/upload', data);
+        await makeAxios.post("/upload", data);
         window.location.reload();
       } catch (err) {
         // Handle error
-        console.error('Error uploading file:', err.message);
+        console.error("Error uploading file:", err.message);
       }
     }
-  
+
     try {
-      await makeRequest('posts', 'POST', newPost);
+      await makeRequest("posts", "POST", newPost);
       window.location.reload();
     } catch (err) {
       // Handle error
-      console.error('Error creating post:', err.message);
+      console.error("Error creating post:", err.message);
     }
   };
-  
 
   const handleMediaButtonClick = () => {
     setShowFileInput(!showFileInput);
@@ -81,23 +83,23 @@ const Upload = () => {
   };
 
   const handleEnterKey = (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleClick(e);
-    } else if (e.key === 'Enter' && e.shiftKey) {
+    } else if (e.key === "Enter" && e.shiftKey) {
       const descElement = desc.current;
       const startPos = descElement.selectionStart;
       const endPos = descElement.selectionEnd;
       const text = descElement.value;
       const newText =
         text.substring(0, startPos) +
-        '\n' +
+        "\n" +
         text.substring(endPos, text.length);
-  
+
       descElement.value = newText;
       descElement.setSelectionRange(startPos + 1, startPos + 1);
     }
-  
+
     handleAutoHeight();
   };
 
@@ -105,6 +107,46 @@ const Upload = () => {
     const textarea = desc.current;
     textarea.style.height = "auto";
     textarea.style.height = `${Math.min(textarea.scrollHeight, 80)}px`;
+  };
+
+  const startRecording = () => {
+    navigator.mediaDevices
+      .getUserMedia({ audio: true })
+      .then((stream) => {
+        const recorder = new MediaRecorder(stream);
+        recorder.ondataavailable = (e) => {
+          const audioBlob = e.data;
+          const audioUrl = URL.createObjectURL(audioBlob);
+          setAudioRecording(audioUrl);
+          setFile(audioBlob);
+        };
+        recorder.start();
+        setIsRecording(true);
+        mediaRecorder.current = recorder;
+      })
+      .catch((err) => console.error("Error accessing microphone:", err));
+  };
+
+  const stopRecording = () => {
+    if (mediaRecorder.current && isRecording) {
+      mediaRecorder.current.stop();
+      setIsRecording(false);
+    }
+  };
+
+  const handleVoiceButtonClick = () => {
+    if (!isRecording) {
+      startRecording();
+      setIsRecording(true);
+    } else {
+      stopRecording();
+      setIsRecording(false);
+    }
+  };
+
+  const handleCloseAudio = () => {
+    setAudioRecording(null);
+    setFile(null);
   };
 
   return (
@@ -131,6 +173,14 @@ const Upload = () => {
           ref={desc}
           onKeyDown={handleEnterKey}
         />
+        {audioRecording && (
+          <div className="audio-controls">
+            <audio controls src={audioRecording} />
+            <button className="close-audio" onClick={handleCloseAudio}>
+              Close
+            </button>
+          </div>
+        )}
       </div>
       <div className="button-upload">
         <div className="uploadItem-row">
@@ -158,8 +208,12 @@ const Upload = () => {
           <button className="uploadItem">
             <Icon icon="fluent:gif-16-regular" width={25} height={25}></Icon>
           </button>
-          <button className="uploadItem">
-            <Icon icon="ic:outline-poll" width={25} height={25}></Icon>
+          <button className="uploadItem" onClick={handleVoiceButtonClick}>
+            {isRecording ? (
+              <Icon icon="icon-park-twotone:voice" width={25} height={25} />
+            ) : (
+              <Icon icon="icon-park-outline:voice" width={25} height={25} />
+            )}
           </button>
         </div>
         <button className="uploadButton" onClick={handleClick}>
