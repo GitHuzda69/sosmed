@@ -52,9 +52,8 @@ const Profile = () => {
   useEffect(() => {
     const getFriends = async () => {
       try {
-        const friendList = await makeRequest(
-          "relationships/friends/" + user._id
-        );
+        const res = await makeRequest(`users?username=${username}`);
+        const friendList = await makeRequest("relationships/friends/" + res._id, "GET");
         setFriends(friendList);
       } catch (err) {
         console.log(err);
@@ -248,7 +247,7 @@ const Profile = () => {
                 <div className="profil-bio">
                   <h2>{user && user.displayname}</h2>
                   <h4>
-                    <Link to="/friend">
+                    <Link to={`/friend/${username}`}>
                       <button>
                         {user.followers ? user.followers.length : "Loading"}{" "}
                         Follower

@@ -18,6 +18,7 @@ const FriendList = () => {
   const { user: currentUser } = useContext(AuthContext);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [user, setUser] = useState({});
+  const [id, setId] = useState({});
   const [friends, setFriends] = useState([]);
   const username = useParams().username;
   const [settingOpen, setSettingOpen] = useState(false);
@@ -31,19 +32,10 @@ const FriendList = () => {
   });
 
   useEffect(() => {
-    const fetchUser = async () => {
-      const userUrl = `users?username=${username}`;
-      const res = await makeRequest(userUrl);
-      setUser(res);
-    };
-    fetchUser();
-  }, [username]);
-
-  useEffect(() => {
     const getFriends = async () => {
       try {
-        const friendUrl = `relationships/friends/${user._id}`;
-        const friendList = await makeRequest.get(friendUrl);
+        const id = await makeRequest(`users?username=${username}`, "GET");
+        const friendList = await makeRequest(`relationships/friends/followers/${id._id}`, "GET");
         setFriends(friendList);
       } catch (err) {
         console.log(err);
@@ -84,7 +76,7 @@ const FriendList = () => {
     <div className="friendlist-main">
       <div className="friendlist-container">
         <div className="friendlist-header">
-          <Link to="/profile/:username">
+          <Link to={`/profile/${username}`}>
             <button className="button-info">
               <Icon icon="ic:round-arrow-back" width={35} height={35} />
             </button>
@@ -128,9 +120,9 @@ const FriendList = () => {
                   <div className="friend-info-details">
                     <h3>{friend.displayname}</h3>
                     <div className="friend-follower">
-                      <h3>{friends.followers}</h3>
+                      <h3>{friend.followings.length}</h3>
                       <h4>Following</h4>
-                      <h3>4334</h3>
+                      <h3>{friend.followers.length}</h3>
                       <h4>Followers</h4>
                     </div>
                   </div>

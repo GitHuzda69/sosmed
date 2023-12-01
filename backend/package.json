@@ -4,6 +4,7 @@
   "type": "commonjs",
   "dependencies": {
     "@tanstack/react-query": "^4.32.6",
+    "axios": "^1.6.2",
     "bcrpyt": "^2.0.0",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",

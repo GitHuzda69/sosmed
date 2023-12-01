@@ -50,12 +50,8 @@ const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "public/images");
   },
-  filename: (req, file, cb) => {
-    // Generate a unique filename for the uploaded file
-    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-    const originalName = req.body.filename;
-    const filename = `${uniqueSuffix}-${originalName}`;
-    cb(null, filename);
+  filename: function (req, file, cb) {
+    cb(null, req.body.name);
   },
 });
 
@@ -74,6 +70,7 @@ app.post("/api/upload", (req, res, next) => {
 }, (req, res) => {
   return res.status(200).json("File uploaded successfully");
 });
+
 
 // Routes
 app.use('/api/auth', authRoutes)

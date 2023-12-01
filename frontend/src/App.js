@@ -36,7 +36,8 @@ function App() {
         <Route path="/messages" element={user ? <Message /> : <Login />} />
         <Route path="/profile/:username" element={<Profile />} />
         <Route path="/fyp/profile/:username" element={<Profile />} />
-        <Route path="/friend" element={user ? <Friends /> : <Login />} />
+        <Route path="/login/profile/:username" element={<Profile />} />
+        <Route path="/friend/:username" element={user ? <Friends /> : <Login />} />
         <Route path="/fyp" element={user ? <Fyp /> : <Login />} />
         <Route path="/notif" element={user ? <Notif /> : <Login />} />
         <Route path="/signup" element={<Signup />} />

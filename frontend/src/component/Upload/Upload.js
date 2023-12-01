@@ -2,8 +2,7 @@ import "./Upload.css";
 import { useContext, useState, useRef } from "react";
 import AuthContext from "../../context/authContext.js";
 import { Icon } from "@iconify/react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { makeRequest } from "../../fetch.js";
+import { makeRequest, makeAxios } from "../../fetch.js";
 import { useNavigate } from "react-router";
 
 const Upload = () => {
@@ -56,7 +55,7 @@ const Upload = () => {
       newPost.img = fileName;
   
       try {
-        await makeRequest('upload', 'POST', data);
+        await makeAxios.post('/upload', data);
         window.location.reload();
       } catch (err) {
         // Handle error

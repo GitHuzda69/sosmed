@@ -29,16 +29,10 @@ const Rightbar = () => {
   const navigate = useNavigate();
   const handleMessage = async () => {
     try {
-      const friendids = friends.flatMap((id) => (id._id));
-      const userDataArray = [];
-
-      for (const friendId of friendids) {
-      if (friendId === currentUser._id) continue;
-
-      console.log(friendids)
-      await makeRequest(`conversations/`, { senderId: currentUser._id,  receiverId: friendids });
+      const friendids = friends.find((id) => (id));
+      await makeRequest(`conversations/`, "POST", { senderId: currentUser._id,  receiverId: friendids._id });
       navigate("/messages");
-    }} catch (err) {
+    } catch (err) {
       console.log(err);
     }
   };

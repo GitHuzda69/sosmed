@@ -1,7 +1,7 @@
 import "./Post.css";
 import React, { useContext, useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { makeRequest } from "../../fetch.js";
+import { makeRequest, makeAxios } from "../../fetch.js";
 import { AuthContext } from "../../context/authContext.js";
 import { Icon } from "@iconify/react";
 import moment from "moment";
@@ -69,7 +69,7 @@ const Post = ({
       formData.append("name", fileName);
       formData.append("file", file);
 
-      await makeRequest("upload", "POST", { formData });
+      await makeAxios.post("/upload", { formData });
 
       return fileName;
     } catch (err) {
