@@ -153,11 +153,14 @@ function Message() {
     //   text: newMessage,
     // });
 
+    const currentDate = new Date();
+
     try {
       const res = await makeRequest("messages", "POST", {
         sender: currentUser._id,
         text: newMessage,
         conversationId: currentChat._id,
+        createdAt: currentDate,
       });
       setMessages([...messages, res.data]);
       setNewMessage("");
@@ -195,13 +198,15 @@ function Message() {
   };
 
   const groupedMessages = messages.reduce((accumulator, message) => {
-    const dateKey = new Date(message.createdAt).toDateString();
+    if (message && message.createdAt) {
+      const dateKey = new Date(message.createdAt).toDateString();
 
-    if (!accumulator[dateKey]) {
-      accumulator[dateKey] = [];
+      if (!accumulator[dateKey]) {
+        accumulator[dateKey] = [];
+      }
+
+      accumulator[dateKey].push(message);
     }
-
-    accumulator[dateKey].push(message);
 
     return accumulator;
   }, {});
@@ -219,7 +224,8 @@ function Message() {
 
   useEffect(() => {
     if (chatContainerRef.current) {
-      setChatContainerHeight(chatContainerRef.current.scrollHeight);
+      chatContainerRef.current.scrollTop =
+        chatContainerRef.current.scrollHeight;
     }
   }, [messages]);
 
@@ -228,6 +234,13 @@ function Message() {
       chatContainerRef.current.scrollTop = chatContainerHeight;
     }
   }, [chatContainerHeight]);
+
+  useEffect(() => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop =
+        chatContainerRef.current.scrollHeight;
+    }
+  }, [selectedConversation]);
 
   return (
     <div className="main-messages" style={{ height: chatHeight }}>
