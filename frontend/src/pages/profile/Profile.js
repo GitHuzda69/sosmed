@@ -65,7 +65,6 @@ const Profile = () => {
   const handleFollow = async () => {
     try {
       if (followed) {
-        // If already followed, show confirmation popup
         setShowUnfollowConfirmation(true);
       } else {
         await makeRequest(`relationships/${user._id}/follow`, "PUT", {
@@ -80,9 +79,10 @@ const Profile = () => {
   };
 
   const navigate = useNavigate();
+
   const handleMessage = async () => {
     try {
-      const friend = friends.map((id) => console.log(id._id));
+      const friend = friends.find((id) => id._id);
       await makeRequest(`conversations/`, "POST", {
         senderId: currentUser._id,
         receiverId: friend._id,
@@ -136,16 +136,6 @@ const Profile = () => {
     return text.length > maxLength
       ? text.substring(0, maxLength) + "..."
       : text;
-  };
-
-  const togglePosts = () => {
-    setShowPosts(true);
-    setShowFollowing(false);
-  };
-
-  const toggleFollowing = () => {
-    setShowPosts(false);
-    setShowFollowing(true);
   };
 
   const handleUnfollowConfirmation = async () => {
@@ -376,12 +366,23 @@ const Profile = () => {
                           <p>{friend && truncateText(friend.desc, 20)}</p>
                         </div>
                       </Link>
-                      <button
+                      {currentUser.username === username ? (<button
                         className="rightBarButtonProfile"
                         onClick={handleMessage}
-                      >
-                        Chat
+                      >Chat
+                      </button>) : (<div
+                      >{followed ? (
+                        <button className="rightBarButtonProfile" onClick={handleFollow}>
+                          Follow
+                        </button>
+                      ) : (
+                        <button
+                        className="rightBarButtonProfile"
+                        onClick={handleMessage}
+                      >Chat
                       </button>
+                      )}
+                      </div>)}
                     </div>
                   ))
                 ) : (

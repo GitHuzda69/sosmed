@@ -60,7 +60,7 @@ export default function Posts({ username, className, isHome }) {
     <>
       <div className={`posts ${className}`}>
         {!username || username === user.username}
-        {posts.map((p) => (
+        {posts.length === 0 ? "There is no any post yet" : posts.map((p) => (
           <Post
             key={p._id}
             post={p}
