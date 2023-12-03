@@ -117,6 +117,7 @@ const Upload = () => {
         recorder.ondataavailable = (e) => {
           const audioBlob = e.data;
           const audioUrl = URL.createObjectURL(audioBlob);
+          audioBlob.name = `audio-${Date.now()}.mp3`;
           setAudioRecording(audioUrl);
           setFile(audioBlob);
         };
@@ -148,7 +149,6 @@ const Upload = () => {
     setAudioRecording(null);
     setFile(null);
   };
-
   return (
     <div className="upload">
       <div className="selected-file-container">
