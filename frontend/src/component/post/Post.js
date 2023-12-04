@@ -34,9 +34,7 @@ const Post = ({
   const [posts, setPosts] = useState();
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const { user: currentUser, dispatch } = useContext(AuthContext);
-  const following = friends
-    ? friends.some((friend) => friend._id === post.userId)
-    : false;
+  const [following, setFollowing] = useState(false);
   const [followed, setFollowed] = useState(
     currentUser.followings.includes(user?._id)
   );
@@ -44,6 +42,11 @@ const Post = ({
   useEffect(() => {
     setIsLiked(post.likes && post.likes.includes(currentUser._id));
   }, [currentUser._id, post.likes]);
+
+  useEffect(() => {
+    const isFollowing = currentUser.followings.includes(post.userId);
+    setFollowing(isFollowing);
+  }, [currentUser.followings, post.userId]);
 
   useEffect(() => {
     if (post.userId) {
@@ -132,21 +135,21 @@ const Post = ({
 
   const handleFollow = async () => {
     try {
-      let isFollowing = currentUser.followings.includes(user?._id);
+      const isFollowing = !following;
 
       if (isFollowing) {
-        await makeRequest(`relationships/${user._id}/unfollow`, "PUT", {
+        await makeRequest(`relationships/${post.userId}/follow`, "PUT", {
           userId: currentUser._id,
         });
-        dispatch({ type: "UNFOLLOW", payload: user._id });
+        dispatch({ type: "FOLLOW", payload: post.userId });
       } else {
-        await makeRequest(`relationships/${user._id}/follow`, "PUT", {
+        await makeRequest(`relationships/${post.userId}/unfollow`, "PUT", {
           userId: currentUser._id,
         });
-        dispatch({ type: "FOLLOW", payload: user._id });
+        dispatch({ type: "UNFOLLOW", payload: post.userId });
       }
 
-      setFollowed(!isFollowing);
+      setFollowing(isFollowing);
     } catch (err) {
       console.log(err);
     }
@@ -222,6 +225,7 @@ const Post = ({
                       ? PF + user.profilePicture
                       : defaultprofile
                   }
+                  alt=""
                 />
               </Link>
               <div className="details">

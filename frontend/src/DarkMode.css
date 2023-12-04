@@ -6,8 +6,15 @@
 
 
   /*buat topbar*/ 
+  .dark-mode .topbar .fyp-switch{
+    background-color: #1E1E1E; 
+  }
   .dark-mode .topbar .link-following{ 
-    background-color: #1E1E1E;
+    color: white; 
+    border-bottom: 3px white solid;
+  }
+  .dark-mode .topbar .link-fyp{
+    color: white;
   }
 
   .dark-mode .search-bar-container{
@@ -252,8 +259,15 @@
   }
 
   /*buat fyp*/
-  .dark-mode .topbar-fyp .link-fyp{
+  .dark-mode .topbar-fyp .fyp-switch{
     background-color: #1E1E1E;
+  }
+  .dark-mode .topbar-fyp .link-fyp{ 
+    color: white;
+    border-bottom: 3px white solid;
+  }
+  .dark-mode .topbar-fyp .link-following{
+    color: white;
   }
 
   /*buat notif*/
@@ -357,6 +371,10 @@
   .dark-mode .button-info{
     background-color: transparent;
     color: white; 
+  }
+  .dark-mode .button-popup{ 
+    background-color: white;
+    color: black;
   }
 
   /*buat profile*/

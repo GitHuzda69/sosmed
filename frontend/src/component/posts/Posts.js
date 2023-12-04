@@ -17,7 +17,7 @@ export default function Posts({ username, className, isHome }) {
       const endpoint = username
         ? `posts/profile/${username}`
         : `posts/timeline/${user._id}`;
-  
+
       try {
         const res = await makeRequest(endpoint);
         setPosts(
@@ -27,10 +27,10 @@ export default function Posts({ username, className, isHome }) {
         );
       } catch (error) {
         // Handle error
-        console.error('Error:', error.message);
+        console.error("Error:", error.message);
       }
     };
-  
+
     fetchPosts();
   }, [username, user._id]);
 
@@ -60,16 +60,18 @@ export default function Posts({ username, className, isHome }) {
     <>
       <div className={`posts ${className}`}>
         {!username || username === user.username}
-        {posts.length === 0 ? "There is no any post yet" : posts.map((p) => (
-          <Post
-            key={p._id}
-            post={p}
-            openPostOption={openPostOption}
-            handleOpenPostOption={handleOpenPostOption}
-            handleClosePostOption={handleClosePostOption}
-            friends={friends}
-          />
-        ))}
+        {posts.length === 0
+          ? "There is no any post yet"
+          : posts.map((p) => (
+              <Post
+                key={p._id}
+                post={p}
+                openPostOption={openPostOption}
+                handleOpenPostOption={handleOpenPostOption}
+                handleClosePostOption={handleClosePostOption}
+                friends={friends}
+              />
+            ))}
       </div>
       {isHome && (
         <div className="side-content">
