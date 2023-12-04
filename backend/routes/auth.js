@@ -5,9 +5,11 @@ const moment = require("moment")
 
 router.post("/login", async (req, res) => {
   try {
-    const user = await User.findOne({ username: req.body.username });
+    const user = await User.findOne({
+      $or: [{ username: req.body.username }, { email: req.body.username }]
+    });
     if (!user) {
-      return res.status(404).json("Wrong Username");
+      return res.status(404).json("Wrong Username or Email");
     }
 
     const validPassword = await bcrypt.compare(req.body.password, user.password);

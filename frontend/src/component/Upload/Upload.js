@@ -59,7 +59,6 @@ const Upload = () => {
 
       try {
         await makeAxios.post("/upload", data);
-        window.location.reload();
       } catch (err) {
         // Handle error
         console.error("Error uploading file:", err.message);

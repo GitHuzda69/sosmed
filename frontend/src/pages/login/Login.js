@@ -66,7 +66,7 @@ const Login = () => {
               }}
             >
               <strong style={{ paddingBottom: "10px" }}>
-                <label>Username</label>
+                <label>Username or Email</label>
               </strong>
               <input
                 className="input-login"
@@ -158,6 +158,7 @@ const Login = () => {
               type="submit"
               className="login-else"
               style={{ marginTop: "20px" }}
+              href="https://connect.facebook.net/id_ID/sdk.js#xfbml=1&version=v18.0&appId=620456156436672"
             >
               <span className="login-else-icon">
                 <Icon

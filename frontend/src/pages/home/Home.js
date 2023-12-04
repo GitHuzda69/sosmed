@@ -11,14 +11,14 @@ import Upload from "../../component/Upload/Upload.js";
 import Logout from "../../component/Logout/Logout.js";
 import FypSwitch from "../../component/fyp-button/fyp-switch.js";
 import HomeProfile from "../../component/home-profile/home-profile.js";
+import { makeRequest } from "../../fetch.js";
 
 function Home() {
   const [settingOpen, setSettingOpen] = useState(false);
   const [logoutOpen, setLogoutOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
-
+  const [searchResults, setSearchResults] = useState([]);
   const isHomePage = true;
-  const isHome = true;
 
   const toggleSettings = () => {
     setSettingOpen(!settingOpen);
