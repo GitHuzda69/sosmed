@@ -8,6 +8,7 @@ import HomeProfile from "../home-profile/home-profile.js";
 import Rightbar from "../rightbar/Rightbar.js";
 import Settings from "../../component/Settings/Settings";
 import Logout from "../../component/Logout/Logout";
+import RightbarProfile from "../../pages/profile/RightbarProfile.js";
 import { makeRequest } from "../../fetch.js";
 import { useLocation, Link } from "react-router-dom";
 
@@ -25,6 +26,10 @@ const FriendList = () => {
   const [logoutOpen, setLogoutOpen] = useState(false);
   const isFriendListPage = true;
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+  const [showPopupUnfollow, setShowPopupUnfollow] = useState(false);
+  const [showPopupFollow, setShowPopupFollow] = useState(false);
+  const [showUnfollowConfirmation, setShowUnfollowConfirmation] =
+    useState(false);
   const [popupPosition, setPopupPosition] = useState({
     visible: false,
     top: 0,
@@ -35,7 +40,10 @@ const FriendList = () => {
     const getFriends = async () => {
       try {
         const id = await makeRequest(`users?username=${username}`, "GET");
-        const friendList = await makeRequest(`relationships/friends/followers/${id._id}`, "GET");
+        const friendList = await makeRequest(
+          `relationships/friends/followers/${id._id}`,
+          "GET"
+        );
         setFriends(friendList);
       } catch (err) {
         console.log(err);
@@ -96,25 +104,14 @@ const FriendList = () => {
                   className="profileavatar"
                 >
                   <img
-                    className="friend-cover"
                     src={
-                      friend && friend.coverPicture
-                        ? PF + friend.coverPicture
-                        : defaultcover
+                      friend && friend.profilePicture
+                        ? PF + friend.profilePicture
+                        : defaultprofile
                     }
                     alt={friend.displayname}
+                    className="friend-avatar"
                   />
-                  <div>
-                    <img
-                      src={
-                        friend && friend.profilePicture
-                          ? PF + friend.profilePicture
-                          : defaultprofile
-                      }
-                      alt={friend.displayname}
-                      className="friend-avatar"
-                    />
-                  </div>
                 </Link>
                 <div className="friend-info-container">
                   <div className="friend-info-details">
@@ -126,13 +123,11 @@ const FriendList = () => {
                       <h4>Followers</h4>
                     </div>
                   </div>
-                  <button className="button-popup">
-                    <Icon icon="tabler:dots" width={20} height={20} />
-                  </button>
                 </div>
-                <div className="friend-desc">
-                  <p>{friend.desc}</p>
-                </div>
+                <button className="button-popup">
+                  <Icon icon="bi:person-check-fill" width={20} height={20} />
+                  <h3>Following</h3>
+                </button>
               </div>
             ))
           ) : (
@@ -167,10 +162,15 @@ const FriendList = () => {
         toggleLogout={toggleLogout}
         isFriendListPage={isFriendListPage}
       />
-      <div className="side-content">
-        <HomeProfile />
-        <Rightbar />
-      </div>
+      <RightbarProfile
+        user={user}
+        friends={friends}
+        username={username}
+        currentUser={currentUser}
+        setShowUnfollowConfirmation={setShowUnfollowConfirmation}
+        showUnfollowConfirmation={showUnfollowConfirmation}
+        showPopupFollow={showPopupFollow}
+      />
       {settingOpen && (
         <>
           <div className="settings-overlay" />

@@ -49,14 +49,11 @@ html::-webkit-scrollbar-track {
   margin-left: -5px;  
 }
 
-.topbar .link-fyp {
-  background-color: white;
-  color: black;
+.topbar .link-fyp { 
 }
 
-.topbar .link-following {
-  background-color: black;
-  color: white;
+.topbar .link-following { 
+  border-bottom: 3px black solid;
 }
 
 .leftbar {
