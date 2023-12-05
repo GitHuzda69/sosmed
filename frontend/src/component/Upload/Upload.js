@@ -150,7 +150,7 @@ const Upload = () => {
   return (
     <div className="upload">
       <div className="selected-file-container">
-        {file && (
+        {file && !audioRecording && (
           <div className="selected-file-info">
             <img
               className="selected-image"

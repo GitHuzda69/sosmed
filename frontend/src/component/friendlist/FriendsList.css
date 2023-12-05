@@ -13,8 +13,7 @@
 .friendlist-container h2{
   font-size: 40px;
   font-family: "Inter";
-  font-weight: 1000;
-  margin-left: 30px;
+  font-weight: 1000; 
 }
 .friendlist-header {
   display: flex;
@@ -25,6 +24,7 @@
 }
 .friendlist-header h2{
   font-size: 25px;
+  margin-left: -70px;
 }
 
 .button-info {
@@ -47,9 +47,9 @@
   margin-left: 30px;
 }
 
-.friendlist {  
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(550px, 1fr));   
+.friendlist {   
+  display: flex;
+  flex-direction: column; 
   margin-bottom: 10px; 
   overflow-y: scroll;
   overflow-x: hidden; 
