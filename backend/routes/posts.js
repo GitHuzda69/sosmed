@@ -70,9 +70,9 @@ router.post("/", async (req, res) => {
     const newPost = new Post(req.body);
     try {
       const savedPost = await newPost.save();
-      res.status(200).json(savedPost);
+      return res.status(200).json(savedPost);
     } catch (err) {
-      res.status(500).json(err);
+      return res.status(500).json(err);
     }
   });
 
@@ -113,33 +113,18 @@ router.put("/:id", async (req, res) => {
 router.get("/search/:keyword", async (req, res) => {
   const keyword = req.params.keyword;
   try {
-    // Pencarian user berdasarkan username
-    const users = await User.find({ username: { $regex: keyword, $options: 'i' } });
-
-    // Membuat array untuk menyimpan semua post dari user yang ditemukan
-    let allPosts = [];
-
-    // Jika ditemukan user, cari post berdasarkan username tersebut
-    if (users.length > 0) {
-      const usernames = users.map(user => user.username);
-      for (const username of usernames) {
-        const posts = await Post.find({ username: username });
-        console.log(posts);
-        // Menambahkan post ke dalam array allPosts
-        allPosts = allPosts.concat(posts);
-      }
-    } else {
-      // Jika tidak ada user, lanjutkan pencarian post berdasarkan deskripsi
-      allPosts = await Post.find({
-        desc: { $regex: keyword, $options: 'i' },
-      });
+    const posts = await Post.find({
+      $or: [
+        { desc: { $regex: keyword, $options: 'i' } },
+        { img: { $regex: keyword, $options: 'i' } }
+      ]
+    });
+    if (posts.length === 0) {
+      return res.status(200).json("There no result")
     }
-
-    // Mengirimkan satu response setelah semua post terkumpul
-    res.status(200).json(allPosts);
+    return res.status(200).json(posts);
   } catch (err) {
-    console.error("Error during search:", err);
-    res.status(500).json({ error: "Failed to search posts" });
+    return res.status(500).json({ error: "Failed to search posts" });
   }
 });
 

@@ -9,13 +9,7 @@ import Commento from "../Commento/Commento.js";
 
 import defaultprofile from "../../assets/profile/default_avatar.png";
 
-const Post = ({
-  post,
-  openPostOption,
-  handleOpenPostOption,
-  handleClosePostOption,
-  friends,
-}) => {
+const Post = ({ post, openPostOption, handleOpenPostOption, handleClosePostOption, friends, }) => {
   const [commentOpen, setCommentOpen] = useState(false);
   const [popupOpen, setPopupOpen] = useState(false);
   const [selectedPostImg, setSelectedPostImg] = useState(null);

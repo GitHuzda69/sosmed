@@ -37,6 +37,14 @@ const FriendList = () => {
   });
 
   useEffect(() => {
+    const fetchUser = async () => {
+      const res = await makeRequest(`users?username=${username}`);
+      setUser(res);
+    };
+    fetchUser();
+  }, [username]);
+
+  useEffect(() => {
     const getFriends = async () => {
       try {
         const id = await makeRequest(`users?username=${username}`, "GET");
@@ -50,7 +58,7 @@ const FriendList = () => {
       }
     };
     getFriends();
-  }, [user]);
+  }, [username]);
 
   const toggleSettings = () => {
     setSettingOpen(!settingOpen);
@@ -164,7 +172,6 @@ const FriendList = () => {
       />
       <RightbarProfile
         user={user}
-        friends={friends}
         username={username}
         currentUser={currentUser}
         setShowUnfollowConfirmation={setShowUnfollowConfirmation}

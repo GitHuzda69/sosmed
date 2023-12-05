@@ -135,13 +135,6 @@ const Profile = () => {
     setDarkMode(newDarkModeStatus);
   };
 
-  const truncateText = (text, maxLength) => {
-    if (!text) return "";
-    return text.length > maxLength
-      ? text.substring(0, maxLength) + "..."
-      : text;
-  };
-
   const handleUnfollowConfirmation = async () => {
     try {
       await makeRequest(`relationships/${user._id}/unfollow`, "PUT", {
@@ -305,7 +298,7 @@ const Profile = () => {
             )}
           </div>
           <RightbarProfile
-            user={user}
+            user={currentUser}
             friends={friends}
             username={username}
             handleFollow={handleFollow}

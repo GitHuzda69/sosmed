@@ -64,13 +64,11 @@ app.post("/api/upload", (req, res, next) => {
       console.error(err);
       return res.status(500).json("File upload failed");
     }
-    // Continue with the next middleware or route handler
     next();
   });
 }, (req, res) => {
   return res.status(200).json("File uploaded successfully");
 });
-
 
 // Routes
 app.use('/api/auth', authRoutes)
