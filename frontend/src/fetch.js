@@ -27,7 +27,6 @@ export const makeRequest = async (endpoint, method , body) => {
     }
     return data;
   } catch (error) {
-    console.error('Ini Errornya :', error);
     throw error;
   }
 };

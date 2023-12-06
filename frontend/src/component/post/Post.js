@@ -415,10 +415,10 @@ const Post = ({
               </button>
             </div>
           )}
-          {post.audio && (
+          {post.file && (
             <div className="post-audio">
               <audio controls>
-                <source src={PF + `${post.audio}`} type="audio/mpeg" />
+                <source src={PF + `${post.file}`} type="audio/mpeg" />
                 Your browser does not support the audio element.
               </audio>
             </div>

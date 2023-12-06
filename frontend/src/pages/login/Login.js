@@ -2,25 +2,27 @@ import React, { useContext, useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/authContext";
 import { Icon } from "@iconify/react";
-import { loginCall } from "../apiCalls.js";
 import "./Login.css";
+import FacebookLogin from "react-facebook-login";
 
 import loginimages from "../../assets/Background.png";
+import { makeRequest } from "../../fetch";
 
 const Login = () => {
   const username = useRef();
   const password = useRef();
   const { isFetching, dispatch } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState();
   const [rememberMe, setRememberMe] = useState(false);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     const userData = {
       username: username.current.value,
       password: password.current.value,
     };
-
+  
     if (rememberMe) {
       localStorage.setItem("rememberMe", "true");
       localStorage.setItem("userData", JSON.stringify(userData));
@@ -28,11 +30,32 @@ const Login = () => {
       localStorage.removeItem("rememberMe");
       localStorage.removeItem("userData");
     }
-    loginCall(userData, dispatch);
+  
+    const loginCall = async (userCredential, dispatch) => {
+      dispatch({ type: "LOGIN_START" });
+      try {
+        const res = await makeRequest("auth/login", "POST", userCredential);
+        dispatch({ type: "LOGIN_SUCCESS", payload: res });
+      } catch (err) {
+        setError(err.message);
+        dispatch({ type: "LOGIN_FAILURE", payload: err });
+      }
+    };
+  
+    try {
+      await loginCall(userData, dispatch);
+    } catch (error) {
+      console.error(error)
+    }
   };
 
   const navigate = useNavigate();
   const handleGoogle = () => {};
+
+  const responseFacebook = (response) => {
+    console.log(response);
+  };
+  console.log(process.env.FB_APP_ID);
 
   useEffect(() => {
     const rememberMeStatus = localStorage.getItem("rememberMe");
@@ -128,6 +151,7 @@ const Login = () => {
               <button type="button" className="forgot-password-button">
                 Forgot Password
               </button>
+              <span>{error && error}</span>
               <button
                 type="submit"
                 className="login"
@@ -155,20 +179,20 @@ const Login = () => {
               </button>
             </Link>
             <button
-              type="submit"
-              className="login-else"
               style={{ marginTop: "20px" }}
-              href="https://connect.facebook.net/id_ID/sdk.js#xfbml=1&version=v18.0&appId=620456156436672"
             >
+              <FacebookLogin 
+              appId={process.env.FB_APP_ID}
+              autoLoad={true}
+              fields="name,email,picture"
+              callback={responseFacebook}
+              textButton="Continue with Facebook"
+              className="login-else"
+              size="small"
+              />
               <span className="login-else-icon">
-                <Icon
-                  icon="brandico:facebook-rect"
-                  width={20}
-                  height={20}
-                  color="rgb(43, 88, 209)"
-                />
               </span>
-              <h5>Continue with Facebook</h5>
+              <h5></h5>
             </button>
             <div
               className="signup"

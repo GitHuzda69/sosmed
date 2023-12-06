@@ -33,14 +33,20 @@ async function connectToDatabase() {
 }
 
 connectToDatabase();
-
+const allowedOrigins = ["http://localhost:3000", "https://ad60-103-105-55-169.ngrok-free.app"];
 // Middlewares
 app.use("/images", express.static(path.join(__dirname, "public/images")));
 app.use(express.json());
 app.use(helmet());
 app.use(morgan("common"));
 app.use(cors({
-  origin: "http://localhost:3000",
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
 }));
 

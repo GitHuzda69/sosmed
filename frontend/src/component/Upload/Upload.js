@@ -7,6 +7,7 @@ import { useNavigate } from "react-router";
 
 const Upload = () => {
   const [file, setFile] = useState(null);
+  const [audio, setAudio] = useState(null);
   const fileInputRef = useRef(null);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const desc = useRef();
@@ -65,8 +66,24 @@ const Upload = () => {
       }
     }
 
+    if (audio) {
+      const data = new FormData();
+      const audioName = Date.now() + audio.name;
+      data.append("name", audioName);
+      data.append("file", audio);
+      newPost.file = audioName;
+
+      try {
+        await makeAxios.post("/upload", data);
+      } catch (err) {
+        // Handle error
+        console.error("Error uploading file:", err.message);
+      }
+    }
+
     try {
       await makeRequest("posts", "POST", newPost);
+      window.location.reload();
     } catch (err) {
       // Handle error
       console.error("Error creating post:", err.message);
@@ -117,7 +134,7 @@ const Upload = () => {
           const audioUrl = URL.createObjectURL(audioBlob);
           audioBlob.name = `audio-${Date.now()}.mp3`;
           setAudioRecording(audioUrl);
-          setFile(audioBlob);
+          setAudio(audioBlob)
         };
         recorder.start();
         setIsRecording(true);

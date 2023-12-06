@@ -13,6 +13,9 @@ const PostSchema = new mongoose.Schema(
     img: {
       type: String,
     },
+    file: {
+      type: String,
+    },
     createdat: {
       type: String,
     },

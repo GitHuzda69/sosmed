@@ -62,7 +62,6 @@ const Register = () => {
       history("/login");
     } catch (err) {
       setErrors(err.message);
-      console.log(err.message);
     }
   };
 
