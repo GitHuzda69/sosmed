@@ -9,7 +9,13 @@ import Commento from "../Commento/Commento.js";
 
 import defaultprofile from "../../assets/profile/default_avatar.png";
 
-const Post = ({ post, openPostOption, handleOpenPostOption, handleClosePostOption, friends, }) => {
+const Post = ({
+  post,
+  openPostOption,
+  handleOpenPostOption,
+  handleClosePostOption,
+  friends,
+}) => {
   const [commentOpen, setCommentOpen] = useState(false);
   const [popupOpen, setPopupOpen] = useState(false);
   const [selectedPostImg, setSelectedPostImg] = useState(null);
@@ -399,7 +405,7 @@ const Post = ({ post, openPostOption, handleOpenPostOption, handleClosePostOptio
         </div>
         <div className="post-content">
           {post?.desc && <p className="post-desc">{editedDesc}</p>}
-          {post.img && (
+          {post.img && !post.audio && (
             <div className="post-img-container">
               <button
                 className="img-button-post"
@@ -407,6 +413,14 @@ const Post = ({ post, openPostOption, handleOpenPostOption, handleClosePostOptio
               >
                 <img className="post-img" src={PF + `${post.img}`} alt="" />
               </button>
+            </div>
+          )}
+          {post.audio && (
+            <div className="post-audio">
+              <audio controls>
+                <source src={PF + `${post.audio}`} type="audio/mpeg" />
+                Your browser does not support the audio element.
+              </audio>
             </div>
           )}
         </div>

@@ -97,7 +97,7 @@ const FriendList = () => {
               <Icon icon="ic:round-arrow-back" width={35} height={35} />
             </button>
           </Link>
-          <h2 style={{ flex: 1 }}>{user && user.displayname} Follower's</h2>
+          <h2 style={{ flex: 1 }}>{user && user.displayname} follower's</h2>
         </div>
         <div className="friendlist">
           {friends && friends.length === 0 ? (
