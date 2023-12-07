@@ -10,6 +10,7 @@ const cors = require("cors");
 
 const authRoutes = require("./routes/auth");
 const googleRoutes = require("./routes/google");
+const FBRoutes = require("./routes/facebook");
 const userRoutes = require("./routes/users");
 const postRoutes = require("./routes/posts");
 const commentRoutes = require("./routes/comments");
@@ -33,7 +34,7 @@ async function connectToDatabase() {
 }
 
 connectToDatabase();
-const allowedOrigins = ["http://localhost:3000", "https://ad60-103-105-55-169.ngrok-free.app"];
+const allowedOrigins = ["http://localhost:3000", "https://facebook.com", "http://localhost:8800"];
 // Middlewares
 app.use("/images", express.static(path.join(__dirname, "public/images")));
 app.use(express.json());
@@ -79,6 +80,7 @@ app.post("/api/upload", (req, res, next) => {
 // Routes
 app.use('/api/auth', authRoutes)
 app.use('/api/auth', googleRoutes)
+app.use('/api/auth', FBRoutes)
 app.use('/api/users', userRoutes)
 app.use('/api/posts', postRoutes)
 app.use('/api/comments', commentRoutes)

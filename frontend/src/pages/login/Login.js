@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/authContext";
 import { Icon } from "@iconify/react";
 import "./Login.css";
-import FacebookLogin from "react-facebook-login";
 
 import loginimages from "../../assets/Background.png";
 import { makeRequest } from "../../fetch";
@@ -49,13 +48,14 @@ const Login = () => {
     }
   };
 
-  const navigate = useNavigate();
-  const handleGoogle = () => {};
-
-  const responseFacebook = (response) => {
-    console.log(response);
+  const handleFacebook = async () => {
+    try{
+      const res = await makeRequest("auth/facebook", "GET")
+      window.open(res)
+    }catch (err) {
+      console.error(err)
+    }
   };
-  console.log(process.env.FB_APP_ID);
 
   useEffect(() => {
     const rememberMeStatus = localStorage.getItem("rememberMe");
@@ -79,7 +79,7 @@ const Login = () => {
         <img className="login-images" src={loginimages} alt="" />
         <div className="login-forms">
           <h3>Log in</h3>
-          <form action="" onSubmit={handleLogin}>
+          <form action="">
             <div
               className="form-groups"
               style={{
@@ -153,7 +153,7 @@ const Login = () => {
               </button>
               <span>{error && error}</span>
               <button
-                type="submit"
+                onClick={handleLogin}
                 className="login"
                 style={{ marginTop: "20px" }}
                 disabled={isFetching}
@@ -168,7 +168,7 @@ const Login = () => {
             </div>
             <Link to="/google" style={{ textDecoration: "none" }}>
               <button
-                type="submit"
+                type="button"
                 className="login-else"
                 style={{ marginTop: "20px" }}
               >
@@ -179,20 +179,20 @@ const Login = () => {
               </button>
             </Link>
             <button
-              style={{ marginTop: "20px" }}
-            >
-              <FacebookLogin 
-              appId={process.env.FB_APP_ID}
-              autoLoad={true}
-              fields="name,email,picture"
-              callback={responseFacebook}
-              textButton="Continue with Facebook"
+            type="button"
               className="login-else"
-              size="small"
-              />
+              style={{ marginTop: "20px" }}
+              onClick={handleFacebook}
+            >
               <span className="login-else-icon">
+              <Icon
+                  icon="brandico:facebook-rect"
+                  width={20}
+                  height={20}
+                  color="rgb(43, 88, 209)"
+                />
               </span>
-              <h5></h5>
+              <h5>Continue with Facebook</h5>
             </button>
             <div
               className="signup"
