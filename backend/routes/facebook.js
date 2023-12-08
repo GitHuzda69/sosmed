@@ -28,28 +28,9 @@ router.get('/facebook/callback', async (req, res) => {
 
   try {
     // Mendapatkan access token dari Facebook
-    const tokenUrl = `https://graph.facebook.com/oauth/v18.0/access_token?client_id=${FACEBOOK_APP_ID}?client_secret=${FACEBOOK_APP_SECRET}?redirect_uri=${CALLBACK_URL}?code=${code}`;
-    const tokenResponse = await axios.get(tokenUrl);
+    const tokenUrl = `https://graph.facebook.com/oauth/access_token?client_id=${FACEBOOK_APP_ID}&client_secret=${FACEBOOK_APP_SECRET}&code=${code}}&redirect_uri=${CALLBACK_URL}`;
 
-    const access_token = tokenResponse.data;
-
-    // Mendapatkan data pengguna dari Facebook menggunakan access token
-    const userDataUrl = `https://graph.facebook.com/v12.0/me`;
-    const userDataResponse = await axios.get(userDataUrl, {
-      params: {
-        fields: 'id,name,email',
-        access_token: access_token,
-      },
-    });
-    const userData = userDataResponse.data;
-    console.log(userData);
-
-    // Simpan data pengguna di penyimpanan sederhana
-    const userId = userData.id;
-    userStore[userId] = userData;
-
-    // Redirect atau tindakan lainnya setelah login berhasil
-    res.status(200).json(`Hello, ${userData.name}! <a href="/logout">Logout</a>`);
+    return res.status(200).json(tokenUrl);
   } catch (error) {
     console.error('Error during Facebook authentication:', error.message);
     res.status(500).send('Internal Server Error');
@@ -64,6 +45,26 @@ router.get('/facebook/logout', (req, res) => {
 
   res.send('You have been logged out. <a href="/">Home</a>');
 });
+
+//delete informations
+router.get('/facebook/delete', async (req, res) => {
+  const { user_id, access_token } = req.query;
+ 
+  try {
+     const response = await axios.delete(
+       `https://graph.facebook.com/${user_id}?access_token=${access_token}`
+     );
+ 
+     if (response.status === 200) {
+       res.status(200).json({ message: 'User deleted successfully' });
+     } else {
+       res.status(400).json({ message: 'Error deleting user' });
+     }
+  } catch (error) {
+     console.log(error);
+     res.status(500).json({ message: 'Internal server error' });
+  }
+ });
 
 // Route proteksi yang memeriksa apakah pengguna sudah login
 router.get('/facebook/check', (req, res) => {

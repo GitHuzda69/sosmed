@@ -12,11 +12,13 @@ const Facebook = () => {
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
   const { setAuthEmail } = useAuth();
-  const Kode = useParams().code;
-  console.log(Kode);
+  const queryParams = new URLSearchParams(window.location.search);
+  const codeParam = queryParams.get('code');
+  console.log(codeParam);
+
   const callback = async () => {
     try {
-      const res = await makeRequest(`auth/facebook/callback?code=${Kode}`)
+      const res = await makeRequest(`auth/facebook/callback?code=${codeParam}`, "GET")
       console.log(res);
     } catch (err) {
       setErrors(err.message);
