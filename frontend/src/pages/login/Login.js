@@ -21,7 +21,7 @@ const Login = () => {
       username: username.current.value,
       password: password.current.value,
     };
-  
+
     if (rememberMe) {
       localStorage.setItem("rememberMe", "true");
       localStorage.setItem("userData", JSON.stringify(userData));
@@ -29,7 +29,7 @@ const Login = () => {
       localStorage.removeItem("rememberMe");
       localStorage.removeItem("userData");
     }
-  
+
     const loginCall = async (userCredential, dispatch) => {
       dispatch({ type: "LOGIN_START" });
       try {
@@ -40,20 +40,20 @@ const Login = () => {
         dispatch({ type: "LOGIN_FAILURE", payload: err });
       }
     };
-  
+
     try {
       await loginCall(userData, dispatch);
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
   };
 
   const handleFacebook = async () => {
-    try{
-      const res = await makeRequest("auth/facebook", "GET")
-      window.open(res)
-    }catch (err) {
-      console.error(err)
+    try {
+      const res = await makeRequest("auth/facebook", "GET");
+      window.open(res);
+    } catch (err) {
+      console.error(err);
     }
   };
 
@@ -179,13 +179,13 @@ const Login = () => {
               </button>
             </Link>
             <button
-            type="button"
+              type="button"
               className="login-else"
               style={{ marginTop: "20px" }}
               onClick={handleFacebook}
             >
               <span className="login-else-icon">
-              <Icon
+                <Icon
                   icon="brandico:facebook-rect"
                   width={20}
                   height={20}
