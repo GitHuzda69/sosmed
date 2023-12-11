@@ -34,7 +34,7 @@ async function connectToDatabase() {
 }
 
 connectToDatabase();
-const allowedOrigins = ["http://localhost:3000", "https://facebook.com", "http://localhost:8800"];
+const allowedOrigins = ["http://localhost:3000", "http://localhost:8800"];
 // Middlewares
 app.use("/images", express.static(path.join(__dirname, "public/images")));
 app.use(express.json());

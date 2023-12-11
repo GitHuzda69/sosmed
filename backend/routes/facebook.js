@@ -9,15 +9,19 @@ const userStore = {};
 // Sesuaikan dengan informasi aplikasi Facebook Anda
 const FACEBOOK_APP_ID = process.env.FB_APP_ID;
 const FACEBOOK_APP_SECRET = process.env.FB_SECRET_TOKEN;
-const CALLBACK_URL = 'http://localhost:3000/facebook/callback';
+const CALLBACK_HTTPS = process.env.HTTPS;
 
 // Route untuk autentikasi menggunakan Facebook
-router.get('/facebook', (req, res) => {
-  const redirectUrl = `https://www.facebook.com/v12.0/dialog/oauth?client_id=${FACEBOOK_APP_ID}&redirect_uri=${CALLBACK_URL}&scope=email`;
-  return res.status(200).json(redirectUrl)
+router.get('/facebook', async (req, res) => {
+  try {
+    const redirectUrl = `https://www.facebook.com/v12.0/dialog/oauth?client_id=${FACEBOOK_APP_ID}&redirect_uri=${CALLBACK_HTTPS}&scope=email`;
+    res.status(200).json(redirectUrl);
+  } catch (error) {
+    console.error('Error making Facebook OAuth request:', error.message);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 });
 
-// Callback setelah autentikasi berhasil
 router.get('/facebook/callback', async (req, res) => {
   const code = req.query.code;
 
@@ -28,9 +32,18 @@ router.get('/facebook/callback', async (req, res) => {
 
   try {
     // Mendapatkan access token dari Facebook
-    const tokenUrl = `https://graph.facebook.com/oauth/access_token?client_id=${FACEBOOK_APP_ID}&client_secret=${FACEBOOK_APP_SECRET}&code=${code}}&redirect_uri=${CALLBACK_URL}`;
+    const tokenUrl = `https://graph.facebook.com/oauth/access_token?client_id=${FACEBOOK_APP_ID}&client_secret=${FACEBOOK_APP_SECRET}&code=${code}&redirect_uri=${CALLBACK_HTTPS}`;
 
-    return res.status(200).json(tokenUrl);
+    const response = await axios.get(tokenUrl);
+    const accessToken = response.data.access_token;
+
+    const userUrl = `https://graph.facebook.com/me?fields=id,name,email&access_token=${accessToken}`;
+    const userResponse = await axios.get(userUrl);
+    const userData = userResponse.data;
+
+    // Di sini Anda dapat menggunakan atau menyimpan data pengguna sesuai kebutuhan aplikasi Anda.
+
+    return res.redirect(`http://localhost:3000/login`);
   } catch (error) {
     console.error('Error during Facebook authentication:', error.message);
     res.status(500).send('Internal Server Error');
@@ -76,6 +89,5 @@ router.get('/facebook/check', (req, res) => {
     res.send('Hello, guest! <a href="/auth/facebook">Login with Facebook</a>');
   }
 });
-
 
 module.exports = router;
