@@ -45,6 +45,7 @@ const Post = ({
   const [sliderValue, setSliderValue] = useState(0);
   const [showVolumeSlider, setShowVolumeSlider] = useState(false);
   const [volumeSliderValue, setVolumeSliderValue] = useState(50);
+  const [showAudioHovered, setShowAudioHovered] = useState(false);
 
   useEffect(() => {
     setIsLiked(post.likes && post.likes.includes(currentUser._id));
@@ -490,7 +491,11 @@ const Post = ({
             </div>
           )}
           {post.file && (
-            <div className="post-audio-container">
+            <div
+              className="post-audio-container"
+              onMouseEnter={() => setShowAudioHovered(true)}
+              onMouseLeave={() => setShowAudioHovered(false)}
+            >
               <img
                 className="profile-audio"
                 src={
@@ -500,69 +505,74 @@ const Post = ({
                 }
                 alt=""
               />
-              <div className="post-audio">
-                <p className="audio-total-duration">
-                  {formatTime(audioDuration)}
-                </p>
-                <button
-                  className="audio-volume-button"
-                  onMouseEnter={() => setShowVolumeSlider(true)}
-                  onMouseLeave={() => setShowVolumeSlider(false)}
-                >
-                  <Icon
-                    icon="fluent:speaker-2-16-filled"
-                    width={20}
-                    height={20}
-                  />
-                  {showVolumeSlider && (
-                    <input
-                      className="audio-volume-slider"
-                      type="range"
-                      min="0"
-                      max="100"
-                      value={volumeSliderValue}
-                      onChange={handleVolumeChange}
-                      onMouseEnter={() => setShowVolumeSlider(true)}
-                      onMouseLeave={() => setShowVolumeSlider(false)}
+              {showAudioHovered && (
+                <div className="post-audio">
+                  <button
+                    className="audio-volume-button"
+                    onMouseEnter={() => setShowVolumeSlider(true)}
+                    onMouseLeave={() => setShowVolumeSlider(false)}
+                  >
+                    <Icon
+                      icon="fluent:speaker-2-16-filled"
+                      width={20}
+                      height={20}
                     />
-                  )}
-                </button>
-                <audio
-                  id={`audio-${post._id}`}
-                  style={{ display: "none" }}
-                  onError={(e) => console.error("Audio Error:", e)}
-                >
-                  <source src={PF + `${post.file}`} type="audio/mpeg" />
-                  Your browser does not support the audio element.
-                </audio>
-                <div className="custom-audio-controls">
-                  <button onClick={() => togglePlayPause(`audio-${post._id}`)}>
-                    {isPlaying ? (
-                      <Icon icon="solar:pause-bold" width={25} height={25} />
-                    ) : (
-                      <Icon icon="solar:play-bold" width={25} height={25} />
+                    {showVolumeSlider && (
+                      <input
+                        className="audio-volume-slider"
+                        type="range"
+                        min="0"
+                        max="100"
+                        value={volumeSliderValue}
+                        onChange={handleVolumeChange}
+                        onMouseEnter={() => setShowVolumeSlider(true)}
+                        onMouseLeave={() => setShowVolumeSlider(false)}
+                      />
                     )}
                   </button>
+                  <audio
+                    id={`audio-${post._id}`}
+                    style={{ display: "none" }}
+                    onError={(e) => console.error("Audio Error:", e)}
+                  >
+                    <source src={PF + `${post.file}`} type="audio/mpeg" />
+                    Your browser does not support the audio element.
+                  </audio>
+                  <div className="custom-audio-controls">
+                    <button
+                      onClick={() => togglePlayPause(`audio-${post._id}`)}
+                    >
+                      {isPlaying ? (
+                        <Icon icon="solar:pause-bold" width={25} height={25} />
+                      ) : (
+                        <Icon icon="solar:play-bold" width={25} height={25} />
+                      )}
+                    </button>
+                  </div>
+                  <input
+                    className="audio-duration-slider"
+                    type="range"
+                    min="0"
+                    max={audioDuration}
+                    value={sliderValue}
+                    onChange={(e) => setSliderValue(parseFloat(e.target.value))}
+                    onMouseUp={(e) => {
+                      const audio = document.getElementById(
+                        `audio-${post._id}`
+                      );
+                      if (audio) {
+                        audio.currentTime = parseFloat(e.target.value);
+                      }
+                    }}
+                  />
+                  <p className="audio-duration">
+                    {formatTime(audioCurrentTime)}
+                  </p>
+                  <p className="audio-not-played">
+                    -{formatTime(audioDuration - audioCurrentTime)}
+                  </p>
                 </div>
-                <input
-                  className="audio-duration-slider"
-                  type="range"
-                  min="0"
-                  max={audioDuration}
-                  value={sliderValue}
-                  onChange={(e) => setSliderValue(parseFloat(e.target.value))}
-                  onMouseUp={(e) => {
-                    const audio = document.getElementById(`audio-${post._id}`);
-                    if (audio) {
-                      audio.currentTime = parseFloat(e.target.value);
-                    }
-                  }}
-                />
-                <p className="audio-duration">{formatTime(audioCurrentTime)}</p>
-                <p className="audio-not-played">
-                  {formatTime(audioDuration - audioCurrentTime)}
-                </p>
-              </div>
+              )}
             </div>
           )}
         </div>
