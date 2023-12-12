@@ -39,6 +39,13 @@ const Post = ({
     currentUser.followings.includes(user?._id)
   );
 
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [audioDuration, setAudioDuration] = useState(0);
+  const [audioCurrentTime, setAudioCurrentTime] = useState(0);
+  const [sliderValue, setSliderValue] = useState(0);
+  const [showVolumeSlider, setShowVolumeSlider] = useState(false);
+  const [volumeSliderValue, setVolumeSliderValue] = useState(50);
+
   useEffect(() => {
     setIsLiked(post.likes && post.likes.includes(currentUser._id));
   }, [currentUser._id, post.likes]);
@@ -208,6 +215,73 @@ const Post = ({
       console.error(error);
     }
   };
+
+  function togglePlayPause(audioId) {
+    const audio = document.getElementById(audioId);
+
+    if (audio.paused || audio.ended) {
+      audio.play();
+      setIsPlaying(true);
+    } else {
+      audio.pause();
+      setIsPlaying(false);
+    }
+
+    audio.addEventListener("ended", () => {
+      setIsPlaying(false);
+      setSliderValue(0);
+    });
+  }
+
+  function setVolume(audioId, volume) {
+    const audio = document.getElementById(audioId);
+    audio.volume = volume / 100;
+  }
+
+  useEffect(() => {
+    const audio = document.getElementById(`audio-${post._id}`);
+    if (audio) {
+      audio.addEventListener("timeupdate", () => {
+        setAudioCurrentTime(audio.currentTime);
+        setAudioDuration(audio.duration);
+      });
+
+      return () => {
+        audio.removeEventListener("timeupdate", () => {});
+      };
+    }
+  }, [post._id]);
+
+  useEffect(() => {
+    const audio = document.getElementById(`audio-${post._id}`);
+    if (audio) {
+      const updateSlider = () => {
+        setSliderValue(audio.currentTime);
+      };
+
+      audio.addEventListener("timeupdate", updateSlider);
+
+      return () => {
+        audio.removeEventListener("timeupdate", updateSlider);
+      };
+    }
+  }, [post._id]);
+
+  const formatTime = (time) => {
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+    return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+  };
+
+  const handleVolumeChange = (e) => {
+    setVolumeSliderValue(e.target.value);
+
+    const audio = document.getElementById(`audio-${post._id}`);
+    if (audio) {
+      audio.volume = e.target.value / 100;
+    }
+  };
+
   return (
     <div className="post-container">
       <div className="post">
@@ -416,11 +490,79 @@ const Post = ({
             </div>
           )}
           {post.file && (
-            <div className="post-audio">
-              <audio controls>
-                <source src={PF + `${post.file}`} type="audio/mpeg" />
-                Your browser does not support the audio element.
-              </audio>
+            <div className="post-audio-container">
+              <img
+                className="profile-audio"
+                src={
+                  user.profilePicture
+                    ? PF + user.profilePicture
+                    : defaultprofile
+                }
+                alt=""
+              />
+              <div className="post-audio">
+                <p className="audio-total-duration">
+                  {formatTime(audioDuration)}
+                </p>
+                <button
+                  className="audio-volume-button"
+                  onMouseEnter={() => setShowVolumeSlider(true)}
+                  onMouseLeave={() => setShowVolumeSlider(false)}
+                >
+                  <Icon
+                    icon="fluent:speaker-2-16-filled"
+                    width={20}
+                    height={20}
+                  />
+                  {showVolumeSlider && (
+                    <input
+                      className="audio-volume-slider"
+                      type="range"
+                      min="0"
+                      max="100"
+                      value={volumeSliderValue}
+                      onChange={handleVolumeChange}
+                      onMouseEnter={() => setShowVolumeSlider(true)}
+                      onMouseLeave={() => setShowVolumeSlider(false)}
+                    />
+                  )}
+                </button>
+                <audio
+                  id={`audio-${post._id}`}
+                  style={{ display: "none" }}
+                  onError={(e) => console.error("Audio Error:", e)}
+                >
+                  <source src={PF + `${post.file}`} type="audio/mpeg" />
+                  Your browser does not support the audio element.
+                </audio>
+                <div className="custom-audio-controls">
+                  <button onClick={() => togglePlayPause(`audio-${post._id}`)}>
+                    {isPlaying ? (
+                      <Icon icon="solar:pause-bold" width={25} height={25} />
+                    ) : (
+                      <Icon icon="solar:play-bold" width={25} height={25} />
+                    )}
+                  </button>
+                </div>
+                <input
+                  className="audio-duration-slider"
+                  type="range"
+                  min="0"
+                  max={audioDuration}
+                  value={sliderValue}
+                  onChange={(e) => setSliderValue(parseFloat(e.target.value))}
+                  onMouseUp={(e) => {
+                    const audio = document.getElementById(`audio-${post._id}`);
+                    if (audio) {
+                      audio.currentTime = parseFloat(e.target.value);
+                    }
+                  }}
+                />
+                <p className="audio-duration">{formatTime(audioCurrentTime)}</p>
+                <p className="audio-not-played">
+                  {formatTime(audioDuration - audioCurrentTime)}
+                </p>
+              </div>
             </div>
           )}
         </div>
