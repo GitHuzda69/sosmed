@@ -3,7 +3,7 @@ import Google from "./pages/login/Google.js";
 import OTP from "./pages/login/OTP.js";
 import Signup from "./pages/register/Register.js";
 import GSignup from "./pages/register/Google.js";
-import Facebook from "./pages/login/FacebookCB.js";
+import Facebook from "./pages/login/Facebook.js";
 import Home from "./pages/home/Home.js";
 import Message from "./pages/messages/Messages.js";
 import Friends from "./component/friendlist/FriendsList.js";
@@ -44,7 +44,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={user ? <Home /> : <Login />} />
         <Route path="/google" element={user ? <Home /> : <Google />} />
-        <Route path="/facebook/callback" element={user ? <Home /> : <Facebook />} />
+        <Route path="/facebook" element={user ? <Home /> : <Facebook />} />
         <Route path="/google/signup" element={user ? <Home /> : <GSignup />} />
         <Route path="/google/otp" element={user ? <Home /> : <OTP />} />
       </Routes>

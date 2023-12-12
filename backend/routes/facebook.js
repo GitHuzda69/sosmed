@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const axios = require('axios');
-const dotenv = require("dotenv")
+const dotenv = require("dotenv");
+const User = require("../models/User");
 dotenv.config();
 
 // Penyimpanan sederhana dalam memori
@@ -40,54 +41,68 @@ router.get('/facebook/callback', async (req, res) => {
     const userUrl = `https://graph.facebook.com/me?fields=id,name,email&access_token=${accessToken}`;
     const userResponse = await axios.get(userUrl);
     const userData = userResponse.data;
+    const newUser = new User({
+      email: userData.email,
+      displayName: userData.name,
+      otp: accessToken,
+    });
+    await newUser.save();
 
-    // Di sini Anda dapat menggunakan atau menyimpan data pengguna sesuai kebutuhan aplikasi Anda.
-
-    return res.redirect(`http://localhost:3000/login`);
+    return res.redirect(`http://localhost:3000/facebook?code=${accessToken}`);
   } catch (error) {
     console.error('Error during Facebook authentication:', error.message);
     res.status(500).send('Internal Server Error');
   }
 });
 
-// Route untuk logout
-router.get('/facebook/logout', (req, res) => {
-  // Hapus data pengguna dari penyimpanan sederhana
-  const userId = req.session.userId;
-  delete userStore[userId];
-
-  res.send('You have been logged out. <a href="/">Home</a>');
-});
-
-//delete informations
-router.get('/facebook/delete', async (req, res) => {
-  const { user_id, access_token } = req.query;
- 
+// Daftar akun menggunakan facebook
+router.put("/facebook/register", async (req, res) => {
   try {
-     const response = await axios.delete(
-       `https://graph.facebook.com/${user_id}?access_token=${access_token}`
-     );
- 
-     if (response.status === 200) {
-       res.status(200).json({ message: 'User deleted successfully' });
-     } else {
-       res.status(400).json({ message: 'Error deleting user' });
-     }
-  } catch (error) {
-     console.log(error);
-     res.status(500).json({ message: 'Internal server error' });
-  }
- });
+    // Generate a new password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(req.body.password, salt);
+    const bio = "Hello, This is my biodata";
 
-// Route proteksi yang memeriksa apakah pengguna sudah login
-router.get('/facebook/check', (req, res) => {
-  const userId = req.session.userId;
+    // Find and update user based on email
+    const user = await User.findOneAndUpdate(
+      { email: req.body.email },
+      {
+        username: req.body.username,
+        password: hashedPassword,
+        displayname: req.body.displayname,
+        desc: bio,
+      },
+      { new: true } // Return the updated user data
+    );
 
-  if (userId && userStore[userId]) {
-    res.send(`Hello, ${userStore[userId].displayName}! <a href="/logout">Logout</a>`);
-  } else {
-    res.send('Hello, guest! <a href="/auth/facebook">Login with Facebook</a>');
+    // Handle case where user is not found
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.status(200).json(user);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+//get user information facebook
+router.get("/facebook/users", async (req, res) => {
+  const accessToken = req.query.code;
+  try {
+    const user = await User.findOne({ otp: accessToken });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const { password, updatedAt, ...other } = user._doc;
+    res.status(200).json(other);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
 
 module.exports = router;
