@@ -2,6 +2,8 @@ const router = require("express").Router();
 const axios = require('axios');
 const dotenv = require("dotenv");
 const User = require("../models/User");
+const bcrypt = require("bcrypt");
+
 dotenv.config();
 
 // Penyimpanan sederhana dalam memori
@@ -41,13 +43,16 @@ router.get('/facebook/callback', async (req, res) => {
     const userUrl = `https://graph.facebook.com/me?fields=id,name,email&access_token=${accessToken}`;
     const userResponse = await axios.get(userUrl);
     const userData = userResponse.data;
+    const checkEmail = await User.findOne({ email: userData.email });
+    if (checkEmail) {
+      res.redirect('http://localhost:3000/login')
+    }
     const newUser = new User({
       email: userData.email,
-      displayName: userData.name,
+      displayname: userData.name,
       otp: accessToken,
     });
     await newUser.save();
-
     return res.redirect(`http://localhost:3000/facebook?code=${accessToken}`);
   } catch (error) {
     console.error('Error during Facebook authentication:', error.message);

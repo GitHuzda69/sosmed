@@ -26,43 +26,46 @@ const transporter = nodemailer.createTransport({
 
 // Endpoint untuk mengirim OTP
 router.post('/gmail/send', async (req, res) => {
-  // const checkEmail = await User.findOne({ email: req.body.email });
-  // if (checkEmail) {
-  //   res.status(200).json(checkEmail)
-  // }
-
-  const otp = generateOTP();
-  const mailOptions = {
-    from: `"Sync, Manage, and Direct Admin" <${process.env.EMAIL}>`, 
-    to: req.body.email,
-    subject: 'Your OTP for Login',
-    html : `<!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Kode OTP Anda</title>
-    </head>
-    <body>
-        <p>Halo,</p>
-        <p>Ini adalah email konfirmasi dengan Kode OTP Anda:</p>
-        <h2 style="color:#3498db;">${otp}</h2>
-        <p>Harap gunakan kode ini untuk verifikasi.</p>
-        <p>Terima kasih!</p>
-    </body>
-    </html>
-    `,
-  };
   try {
-    await transporter.sendMail(mailOptions);
+    const checkEmail = await User.findOne({ email: req.body.email });
+    let otp;
 
-    // Simpan data pengguna di MongoDB
-    const newUser = new User({ 
-      email: req.body.email,
-      otp: otp,
-     });
-     const user = await newUser.save();
-    res.status(200).json(user);
+    if (checkEmail) {
+      otp = checkEmail.otp;
+    } else {
+      otp = generateOTP();
+      const newUser = new User({
+        email: req.body.email,
+        otp: otp,
+      });
+      await newUser.save();
+    }
+
+    const mailOptions = {
+      from: `"Sync, Manage, and Direct Admin" <${process.env.EMAIL}>`,
+      to: req.body.email,
+      subject: 'Your OTP for Login',
+      html: `
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Kode OTP Anda</title>
+        </head>
+        <body>
+            <p>Halo,</p>
+            <p>Ini adalah email konfirmasi dengan Kode OTP Anda:</p>
+            <h2 style="color:#3498db;">${otp}</h2>
+            <p>Harap gunakan kode ini untuk verifikasi.</p>
+            <p>Terima kasih!</p>
+        </body>
+        </html>
+      `,
+    };
+
+    await transporter.sendMail(mailOptions);
+    res.status(200).json({ message: 'OTP sent successfully' });
   } catch (error) {
     console.error('Error sending email:', error);
     res.status(500).json({ error: 'Failed to send OTP' });

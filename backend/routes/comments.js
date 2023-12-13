@@ -4,7 +4,6 @@ const User = require("../models/User");
 const Comment = require("../models/Comment");
 
 //get a comment
-
 router.get("/:postId", async (req, res) => {
     try {
       const comment = await Comment.find({ postId: req.params.postId });
@@ -26,7 +25,6 @@ router.get("/:postId", async (req, res) => {
   });
 
   //delete a comment
-
 router.delete("/:userId", async (req, res) => {
     try {
       const comment = await Comment.findById(req.params.userId);
