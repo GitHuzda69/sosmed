@@ -45,7 +45,7 @@ const Facebook = () => {
     const user = {
       username: username.current.value,
       email: email,
-      displayname: displayname,
+      displayname: displayname.current.value,
       password: password.current.value,
     };
 
@@ -186,7 +186,7 @@ const Facebook = () => {
                 Policy
               </h4>
             </label>
-            <button className="sign-up" type="submit">
+            <button className="sign-up" type="submit" onClick={handleClick}>
               Sign Up
             </button>
             <div
