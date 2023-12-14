@@ -1,9 +1,11 @@
 .post-container {
+    position: relative;
     display: flex;
     flex-direction: column;
     margin-top: 20px; 
     margin-bottom: 5px;
     width: 100%;  
+    transition: height 0.3s ease-in-out;
   } 
   .post { 
     width: 100%;
@@ -496,3 +498,29 @@
     right: 10px;
     margin-bottom: 5px; 
   }
+
+  .post-container:hover .post-content .post-img-container,
+  .post-container:hover .post-content .post-audio-container {
+  display: block; 
+  transition: opacity 0.3s ease-in-out; 
+  }
+
+  .post-content .post-audio-container .audio-volume-button,
+  .post-content .post-audio-container .audio-volume-slider,
+  .post-content .post-audio-container .custom-audio-controls,
+  .post-content .post-audio-container .audio-duration-slider,
+  .post-content .post-audio-container .audio-duration,
+  .post-content .post-audio-container .audio-not-played {
+  display: none;
+  transition: opacity 0.3s ease-in-out; 
+}
+
+  .post-content .post-audio-container:hover .audio-volume-button,
+  .post-content .post-audio-container:hover .audio-volume-slider,
+  .post-content .post-audio-container:hover .custom-audio-controls,
+  .post-content .post-audio-container:hover .audio-duration-slider,
+  .post-content .post-audio-container:hover .audio-duration,
+  .post-content .post-audio-container:hover .audio-not-played {
+  display: block;
+  transition: opacity 0.3s ease-in-out;  
+}
