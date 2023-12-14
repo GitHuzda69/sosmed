@@ -111,14 +111,14 @@ const Otp = () => {
               >
                 Verify OTP
               </button>
-              <div className="otp-resend">
+            </div>
+          </form>
+          <div className="otp-resend">
                 <h4>Didn't receive the code?</h4>
                 <button onClick={resendOTP}>
                   <h5>Resend</h5>
                 </button>
               </div>
-            </div>
-          </form>
         </div>
       </div>
     </div>

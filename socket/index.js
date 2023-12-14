@@ -8,6 +8,7 @@
 
 // const addUser = (userId, socketId) => {
 //   !users.some((user) => user.userId === userId) && users.push({ userId, socketId });
+//   console.log(socketId)
 // };
 
 // const removeUser = (socketId) => {
