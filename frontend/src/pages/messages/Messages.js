@@ -3,8 +3,6 @@ import "./Messages.css";
 import Sidebar from "../../component/Leftbar/Leftbar";
 import Settings from "../../component/Settings/Settings";
 import Logout from "../../component/Logout/Logout";
-import { Link } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
 import { makeRequest } from "../../fetch.js";
 import { AuthContext } from "../../context/authContext.js";
 import { Icon } from "@iconify/react";
@@ -23,8 +21,6 @@ function Message() {
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const [newMessage, setNewMessage] = useState("");
   const socket = useRef();
-  const [user, setUser] = useState(null);
-  const [info, setInfo] = useState(null);
   const [messages, setMessages] = useState([]);
   const { user: currentUser } = useContext(AuthContext);
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -34,7 +30,6 @@ function Message() {
   const [displayedDate, setDisplayedDate] = useState(null);
   const [selectedConversation, setSelectedConversation] = useState(null);
   const [chatContainerHeight, setChatContainerHeight] = useState(0);
-
   const chatContainerRef = useRef(null);
 
   const toggleSettings = () => {
@@ -66,9 +61,7 @@ function Message() {
         console.log(err);
       }
     };
-    if (currentChat) {
       getMessages();
-    }
   }, [currentChat]);
 
   // useEffect(() => {
@@ -89,18 +82,19 @@ function Message() {
   // }, [arrivalMessage, currentChat]);
 
   // useEffect(() => {
-  //   const socketId = (socket.current.id)
   //   const SocketEEk = async () => {
   //     try {
+  //       await new Promise((resolve) => socket.current.on("connect", resolve));
+  //       const socketId = socket.current.id;
   //       socket.current.emit("addUser", currentUser._id, socketId);
   //       socket.current.on("getUsers", (users) => {
   //         console.log(users);
   //       });
   //     } catch (err) {
-  //       console.log(err);
+  //       console.error("Error connecting to socket:", err);
+  //     }
   //   };
-  // };
-  // SocketEEk();
+  //   SocketEEk();
   // }, [currentUser]);
 
   useEffect(() => {
@@ -143,6 +137,14 @@ function Message() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const currentDate = new Date();
+    const message = {
+      sender: currentUser._id,
+      text: newMessage,
+      conversationId: currentChat._id,
+      createdAt: currentDate,
+    }
+
     const receiverId = currentChat.members.find(
       (member) => member !== currentUser._id
     );
@@ -153,16 +155,9 @@ function Message() {
     //   text: newMessage,
     // });
 
-    const currentDate = new Date();
-
     try {
-      const res = await makeRequest("messages", "POST", {
-        sender: currentUser._id,
-        text: newMessage,
-        conversationId: currentChat._id,
-        createdAt: currentDate,
-      });
-      setMessages([...messages, res.data]);
+      const res = await makeRequest("messages", "POST", message);
+      setMessages([...messages, res]);
       setNewMessage("");
     } catch (err) {
       console.log(err);
