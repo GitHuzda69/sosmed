@@ -6,7 +6,7 @@ import Logout from "../../component/Logout/Logout";
 import { makeRequest } from "../../fetch.js";
 import { AuthContext } from "../../context/authContext.js";
 import { Icon } from "@iconify/react";
-// import { io } from "socket.io-client";
+import { io } from "socket.io-client";
 
 import defaultprofile from "../../assets/profile/default_avatar.png";
 import { format, isToday, isSameDay, isYesterday, isThisYear } from "date-fns";
@@ -20,10 +20,10 @@ function Message() {
   const [currentChat, setCurrentChat] = useState(null);
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const [newMessage, setNewMessage] = useState("");
-  const socket = useRef();
   const [messages, setMessages] = useState([]);
   const { user: currentUser } = useContext(AuthContext);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const socket = useRef();
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const isMessagesPage = true;
   const [chatHeight, setChatHeight] = useState("80vh");
@@ -64,43 +64,32 @@ function Message() {
       getMessages();
   }, [currentChat]);
 
-  // useEffect(() => {
-  //   socket.current = io("ws://localhost:8900");
-  //   socket.current.on("getMessage", (data) => {
-  //     setArrivalMessage({
-  //       sender: data.senderId,
-  //       text: data.text,
-  //       createdAt: Date.now(),
-  //     });
-  //   });
-  // }, []);
+  useEffect(() => {
+    socket.current = io("ws://localhost:8900");
+    socket.current.on("getMessage", (data) => {
+      setArrivalMessage({
+        sender: data.senderId,
+        text: data.text,
+        createdAt: Date.now(),
+      });
+    });
+  }, []);
 
-  // useEffect(() => {
-  //   arrivalMessage &&
-  //     currentChat?.members.includes(arrivalMessage.sender) &&
-  //     setMessages((prev) => [...prev, arrivalMessage]);
-  // }, [arrivalMessage, currentChat]);
+  useEffect(() => {
+    arrivalMessage &&
+      currentChat?.members.includes(arrivalMessage.sender) &&
+      setMessages((prev) => [...prev, arrivalMessage]);
+  }, [arrivalMessage, currentChat]);
 
-  // useEffect(() => {
-  //   const SocketEEk = async () => {
-  //     try {
-  //       await new Promise((resolve) => socket.current.on("connect", resolve));
-  //       const socketId = socket.current.id;
-  //       socket.current.emit("addUser", currentUser._id, socketId);
-  //       socket.current.on("getUsers", (users) => {
-  //         console.log(users);
-  //       });
-  //     } catch (err) {
-  //       console.error("Error connecting to socket:", err);
-  //     }
-  //   };
-  //   SocketEEk();
-  // }, [currentUser]);
+  useEffect(() => {
+        socket.current.emit("addUser", currentUser._id);
+        socket.current.on("getUsers", () => {
+        });
+  }, [currentUser]);
 
   useEffect(() => {
     const storedDarkModeStatus = localStorage.getItem("isDarkMode") === "true";
     setIsDarkMode(storedDarkModeStatus);
-
     setDarkMode(storedDarkModeStatus);
   }, []);
 
@@ -149,11 +138,11 @@ function Message() {
       (member) => member !== currentUser._id
     );
 
-    // socket.current.emit("sendMessage", {
-    //   senderId: currentUser._id,
-    //   receiverId: receiverId,
-    //   text: newMessage,
-    // });
+    socket.current.emit("sendMessage", {
+      senderId: currentUser._id,
+      receiverId: receiverId,
+      text: newMessage,
+    });
 
     try {
       const res = await makeRequest("messages", "POST", message);
@@ -174,10 +163,8 @@ function Message() {
   };
 
   useEffect(() => {
-    // Find the first message with a valid date
     const firstMessageWithDate = messages.find((m) => m.createdAt);
 
-    // Update displayed date if it exists
     if (firstMessageWithDate) {
       setDisplayedDate(new Date(firstMessageWithDate.createdAt));
     }

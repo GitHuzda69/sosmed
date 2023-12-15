@@ -45,7 +45,10 @@ router.get('/facebook/callback', async (req, res) => {
     const userData = userResponse.data;
     const checkEmail = await User.findOne({ email: userData.email });
     if (checkEmail) {
-      res.redirect('http://localhost:3000/login')
+      if (checkEmail.username) {
+        return res.redirect("http://localhost:3000/login")
+      }
+      return res.redirect(`http://localhost:3000/facebook?code=${checkEmail.otp}`)
     }
     const newUser = new User({
       email: userData.email,

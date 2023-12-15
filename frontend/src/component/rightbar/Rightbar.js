@@ -4,13 +4,31 @@ import { Link, useNavigate } from "react-router-dom";
 import { makeRequest } from "../../fetch.js";
 
 import defaultprofile from "../../assets/profile/default_avatar.png";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import AuthContext from "../../context/authContext";
+import { io } from "socket.io-client";
 
 const Rightbar = () => {
   const [friends, setFriends] = useState([]);
+  const [onlineUser, setOnlineUser] = useState([]);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const { user: currentUser } = useContext(AuthContext);
+
+//SOCKET IO
+const socket = useRef();
+useEffect(() => {
+  socket.current = io("ws://localhost:8900");
+  socket.current.on("getPostFollow", (data) => {
+    console.log(data);
+  });
+}, []);
+
+useEffect(() => {
+  socket.current.emit("addUser", currentUser._id);
+  socket.current.on("getUsers", (users) => {
+    setOnlineUser(currentUser.followings.filter((f) => users.some((u) => u.userId === f)))
+  });
+}, [currentUser]);
 
   useEffect(() => {
     const getFriends = async () => {
@@ -52,13 +70,19 @@ const Rightbar = () => {
                       src={friend.profilePicture ? PF + friend.profilePicture : defaultprofile}
                       alt={friend.displayname}
                     />
-                    <div className={`statusDot ${"grayDot"}`} />
+                    {onlineUser && onlineUser.includes(friend._id) ? (
+                      <div className={`statusDot ${"greenDot"}`} />
+                    ) : (
+                      <div className={`statusDot ${"grayDot"}`} />
+                    )}
                   </div>
                   <p className="rightBarUserStatus">
                     <span className="rightBarName">{friend.displayname}</span>
                   </p>
                 </Link>
-                  <button className="rightBarButton" onClick={handleMessage}>Chat</button>
+                <button className="rightBarButton" onClick={handleMessage}>
+                  Chat
+                </button>
               </div>
             ))
           ) : (

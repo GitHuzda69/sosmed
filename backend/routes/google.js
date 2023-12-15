@@ -31,6 +31,9 @@ router.post('/gmail/send', async (req, res) => {
     let otp;
 
     if (checkEmail) {
+      if (checkEmail.username) {
+        return res.redirect("http://localhost:3000/login")
+      }
       otp = checkEmail.otp;
     } else {
       otp = generateOTP();

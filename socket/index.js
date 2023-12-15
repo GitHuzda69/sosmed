@@ -1,51 +1,60 @@
-// const io = require("socket.io")(8900, {
-//     cors: {
-//         origin: "http://localhost:3000"
-//     }
-// });
+const io = require("socket.io")(8900, {
+    cors: {
+        origin: "http://localhost:3000"
+    }
+});
 
-// let users = [];
+let users = [];
 
-// const addUser = (userId, socketId) => {
-//   !users.some((user) => user.userId === userId) && users.push({ userId, socketId });
-//   console.log(socketId)
-// };
+const addUser = (userId, socketId) => {
+  !users.some((user) => user.userId === userId) && users.push({ userId, socketId });
+  console.log(socketId)
+};
 
-// const removeUser = (socketId) => {
-//   users = users.filter((user) => user.socketId !== socketId);
-// };
+const removeUser = (socketId) => {
+  users = users.filter((user) => user.socketId !== socketId);
+};
 
-// const getUser = (userId) => {
-//   return users.find(user=>user.userId === userId)
-// }
+const getUser = (userId) => {
+  return users.find(user=>user.userId === userId)
+}
 
-// io.on("connection", (socket) => {
-//   console.log("User connected");
+io.on("connection", (socket) => {
+  console.log("User connected");
 
-//   // add user
-//   socket.on("addUser", (userId, socketId) => {
-//     addUser(userId, socketId);
-//     io.emit("getUsers", users);
-//   });
+  // add user
+  socket.on("addUser", (userId) => {
+    addUser(userId, socket.id);
+    io.emit("getUsers", users);
+  });
 
-//   // send and get message
-//   socket.on("sendMessage", ({senderId, receiverId, text}) => {
-//     const user = getUser(senderId);
-//     io.to(user.socketId).emit("getMessage", {
-//       senderId,
-//       text,
-//     })
-//   })
+  // send and get message
+  socket.on("sendMessage", ({senderId, receiverId, text}) => {
+    const user = getUser(receiverId);
+    io.to(user.socketId).emit("getMessage", {
+      senderId,
+      text,
+    })
+  })
 
-//   // when disconnect
-//   socket.on("disconnect", () => {
-//     console.log("User disconnected");
-//     removeUser(socket.id);
-//     io.emit("getUsers", users);
-//   });
+  // post and get a post from follow pages
+  socket.on("uploadPostFollow", ({userId, desc, img}) => {
+    io.emit("getPostFollow", {
+      userId,
+      desc,
+      img,
+    })
+  })
 
-//   // when error
-//   socket.on("error", (error) => {
-//     console.error("Socket error:", error);
-//   });
-// });
+  // when disconnect
+  socket.on("disconnect", () => {
+    console.log("User disconnected");
+    removeUser(socket.id);
+    io.emit("getUsers", users);
+  });
+
+  // when error
+  socket.on("error", (error) => {
+    console.error("Socket error:", error);
+  });
+});

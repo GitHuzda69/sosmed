@@ -1,9 +1,11 @@
 import "./Upload.css";
-import { useContext, useState, useRef } from "react";
+import { useContext, useState, useRef, useEffect } from "react";
 import AuthContext from "../../context/authContext.js";
 import { Icon } from "@iconify/react";
 import { makeRequest, makeAxios } from "../../fetch.js";
 import { useNavigate } from "react-router";
+import { io } from "socket.io-client";
+
 
 const Upload = () => {
   const [file, setFile] = useState(null);
@@ -11,12 +13,19 @@ const Upload = () => {
   const fileInputRef = useRef(null);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const desc = useRef();
+  const { user: currentUser } = useContext(AuthContext);
   const [showFileInput, setShowFileInput] = useState(false);
   const [audioRecording, setAudioRecording] = useState(null);
   const [isRecording, setIsRecording] = useState(false);
   const mediaRecorder = useRef(null);
 
   const { user } = useContext(AuthContext);
+
+//SOCKET IO
+const socket = useRef();
+useEffect(() => {
+  socket.current = io("ws://localhost:8900");
+}, []);
 
   const handleFileInputChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -81,6 +90,12 @@ const Upload = () => {
       }
     }
 
+    socket.current.emit("uploadPostFollow", {
+      userId: currentUser._id,
+      desc: newPost.desc,
+      img: newPost.img
+    });
+    
     try {
       await makeRequest("posts", "POST", newPost);
       window.location.reload();
