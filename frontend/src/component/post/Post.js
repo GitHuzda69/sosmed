@@ -65,9 +65,8 @@ const Post = ({
 
   useEffect(() => {
     socket.current.emit("addUser", currentUser._id);
-    socket.current.on("getUsers", (users) => {
-    });
-}, [currentUser]);
+    socket.current.on("getUsers", (users) => {});
+  }, [currentUser]);
 
   useEffect(() => {
     setIsLiked(post.likes && post.likes.includes(currentUser._id));
@@ -87,7 +86,8 @@ const Post = ({
           setUser(res);
         } catch (err) {
           console.error("Error:", err.message);
-       }};
+        }
+      };
       fetchUser();
     }
   }, [post.userId]);
@@ -187,7 +187,9 @@ const Post = ({
         }
       }
     };
+
     document.addEventListener("keydown", handleEnterKey);
+
     return () => {
       document.removeEventListener("keydown", handleEnterKey);
     };
@@ -401,7 +403,14 @@ const Post = ({
                           <Icon icon="tabler:edit" height={20} width={20} />
                           Edit Post
                           {postEditOpen && (
-                            <div className="edit-post">
+                            <div
+                              className="edit-post"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                e.preventDefault(); // Prevent the default behavior of the click event
+                                console.log("Clicking inside edit post div");
+                              }}
+                            >
                               {isDescEmpty && (
                                 <div className="edit-post-warn">
                                   <button
@@ -420,7 +429,12 @@ const Post = ({
                                   <p>Deskripsi tidak boleh kosong.</p>
                                 </div>
                               )}
-                              <form className="edit-post-content">
+                              <form
+                                className="edit-post-content"
+                                onSubmit={(e) => {
+                                  e.preventDefault();
+                                }}
+                              >
                                 <input
                                   className="edit-post-text"
                                   type="text"
@@ -460,6 +474,7 @@ const Post = ({
                                   className="close-edit-post"
                                   onClick={(e) => {
                                     e.preventDefault();
+                                    console.log("Closing edit post ser");
                                     setPostEditOpen(false);
                                     setIsDescEmpty(false);
                                   }}
