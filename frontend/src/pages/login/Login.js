@@ -14,6 +14,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState();
   const [rememberMe, setRememberMe] = useState(false);
+  const [errorVisible, setErrorVisible] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -38,6 +39,7 @@ const Login = () => {
       } catch (err) {
         setError(err.message);
         dispatch({ type: "LOGIN_FAILURE", payload: err });
+        setTimeout(() => setError(null), 3000);
       }
     };
 
@@ -71,6 +73,23 @@ const Login = () => {
       }
     }
   }, []);
+
+  useEffect(() => {
+    setErrorVisible(!!error);
+
+    const errorContainer = document.querySelector(".error-container");
+    if (errorContainer) {
+      errorContainer.classList.toggle("error-container-transition", !!error);
+    }
+
+    const timeout = setTimeout(() => {
+      setErrorVisible(false);
+    }, 3000);
+
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [error]);
 
   return (
     <div className="login-pages">
@@ -151,7 +170,9 @@ const Login = () => {
               <button type="button" className="forgot-password-button">
                 Forgot Password
               </button>
-              <span>{error && error}</span>
+              <div className={errorVisible ? "error-container" : ""}>
+                <span>{error && error}</span>
+              </div>
               <button
                 onClick={handleLogin}
                 className="login"

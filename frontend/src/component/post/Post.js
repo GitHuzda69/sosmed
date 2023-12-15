@@ -501,9 +501,6 @@ const Post = ({
                 alt=""
               />
               <div className="post-audio">
-                <p className="audio-total-duration">
-                  {formatTime(audioDuration)}
-                </p>
                 <button
                   className="audio-volume-button"
                   onMouseEnter={() => setShowVolumeSlider(true)}
@@ -560,7 +557,7 @@ const Post = ({
                 />
                 <p className="audio-duration">{formatTime(audioCurrentTime)}</p>
                 <p className="audio-not-played">
-                  {formatTime(audioDuration - audioCurrentTime)}
+                  -{formatTime(audioDuration - audioCurrentTime)}
                 </p>
               </div>
             </div>

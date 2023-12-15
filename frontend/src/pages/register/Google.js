@@ -67,9 +67,18 @@ const Register = () => {
     }
   };
 
-  const handleCloseError = () => {
-    setErrors(null);
-  };
+  useEffect(() => {
+    let timer;
+    if (errors) {
+      timer = setTimeout(() => {
+        setErrors(null);
+      }, 3000);
+    }
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [errors]);
 
   return (
     <div className="signup-main">
@@ -181,7 +190,6 @@ const Register = () => {
             {errors && (
               <div className="error-register">
                 <span>{errors}</span>
-                <button onClick={handleCloseError}>Close</button>
               </div>
             )}
             <label className="checkbox-container-signup checkbox-label-signup">
