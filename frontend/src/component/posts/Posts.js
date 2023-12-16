@@ -1,16 +1,42 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import Post from "../post/Post.js";
 import HomeProfile from "../../component/home-profile/home-profile.js";
 import Rightbar from "../../component/rightbar/Rightbar.js";
 import "./Posts.css";
 import { makeRequest } from "../../fetch.js";
 import AuthContext from "../../context/authContext.js";
+import { io } from "socket.io-client";
 
 export default function Posts({ username, className, isHome }) {
   const [posts, setPosts] = useState([""]);
   const { user } = useContext(AuthContext);
   const [openPostOption, setOpenPostOption] = useState(null);
   const [friends, setFriends] = useState([]);
+  const [arrivalPost, setArrivalPost] = useState(null);
+
+  //SOCKET IO
+  const socket = useRef();
+  useEffect(() => {
+    socket.current = io("ws://localhost:8900");
+    socket.current.on("getPostFollow", (data) => {
+      setArrivalPost({
+        userId: data.userId,
+        desc: data.desc,
+        createdAt: Date.now(),
+      });
+    });
+  }, []);
+
+  useEffect(() => {
+  if (arrivalPost && !posts.some((post) => post._id === arrivalPost._id)) {
+    setPosts((prev) => [arrivalPost, ...prev]);
+  }
+}, [arrivalPost, posts]);
+
+  useEffect(() => {
+    socket.current.emit("addUser", user._id);
+    socket.current.on("getUsers", (users) => {});
+  }, [user]);
 
   useEffect(() => {
     const fetchPosts = async () => {

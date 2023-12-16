@@ -27,4 +27,20 @@ router.get("/:conversationId", async (req, res) => {
   }
 });
 
+//delete a message
+
+router.delete("/:id", async (req, res) => {
+  try {
+    const mess = await Message.findById(req.params.id);
+    if (mess.sender === req.body.userId) {
+      await mess.deleteOne();
+      res.status(200).json("the message has been deleted");
+    } else {
+      res.status(403).json("you can delete only your message");
+    }
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});  
+
 module.exports = router;

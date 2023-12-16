@@ -9,6 +9,7 @@ import Message from "./pages/messages/Messages.js";
 import Friends from "./component/friendlist/FriendsList.js";
 import Profile from "./pages/profile/Profile.js";
 import Fyp from "./pages/Fyp/Fyp.js";
+import Result from "./pages/Result/Result.js";
 import Notif from "./pages/notif/notif.js";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./pages/home/Home.css";
@@ -34,6 +35,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={user ? <Home /> : <Login />} />
+        <Route path="/search/:keyword" element={user ? <Result /> : <Login />} />
         <Route path="/messages" element={user ? <Message /> : <Login />} />
         <Route path="/profile/:username" element={<Profile />} />
         <Route path="/fyp/profile/:username" element={<Profile />} />

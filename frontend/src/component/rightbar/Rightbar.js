@@ -18,9 +18,6 @@ const Rightbar = () => {
 const socket = useRef();
 useEffect(() => {
   socket.current = io("ws://localhost:8900");
-  socket.current.on("getPostFollow", (data) => {
-    console.log(data);
-  });
 }, []);
 
 useEffect(() => {

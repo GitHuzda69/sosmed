@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Icon } from "@iconify/react";
 
 import "./Search.css";
+import { useNavigate } from "react-router";
 
 const SearchBar = ({ onSearch }) => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -10,12 +11,23 @@ const SearchBar = ({ onSearch }) => {
     setSearchTerm(event.target.value);
   };
 
+  const navigate = useNavigate();
   const handleSearch = (searchTerm) => {
-    console.log("Pencarian:", searchTerm);
+    const searchTermValue = searchTerm.target.value;
+    navigate(`/search/${searchTermValue}`);
+    window.location.reload(true);
   };
+  
 
   const handleClearSearch = () => {
     setSearchTerm("");
+  };
+
+  const handleEnterKey = (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSearch(e);
+    }
   };
 
   return (
@@ -33,6 +45,7 @@ const SearchBar = ({ onSearch }) => {
           placeholder="Search . . ."
           value={searchTerm}
           onChange={handleInputChange}
+          onKeyDown={handleEnterKey}
         />
         {searchTerm && (
           <button className="clear-search-button" onClick={handleClearSearch}>

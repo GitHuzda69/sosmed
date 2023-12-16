@@ -93,12 +93,12 @@ useEffect(() => {
     socket.current.emit("uploadPostFollow", {
       userId: currentUser._id,
       desc: newPost.desc,
-      img: newPost.img
+      img: newPost.img,
     });
     
     try {
       await makeRequest("posts", "POST", newPost);
-      window.location.reload();
+      // window.location.reload();
     } catch (err) {
       // Handle error
       console.error("Error creating post:", err.message);
@@ -129,7 +129,6 @@ useEffect(() => {
       descElement.value = newText;
       descElement.setSelectionRange(startPos + 1, startPos + 1);
     }
-
     handleAutoHeight();
   };
 

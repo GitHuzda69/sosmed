@@ -6,8 +6,6 @@ import { AuthContext } from "../../context/authContext.js";
 import { Icon } from "@iconify/react";
 import moment from "moment";
 import Commento from "../Commento/Commento.js";
-import { io } from "socket.io-client";
-
 import defaultprofile from "../../assets/profile/default_avatar.png";
 
 const Post = ({
@@ -20,53 +18,24 @@ const Post = ({
   const [commentOpen, setCommentOpen] = useState(false);
   const [popupOpen, setPopupOpen] = useState(false);
   const [selectedPostImg, setSelectedPostImg] = useState(null);
-  const [postOptionOpen, setpostOptionOpen] = useState(false);
   const [postEditOpen, setPostEditOpen] = useState(false);
   const [editedDesc, setEditedDesc] = useState(post.desc);
   const [editedImg, setEditedImg] = useState(null);
-  const [arrivalPost, setArrivalPost] = useState(null);
   const [isDescEmpty, setIsDescEmpty] = useState(false);
   const descInputRef = useRef(null);
   const [originalDesc, setOriginalDesc] = useState(post.desc);
-  const [postOptionButtonPosition, setPostOptionButtonPosition] =
-    useState(null);
   const [like, setLike] = useState(post.likes && post.likes.length);
   const [isLiked, setIsLiked] = useState(false);
   const [user, setUser] = useState({});
-  const [posts, setPosts] = useState();
-  const [onlineUser, setOnlineUser] = useState([]);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const { user: currentUser, dispatch } = useContext(AuthContext);
   const [following, setFollowing] = useState(false);
-  const [followed, setFollowed] = useState(
-    currentUser.followings.includes(user?._id)
-  );
   const [isPlaying, setIsPlaying] = useState(false);
   const [audioDuration, setAudioDuration] = useState(0);
   const [audioCurrentTime, setAudioCurrentTime] = useState(0);
   const [sliderValue, setSliderValue] = useState(0);
   const [showVolumeSlider, setShowVolumeSlider] = useState(false);
   const [volumeSliderValue, setVolumeSliderValue] = useState(50);
-
-  //SOCKET IO
-  const socket = useRef();
-  useEffect(() => {
-    socket.current = io("ws://localhost:8900");
-    socket.current.on("getPostFollow", (data) => {
-      console.log(data);
-    });
-  }, []);
-
-  useEffect(() => {
-    arrivalPost &&
-      posts?.includes(arrivalPost.userId) &&
-      setPosts((prev) => [...prev, arrivalPost]);
-  }, [arrivalPost, posts]);
-
-  useEffect(() => {
-    socket.current.emit("addUser", currentUser._id);
-    socket.current.on("getUsers", (users) => {});
-  }, [currentUser]);
 
   useEffect(() => {
     setIsLiked(post.likes && post.likes.includes(currentUser._id));
@@ -150,7 +119,6 @@ const Post = ({
         "PUT",
         editedPost
       );
-      setPosts(updatedPost);
       setPostEditOpen(false);
     } catch (error) {
       console.error(error);

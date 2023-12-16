@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "../../component/Leftbar/Leftbar.js";
-import Rightbar from "../../component/rightbar/Rightbar.js";
 import SearchBar from "../../component/search/Search";
 import Settings from "../../component/Settings/Settings.js";
 import "./Home.css";
@@ -10,8 +9,6 @@ import Posts from "../../component/posts/Posts";
 import Upload from "../../component/Upload/Upload.js";
 import Logout from "../../component/Logout/Logout.js";
 import FypSwitch from "../../component/fyp-button/fyp-switch.js";
-import HomeProfile from "../../component/home-profile/home-profile.js";
-import { makeRequest } from "../../fetch.js";
 
 function Home() {
   const [settingOpen, setSettingOpen] = useState(false);
