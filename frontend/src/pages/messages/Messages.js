@@ -61,7 +61,7 @@ function Message() {
         console.log(err);
       }
     };
-      getMessages();
+    getMessages();
   }, [currentChat]);
 
   useEffect(() => {
@@ -82,9 +82,8 @@ function Message() {
   }, [arrivalMessage, currentChat]);
 
   useEffect(() => {
-        socket.current.emit("addUser", currentUser._id);
-        socket.current.on("getUsers", () => {
-        });
+    socket.current.emit("addUser", currentUser._id);
+    socket.current.on("getUsers", () => {});
   }, [currentUser]);
 
   useEffect(() => {
@@ -132,7 +131,7 @@ function Message() {
       text: newMessage,
       conversationId: currentChat._id,
       createdAt: currentDate,
-    }
+    };
 
     const receiverId = currentChat.members.find(
       (member) => member !== currentUser._id
