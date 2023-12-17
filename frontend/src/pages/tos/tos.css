@@ -1,0 +1,44 @@
+   .terms-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+    overflow-y: hidden;
+    height: 100vh; 
+  }
+  .terms-of-service { 
+    position: relative;
+    width: 70%;
+    height: 100%;
+    margin-top: 70px;
+    padding-top: 30px;
+    padding-left: 60px;
+    padding-right: 60px;
+    padding-bottom: 40px;
+    border-radius: 10px; 
+    background-color: #fff;
+    font-family: "Inter";
+  }
+
+  .terms-of-service h1{
+    color: black;
+    font-size: 35px;
+    font-weight: bold;
+  }
+  .terms-of-service h2{
+    color: black;
+    font-size: 25px;
+    font-weight: bold;
+  }
+  .terms-of-service p{
+    margin-top: -15px;
+    color: black;
+    font-size: 20px;
+    font-weight: normal;
+  }
+
+  .back-terms{
+    position: absolute;
+    top: 10px; 
+    left: 20px;
+  }
+   

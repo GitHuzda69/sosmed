@@ -196,9 +196,11 @@ const Register = () => {
               />
               <h4>
                 I Agree with
-                <button type="button" className="terms-button">
-                  Terms & Services
-                </button>
+                <Link to="/TermsOfServices">
+                  <button type="button" className="terms-button">
+                    Terms & Services
+                  </button>
+                </Link>
                 Policy
               </h4>
             </label>
