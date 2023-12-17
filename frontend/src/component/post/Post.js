@@ -61,19 +61,21 @@ const Post = ({
     }
   }, [post.userId]);
 
-  const upload = async (file) => {
-    try {
-      const formData = new FormData();
-      const fileName = Date.now() + file.name;
-      formData.append("name", fileName);
-      formData.append("file", file);
+  // BASE 64 SYSTEM
+const convertbase64 = (file) => {
+  return new Promise((resolve, reject) => {
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(file);
 
-      await makeAxios.post("/upload", { formData });
-      return fileName;
-    } catch (err) {
-      console.log(err);
+    fileReader.onload = () => {
+      resolve(fileReader.result)
     }
-  };
+
+    fileReader.onerror = (error) => {
+      reject(error)
+    }
+  })
+}
 
   const handleLike = async () => {
     try {
@@ -110,11 +112,11 @@ const Post = ({
     const editedPost = {
       ...post,
       desc: editedDesc,
-      img: editedImg ? await upload(editedImg) : post.img,
+      img: editedImg ? await await convertbase64(editedImg) : post.img,
     };
 
     try {
-      const updatedPost = await makeRequest(
+      await makeRequest(
         "posts/" + editedPost._id,
         "PUT",
         editedPost
@@ -155,7 +157,6 @@ const Post = ({
         }
       }
     };
-
     document.addEventListener("keydown", handleEnterKey);
 
     return () => {
@@ -280,7 +281,7 @@ const Post = ({
                   className="profile"
                   src={
                     user.profilePicture
-                      ? PF + user.profilePicture
+                      ? user.profilePicture
                       : defaultprofile
                   }
                   alt=""
@@ -480,9 +481,9 @@ const Post = ({
             <div className="post-img-container">
               <button
                 className="img-button-post"
-                onClick={() => openPopup(PF + `${editedImg || post.img}`)}
+                onClick={() => openPopup(editedImg || post.img)}
               >
-                <img className="post-img" src={PF + `${post.img}`} alt="" />
+                <img className="post-img" src={post.img} alt="" />
               </button>
             </div>
           )}
@@ -492,7 +493,7 @@ const Post = ({
                 className="profile-audio"
                 src={
                   user.profilePicture
-                    ? PF + user.profilePicture
+                    ? user.profilePicture
                     : defaultprofile
                 }
                 alt=""
@@ -526,7 +527,7 @@ const Post = ({
                   style={{ display: "none" }}
                   onError={(e) => console.error("Audio Error:", e)}
                 >
-                  <source src={PF + `${post.file}`} type="audio/mpeg" />
+                  <source src={post.file} type="audio/mpeg" />
                   Your browser does not support the audio element.
                 </audio>
                 <div className="custom-audio-controls">

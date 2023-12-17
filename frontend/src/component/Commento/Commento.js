@@ -16,21 +16,23 @@ const Commento = ({ postid, className }) => {
   const [desc, setDesc] = useState(null);
   const [file, setFile] = useState(null);
   const [showFileInput, setShowFileInput] = useState(false);
-  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [friends, setFriends] = useState([]);
 
-  const upload = async () => {
-    try {
-      const formData = new FormData();
-      const fileName = Date.now() + file.name;
-      formData.append("name", fileName);
-      formData.append("file", file);
-      const res = await makeRequest("upload", "POST", formData);
-      return fileName;
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // BASE 64 SYSTEM
+  const convertbase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+
+      fileReader.onload = () => {
+        resolve(fileReader.result)
+      }
+
+      fileReader.onerror = (error) => {
+        reject(error)
+      }
+    })
+  }
 
   useEffect(() => {
     const fetchComments = async () => {
@@ -76,9 +78,8 @@ const Commento = ({ postid, className }) => {
 
         let imgUrl = "";
         if (file) {
-          imgUrl = await upload(file).catch((uploadError) => {
-            console.log(uploadError.message);
-          });
+          const res = await convertbase64(file);
+          imgUrl = res;
         }
 
         try {
@@ -130,7 +131,7 @@ const Commento = ({ postid, className }) => {
             className="comments-pic-write"
             src={
               currentUser && currentUser.profilePicture
-                ? PF + currentUser.profilePicture
+                ? currentUser.profilePicture
                 : defaultprofile
             }
             alt={currentUser.displayname}

@@ -40,18 +40,21 @@ const Update = ({ user, onClose }) => {
   const [originalName, setOriginalName] = useState(currentUser.displayname);
   const [isNameEmpty, setIsNameEmpty] = useState(false);
 
-  const upload = async (file) => {
-    try {
-      const formData = new FormData();
-      const fileName = Date.now() + file.name;
-      formData.append("name", fileName);
-      formData.append("file", file);
-      await makeRequest("upload", "POST", formData);
-      return fileName;
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // BASE 64 SYSTEM
+  const convertbase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+
+      fileReader.onload = () => {
+        resolve(fileReader.result)
+      }
+
+      fileReader.onerror = (error) => {
+        reject(error)
+      }
+    })
+  }
 
   const handleChange = (e) => {
     setTexts((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -69,11 +72,11 @@ const Update = ({ user, onClose }) => {
       let profileUrl = user.profilePicture;
 
       if (coverInput) {
-        coverUrl = await upload(coverInput);
+        coverUrl = await convertbase64(coverInput);
       }
 
       if (profileInput) {
-        profileUrl = await upload(profileInput);
+        profileUrl = await convertbase64(profileInput);
       }
       const editUser = {
         ...texts,

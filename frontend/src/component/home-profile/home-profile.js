@@ -9,7 +9,6 @@ import defaultcover from "../../assets/profile/default_banner.jpg";
 
 const HomeProfile = () => {
   const { user } = useContext(AuthContext);
-  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
   return (
     <div className="homeProfile">
@@ -20,12 +19,12 @@ const HomeProfile = () => {
       >
         <img
           className="banner-homeProfile"
-          src={user.coverPicture ? PF + user.coverPicture : defaultprofile}
+          src={user.coverPicture ? user.coverPicture : defaultprofile}
           alt={user.displayname}
         />
         <img
           className="profile-homeProfile"
-          src={user.profilePicture ? PF + user.profilePicture : defaultprofile}
+          src={user.profilePicture ? user.profilePicture : defaultprofile}
           alt="profile"
         />
       </Link>

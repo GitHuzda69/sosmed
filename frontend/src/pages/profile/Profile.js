@@ -31,7 +31,6 @@ const Profile = () => {
   const username = useParams().username;
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [showPosts, setShowPosts] = useState(true);
-  const [showFollowing, setShowFollowing] = useState(false);
   const [showPopupUnfollow, setShowPopupUnfollow] = useState(false);
   const [showPopupFollow, setShowPopupFollow] = useState(false);
   const [showUnfollowConfirmation, setShowUnfollowConfirmation] =
@@ -171,7 +170,7 @@ const Profile = () => {
                 >
                   <img
                     src={
-                      user.coverPicture ? PF + user.coverPicture : defaultcover
+                      user.coverPicture ? user.coverPicture : defaultcover
                     }
                     alt="banner"
                   />
@@ -187,7 +186,7 @@ const Profile = () => {
                   <img
                     className="popup-img-banner"
                     src={
-                      user.coverPicture ? PF + user.coverPicture : defaultcover
+                      user.coverPicture ? user.coverPicture : defaultcover
                     }
                     alt=""
                   />
@@ -205,7 +204,7 @@ const Profile = () => {
                       <img
                         src={
                           user.profilePicture
-                            ? PF + user.profilePicture
+                            ? user.profilePicture
                             : defaultcover
                         }
                         alt="post-profile"

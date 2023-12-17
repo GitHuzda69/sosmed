@@ -11,7 +11,6 @@ const Upload = () => {
   const [file, setFile] = useState(null);
   const [audio, setAudio] = useState(null);
   const fileInputRef = useRef(null);
-  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const desc = useRef();
   const { user: currentUser } = useContext(AuthContext);
   const [showFileInput, setShowFileInput] = useState(false);
@@ -45,6 +44,37 @@ useEffect(() => {
     setFile(null);
   };
 
+  // BASE 64 SYSTEM
+  const convertbase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+
+      fileReader.onload = () => {
+        resolve(fileReader.result)
+      }
+
+      fileReader.onerror = (error) => {
+        reject(error)
+      }
+    })
+  }
+
+const convertAudio64 = (audio) => {
+  return new Promise((resolve, reject) => {
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(audio);
+
+    fileReader.onload = () => {
+      resolve(fileReader.result)
+    }
+
+    fileReader.onerror = (error) => {
+      reject(error)
+    }
+  })
+}
+
   const handleClick = async (e) => {
     e.preventDefault();
 
@@ -61,44 +91,25 @@ useEffect(() => {
     };
 
     if (file) {
-      const data = new FormData();
-      const fileName = Date.now() + file.name;
-      data.append("name", fileName);
-      data.append("file", file);
-      newPost.img = fileName;
-
-      try {
-        await makeAxios.post("/upload", data);
-      } catch (err) {
-        // Handle error
-        console.error("Error uploading file:", err.message);
-      }
-    }
+      const res = await convertbase64(file);
+      newPost.img = res;
+    };
 
     if (audio) {
-      const data = new FormData();
-      const audioName = Date.now() + audio.name;
-      data.append("name", audioName);
-      data.append("file", audio);
-      newPost.file = audioName;
-
-      try {
-        await makeAxios.post("/upload", data);
-      } catch (err) {
-        // Handle error
-        console.error("Error uploading file:", err.message);
-      }
+      const res = await convertAudio64(audio);
+      newPost.file = res;
     }
 
     socket.current.emit("uploadPostFollow", {
       userId: currentUser._id,
       desc: newPost.desc,
-      img: newPost.img,
+      img: newPost?.img,
+      file: newPost?.file,
     });
     
     try {
       await makeRequest("posts", "POST", newPost);
-      // window.location.reload();
+      desc.current.value = null;
     } catch (err) {
       // Handle error
       console.error("Error creating post:", err.message);

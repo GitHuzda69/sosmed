@@ -9,7 +9,6 @@ import { makeRequest } from "../../fetch";
 const RightbarProfile = ({ handleFollow, handleMessage, currentUser, setShowUnfollowConfirmation, showUnfollowConfirmation, showPopupFollow,}) => {
   const [user, setUser] = useState();
   const username = useParams().username;
-  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [friends, setFriends] = useState();
 
   useEffect(() => {
@@ -93,7 +92,7 @@ const RightbarProfile = ({ handleFollow, handleMessage, currentUser, setShowUnfo
                       className="rightBarImgProfile"
                       src={
                         friend.profilePicture
-                          ? PF + friend.profilePicture
+                          ? friend.profilePicture
                           : defaultprofile
                       }
                       alt=""

@@ -24,7 +24,6 @@ function Message() {
   const { user: currentUser } = useContext(AuthContext);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const socket = useRef();
-  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const isMessagesPage = true;
   const [chatHeight, setChatHeight] = useState("80vh");
   const [displayedDate, setDisplayedDate] = useState(null);

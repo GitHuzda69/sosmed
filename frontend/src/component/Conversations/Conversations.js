@@ -13,7 +13,6 @@ export default function Conversation({
   isSelected,
 }) {
   const [user, setUser] = useState();
-  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [isOnline, setIsOnline] = useState(false);
 
   useEffect(() => {
@@ -43,7 +42,7 @@ export default function Conversation({
             className="message-friend-avatar"
             src={
               user && user.profilePicture
-                ? PF + user.profilePicture
+                ? user.profilePicture
                 : defaultprofile
             }
             alt=""

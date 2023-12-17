@@ -47,18 +47,21 @@ const Comments = ({ postid, comment, friends }) => {
     }
   }, [comment.userId]);
 
-  const upload = async (file) => {
-    try {
-      const formData = new FormData();
-      const fileName = Date.now() + file.name;
-      formData.append("name", fileName);
-      formData.append("file", file);
-      await makeRequest("upload", "POST" ,formData);
-      return fileName;
-    } catch (err) {
-      console.log(err);
-    }
-  };
+    // BASE 64 SYSTEM
+  const convertbase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+
+      fileReader.onload = () => {
+        resolve(fileReader.result)
+      }
+
+      fileReader.onerror = (error) => {
+        reject(error)
+      }
+    })
+  }
 
   const handleDelete = async () => {
     try {
@@ -92,7 +95,7 @@ const Comments = ({ postid, comment, friends }) => {
     const editedComment = {
       ...comment,
       desc: editedDescComment,
-      img: editedImgComment ? await upload(editedImgComment) : comment.img,
+      img: editedImgComment ? await convertbase64(editedImgComment) : comment.img,
     };
 
     try {
@@ -173,7 +176,7 @@ const Comments = ({ postid, comment, friends }) => {
             className="comments-pic"
             src={
               user && user.profilePicture
-                ? PF + user.profilePicture
+                ? user.profilePicture
                 : defaultprofile
             }
           />
@@ -334,7 +337,7 @@ const Comments = ({ postid, comment, friends }) => {
               >
                 <img
                   className="comments-image"
-                  src={PF + comment.img}
+                  src={comment.img}
                   alt="comment-img"
                 />
               </button>

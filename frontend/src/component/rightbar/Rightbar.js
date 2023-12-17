@@ -64,7 +64,7 @@ useEffect(() => {
                   <div className="rightBarUserInfo">
                     <img
                       className="rightBarImg"
-                      src={friend.profilePicture ? PF + friend.profilePicture : defaultprofile}
+                      src={friend.profilePicture ? friend.profilePicture : defaultprofile}
                       alt={friend.displayname}
                     />
                     {onlineUser && onlineUser.includes(friend._id) ? (
