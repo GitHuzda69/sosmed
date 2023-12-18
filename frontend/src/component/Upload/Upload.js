@@ -6,7 +6,6 @@ import { makeRequest, makeAxios } from "../../fetch.js";
 import { useNavigate } from "react-router";
 import { io } from "socket.io-client";
 
-
 const Upload = () => {
   const [file, setFile] = useState(null);
   const [audio, setAudio] = useState(null);
@@ -20,11 +19,11 @@ const Upload = () => {
 
   const { user } = useContext(AuthContext);
 
-//SOCKET IO
-const socket = useRef();
-useEffect(() => {
-  socket.current = io("ws://localhost:8900");
-}, []);
+  //SOCKET IO
+  const socket = useRef();
+  useEffect(() => {
+    socket.current = io("ws://localhost:8900");
+  }, []);
 
   const handleFileInputChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -51,29 +50,29 @@ useEffect(() => {
       fileReader.readAsDataURL(file);
 
       fileReader.onload = () => {
-        resolve(fileReader.result)
-      }
+        resolve(fileReader.result);
+      };
 
       fileReader.onerror = (error) => {
-        reject(error)
-      }
-    })
-  }
+        reject(error);
+      };
+    });
+  };
 
-const convertAudio64 = (audio) => {
-  return new Promise((resolve, reject) => {
-    const fileReader = new FileReader();
-    fileReader.readAsDataURL(audio);
+  const convertAudio64 = (audio) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(audio);
 
-    fileReader.onload = () => {
-      resolve(fileReader.result)
-    }
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
 
-    fileReader.onerror = (error) => {
-      reject(error)
-    }
-  })
-}
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  };
 
   const handleClick = async (e) => {
     e.preventDefault();
@@ -81,7 +80,7 @@ const convertAudio64 = (audio) => {
     const isTextareaEmpty = !desc.current.value.trim();
     const isFileNotSelected = !file;
 
-    if (isTextareaEmpty && isFileNotSelected) {
+    if (!isTextareaEmpty || !isFileNotSelected) {
       return;
     }
 
@@ -93,7 +92,7 @@ const convertAudio64 = (audio) => {
     if (file) {
       const res = await convertbase64(file);
       newPost.img = res;
-    };
+    }
 
     if (audio) {
       const res = await convertAudio64(audio);
@@ -106,12 +105,12 @@ const convertAudio64 = (audio) => {
       img: newPost?.img,
       file: newPost?.file,
     });
-    
+
     try {
       await makeRequest("posts", "POST", newPost);
       desc.current.value = null;
+      setAudio(null);
     } catch (err) {
-      // Handle error
       console.error("Error creating post:", err.message);
     }
   };
@@ -159,7 +158,7 @@ const convertAudio64 = (audio) => {
           const audioUrl = URL.createObjectURL(audioBlob);
           audioBlob.name = `audio-${Date.now()}.mp3`;
           setAudioRecording(audioUrl);
-          setAudio(audioBlob)
+          setAudio(audioBlob);
         };
         recorder.start();
         setIsRecording(true);

@@ -136,6 +136,7 @@
   position: absolute; 
   top: 140px;
   right: 450px; 
+  z-index: 200;
 }
 .selected-file-info{
   display: flex;

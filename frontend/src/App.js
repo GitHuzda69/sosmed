@@ -11,6 +11,8 @@ import Profile from "./pages/profile/Profile.js";
 import Fyp from "./pages/Fyp/Fyp.js";
 import Result from "./pages/Result/Result.js";
 import Notif from "./pages/notif/notif.js";
+import TOS from "./pages/tos/tos.js";
+import NotFound from "./pages/NotFound/NotFound.js";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./pages/home/Home.css";
 import AuthContext from "./context/authContext.js";
@@ -35,12 +37,18 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={user ? <Home /> : <Login />} />
-        <Route path="/search/:keyword" element={user ? <Result /> : <Login />} />
+        <Route
+          path="/search/:keyword"
+          element={user ? <Result /> : <Login />}
+        />
         <Route path="/messages" element={user ? <Message /> : <Login />} />
         <Route path="/profile/:username" element={<Profile />} />
         <Route path="/fyp/profile/:username" element={<Profile />} />
         <Route path="/login/profile/:username" element={<Profile />} />
-        <Route path="/friend/:username" element={user ? <Friends /> : <Login />} />
+        <Route
+          path="/friend/:username"
+          element={user ? <Friends /> : <Login />}
+        />
         <Route path="/fyp" element={user ? <Fyp /> : <Login />} />
         <Route path="/notif" element={user ? <Notif /> : <Login />} />
         <Route path="/signup" element={<Signup />} />
@@ -49,6 +57,8 @@ function App() {
         <Route path="/facebook" element={user ? <Home /> : <Facebook />} />
         <Route path="/google/signup" element={user ? <Home /> : <GSignup />} />
         <Route path="/google/otp" element={user ? <Home /> : <OTP />} />
+        <Route path="/TermsOfServices" element={user ? <Home /> : <TOS />} />
+        <Route path="/NotFound" element={user ? <Home /> : <NotFound />} />
       </Routes>
     </Router>
   );
