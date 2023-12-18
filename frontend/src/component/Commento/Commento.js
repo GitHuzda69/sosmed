@@ -5,12 +5,12 @@ import "../comments/Comments.css";
 import { useContext, useState, useRef, useEffect } from "react";
 import AuthContext from "../../context/authContext.js";
 import { Icon } from "@iconify/react";
+import { io } from "socket.io-client";
 
 import defaultprofile from "../../assets/profile/default_avatar.png";
 
 const Commento = ({ postid, className }) => {
   const { user: currentUser } = useContext(AuthContext);
-  const { user } = useContext(AuthContext);
   const [comments, setComments] = useState();
   const fileInputRef = useRef(null);
   const [desc, setDesc] = useState(null);
@@ -25,19 +25,37 @@ const Commento = ({ postid, className }) => {
       fileReader.readAsDataURL(file);
 
       fileReader.onload = () => {
-        resolve(fileReader.result)
-      }
+        resolve(fileReader.result);
+      };
 
       fileReader.onerror = (error) => {
-        reject(error)
-      }
-    })
-  }
+        reject(error);
+      };
+    });
+  };
+
+  // SOCKET IO
+  const socket = useRef();
+  useEffect(() => {
+    socket.current = io("ws://localhost:8900");
+  }, []);
+
+  useEffect(() => {
+    socket.current.emit("addUser", currentUser._id);
+    socket.current.on("getUsers", (users) => {});
+  }, [currentUser]);
+
+  const postUserId = async (postid) => {
+    try {
+      const res = await makeRequest(`posts/${postid}`, "GET");
+      return res;
+    } catch (err) {}
+  };
 
   useEffect(() => {
     const fetchComments = async () => {
       const commentsUrl = `comments/${postid}`;
-  
+
       try {
         const res = await makeRequest(commentsUrl);
         setComments(
@@ -47,17 +65,17 @@ const Commento = ({ postid, className }) => {
         );
       } catch (error) {
         // Handle error
-        console.error('Error fetching comments:', error.message);
+        console.error("Error fetching comments:", error.message);
       }
     };
-  
+
     fetchComments();
   }, [postid]);
 
   useEffect(() => {
     const getFriends = async () => {
       try {
-        const friendUrl = "relationships/friends/" + user._id
+        const friendUrl = "relationships/friends/" + currentUser._id;
         const friendList = await makeRequest(friendUrl);
         setFriends(friendList.data);
       } catch (err) {
@@ -65,7 +83,7 @@ const Commento = ({ postid, className }) => {
       }
     };
     getFriends();
-  }, [user._id]);
+  }, [currentUser._id]);
 
   useEffect(() => {
     const handleKeyPress = async (e) => {
@@ -81,6 +99,12 @@ const Commento = ({ postid, className }) => {
           const res = await convertbase64(file);
           imgUrl = res;
         }
+
+        socket.current.emit("sendNotification", {
+          senderId: currentUser._id,
+          receiverId: await postUserId(postid),
+          type: 2,
+        });
 
         try {
           const newComment = {
@@ -127,23 +151,8 @@ const Commento = ({ postid, className }) => {
     <div className={`commento ${className}`}>
       <div className="write">
         <div className="write1">
-          <img
-            className="comments-pic-write"
-            src={
-              currentUser && currentUser.profilePicture
-                ? currentUser.profilePicture
-                : defaultprofile
-            }
-            alt={currentUser.displayname}
-          />
-          <input
-            className="input-comment"
-            type="text"
-            id="desc"
-            placeholder="Write a comment . . . "
-            value={desc}
-            onChange={(e) => setDesc(e.target.value)}
-          />
+          <img className="comments-pic-write" src={currentUser && currentUser.profilePicture ? currentUser.profilePicture : defaultprofile} alt={currentUser.displayname} />
+          <input className="input-comment" type="text" id="desc" placeholder="Write a comment . . . " value={desc} onChange={(e) => setDesc(e.target.value)} />
           <div className="uploadItem-comment-row">
             <button className="uploadItem-comment">
               <Icon icon="ic:outline-poll" width={25} height={25}></Icon>
@@ -151,54 +160,25 @@ const Commento = ({ postid, className }) => {
             <button className="uploadItem-comment">
               <Icon icon="fluent:gif-16-regular" width={25} height={25}></Icon>
             </button>
-            <button
-              className="uploadItem-comment"
-              onClick={handleMediaButtonClick}
-            >
-              <Icon
-                icon="material-symbols:perm-media-outline"
-                width={25}
-                height={25}
-              ></Icon>
+            <button className="uploadItem-comment" onClick={handleMediaButtonClick}>
+              <Icon icon="material-symbols:perm-media-outline" width={25} height={25}></Icon>
             </button>
-            <input
-              className="uploadItem-popup"
-              type="file"
-              id="file"
-              ref={fileInputRef}
-              onChange={handleFileInputChange}
-              style={{ display: "none" }}
-            />
+            <input className="uploadItem-popup" type="file" id="file" ref={fileInputRef} onChange={handleFileInputChange} style={{ display: "none" }} />
           </div>
         </div>
         <div className="write-pic">
           {file && (
             <div className="selected-file-comment">
-              <img
-                className="selected-image-comment"
-                src={URL.createObjectURL(file)}
-                alt="Selected"
-              />
+              <img className="selected-image-comment" src={URL.createObjectURL(file)} alt="Selected" />
               <span className="file-name-comment">{file.name}</span>
-              <button
-                className="clear-file-button-comment"
-                onClick={clearSelectedFile}
-              >
+              <button className="clear-file-button-comment" onClick={clearSelectedFile}>
                 <Icon icon="ph:x-bold" width={15} height={15} />
               </button>
             </div>
           )}
         </div>
       </div>
-      {comments &&
-        comments.map((comment) => (
-          <Comments
-            comment={comment}
-            postid={postid}
-            key={comment.id}
-            friends={friends}
-          />
-        ))}
+      {comments && comments.map((comment) => <Comments comment={comment} postid={postid} key={comment.id} friends={friends} />)}
     </div>
   );
 };

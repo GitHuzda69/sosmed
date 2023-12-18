@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import profilimage from "../../assets/profil.jpg";
 import "./notif.css";
 import Sidebar from "../../component/Leftbar/Leftbar";
@@ -8,12 +8,14 @@ import Settings from "../../component/Settings/Settings";
 import Logout from "../../component/Logout/Logout";
 import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
+import { io } from "socket.io-client";
 
 import avatar1 from "../../assets/friend/friend1.jpg";
 import avatar2 from "../../assets/friend/friend2.jpg";
 import avatar3 from "../../assets/friend/friend3.jpg";
 import avatar4 from "../../assets/friend/friend4.jpg";
 import avatar5 from "../../assets/friend/friend5.jpeg";
+import AuthContext from "../../context/authContext.js";
 
 function Notif() {
   const [settingOpen, setSettingOpen] = useState(false);
@@ -22,8 +24,28 @@ function Notif() {
   const [showMentions, setShowMentions] = useState(false);
   const [showUnread, setShowUnread] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
-
+  const [notifications, setNotification] = useState([]);
+  const { user } = useContext(AuthContext);
   const isNotifPage = true;
+
+  //SOCKET IO
+  const socket = useRef();
+  useEffect(() => {
+    socket.current = io("ws://localhost:8900");
+  }, []);
+
+  useEffect(() => {
+    socket.current.emit("addUser", user._id);
+    socket.current.on("getUsers", (users) => {});
+  }, [user]);
+
+  useEffect(() => {
+    socket.current.on("getNotification", (data) => {
+      setNotification((prev) => [...prev, data]);
+    });
+  }, [socket]);
+
+  console.log(notifications);
 
   const notification = [
     {
@@ -57,8 +79,7 @@ function Notif() {
     {
       id: 5,
       name: "John Doel",
-      notif:
-        "Started follow you Lorem ipsum dolor sit amet, consectetur adipiscing elit  Nam in lorem sodales tellus semper pharetra. Mauris nec auctor elit, sed facilisis eros..",
+      notif: "Started follow you Lorem ipsum dolor sit amet, consectetur adipiscing elit  Nam in lorem sodales tellus semper pharetra. Mauris nec auctor elit, sed facilisis eros..",
       avatar: avatar1,
       date: "2 Hours Ago",
     },
@@ -79,8 +100,7 @@ function Notif() {
     {
       id: 8,
       name: "John Doel",
-      notif:
-        "Started follow you Lorem ipsum dolor sit amet, consectetur adipiscing elit  Nam in lorem sodales tellus semper pharetra. Mauris nec auctor elit, sed facilisis eros..",
+      notif: "Started follow you Lorem ipsum dolor sit amet, consectetur adipiscing elit  Nam in lorem sodales tellus semper pharetra. Mauris nec auctor elit, sed facilisis eros..",
       avatar: avatar1,
       date: "2 Hours Ago",
     },
@@ -145,24 +165,13 @@ function Notif() {
         <div className="notif-container">
           <div className="notif-border">
             <div className="notif-buttons">
-              <button
-                onClick={toggleAll}
-                className={`all-button ${showAll ? "bold-button" : ""}`}
-              >
+              <button onClick={toggleAll} className={`all-button ${showAll ? "bold-button" : ""}`}>
                 All
               </button>
-              <button
-                onClick={toggleMentions}
-                className={`mentions-button ${
-                  showMentions ? "bold-button" : ""
-                }`}
-              >
+              <button onClick={toggleMentions} className={`mentions-button ${showMentions ? "bold-button" : ""}`}>
                 Mentions
               </button>
-              <button
-                onClick={toggleUnread}
-                className={`unread-button ${showUnread ? "bold-button" : ""}`}
-              >
+              <button onClick={toggleUnread} className={`unread-button ${showUnread ? "bold-button" : ""}`}>
                 Unread
               </button>
             </div>
@@ -174,15 +183,10 @@ function Notif() {
                   <div className="notif" key={notification.id}>
                     <span className="notif-date">{notification.date}</span>
                     <div className="notif-user">
-                      <img
-                        className="notif-avatar"
-                        src={notification.avatar}
-                        alt={notification.name}
-                      />
+                      <img className="notif-avatar" src={notification.avatar} alt={notification.name} />
                       <div className="notif-text">
                         <p>
-                          <strong>{notification.name}</strong>{" "}
-                          {notification.notif}
+                          <strong>{notification.name}</strong> {notification.notif}
                         </p>
                       </div>
                     </div>
@@ -196,15 +200,10 @@ function Notif() {
                   <div className="notif" key={notification.id}>
                     <span className="notif-date">{notification.date}</span>
                     <div className="notif-user">
-                      <img
-                        className="notif-avatar"
-                        src={notification.avatar}
-                        alt={notification.name}
-                      />
+                      <img className="notif-avatar" src={notification.avatar} alt={notification.name} />
                       <div className="notif-text">
                         <p>
-                          <strong>{notification.name}</strong>{" "}
-                          {notification.notif}
+                          <strong>{notification.name}</strong> {notification.notif}
                         </p>
                       </div>
                     </div>
@@ -218,15 +217,10 @@ function Notif() {
                   <div className="notif" key={notification.id}>
                     <span className="notif-date">{notification.date}</span>
                     <div className="notif-user">
-                      <img
-                        className="notif-avatar"
-                        src={notification.avatar}
-                        alt={notification.name}
-                      />
+                      <img className="notif-avatar" src={notification.avatar} alt={notification.name} />
                       <div className="notif-text">
                         <p>
-                          <strong>{notification.name}</strong>{" "}
-                          {notification.notif}
+                          <strong>{notification.name}</strong> {notification.notif}
                         </p>
                       </div>
                     </div>
@@ -241,20 +235,12 @@ function Notif() {
         <HomeProfile />
         <Rightbar />
       </div>
-      <Sidebar
-        toggleSettings={toggleSettings}
-        toggleLogout={toggleLogout}
-        isNotifPage={isNotifPage}
-      />
+      <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isNotifPage={isNotifPage} />
       {settingOpen && (
         <>
           <div className="settings-overlay" />
           <div className="settings-container">
-            <Settings
-              onClose={toggleSettings}
-              isDarkMode={isDarkMode}
-              toggleDarkMode={toggleDarkMode}
-            />
+            <Settings onClose={toggleSettings} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
           </div>
         </>
       )}

@@ -1,28 +1,27 @@
- 
 .message-friend-container {
   width: 300px;
   height: 100%;
   position: relative;
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   margin-left: -20px;
-  margin-right: -20px;   
-} 
-
-.message-friend-container h2{
-  font-size: 18px; 
+  margin-right: -20px;
 }
 
-.message-friend-bar{
+.message-friend-container h2 {
+  font-size: 18px;
+}
+
+.message-friend-bar {
   display: flex;
   flex-direction: column;
-  height: 100%;  
-  margin-left: 0px; 
-  margin-right: -8px;     
+  height: 100%;
+  margin-left: 0px;
+  margin-right: -8px;
   overflow-y: scroll;
-  overflow-x: hidden; 
+  overflow-x: hidden;
   scrollbar-width: thin;
-  scrollbar-color: #999999 #ffffff;  
+  scrollbar-color: #999999 #ffffff;
 }
 
 .message-friend-bar::-webkit-scrollbar {
@@ -43,29 +42,29 @@
   border-radius: 10px;
 }
 
-.selected-friend{
+.selected-friend {
   background-color: #999999;
   color: white;
 }
 
-.message-friend{
+.message-friend {
   display: flex;
-  flex-direction: row;    
-  padding: 5px 10px;     
-  border-bottom: 1px gray solid; 
+  flex-direction: row;
+  padding: 5px 10px;
+  border-bottom: 1px gray solid;
 }
-.message-friend:hover{
+.message-friend:hover {
   border-radius: 0;
-  background-color: #999999; 
+  background-color: #999999;
   transition: all 0.3s ease;
 }
 
 .message-friend.selected {
-  background-color: #5C5C5C; 
+  background-color: #5c5c5c;
   color: white;
 }
 
-.message-friend-avatar{
+.message-friend-avatar {
   position: relative;
   width: 50px;
   height: 50px;
@@ -73,30 +72,37 @@
   margin-top: 3px;
 }
 
-.message-friend-bio{
+.message-friend-bio {
   display: flex;
   flex-direction: column;
   text-align: left;
   margin-top: -5px;
   margin-left: 10px;
-} 
+}
 
-.message-friend-bio h2{
+.message-friend-bio h2 {
   font-size: 16px;
 }
 
-.message-friend-bio h3{
+.message-friend-bio h3 {
   margin-top: -12px;
   font-size: 13px;
   font-weight: normal;
 }
 
-.message-friend-dot {
-  position: absolute;
-  left: 48px;
-  bottom: 12px;
-  width: 15px;  
-  height: 15px;
-  background-color: grey; 
+.statusDot {
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
+  margin-top: 40px;
+  margin-left: -15px;
+  z-index: 10;
+}
+
+.greenDot {
+  background-color: rgb(2, 255, 2);
+}
+
+.grayDot {
+  background-color: gray;
 }

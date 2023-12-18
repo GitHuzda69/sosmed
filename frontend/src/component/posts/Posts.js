@@ -19,19 +19,38 @@ export default function Posts({ username, className, isHome }) {
   useEffect(() => {
     socket.current = io("ws://localhost:8900");
     socket.current.on("getPostFollow", (data) => {
+      const decodeBase64ToBlob = (base64) => {
+        const binaryString = window.atob(base64);
+        const arrayBuffer = new ArrayBuffer(binaryString.length);
+        const byteArray = new Uint8Array(arrayBuffer);
+
+        for (let i = 0; i < binaryString.length; i++) {
+          byteArray[i] = binaryString.charCodeAt(i);
+        }
+
+        return new Blob([arrayBuffer], { type: "application/octet-stream" });
+      };
+
+      const decodedImg =
+        typeof img === "string" ? decodeBase64ToBlob(data.img) : data.img;
+      const decodedFile =
+        typeof file === "string" ? decodeBase64ToBlob(data.file) : data.file;
+
       setArrivalPost({
         userId: data.userId,
         desc: data.desc,
+        img: decodedImg,
+        file: decodedFile,
         createdAt: Date.now(),
       });
     });
   }, []);
 
   useEffect(() => {
-  if (arrivalPost && !posts.some((post) => post._id === arrivalPost._id)) {
-    setPosts((prev) => [arrivalPost, ...prev]);
-  }
-}, [arrivalPost, posts]);
+    if (arrivalPost && !posts.some((post) => post._id === arrivalPost._id)) {
+      setPosts((prev) => [arrivalPost, ...prev]);
+    }
+  }, [arrivalPost, posts]);
 
   useEffect(() => {
     socket.current.emit("addUser", user._id);

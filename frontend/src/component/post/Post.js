@@ -7,14 +7,9 @@ import { Icon } from "@iconify/react";
 import moment from "moment";
 import Commento from "../Commento/Commento.js";
 import defaultprofile from "../../assets/profile/default_avatar.png";
+import { io } from "socket.io-client";
 
-const Post = ({
-  post,
-  openPostOption,
-  handleOpenPostOption,
-  handleClosePostOption,
-  friends,
-}) => {
+const Post = ({ post, openPostOption, handleOpenPostOption, handleClosePostOption, friends }) => {
   const [commentOpen, setCommentOpen] = useState(false);
   const [popupOpen, setPopupOpen] = useState(false);
   const [selectedPostImg, setSelectedPostImg] = useState(null);
@@ -62,31 +57,49 @@ const Post = ({
   }, [post.userId]);
 
   // BASE 64 SYSTEM
-const convertbase64 = (file) => {
-  return new Promise((resolve, reject) => {
-    const fileReader = new FileReader();
-    fileReader.readAsDataURL(file);
+  const convertbase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
 
-    fileReader.onload = () => {
-      resolve(fileReader.result)
-    }
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
 
-    fileReader.onerror = (error) => {
-      reject(error)
-    }
-  })
-}
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  };
+
+  // SOCKET IO
+  const socket = useRef();
+  useEffect(() => {
+    socket.current = io("ws://localhost:8900");
+  }, []);
+
+  useEffect(() => {
+    socket.current.emit("addUser", currentUser._id);
+    socket.current.on("getUsers", (users) => {});
+  }, [currentUser]);
 
   const handleLike = async () => {
     try {
       await makeRequest(`likes/${post._id}/like`, "PUT", {
         userId: currentUser._id,
       });
+
+      socket.current.emit("sendNotification", {
+        senderId: currentUser._id,
+        receiverId: post.userId,
+        type: 1,
+      });
+
+      setLike(isLiked ? like - 1 : like + 1);
+      setIsLiked(!isLiked);
     } catch (err) {
       console.error(err.message);
     }
-    setLike(isLiked ? like - 1 : like + 1);
-    setIsLiked(!isLiked);
   };
 
   const handleDelete = async () => {
@@ -116,11 +129,7 @@ const convertbase64 = (file) => {
     };
 
     try {
-      await makeRequest(
-        "posts/" + editedPost._id,
-        "PUT",
-        editedPost
-      );
+      await makeRequest("posts/" + editedPost._id, "PUT", editedPost);
       setPostEditOpen(false);
     } catch (error) {
       console.error(error);
@@ -132,6 +141,12 @@ const convertbase64 = (file) => {
       const isFollowing = !following;
 
       if (isFollowing) {
+        socket.emit("sendNotification", {
+          senderId: currentUser._id,
+          receiverId: post.userId,
+          type: 3,
+        });
+
         await makeRequest(`relationships/${post.userId}/follow`, "PUT", {
           userId: currentUser._id,
         });
@@ -273,19 +288,8 @@ const convertbase64 = (file) => {
         <div className="container">
           <div className="user">
             <div className="userinfo">
-              <Link
-                to={`profile/${user.username}`}
-                style={{ textDecoration: "none", color: "inherit" }}
-              >
-                <img
-                  className="profile"
-                  src={
-                    user.profilePicture
-                      ? user.profilePicture
-                      : defaultprofile
-                  }
-                  alt=""
-                />
+              <Link to={`profile/${user.username}`} style={{ textDecoration: "none", color: "inherit" }}>
+                <img className="profile" src={user.profilePicture ? user.profilePicture : defaultprofile} alt="" />
               </Link>
               <div className="details">
                 <span className="name">{user.displayname}</span>
@@ -306,11 +310,7 @@ const convertbase64 = (file) => {
                             gap: "5px",
                           }}
                         >
-                          <Icon
-                            icon="ion:chatbox-ellipses-outline"
-                            width={20}
-                            height={20}
-                          />
+                          <Icon icon="ion:chatbox-ellipses-outline" width={20} height={20} />
                           Message
                         </button>
                         <button
@@ -323,19 +323,7 @@ const convertbase64 = (file) => {
                             gap: "5px",
                           }}
                         >
-                          {following ? (
-                            <Icon
-                              icon="bi:person-check-fill"
-                              width={20}
-                              height={20}
-                            />
-                          ) : (
-                            <Icon
-                              icon="bi:person-plus-fill"
-                              width={20}
-                              height={20}
-                            />
-                          )}
+                          {following ? <Icon icon="bi:person-check-fill" width={20} height={20} /> : <Icon icon="bi:person-plus-fill" width={20} height={20} />}
                           {following ? "Unfollow" : "Follow"}
                         </button>
                       </div>
@@ -389,11 +377,7 @@ const convertbase64 = (file) => {
                                       setIsDescEmpty(false);
                                     }}
                                   >
-                                    <Icon
-                                      icon="ph:x-bold"
-                                      width={15}
-                                      height={15}
-                                    />
+                                    <Icon icon="ph:x-bold" width={15} height={15} />
                                   </button>
                                   <p>Deskripsi tidak boleh kosong.</p>
                                 </div>
@@ -404,39 +388,14 @@ const convertbase64 = (file) => {
                                   e.preventDefault();
                                 }}
                               >
-                                <input
-                                  className="edit-post-text"
-                                  type="text"
-                                  name="desc"
-                                  value={editedDesc}
-                                  onClick={(e) => e.stopPropagation()}
-                                  onChange={(e) =>
-                                    setEditedDesc(e.target.value)
-                                  }
-                                  ref={descInputRef}
-                                />
-                                <input
-                                  type="file"
-                                  name="img"
-                                  id="img"
-                                  onClick={(e) => e.stopPropagation()}
-                                  onChange={(e) =>
-                                    setEditedImg(e.target.files[0])
-                                  }
-                                />
+                                <input className="edit-post-text" type="text" name="desc" value={editedDesc} onClick={(e) => e.stopPropagation()} onChange={(e) => setEditedDesc(e.target.value)} ref={descInputRef} />
+                                <input type="file" name="img" id="img" onClick={(e) => e.stopPropagation()} onChange={(e) => setEditedImg(e.target.files[0])} />
                                 {post.img && post.desc && (
-                                  <button
-                                    className="del-img-edit-post"
-                                    onClick={handleRemoveImg}
-                                  >
+                                  <button className="del-img-edit-post" onClick={handleRemoveImg}>
                                     Hapus Gambar
                                   </button>
                                 )}
-                                <button
-                                  className="save-edit-post"
-                                  onClick={handleEdit}
-                                  disabled={isDescEmpty}
-                                >
+                                <button className="save-edit-post" onClick={handleEdit} disabled={isDescEmpty}>
                                   Save
                                 </button>
                                 <button
@@ -479,65 +438,25 @@ const convertbase64 = (file) => {
           {post?.desc && <p className="post-desc">{editedDesc}</p>}
           {post.img && !post.audio && (
             <div className="post-img-container">
-              <button
-                className="img-button-post"
-                onClick={() => openPopup(editedImg || post.img)}
-              >
+              <button className="img-button-post" onClick={() => openPopup(editedImg || post.img)}>
                 <img className="post-img" src={post.img} alt="" />
               </button>
             </div>
           )}
           {post.file && (
             <div className="post-audio-container">
-              <img
-                className="profile-audio"
-                src={
-                  user.profilePicture
-                    ? user.profilePicture
-                    : defaultprofile
-                }
-                alt=""
-              />
+              <img className="profile-audio" src={user.profilePicture ? user.profilePicture : defaultprofile} alt="" />
               <div className="post-audio">
-                <button
-                  className="audio-volume-button"
-                  onMouseEnter={() => setShowVolumeSlider(true)}
-                  onMouseLeave={() => setShowVolumeSlider(false)}
-                >
-                  <Icon
-                    icon="fluent:speaker-2-16-filled"
-                    width={20}
-                    height={20}
-                  />
-                  {showVolumeSlider && (
-                    <input
-                      className="audio-volume-slider"
-                      type="range"
-                      min="0"
-                      max="100"
-                      value={volumeSliderValue}
-                      onChange={handleVolumeChange}
-                      onMouseEnter={() => setShowVolumeSlider(true)}
-                      onMouseLeave={() => setShowVolumeSlider(false)}
-                    />
-                  )}
+                <button className="audio-volume-button" onMouseEnter={() => setShowVolumeSlider(true)} onMouseLeave={() => setShowVolumeSlider(false)}>
+                  <Icon icon="fluent:speaker-2-16-filled" width={20} height={20} />
+                  {showVolumeSlider && <input className="audio-volume-slider" type="range" min="0" max="100" value={volumeSliderValue} onChange={handleVolumeChange} onMouseEnter={() => setShowVolumeSlider(true)} onMouseLeave={() => setShowVolumeSlider(false)} />}
                 </button>
-                <audio
-                  id={`audio-${post._id}`}
-                  style={{ display: "none" }}
-                  onError={(e) => console.error("Audio Error:", e)}
-                >
+                <audio id={`audio-${post._id}`} style={{ display: "none" }} onError={(e) => console.error("Audio Error:", e)}>
                   <source src={post.file} type="audio/mpeg" />
                   Your browser does not support the audio element.
                 </audio>
                 <div className="custom-audio-controls">
-                  <button onClick={() => togglePlayPause(`audio-${post._id}`)}>
-                    {isPlaying ? (
-                      <Icon icon="solar:pause-bold" width={25} height={25} />
-                    ) : (
-                      <Icon icon="solar:play-bold" width={25} height={25} />
-                    )}
-                  </button>
+                  <button onClick={() => togglePlayPause(`audio-${post._id}`)}>{isPlaying ? <Icon icon="solar:pause-bold" width={25} height={25} /> : <Icon icon="solar:play-bold" width={25} height={25} />}</button>
                 </div>
                 <input
                   className="audio-duration-slider"
@@ -554,9 +473,7 @@ const convertbase64 = (file) => {
                   }}
                 />
                 <p className="audio-duration">{formatTime(audioCurrentTime)}</p>
-                <p className="audio-not-played">
-                  -{formatTime(audioDuration - audioCurrentTime)}
-                </p>
+                <p className="audio-not-played">-{formatTime(audioDuration - audioCurrentTime)}</p>
               </div>
             </div>
           )}
@@ -565,58 +482,28 @@ const convertbase64 = (file) => {
           <div className="item">
             {isLiked ? (
               <div className="liked-post">
-                <Icon
-                  className="icon"
-                  icon="iconamoon:like-fill"
-                  width={25}
-                  height={25}
-                  onClick={handleLike}
-                />
+                <Icon className="icon" icon="iconamoon:like-fill" width={25} height={25} onClick={handleLike} />
                 <h3>{like}</h3>
               </div>
             ) : (
               <div className="like-post">
-                <Icon
-                  className="icon"
-                  icon="iconamoon:like-light"
-                  width={25}
-                  height={25}
-                  onClick={handleLike}
-                />
+                <Icon className="icon" icon="iconamoon:like-light" width={25} height={25} onClick={handleLike} />
                 <h3>{like}</h3>
               </div>
             )}
           </div>
           <div className="item" onClick={() => setCommentOpen(!commentOpen)}>
-            <Icon
-              className="icon"
-              icon="majesticons:comment-text-line"
-              width={25}
-              height={25}
-            />
+            <Icon className="icon" icon="majesticons:comment-text-line" width={25} height={25} />
           </div>
           <div className="item">
-            <Icon
-              className="icon"
-              icon="fluent:share-24-regular"
-              width={30}
-              height={30}
-            />
+            <Icon className="icon" icon="fluent:share-24-regular" width={30} height={30} />
           </div>
         </div>
         {commentOpen && <Commento postid={post._id} />}
       </div>
       {popupOpen && (
         <div className="popup-overlay-post" onClick={closePopup}>
-          <div className="popup-post">
-            {selectedPostImg && (
-              <img
-                className="popup-image-post"
-                src={selectedPostImg}
-                alt="post-img"
-              />
-            )}
-          </div>
+          <div className="popup-post">{selectedPostImg && <img className="popup-image-post" src={selectedPostImg} alt="post-img" />}</div>
         </div>
       )}
     </div>

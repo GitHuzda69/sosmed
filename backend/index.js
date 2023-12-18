@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const cors = require("cors");
+const morgan = require("morgan");
 
 const authRoutes = require("./routes/auth");
 const googleRoutes = require("./routes/google");
@@ -34,6 +35,7 @@ const allowedOrigins = ["http://localhost:3000", "http://localhost:8800"];
 // Middlewares
 app.use(express.json({ limit: '500mb' }));
 app.use(express.urlencoded({ limit: '500mb', extended: true }));
+app.use(morgan("tiny"));
 app.use(cors({
   origin: function (origin, callback) {
     if (!origin || allowedOrigins.includes(origin)) {

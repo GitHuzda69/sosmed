@@ -82,9 +82,6 @@ function Message() {
 
   useEffect(() => {
     socket.current.emit("addUser", currentUser._id);
-    socket.current.on("getUsers", (u) => {
-    console.log(u);
-    });
   }, [currentUser]);
 
   useEffect(() => {
@@ -137,7 +134,7 @@ function Message() {
     const receiverId = currentChat.members.find(
       (member) => member !== currentUser._id
     );
-    
+
     socket.current.emit("sendMessage", {
       senderId: currentUser._id,
       receiverId: receiverId,

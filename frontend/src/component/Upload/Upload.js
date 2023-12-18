@@ -77,10 +77,7 @@ const Upload = () => {
   const handleClick = async (e) => {
     e.preventDefault();
 
-    const isTextareaEmpty = !desc.current.value.trim();
-    const isFileNotSelected = !file;
-
-    if (!isTextareaEmpty || !isFileNotSelected) {
+    if (!desc.current.value.trim() && !file) {
       return;
     }
 
@@ -102,14 +99,15 @@ const Upload = () => {
     socket.current.emit("uploadPostFollow", {
       userId: currentUser._id,
       desc: newPost.desc,
-      img: newPost?.img,
-      file: newPost?.file,
+      img: newPost.img,
+      file: newPost.file,
     });
 
     try {
       await makeRequest("posts", "POST", newPost);
       desc.current.value = null;
       setAudio(null);
+      setFile(null);
     } catch (err) {
       console.error("Error creating post:", err.message);
     }
