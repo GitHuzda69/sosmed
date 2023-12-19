@@ -47,7 +47,7 @@
     color: white;
   }
   .dark-mode .uploadItem:hover{
-    background-color: #5C5C5C;
+    background-color: transparent;
   } 
   .dark-mode .uploadButton:hover{
     background-color: #5C5C5C;
@@ -55,6 +55,42 @@
   .dark-mode .selected-file-info{
     background-color: white;
     color: black;
+  }
+  .dark-mode .play-pause-button{
+    color: white;
+  }
+  .dark-mode .duration-slider input[type="range"]::-webkit-slider-thumb {
+    background-color: white;
+    border: 1px white solid;
+  }
+  .dark-mode .time-display{
+    color: white;
+  }
+  .dark-mode .mute-button{
+    color: white;
+  }
+  .dark-mode .close-audio{
+    background-color: #3B3B3B;
+    border: none;
+    border-radius: 5px;
+  }
+  .dark-mode .close-audio:hover{
+    background-color: #3B3B3B;
+    border: none;
+    border-radius: 5px;
+  }
+  .dark-mode .restart-recording{
+    background-color: #3B3B3B;
+    border: none;
+    border-radius: 5px; 
+  }
+  .dark-mode .restart-recording:hover{
+    background-color: #3B3B3B;
+    border: none;
+    border-radius: 5px; 
+  }
+  .dark-mode .restart-recording svg{
+    color: #A5A5A5;
   }
 
   /*buat setting*/ 
