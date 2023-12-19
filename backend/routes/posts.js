@@ -12,6 +12,7 @@ router.get("/", async (req, res) => {
   }
 });
 
+//get a userId via post
 router.get("/:postId", async (req, res) => {
   try {
     const post = await Post.findById(req.params.postId);

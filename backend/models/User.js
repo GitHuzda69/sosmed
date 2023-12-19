@@ -15,16 +15,28 @@ const UserSchema = new mongoose.Schema(
       max: 50,
       unique: true,
     },
+    facebook: {
+      type: String,
+      required: true,
+      max: 50,
+      unique: true,
+    },
+    google: {
+      type: String,
+      required: true,
+      max: 50,
+      unique: true,
+    },
     password: {
       type: String,
       min: 6,
     },
     displayname: {
-        type: String,
-        min: 3,
-        max: 20,
-        unique: true,
-      },
+      type: String,
+      min: 3,
+      max: 20,
+      unique: true,
+    },
     profilePicture: {
       type: String,
       default: "",
@@ -63,7 +75,7 @@ const UserSchema = new mongoose.Schema(
     relationship: {
       type: Number,
       enum: [1, 2, 3],
-    }
+    },
   },
   { timestamps: true }
 );

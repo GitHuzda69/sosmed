@@ -89,6 +89,13 @@ const Post = ({ post, openPostOption, handleOpenPostOption, handleClosePostOptio
         userId: currentUser._id,
       });
 
+      await makeRequest(`notif`, "POST", {
+        own: post.userId,
+        userId: currentUser._id,
+        postId: post._id,
+        type: 1,
+      });
+
       socket.current.emit("sendNotification", {
         senderId: currentUser._id,
         receiverId: post.userId,

@@ -16,6 +16,7 @@ import avatar3 from "../../assets/friend/friend3.jpg";
 import avatar4 from "../../assets/friend/friend4.jpg";
 import avatar5 from "../../assets/friend/friend5.jpeg";
 import AuthContext from "../../context/authContext.js";
+import { makeRequest } from "../../fetch.js";
 
 function Notif() {
   const [settingOpen, setSettingOpen] = useState(false);
@@ -24,8 +25,12 @@ function Notif() {
   const [showMentions, setShowMentions] = useState(false);
   const [showUnread, setShowUnread] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [notifications, setNotification] = useState([]);
-  const { user } = useContext(AuthContext);
+  const [notification, setNotification] = useState([]);
+  const [notifications, setNotifications] = useState([]);
+  const [notificationsReaded, setNotificationReaded] = useState([]);
+  const [notificationsUnReaded, setNotificationUnReaded] = useState([]);
+  const [user, setUser] = useState([]);
+  const { user: currentUser } = useContext(AuthContext);
   const isNotifPage = true;
 
   //SOCKET IO
@@ -35,76 +40,70 @@ function Notif() {
   }, []);
 
   useEffect(() => {
-    socket.current.emit("addUser", user._id);
+    socket.current.emit("addUser", currentUser._id);
     socket.current.on("getUsers", (users) => {});
-  }, [user]);
+  }, [currentUser]);
 
   useEffect(() => {
     socket.current.on("getNotification", (data) => {
-      setNotification((prev) => [...prev, data]);
+      setNotifications((prev) => [...prev, data]);
     });
   }, [socket]);
 
-  console.log(notifications);
+  useEffect(() => {
+    const fetchNotif = async () => {
+      try {
+        const res = await makeRequest("notif", "GET", { own: currentUser._id });
+        console.log(res);
+        setNotification(res);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchNotif();
+  }, [notification]);
 
-  const notification = [
-    {
-      id: 1,
-      name: "John Doe",
-      notif: "Liked your post .",
-      avatar: avatar4,
-      date: "2 Hours Ago",
-    },
-    {
-      id: 2,
-      name: "Jennifer",
-      notif: "Started follow you .",
-      avatar: avatar3,
-      date: "2 Hours Ago",
-    },
-    {
-      id: 3,
-      name: "Lala",
-      notif: "Following you back .",
-      avatar: avatar2,
-      date: "2 Hours Ago",
-    },
-    {
-      id: 4,
-      name: "Johnny Doe",
-      notif: "Mention you in a post .",
-      avatar: avatar5,
-      date: "2 Hours Ago",
-    },
-    {
-      id: 5,
-      name: "John Doel",
-      notif: "Started follow you Lorem ipsum dolor sit amet, consectetur adipiscing elit  Nam in lorem sodales tellus semper pharetra. Mauris nec auctor elit, sed facilisis eros..",
-      avatar: avatar1,
-      date: "2 Hours Ago",
-    },
-    {
-      id: 6,
-      name: "Lala",
-      notif: "Following you back .",
-      avatar: avatar2,
-      date: "2 Hours Ago",
-    },
-    {
-      id: 7,
-      name: "Johnny Doe",
-      notif: "Mention you in a post .",
-      avatar: avatar5,
-      date: "2 Hours Ago",
-    },
-    {
-      id: 8,
-      name: "John Doel",
-      notif: "Started follow you Lorem ipsum dolor sit amet, consectetur adipiscing elit  Nam in lorem sodales tellus semper pharetra. Mauris nec auctor elit, sed facilisis eros..",
-      avatar: avatar1,
-      date: "2 Hours Ago",
-    },
-  ];
+  useEffect(() => {
+    const fetchNotifRead = async () => {
+      try {
+        const res = await makeRequest(`notif`, "GET", { own: currentUser._id, read: true });
+        setNotificationReaded(res);
+      } catch (err) {
+        console.error(err);
+      }
+      fetchNotifRead();
+    };
+  }, [notifications]);
+
+  useEffect(() => {
+    const fetchNotifUnRead = async () => {
+      try {
+        const res = await makeRequest(`notif`, "GET", { own: currentUser._id, read: false });
+        setNotificationUnReaded(res);
+      } catch (err) {
+        console.error(err);
+      }
+      fetchNotifUnRead();
+    };
+  }, [notifications]);
+
+  useEffect(() => {
+    if (!notification) {
+      const fetchUser = async () => {
+        const url = `users?userId=${notification.userId}`;
+        try {
+          const res = await makeRequest(url);
+          setUser(res);
+        } catch (err) {
+          console.error("Error:", err.message);
+        }
+      };
+      fetchUser();
+    }
+  }, [notification.userId]);
+
+  console.log(notifications);
+  console.log(notification);
 
   const toggleSettings = () => {
     setSettingOpen(!settingOpen);
@@ -179,53 +178,59 @@ function Notif() {
           <div className="notif-content">
             {showAll && (
               <div className="all-notif-container">
-                {notification.map((notification) => (
-                  <div className="notif" key={notification.id}>
-                    <span className="notif-date">{notification.date}</span>
-                    <div className="notif-user">
-                      <img className="notif-avatar" src={notification.avatar} alt={notification.name} />
-                      <div className="notif-text">
-                        <p>
-                          <strong>{notification.name}</strong> {notification.notif}
-                        </p>
+                {notification === 0
+                  ? "There no notification"
+                  : notification.map((notification) => (
+                      <div className="notif" key={notification.id}>
+                        <span className="notif-date">{notification.createdAt}</span>
+                        <div className="notif-user">
+                          <img className="notif-avatar" src={user.profilePic} alt={user.username} />
+                          <div className="notif-text">
+                            <p>
+                              <strong>{user.displayname}</strong> {notification.type}
+                            </p>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                ))}
+                    ))}
               </div>
             )}
             {showMentions && (
               <div className="mentions-notif-container">
-                {notification.map((notification) => (
-                  <div className="notif" key={notification.id}>
-                    <span className="notif-date">{notification.date}</span>
-                    <div className="notif-user">
-                      <img className="notif-avatar" src={notification.avatar} alt={notification.name} />
-                      <div className="notif-text">
-                        <p>
-                          <strong>{notification.name}</strong> {notification.notif}
-                        </p>
+                {notificationsReaded === 0
+                  ? "There no notification"
+                  : notificationsReaded.map((notification) => (
+                      <div className="notif" key={notification.id}>
+                        <span className="notif-date">{notification.createdAt}</span>
+                        <div className="notif-user">
+                          <img className="notif-avatar" src={user.profilePic} alt={user.username} />
+                          <div className="notif-text">
+                            <p>
+                              <strong>{user.displayname}</strong> {notification.type}
+                            </p>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                ))}
+                    ))}
               </div>
             )}
             {showUnread && (
               <div className="unread-notif-container">
-                {notification.map((notification) => (
-                  <div className="notif" key={notification.id}>
-                    <span className="notif-date">{notification.date}</span>
-                    <div className="notif-user">
-                      <img className="notif-avatar" src={notification.avatar} alt={notification.name} />
-                      <div className="notif-text">
-                        <p>
-                          <strong>{notification.name}</strong> {notification.notif}
-                        </p>
+                {notificationsUnReaded === 0
+                  ? "There no notification"
+                  : notificationsUnReaded.map((notification) => (
+                      <div className="notif" key={notification.id}>
+                        <span className="notif-date">{notification.createdAt}</span>
+                        <div className="notif-user">
+                          <img className="notif-avatar" src={user.profilePic} alt={user.username} />
+                          <div className="notif-text">
+                            <p>
+                              <strong>{user.displayname}</strong> {notification.type}
+                            </p>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                ))}
+                    ))}
               </div>
             )}
           </div>
