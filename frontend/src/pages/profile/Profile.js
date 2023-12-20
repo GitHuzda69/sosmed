@@ -33,12 +33,11 @@ const Profile = () => {
   const [showPosts, setShowPosts] = useState(true);
   const [showPopupUnfollow, setShowPopupUnfollow] = useState(false);
   const [showPopupFollow, setShowPopupFollow] = useState(false);
-  const [showUnfollowConfirmation, setShowUnfollowConfirmation] =
-    useState(false);
+  const [showUnfollowConfirmation, setShowUnfollowConfirmation] = useState(false);
 
-  const [followed, setFollowed] = useState(
-    currentUser.followings.includes(user?._id)
-  );
+  const [followed, setFollowed] = useState(currentUser.followings.includes(user?._id));
+
+  const isProfilePage = true;
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -53,10 +52,7 @@ const Profile = () => {
     const getFriends = async () => {
       try {
         const res = await makeRequest(`users?username=${username}`);
-        const friendList = await makeRequest(
-          "relationships/friends/" + res._id,
-          "GET"
-        );
+        const friendList = await makeRequest("relationships/friends/" + res._id, "GET");
         setFriends(friendList);
       } catch (err) {
         console.log(err);
@@ -155,41 +151,18 @@ const Profile = () => {
     <div className={`app ${isDarkMode ? "dark-mode" : ""}`}>
       <div className="profile-main">
         <div className="profil">
-          <div
-            className={`profil-container ${
-              showPosts
-                ? "profile-container-posts-view"
-                : "profile-container-friends-view"
-            }`}
-          >
+          <div className={`profil-container ${showPosts ? "profile-container-posts-view" : "profile-container-friends-view"}`}>
             <div className="cover-img">
               <div className="post-img-banner">
-                <button
-                  className="img-button"
-                  onClick={() => setImagePopupOpenBanner(true)}
-                >
-                  <img
-                    src={
-                      user.coverPicture ? user.coverPicture : defaultcover
-                    }
-                    alt="banner"
-                  />
+                <button className="img-button" onClick={() => setImagePopupOpenBanner(true)}>
+                  <img src={user.coverPicture ? user.coverPicture : defaultcover} alt="banner" />
                 </button>
               </div>
             </div>
             {imagePopupOpenbanner && (
-              <div
-                className="image-popup-profil"
-                onClick={() => setImagePopupOpenBanner(false)}
-              >
+              <div className="image-popup-profil" onClick={() => setImagePopupOpenBanner(false)}>
                 <div className="popup-banner">
-                  <img
-                    className="popup-img-banner"
-                    src={
-                      user.coverPicture ? user.coverPicture : defaultcover
-                    }
-                    alt=""
-                  />
+                  <img className="popup-img-banner" src={user.coverPicture ? user.coverPicture : defaultcover} alt="" />
                 </div>
               </div>
             )}
@@ -197,36 +170,15 @@ const Profile = () => {
               <div className="profil-info">
                 <div className="profilePic">
                   <div className="post-img-profile">
-                    <button
-                      className="img-button-profile"
-                      onClick={() => setImagePopupOpenProfile(true)}
-                    >
-                      <img
-                        src={
-                          user.profilePicture
-                            ? user.profilePicture
-                            : defaultcover
-                        }
-                        alt="post-profile"
-                      />
+                    <button className="img-button-profile" onClick={() => setImagePopupOpenProfile(true)}>
+                      <img src={user.profilePicture ? user.profilePicture : defaultcover} alt="post-profile" />
                     </button>
                   </div>
                 </div>
                 {imagePopupOpenprofile && (
-                  <div
-                    className="image-popup-profil"
-                    onClick={() => setImagePopupOpenProfile(false)}
-                  >
+                  <div className="image-popup-profil" onClick={() => setImagePopupOpenProfile(false)}>
                     <div className="popup-profil">
-                      <img
-                        className="popup-img-profil"
-                        src={
-                          user.profilePicture
-                            ? PF + user.profilePicture
-                            : defaultcover
-                        }
-                        alt=""
-                      />
+                      <img className="popup-img-profil" src={user.profilePicture ? PF + user.profilePicture : defaultcover} alt="" />
                     </div>
                   </div>
                 )}
@@ -234,20 +186,14 @@ const Profile = () => {
                   <h2>{user && user.displayname}</h2>
                   <h4>
                     <Link to={`/friend/${username}`}>
-                      <button>
-                        {user.followers ? user.followers.length : "Loading"}{" "}
-                        Follower
-                      </button>
+                      <button>{user.followers ? user.followers.length : "Loading"} Follower</button>
                     </Link>
                   </h4>
                 </div>
               </div>
               <div className="profiluser-button">
                 {user.username === currentUser.username ? (
-                  <button
-                    className="edit-profile-button"
-                    onClick={openUpdateModal}
-                  >
+                  <button className="edit-profile-button" onClick={openUpdateModal}>
                     <Icon icon="bxs:edit" width={20} height={20} />
                     Edit Profile
                   </button>
@@ -256,35 +202,19 @@ const Profile = () => {
                     {followed ? (
                       <div className="following-profile">
                         <div className="followed-profile">
-                          <Icon
-                            icon="bi:person-check-fill"
-                            width={20}
-                            height={20}
-                          />
+                          <Icon icon="bi:person-check-fill" width={20} height={20} />
                           Following
                         </div>
                         <div className="message-profile">
-                          <Icon
-                            icon="ion:chatbox-ellipses-outline"
-                            width={20}
-                            height={20}
-                          />
+                          <Icon icon="ion:chatbox-ellipses-outline" width={20} height={20} />
                         </div>
                         <div className="share-profile">
-                          <Icon
-                            icon="basil:share-outline"
-                            width={20}
-                            height={20}
-                          />
+                          <Icon icon="basil:share-outline" width={20} height={20} />
                         </div>
                       </div>
                     ) : (
                       <div className="follow-profile">
-                        <Icon
-                          icon="bi:person-plus-fill"
-                          width={20}
-                          height={20}
-                        />
+                        <Icon icon="bi:person-plus-fill" width={20} height={20} />
                         Follow
                       </div>
                     )}
@@ -292,34 +222,17 @@ const Profile = () => {
                 )}
               </div>
             </div>
-            {showPosts && (
-              <Posts username={username} className="posts-profile" />
-            )}
+            {showPosts && <Posts username={username} className="posts-profile" />}
           </div>
-          <RightbarProfile
-            user={currentUser}
-            friends={friends}
-            username={username}
-            handleFollow={handleFollow}
-            handleMessage={handleMessage}
-            currentUser={currentUser}
-            setShowUnfollowConfirmation={setShowUnfollowConfirmation}
-            showUnfollowConfirmation={showUnfollowConfirmation}
-            showPopupFollow={showPopupFollow}
-          />
+          <RightbarProfile user={currentUser} friends={friends} username={username} handleFollow={handleFollow} handleMessage={handleMessage} currentUser={currentUser} setShowUnfollowConfirmation={setShowUnfollowConfirmation} showUnfollowConfirmation={showUnfollowConfirmation} showPopupFollow={showPopupFollow} />
         </div>
       </div>
-      <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} />
+      <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isProfilePage={isProfilePage} />
       {showUnfollowConfirmation && (
         <div className="popup-follow-container">
           <div className="popup-follow">
-            <p>
-              Are you sure you want to unfollow {user && user.displayname} ?
-            </p>
-            <button
-              onClick={handleUnfollowConfirmation}
-              style={{ marginRight: "30px" }}
-            >
+            <p>Are you sure you want to unfollow {user && user.displayname} ?</p>
+            <button onClick={handleUnfollowConfirmation} style={{ marginRight: "30px" }}>
               Yes
             </button>
             <button onClick={handleCancelUnfollow}>Cancel</button>
@@ -338,11 +251,7 @@ const Profile = () => {
         <>
           <div className="settings-overlay" />
           <div className="settings-container">
-            <Settings
-              onClose={toggleSettings}
-              isDarkMode={isDarkMode}
-              toggleDarkMode={toggleDarkMode}
-            />
+            <Settings onClose={toggleSettings} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
           </div>
         </>
       )}

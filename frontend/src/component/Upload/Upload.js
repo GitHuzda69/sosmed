@@ -112,6 +112,12 @@ const Upload = () => {
   };
 
   const handleMediaButtonClick = () => {
+    if (audioRecording) {
+      return;
+    }
+    if (isRecording) {
+      return;
+    }
     setShowFileInput(!showFileInput);
     if (!showFileInput && fileInputRef.current) {
       fileInputRef.current.click();
@@ -194,6 +200,9 @@ const Upload = () => {
   };
 
   const handleVoiceButtonClick = () => {
+    if (file) {
+      return;
+    }
     if (audioRecording) {
       setAudioRecording(null);
       startRecording();
@@ -291,7 +300,7 @@ const Upload = () => {
             {isMuted ? <Icon icon="fluent:speaker-0-16-filled" width={20} height={20} /> : <Icon icon="fluent:speaker-2-16-filled" width={20} height={20} />}
           </button>
           <button className="close-audio" onClick={onCloseAudio}>
-            <Icon icon="material-symbols-light:delete-outline" width={20} height={20} />
+            <Icon icon="material-symbols-light:delete-outline" width={25} height={25} />
           </button>
           <button className="restart-recording" onClick={handleRestartRecording}>
             <Icon icon="tabler:reload" width={20} height={20} />
@@ -341,9 +350,11 @@ const Upload = () => {
             )}
           </button>
         </div>
-        <button className="uploadButton" onClick={handleClick}>
-          Post
-        </button>
+        {!isRecording && (
+          <button className="uploadButton" onClick={handleClick}>
+            Post
+          </button>
+        )}
       </div>
       {audioRecording && <CustomAudioControls audioRecording={audioRecording} onCloseAudio={handleCloseAudio} onStartRecording={startRecording} />}
       <input className="uploadItem-popup" type="file" id="file" ref={fileInputRef} onChange={handleFileInputChange} accept=".png,.jpeg,.jpg,.gif" style={{ display: "none" }} />

@@ -87,6 +87,7 @@
 .uploadItem-row {
   display: flex;
   flex-direction: row; 
+  margin-left: -15px;
 }
 
 .uploadButton { 
@@ -108,13 +109,15 @@
 }
 
 .uploadItem {
+  height: 40px;
   display: flex;
   align-items: center;
   border-radius: 4px;
   border: none;  
+  margin-right: 8px;
 }
 .uploadItem:hover{
-  background-color: lightgray;
+  background-color: transparent;
   border-radius: 10px;
 }
 
@@ -135,8 +138,8 @@
 
 .selected-file-container{
   position: absolute; 
-  top: 140px;
-  right: 450px; 
+  top: 70px;
+  right: 150px; 
   z-index: 200;
 }
 .selected-file-info{
@@ -214,39 +217,119 @@
 .recording-voice span{
   margin-left: 5px;
 }
+
+.recording-voice p,
+.recording-voice span {
+  margin: 0;
+  padding-left: 4px;  
+}
  
 .audio-controls {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 10px;  
-  margin-left: 10px;
+  margin-top: 10px;   
 }
 .custom-audio-buttons {
   display: flex;
   align-items: center;
+} 
+.custom-audio-buttons button:hover { 
+  background-color: transparent;
 }
 .play-pause-button{
   background-color: transparent;
   color: black;
 }
+.duration-slider{
+  margin-top: -8px;
+}
+.duration-slider input[type="range"] {
+  background: #ccc;
+  border: 1px solid #ccc;
+  -webkit-appearance: none;
+  width: 300px;
+  height: 8px;
+  border-radius: 5px;
+  outline: none;
+  position: relative;
+}
+
+.duration-slider input[type="range"]::-webkit-slider-thumb {
+  background: #000;
+  border: 1px solid #000;
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+  z-index: 2;
+}
+
+.duration-slider input[type="range"]::before {
+  content: "";
+  height: 8px;
+  border-radius: 5px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1;
+  background: #000;  
+  width: var(--value);  
+}
+
+.duration-slider input[type="range"]:focus::before {
+  outline: none;
+}
+
+.duration-slider input[type="range"]::-webkit-slider-thumb:active::before,
+.duration-slider input[type="range"]:hover::before {
+  background: #000;  
+}
+
+.duration-slider input[type="range"]::-webkit-slider-thumb:active::before {
+  background: #000;  
+}
+
 .time-display{
+  font-family: "Inter";
+  font-weight: bold;
+  font-size: 15px;
+  margin-top: -7px;
+  margin-left: 10px;
   background-color: transparent;
   color: black;
 }
 .mute-button{
+  margin-left: 5px;
   background-color: transparent;
   color: black;
 }
 .close-audio{
-  background-color: transparent;
-  color: red;
+  background-color: transparent;  
   border: 2px red solid;
   border-radius: 8px;
+  padding: 0px;
+}
+.close-audio:hover{
+  border-radius: 8px;
+}
+.close-audio svg{
+  color: red;
+  margin-bottom: -2px;
 }
 .restart-recording{
-  background-color: transparent;
-  color: black;
+  background-color: transparent; 
   border: 2px black solid;
   border-radius: 8px;
+  padding: 3px;
+  margin-left: 5px;
+}
+.restart-recording:hover{
+  border-radius: 8px;
+}
+.restart-recording svg{
+  color: black;
+  margin-bottom: -2px;
 }

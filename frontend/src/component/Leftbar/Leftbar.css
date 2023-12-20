@@ -1,22 +1,21 @@
 .sidebar {
     width: 50px;
     height: 100%;
-    background-color: black;
+    background-color: transparent;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     padding: 10px;
     top: 0;
     left: 0;
-    position: fixed;
-    border-right: 1px black solid;
+    position: fixed; 
   }
   
   button {
     margin-bottom: 5px;
     padding: 5px;
     border: none;
-    background-color: #ffffff;
+    background-color: #ffffff; 
     cursor: pointer;
   }
   
@@ -30,18 +29,23 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: white;
+    padding: 10px;
+    border-radius: 10px;
     gap: 20px;
+    margin-left: -5px;
   }
   .content-sidebar button{
     background-color: transparent;
   }
   .content-sidebar button:hover{
-    background-color: rgb(54, 54, 54);
+    background-color: lightgray;
   }
   .sidebar-logo{
     height: 50px;
     width: 50px;
-    margin-left: 3px;
+    border-radius: 10px;
+    margin-left: 0px;
     margin-bottom: 20px;
   }
   .sidebar-user{
