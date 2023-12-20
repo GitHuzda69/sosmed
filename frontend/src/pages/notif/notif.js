@@ -17,6 +17,7 @@ import avatar4 from "../../assets/friend/friend4.jpg";
 import avatar5 from "../../assets/friend/friend5.jpeg";
 import AuthContext from "../../context/authContext.js";
 import { makeRequest } from "../../fetch.js";
+import moment from "moment";
 
 function Notif() {
   const [settingOpen, setSettingOpen] = useState(false);
@@ -35,9 +36,7 @@ function Notif() {
 
   //SOCKET IO
   const socket = useRef();
-  useEffect(() => {
-    socket.current = io("ws://localhost:8900");
-  }, []);
+  socket.current = io("ws://localhost:8900");
 
   useEffect(() => {
     socket.current.emit("addUser", currentUser._id);
@@ -53,7 +52,7 @@ function Notif() {
   useEffect(() => {
     const fetchNotif = async () => {
       try {
-        const res = await makeRequest("notif", "GET", { own: currentUser._id });
+        const res = await makeRequest(`notif?own=${currentUser._id}`, "GET");
         console.log(res);
         setNotification(res);
       } catch (err) {
@@ -61,12 +60,12 @@ function Notif() {
       }
     };
     fetchNotif();
-  }, [notification]);
+  }, []);
 
   useEffect(() => {
     const fetchNotifRead = async () => {
       try {
-        const res = await makeRequest(`notif`, "GET", { own: currentUser._id, read: true });
+        const res = await makeRequest(`notif/read?own=${currentUser._id}&read=${true}`, "GET");
         setNotificationReaded(res);
       } catch (err) {
         console.error(err);
@@ -78,7 +77,7 @@ function Notif() {
   useEffect(() => {
     const fetchNotifUnRead = async () => {
       try {
-        const res = await makeRequest(`notif`, "GET", { own: currentUser._id, read: false });
+        const res = await makeRequest(`notif/read?own=${currentUser._id}&read=${false}`, "GET");
         setNotificationUnReaded(res);
       } catch (err) {
         console.error(err);
@@ -87,10 +86,13 @@ function Notif() {
     };
   }, [notifications]);
 
+  const notif = notification.map((notification) => ({ ...notification }));
+
   useEffect(() => {
-    if (!notification) {
+    // Check if notif is an array and has at least one element
+    if (Array.isArray(notif) && notif.length > 0) {
       const fetchUser = async () => {
-        const url = `users?userId=${notification.userId}`;
+        const url = `users?userId=${notif[notif.length - 1].userId}`; // Assuming userId is in the first notification
         try {
           const res = await makeRequest(url);
           setUser(res);
@@ -100,7 +102,7 @@ function Notif() {
       };
       fetchUser();
     }
-  }, [notification.userId]);
+  }, [notif]);
 
   console.log(notifications);
   console.log(notification);
@@ -178,13 +180,13 @@ function Notif() {
           <div className="notif-content">
             {showAll && (
               <div className="all-notif-container">
-                {notification === 0
+                {notification.length === 0
                   ? "There no notification"
                   : notification.map((notification) => (
                       <div className="notif" key={notification.id}>
-                        <span className="notif-date">{notification.createdAt}</span>
+                        <span className="notif-date">{moment(notification.createdAt).fromNow()}</span>
                         <div className="notif-user">
-                          <img className="notif-avatar" src={user.profilePic} alt={user.username} />
+                          <img className="notif-avatar" src={user.profilePicture} alt={user.username} />
                           <div className="notif-text">
                             <p>
                               <strong>{user.displayname}</strong> {notification.type}
@@ -197,13 +199,13 @@ function Notif() {
             )}
             {showMentions && (
               <div className="mentions-notif-container">
-                {notificationsReaded === 0
-                  ? "There no notification"
+                {notificationsReaded.length === 0
+                  ? "There no notification has read yet"
                   : notificationsReaded.map((notification) => (
                       <div className="notif" key={notification.id}>
-                        <span className="notif-date">{notification.createdAt}</span>
+                        <span className="notif-date">{moment(notification.createdAt).fromNow()}</span>
                         <div className="notif-user">
-                          <img className="notif-avatar" src={user.profilePic} alt={user.username} />
+                          <img className="notif-avatar" src={user.profilePicture} alt={user.username} />
                           <div className="notif-text">
                             <p>
                               <strong>{user.displayname}</strong> {notification.type}
@@ -216,13 +218,13 @@ function Notif() {
             )}
             {showUnread && (
               <div className="unread-notif-container">
-                {notificationsUnReaded === 0
-                  ? "There no notification"
+                {notificationsUnReaded.length === 0
+                  ? "There no notification has unread"
                   : notificationsUnReaded.map((notification) => (
                       <div className="notif" key={notification.id}>
-                        <span className="notif-date">{notification.createdAt}</span>
+                        <span className="notif-date">{moment(notification.createdAt).fromNow()}</span>
                         <div className="notif-user">
-                          <img className="notif-avatar" src={user.profilePic} alt={user.username} />
+                          <img className="notif-avatar" src={user.profilePicture} alt={user.username} />
                           <div className="notif-text">
                             <p>
                               <strong>{user.displayname}</strong> {notification.type}
