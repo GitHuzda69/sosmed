@@ -25,6 +25,7 @@ const Fyp = (post, className, username) => {
   const [mainContentMaxWidth, setMainContentMaxWidth] = useState("100%");
   const [openPostOption, setOpenPostOption] = useState(null);
   const [friends, setFriends] = useState([]);
+  const [isShowRightBar, setIsShowRightBar] = useState(true);
 
   const isHomePage = true;
 
@@ -63,10 +64,10 @@ const Fyp = (post, className, username) => {
     const handleZoomChange = () => {
       if (window.devicePixelRatio >= 1.5) {
         setShowSideContent(false);
-        setMainContentMaxWidth("100%");
+        setMainContentMaxWidth("calc(100% - 360px)");
       } else {
         setShowSideContent(true);
-        setMainContentMaxWidth("calc(100% - 350px)");
+        setMainContentMaxWidth("calc(100% - 360px)");
       }
     };
     window.addEventListener("resize", handleZoomChange);
@@ -80,9 +81,7 @@ const Fyp = (post, className, username) => {
     if (currentUser && currentUser._id) {
       const getFriends = async () => {
         try {
-          const friendList = await makeRequest(
-            "relationships/friends/" + currentUser._id
-          );
+          const friendList = await makeRequest("relationships/friends/" + currentUser._id);
           setFriends(friendList);
         } catch (err) {
           console.log(err);
@@ -128,16 +127,9 @@ const Fyp = (post, className, username) => {
       <div className={`app ${isDarkMode ? "dark-mode" : ""}`}>
         <div className="home">
           <div className="leftbar-fyp">
-            <Sidebar
-              toggleSettings={toggleSettings}
-              toggleLogout={toggleLogout}
-              isHomePage={isHomePage}
-            />
+            <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isHomePage={isHomePage} />
           </div>
-          <div
-            className="main-content-fyp"
-            style={{ maxWidth: mainContentMaxWidth }}
-          >
+          <div className="main-content-fyp" style={{ maxWidth: mainContentMaxWidth }}>
             <div className="topbar-fyp">
               <FypSwitch />
               <SearchBar />
@@ -147,18 +139,11 @@ const Fyp = (post, className, username) => {
               <div className={`posts ${className}`}>
                 {!username || username === user.username}
                 {posts.map((p) => (
-                  <Post
-                    key={p._id}
-                    post={p}
-                    openPostOption={openPostOption}
-                    handleOpenPostOption={handleOpenPostOption}
-                    handleClosePostOption={handleClosePostOption}
-                    friends={friends}
-                  />
+                  <Post key={p._id} post={p} openPostOption={openPostOption} handleOpenPostOption={handleOpenPostOption} handleClosePostOption={handleClosePostOption} friends={friends} />
                 ))}
               </div>
             </div>
-            {showSideContent && (
+            {isShowRightBar && (
               <div className="side-content">
                 <HomeProfile />
                 <Rightbar />
@@ -171,11 +156,7 @@ const Fyp = (post, className, username) => {
         <>
           <div className="settings-overlay" />
           <div className="settings-container">
-            <Settings
-              onClose={toggleSettings}
-              isDarkMode={isDarkMode}
-              toggleDarkMode={toggleDarkMode}
-            />
+            <Settings onClose={toggleSettings} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} isShowRightBar={isShowRightBar} setIsShowRightBar={setIsShowRightBar} />
           </div>
         </>
       )}

@@ -18,64 +18,68 @@ const Sidebar = ({ toggleSettings, toggleLogout, isFriendListPage, isHomePage, i
         <img className="sidebar-logo" src={logo} alt="BNW logo" />
         {isHomePage ? (
           <Link to="/">
-            <button className="home-button">
+            <button>
               <Icon icon="mingcute:home-4-fill" width="35" height="35" />
             </button>
           </Link>
         ) : (
           <Link to="/">
-            <button className="home-button">
+            <button>
               <Icon icon="mingcute:home-4-line" width="35" height="35" />
             </button>
           </Link>
         )}
         {isNotifPage ? (
           <Link to="/notif">
-            <button className="notif-button">
+            <button>
               <Icon icon="mdi:bell" width="35" height="35" />
             </button>
           </Link>
         ) : (
           <Link to="/notif">
-            <button className="notif-button">
+            <button>
               <Icon icon="mdi:bell-outline" width="35" height="35" />
             </button>
           </Link>
         )}
         {isMessagesPage ? (
           <Link to="/messages">
-            <button className="messages-button">
+            <button>
               <Icon icon="bxs:chat" width="35" height="35" />
             </button>
           </Link>
         ) : (
           <Link to="/messages">
-            <button className="messages-button">
+            <button>
               <Icon icon="bx:chat" width="35" height="35" />
             </button>
           </Link>
         )}
         {isProfilePage ? (
           <Link to={`/profile/${user.username}`}>
-            <button className="messages-button">
-              <Icon icon="iconamoon:profile-bold" width="35" height="35" />
+            <button>
+              <Icon icon="iconamoon:profile-fill" width="35" height="35" />
             </button>
           </Link>
         ) : (
           <Link to={`/profile/${user.username}`}>
-            <button className="messages-button">
-              <Icon icon="iconamoon:profile-fill" width="35" height="35" />
+            <button>
+              <Icon icon="iconamoon:profile" width="35" height="35" />
             </button>
           </Link>
         )}
         {isConnectPage ? (
-          <button className="messages-button">
-            <Icon icon="carbon:link" width="35" height="35" />
-          </button>
+          <Link to="/connect">
+            <button>
+              <Icon icon="carbon:link" width="35" height="35" />
+            </button>
+          </Link>
         ) : (
-          <button className="messages-button">
-            <Icon icon="carbon:link" width="35" height="35" />
-          </button>
+          <Link to="/connect">
+            <button>
+              <Icon icon="carbon:link" width="35" height="35" />
+            </button>
+          </Link>
         )}
         <button onClick={toggleSettings}>
           <Icon icon="solar:settings-outline" width="35" height="35" />

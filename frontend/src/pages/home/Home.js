@@ -9,12 +9,16 @@ import Posts from "../../component/posts/Posts";
 import Upload from "../../component/Upload/Upload.js";
 import Logout from "../../component/Logout/Logout.js";
 import FypSwitch from "../../component/fyp-button/fyp-switch.js";
+import Rightbar from "../../component/rightbar/Rightbar.js";
+import HomeProfile from "../../component/home-profile/home-profile.js";
 
 function Home() {
   const [settingOpen, setSettingOpen] = useState(false);
   const [logoutOpen, setLogoutOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
+  const [isShowRightBar, setIsShowRightBar] = useState(true);
+
   const isHomePage = true;
 
   const toggleSettings = () => {
@@ -60,22 +64,14 @@ function Home() {
           </div>
         </div>
         <div className="leftbar">
-          <Sidebar
-            toggleSettings={toggleSettings}
-            toggleLogout={toggleLogout}
-            isHomePage={isHomePage}
-          />
+          <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isHomePage={isHomePage} />
         </div>
       </div>
       {settingOpen && (
         <>
           <div className="settings-overlay" />
           <div className="settings-container">
-            <Settings
-              onClose={toggleSettings}
-              isDarkMode={isDarkMode}
-              toggleDarkMode={toggleDarkMode}
-            />
+            <Settings onClose={toggleSettings} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} isShowRightBar={isShowRightBar} setIsShowRightBar={setIsShowRightBar} />
           </div>
         </>
       )}

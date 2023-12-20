@@ -1,0 +1,98 @@
+.connect-container{ 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: calc(100% - 390px);
+  height: 100vh;  
+  margin-top: 10px;
+  margin-left: 70px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  background-color: #ffffff; 
+  font-family: "Inter";  
+}
+
+.connect-container h1 {
+    text-align: center;
+    border-bottom: 2px #E0E0E0 solid;  
+    width: 100%;    
+    padding-bottom: 10px; 
+    margin-bottom: 10px;  
+  }  
+ 
+.connecth2{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px; 
+    border-bottom: 2px #E0E0E0 solid;  
+    width: 100%;      
+    margin-top: -10px;
+    margin-bottom: 10px;  
+} 
+.connecth2 svg {
+    margin-left: 20px; 
+  }
+.connecth2 h2{
+    font-size: 16px;
+}
+
+.connect-content {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center; 
+    gap: 20px; 
+    border-bottom: 2px #E0E0E0 solid;  
+    width: 100%;  
+    margin-top: -10px;
+    margin-bottom: 10px;   
+  }
+  .connect-content svg{
+    margin-left: 20px;
+  }
+  .connect-content .connect-name { 
+    flex: 1; 
+  }
+  .connect-name h2{
+    font-size: 18px;
+    font-weight: bold;
+  }
+  .connect-name h3{
+    margin-top: -15px;
+    font-size: 14px;
+    font-weight: normal;
+  }
+  .connect-button {
+    margin-left: auto; 
+    margin-right: 20px; 
+    border-radius: 5px;
+    padding: 8px 15px;
+    background-color: black;
+    color: white;
+  }
+  .connect-button:hover{
+    background-color: #5e5e5e;
+    border-radius: 5px;
+  }
+  .disconnect-button{
+    margin-left: auto; 
+    margin-right: 20px; 
+    border-radius: 5px;
+    padding: 8px 15px; 
+    border: 1px red solid;
+    color: red;
+  }
+  .disconnect-button:hover{
+    background-color: transparent;
+    border-radius: 5px;
+  }
+
+  .disconnect-all-button{
+    margin-top: 20px;
+    color: red;
+    font-size: 20px;
+  }
+  .disconnect-all-button:hover{
+    background-color: transparent;
+  }

@@ -24,7 +24,7 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;  
-  max-width: calc(100% - 350px);  
+  max-width: calc(100% - 460px);  
   margin-left: 60px; 
   padding: 0; 
   }

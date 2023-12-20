@@ -93,6 +93,14 @@
     color: #A5A5A5;
   }
 
+  /*buat sidebar*/
+  .dark-mode .content-sidebar{
+    background-color: #1E1E1E;
+  }
+  .dark-mode .content-sidebar button{
+    color: white;
+  }
+
   /*buat setting*/ 
   .dark-mode .settings-popup{  
     background-color: rgb(58, 58, 58); 
@@ -411,6 +419,35 @@
   .dark-mode .button-popup{ 
     background-color: white;
     color: black;
+  }
+
+  /*buat connect*/
+  .dark-mode .connect-container{
+    background-color: #1E1E1E;
+  }
+  .dark-mode .connect-container h1 {
+    border-bottom: 2px #5C5C5C solid;
+  }
+  .dark-mode .connecth2{
+    border-bottom: 2px #5C5C5C solid;
+  }
+  .dark-mode .disconnect-button{
+    background-color: #3B3B3B;
+    border: none;
+  }
+  .dark-mode .disconnect-button:hover{
+    background-color: #3B3B3B;
+  }
+  .dark-mode .connect-content{
+    border-bottom: 2px #5C5C5C solid;
+  }
+  .dark-mode .disconnect-all-button{
+    background-color: #3B3B3B;
+    border-radius: 5px;
+    padding: 8px 20px;
+  }
+  .dark-mode .disconnect-all-button:hover{
+    background-color: #3B3B3B;
   }
 
   /*buat profile*/
