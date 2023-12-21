@@ -99,12 +99,6 @@ export default function Posts({ username, className, isHome }) {
         {!username || username === user.username}
         {posts.length === 0 ? "There is no any post yet" : posts.map((p) => <Post key={p._id} post={p} openPostOption={openPostOption} handleOpenPostOption={handleOpenPostOption} handleClosePostOption={handleClosePostOption} friends={friends} socket={socket} />)}
       </div>
-      {isHome && (
-        <div className="side-content">
-          <HomeProfile />
-          <Rightbar socket={socket} />
-        </div>
-      )}
     </>
   );
 }

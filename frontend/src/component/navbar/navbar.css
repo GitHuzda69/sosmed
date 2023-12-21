@@ -1,0 +1,81 @@
+.navbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: row; 
+    align-items: center;
+    justify-content: space-between; 
+    background-color: black;
+    color: white;
+    font-family: "Inter";
+    text-decoration: none;
+  }
+  
+  .navbar-logo {
+    height: 50px;
+    width: 50px;
+    border-radius: 10px;
+    margin-left: 20px;
+  }
+  
+  .navbar-name {
+    width: 65px;
+    font-size: 20px;
+  }
+
+  /*buat search*/
+  .navbar .search-container { 
+    width: 265px;
+    margin-top: 15px;
+    margin-bottom: 20px;
+  }
+   
+  /**/
+  
+  .navbar button {
+    margin: 0 10px;  
+  }
+
+  .navbar-fyp,
+  .navbar-home,
+  .navbar-newest {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: transparent;
+    color: grey;
+    text-decoration: none;
+    margin-left: 100px;  
+  }
+ 
+ 
+  .navbar-fyp button, .navbar-home button, .navbar-newest button{
+    background-color: transparent;
+    color: grey; 
+    font-size: 20px;
+  }
+   
+  .navbar-profile {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+    margin-right: 20px;    
+  }
+  .navbar-profile button{
+    border-radius: 10px;
+    margin-left: -10px;
+    background-color: transparent;
+    color: white;
+  }
+  .navbar-profile button:hover{
+    background-color: transparent;
+  }
+  .navbar-profile-img{
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+  }

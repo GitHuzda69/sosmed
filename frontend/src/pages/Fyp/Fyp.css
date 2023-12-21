@@ -51,3 +51,13 @@
     font-family: "Inter" ;
     font-weight: bold;
   }
+
+  /*buat navbar*/
+.fyp-navbar .navbar-fyp{
+  padding-bottom: 5px;
+  border-bottom: 2px white solid;
+  color: white;
+}
+.fyp-navbar .navbar-fyp button{
+  color: white;
+}

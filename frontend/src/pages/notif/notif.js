@@ -26,6 +26,8 @@ function Notif() {
   const [notificationsUnReaded, setNotificationUnReaded] = useState([]);
   const [user, setUser] = useState([]);
   const { user: currentUser } = useContext(AuthContext);
+  const [isShowRightBar, setIsShowRightBar] = useState(true);
+
   const isNotifPage = true;
 
   //SOCKET IO
@@ -149,6 +151,17 @@ function Notif() {
     setDarkMode(newDarkModeStatus);
   };
 
+  useEffect(() => {
+    const storedDarkModeStatus = localStorage.getItem("isDarkMode") === "true";
+    setIsDarkMode(storedDarkModeStatus);
+    setDarkMode(storedDarkModeStatus);
+
+    const storedIsShowRightBar = localStorage.getItem("isShowRightBar");
+    if (storedIsShowRightBar !== null) {
+      setIsShowRightBar(JSON.parse(storedIsShowRightBar));
+    }
+  }, []);
+
   return (
     <div className={`app ${isDarkMode ? "dark-mode" : ""}`}>
       <div className="main-notif">
@@ -203,14 +216,7 @@ function Notif() {
                           <div className="notif-text">
                             <p>
                               <strong>{user.displayname}</strong>
-                              {notification.type &&
-                                (notification.type === 1
-                                  ? " liked your post"
-                                  : notification.type === 2
-                                  ? " commented on your post"
-                                  : notification.type === 3
-                                  ? " started following you"
-                                  : " posted a new post")}
+                              {notification.type && (notification.type === 1 ? " liked your post" : notification.type === 2 ? " commented on your post" : notification.type === 3 ? " started following you" : " posted a new post")}
                             </p>
                           </div>
                         </div>
@@ -240,16 +246,18 @@ function Notif() {
           </div>
         </div>
       </div>
-      <div className="side-content">
-        <HomeProfile />
-        <Rightbar />
-      </div>
+      {isShowRightBar && (
+        <div className="side-content">
+          <HomeProfile />
+          <Rightbar />
+        </div>
+      )}
       <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isNotifPage={isNotifPage} />
       {settingOpen && (
         <>
           <div className="settings-overlay" />
           <div className="settings-container">
-            <Settings onClose={toggleSettings} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
+            <Settings onClose={toggleSettings} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} isShowRightBar={isShowRightBar} setIsShowRightBar={setIsShowRightBar} />
           </div>
         </>
       )}
