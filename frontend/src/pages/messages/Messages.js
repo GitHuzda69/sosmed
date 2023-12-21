@@ -23,7 +23,6 @@ function Message() {
   const [messages, setMessages] = useState([]);
   const { user: currentUser } = useContext(AuthContext);
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const socket = useRef();
   const isMessagesPage = true;
   const [chatHeight, setChatHeight] = useState("80vh");
   const [displayedDate, setDisplayedDate] = useState(null);
@@ -63,9 +62,10 @@ function Message() {
     getMessages();
   }, [currentChat]);
 
+  const socket = io("http://localhost:8900");
+
   useEffect(() => {
-    socket.current = io("ws://localhost:8900");
-    socket.current.on("getMessage", (data) => {
+    socket.on("getMessage", (data) => {
       setArrivalMessage({
         sender: data.senderId,
         text: data.text,
@@ -75,14 +75,8 @@ function Message() {
   }, []);
 
   useEffect(() => {
-    arrivalMessage &&
-      currentChat?.members.includes(arrivalMessage.sender) &&
-      setMessages((prev) => [...prev, arrivalMessage]);
+    arrivalMessage && currentChat?.members.includes(arrivalMessage.sender) && setMessages((prev) => [...prev, arrivalMessage]);
   }, [arrivalMessage, currentChat]);
-
-  useEffect(() => {
-    socket.current.emit("addUser", currentUser._id);
-  }, [currentUser]);
 
   useEffect(() => {
     const storedDarkModeStatus = localStorage.getItem("isDarkMode") === "true";
@@ -131,11 +125,9 @@ function Message() {
       createdAt: currentDate,
     };
 
-    const receiverId = currentChat.members.find(
-      (member) => member !== currentUser._id
-    );
+    const receiverId = currentChat.members.find((member) => member !== currentUser._id);
 
-    socket.current.emit("sendMessage", {
+    socket.emit("sendMessage", {
       senderId: currentUser._id,
       receiverId: receiverId,
       text: newMessage,
@@ -203,8 +195,7 @@ function Message() {
 
   useEffect(() => {
     if (chatContainerRef.current) {
-      chatContainerRef.current.scrollTop =
-        chatContainerRef.current.scrollHeight;
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
     }
   }, [messages]);
 
@@ -216,8 +207,7 @@ function Message() {
 
   useEffect(() => {
     if (chatContainerRef.current) {
-      chatContainerRef.current.scrollTop =
-        chatContainerRef.current.scrollHeight;
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
     }
   }, [selectedConversation]);
 
@@ -225,17 +215,8 @@ function Message() {
     <div className="main-messages" style={{ height: chatHeight }}>
       <div className="search-message-friend">
         <h1>Messages</h1>
-        <Icon
-          icon="octicon:search-16"
-          className="searchbar-message-friend-button"
-          width="22"
-          height="22"
-        />
-        <input
-          className="input-search-friend"
-          type="text"
-          placeholder="Search on Messages"
-        />
+        <Icon icon="octicon:search-16" className="searchbar-message-friend-button" width="22" height="22" />
+        <input className="input-search-friend" type="text" placeholder="Search on Messages" />
         <div
           style={{
             borderBottom: "1px gray solid",
@@ -245,12 +226,7 @@ function Message() {
         />
         {conversations.map((c) => (
           <div key={c._id} onClick={() => handleConversationClick(c)}>
-            <Conversation
-              conversation={c}
-              currentUser={currentUser}
-              onClick={handleConversationClick}
-              isSelected={c === selectedConversation}
-            />
+            <Conversation conversation={c} currentUser={currentUser} onClick={handleConversationClick} isSelected={c === selectedConversation} />
           </div>
         ))}
       </div>
@@ -267,22 +243,13 @@ function Message() {
               >
                 <p>{formatDateLabel(date)}</p>
                 {messagesForDate.map((m) => (
-                  <Chat
-                    key={m._id}
-                    message={m}
-                    own={m.sender === currentUser._id}
-                  />
+                  <Chat key={m._id} message={m} own={m.sender === currentUser._id} />
                 ))}
               </div>
             ))}
           </div>
           <div className="chat-input">
-            <textarea
-              placeholder={`Tuliskan sesuatu `}
-              value={newMessage}
-              onChange={(e) => setNewMessage(e.target.value)}
-              onKeyDown={handleEnterPress}
-            />
+            <textarea placeholder={`Tuliskan sesuatu `} value={newMessage} onChange={(e) => setNewMessage(e.target.value)} onKeyDown={handleEnterPress} />
             <div className="chat-input-button">
               <button className="chat-button">
                 <Icon icon="mdi:paperclip" width={25} height={25} />
@@ -291,23 +258,10 @@ function Message() {
                 <Icon icon="fluent:gif-16-regular" width={25} height={25} />
               </button>
               <button className="chat-button">
-                <Icon
-                  icon="material-symbols:folder-copy-outline"
-                  width={25}
-                  height={25}
-                />
+                <Icon icon="material-symbols:folder-copy-outline" width={25} height={25} />
               </button>
-              <button
-                className="post-chat"
-                onClick={handleSubmit}
-                disabled={newMessage.trim() === ""}
-              >
-                <Icon
-                  icon="icon-park-outline:send-one"
-                  width={23}
-                  height={23}
-                  color="white"
-                />
+              <button className="post-chat" onClick={handleSubmit} disabled={newMessage.trim() === ""}>
+                <Icon icon="icon-park-outline:send-one" width={23} height={23} color="white" />
               </button>
             </div>
           </div>
@@ -318,20 +272,12 @@ function Message() {
         </div>
       )}
 
-      <Sidebar
-        toggleSettings={toggleSettings}
-        toggleLogout={toggleLogout}
-        isMessagesPage={isMessagesPage}
-      />
+      <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isMessagesPage={isMessagesPage} />
       {settingOpen && (
         <>
           <div className="settings-overlay" />
           <div className="settings-container">
-            <Settings
-              onClose={toggleSettings}
-              isDarkMode={isDarkMode}
-              toggleDarkMode={toggleDarkMode}
-            />
+            <Settings onClose={toggleSettings} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
           </div>
         </>
       )}

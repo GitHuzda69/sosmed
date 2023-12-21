@@ -12,7 +12,7 @@ const Connect = () => {
   const [settingOpen, setSettingOpen] = useState(false);
   const [logoutOpen, setLogoutOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
-
+  const { user: currentUser } = useContext(AuthContext);
   const isConnectPage = true;
 
   const toggleSettings = () => {
@@ -56,23 +56,23 @@ const Connect = () => {
         <Icon icon="entypo-social:facebook" width={40} height={40} />
         <div className="connect-name">
           <h2>Connect to Facebook</h2>
-          <h3>Facebook Name</h3>
+          <h3>{currentUser && currentUser.facebook ? currentUser.facebook : ""}</h3>
         </div>
-        <button className="disconnect-button">Disconnect</button>
+        {currentUser && currentUser.facebook ? <button className="disconnect-button">Disconnect</button> : <button className="connect-button">Connect</button>}
       </div>
       <div className="connect-content">
         <Icon icon="streamline:instagram-solid" width={40} height={40} />
         <div className="connect-name">
           <h2>Connect to Instagram</h2>
         </div>
-        <button className="connect-button">Connect</button>
+        {currentUser && currentUser.facebook ? <button className="disconnect-button">Disconnect</button> : <button className="connect-button">Connect</button>}
       </div>
       <div className="connect-content">
         <Icon icon="fa6-brands:x-twitter" width={40} height={40} />
         <div className="connect-name">
           <h2>Connect to X/Twitter</h2>
         </div>
-        <button className="connect-button">Connect</button>
+        {currentUser && currentUser.facebook ? <button className="disconnect-button">Disconnect</button> : <button className="connect-button">Connect</button>}
       </div>
       <button className="disconnect-all-button">Disconnect all</button>
       <div className="side-content">

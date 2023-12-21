@@ -146,7 +146,6 @@ const Fyp = (post, className, username) => {
             {isShowRightBar && (
               <div className="side-content">
                 <HomeProfile />
-                <Rightbar />
               </div>
             )}
           </div>

@@ -15,10 +15,9 @@ export default function Posts({ username, className, isHome }) {
   const [arrivalPost, setArrivalPost] = useState(null);
 
   //SOCKET IO
-  const socket = useRef();
+  const socket = io("http://localhost:8900");
   useEffect(() => {
-    socket.current = io("ws://localhost:8900");
-    socket.current.on("getPostFollow", (data) => {
+    socket.on("getPostFollow", (data) => {
       const decodeBase64ToBlob = (base64) => {
         const binaryString = window.atob(base64);
         const arrayBuffer = new ArrayBuffer(binaryString.length);
@@ -31,10 +30,8 @@ export default function Posts({ username, className, isHome }) {
         return new Blob([arrayBuffer], { type: "application/octet-stream" });
       };
 
-      const decodedImg =
-        typeof img === "string" ? decodeBase64ToBlob(data.img) : data.img;
-      const decodedFile =
-        typeof file === "string" ? decodeBase64ToBlob(data.file) : data.file;
+      const decodedImg = typeof img === "string" ? decodeBase64ToBlob(data.img) : data.img;
+      const decodedFile = typeof file === "string" ? decodeBase64ToBlob(data.file) : data.file;
 
       setArrivalPost({
         userId: data.userId,
@@ -53,15 +50,12 @@ export default function Posts({ username, className, isHome }) {
   }, [arrivalPost, posts]);
 
   useEffect(() => {
-    socket.current.emit("addUser", user._id);
-    socket.current.on("getUsers", (users) => {});
+    socket.on("getUsers", (users) => {});
   }, [user]);
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const endpoint = username
-        ? `posts/profile/${username}`
-        : `posts/timeline/${user._id}`;
+      const endpoint = username ? `posts/profile/${username}` : `posts/timeline/${user._id}`;
 
       try {
         const res = await makeRequest(endpoint);
@@ -82,9 +76,7 @@ export default function Posts({ username, className, isHome }) {
   useEffect(() => {
     const getFriends = async () => {
       try {
-        const friendList = await makeRequest(
-          "relationships/friends/" + user._id
-        );
+        const friendList = await makeRequest("relationships/friends/" + user._id);
         setFriends(friendList.data);
       } catch (err) {
         console.log(err);
@@ -105,23 +97,12 @@ export default function Posts({ username, className, isHome }) {
     <>
       <div className={`posts ${className}`}>
         {!username || username === user.username}
-        {posts.length === 0
-          ? "There is no any post yet"
-          : posts.map((p) => (
-              <Post
-                key={p._id}
-                post={p}
-                openPostOption={openPostOption}
-                handleOpenPostOption={handleOpenPostOption}
-                handleClosePostOption={handleClosePostOption}
-                friends={friends}
-              />
-            ))}
+        {posts.length === 0 ? "There is no any post yet" : posts.map((p) => <Post key={p._id} post={p} openPostOption={openPostOption} handleOpenPostOption={handleOpenPostOption} handleClosePostOption={handleClosePostOption} friends={friends} socket={socket} />)}
       </div>
       {isHome && (
         <div className="side-content">
           <HomeProfile />
-          <Rightbar />
+          <Rightbar socket={socket} />
         </div>
       )}
     </>

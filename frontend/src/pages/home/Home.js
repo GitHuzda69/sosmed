@@ -9,10 +9,8 @@ import Posts from "../../component/posts/Posts";
 import Upload from "../../component/Upload/Upload.js";
 import Logout from "../../component/Logout/Logout.js";
 import FypSwitch from "../../component/fyp-button/fyp-switch.js";
-import Rightbar from "../../component/rightbar/Rightbar.js";
-import HomeProfile from "../../component/home-profile/home-profile.js";
 
-function Home() {
+function Home(socket) {
   const [settingOpen, setSettingOpen] = useState(false);
   const [logoutOpen, setLogoutOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -60,7 +58,7 @@ function Home() {
           </div>
           <div className="home-content">
             <Upload />
-            <Posts isHome={true} />
+            <Posts isHome={true} socket={socket} />
           </div>
         </div>
         <div className="leftbar">

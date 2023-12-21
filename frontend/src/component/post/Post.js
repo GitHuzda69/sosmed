@@ -73,14 +73,9 @@ const Post = ({ post, openPostOption, handleOpenPostOption, handleClosePostOptio
   };
 
   // SOCKET IO
-  const socket = useRef();
+  const socket = io("http://localhost:8900");
   useEffect(() => {
-    socket.current = io("ws://localhost:8900");
-  }, []);
-
-  useEffect(() => {
-    socket.current.emit("addUser", currentUser._id);
-    socket.current.on("getUsers", (users) => {});
+    socket?.on("getUsers", (users) => {});
   }, [currentUser]);
 
   const handleLike = async () => {
@@ -96,7 +91,7 @@ const Post = ({ post, openPostOption, handleOpenPostOption, handleClosePostOptio
         type: 1,
       });
 
-      socket.current.emit("sendNotification", {
+      socket.emit("sendNotification", {
         senderId: currentUser._id,
         receiverId: post.userId,
         type: 1,

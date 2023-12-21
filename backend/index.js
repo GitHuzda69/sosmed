@@ -30,9 +30,8 @@ async function connectToDatabase() {
     console.error("Error connecting to MongoDB:", error.message);
   }
 }
-
 connectToDatabase();
-const allowedOrigins = ["http://localhost:3000", "http://localhost:8800"];
+const allowedOrigins = ["http://localhost:3000", "http://localhost:8800", "http://localhost:8900"];
 // Middlewares
 app.use(express.json({ limit: "500mb" }));
 app.use(express.urlencoded({ limit: "500mb", extended: true }));

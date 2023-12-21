@@ -14,25 +14,17 @@ const Rightbar = () => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const { user: currentUser } = useContext(AuthContext);
 
-//SOCKET IO
-const socket = useRef();
-useEffect(() => {
-  socket.current = io("ws://localhost:8900");
-}, []);
-
-useEffect(() => {
-  socket.current.emit("addUser", currentUser._id);
-  socket.current.on("getUsers", (users) => {
-    setOnlineUser(currentUser.followings.filter((f) => users.some((u) => u.userId === f)))
-  });
-}, [currentUser]);
+  const socket = io("http://localhost:8900");
+  useEffect(() => {
+    socket?.on("getUsers", (users) => {
+      setOnlineUser(currentUser.followings.filter((f) => users.some((u) => u.userId === f)));
+    });
+  }, [currentUser]);
 
   useEffect(() => {
     const getFriends = async () => {
       try {
-        const friendList = await makeRequest(
-          "relationships/friends/" + currentUser._id
-        );
+        const friendList = await makeRequest("relationships/friends/" + currentUser._id);
         setFriends(friendList);
       } catch (err) {
         console.log(err);
@@ -40,12 +32,12 @@ useEffect(() => {
     };
     getFriends();
   }, []);
-  
+
   const navigate = useNavigate();
   const handleMessage = async () => {
     try {
-      const friendids = friends.find((id) => (id));
-      await makeRequest(`conversations/`, "POST", { senderId: currentUser._id,  receiverId: friendids._id });
+      const friendids = friends.find((id) => id);
+      await makeRequest(`conversations/`, "POST", { senderId: currentUser._id, receiverId: friendids._id });
       navigate("/messages");
     } catch (err) {
       console.log(err);
@@ -57,21 +49,13 @@ useEffect(() => {
       <h2>People You Follow</h2>
       <div className="rightBarContainer">
         <div className="rightBarItem">
-        {friends && friends.length > 0 ? (
+          {friends && friends.length > 0 ? (
             friends.map((friend) => (
               <div key={friend._id} className="rightBarUser">
                 <Link to={`/profile/${friend.username}`} className="rightBarLinkProfile">
                   <div className="rightBarUserInfo">
-                    <img
-                      className="rightBarImg"
-                      src={friend.profilePicture ? friend.profilePicture : defaultprofile}
-                      alt={friend.displayname}
-                    />
-                    {onlineUser && onlineUser.includes(friend._id) ? (
-                      <div className={`statusDot ${"greenDot"}`} />
-                    ) : (
-                      <div className={`statusDot ${"grayDot"}`} />
-                    )}
+                    <img className="rightBarImg" src={friend.profilePicture ? friend.profilePicture : defaultprofile} alt={friend.displayname} />
+                    {onlineUser && onlineUser.includes(friend._id) ? <div className={`statusDot ${"greenDot"}`} /> : <div className={`statusDot ${"grayDot"}`} />}
                   </div>
                   <p className="rightBarUserStatus">
                     <span className="rightBarName">{friend.displayname}</span>

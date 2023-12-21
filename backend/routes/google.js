@@ -1,12 +1,11 @@
 const router = require("express").Router();
-const nodemailer = require('nodemailer');
+const nodemailer = require("nodemailer");
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const dotenv = require("dotenv");
-const { v4: uuidv4 } = require('uuid');
+const { v4: uuidv4 } = require("uuid");
 
 dotenv.config();
-
 
 // Helper function to generate OTP
 function generateOTP() {
@@ -25,20 +24,21 @@ const transporter = nodemailer.createTransport({
 });
 
 // Endpoint untuk mengirim OTP
-router.post('/gmail/send', async (req, res) => {
+router.post("/gmail/send", async (req, res) => {
   try {
     const checkEmail = await User.findOne({ email: req.body.email });
     let otp;
 
     if (checkEmail) {
       if (checkEmail.username) {
-        return res.redirect("http://localhost:3000/login")
+        return res.redirect("http://localhost:3000/login");
       }
       otp = checkEmail.otp;
     } else {
       otp = generateOTP();
       const newUser = new User({
         email: req.body.email,
+        google: req.body.email,
         otp: otp,
       });
       await newUser.save();
@@ -47,7 +47,7 @@ router.post('/gmail/send', async (req, res) => {
     const mailOptions = {
       from: `"Sync, Manage, and Direct Admin" <${process.env.EMAIL}>`,
       to: req.body.email,
-      subject: 'Your OTP for Login',
+      subject: "Your OTP for Login",
       html: `
         <!DOCTYPE html>
         <html lang="en">
@@ -68,29 +68,29 @@ router.post('/gmail/send', async (req, res) => {
     };
 
     await transporter.sendMail(mailOptions);
-    res.status(200).json({ message: 'OTP sent successfully' });
+    res.status(200).json({ message: "OTP sent successfully" });
   } catch (error) {
-    console.error('Error sending email:', error);
-    res.status(500).json({ error: 'Failed to send OTP' });
+    console.error("Error sending email:", error);
+    res.status(500).json({ error: "Failed to send OTP" });
   }
 });
 
 // Endpoint untuk mengirim ulang OTP
-router.post('/gmail/resend', async (req, res) => {
+router.post("/gmail/resend", async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });
 
     if (!user) {
-      return res.status(404).json({ error: 'User not found' });
+      return res.status(404).json({ error: "User not found" });
     }
 
     const otp = user.otp;
 
     // Kirim email dengan OTP
     const mailOptions = {
-      from: `"Sync, Manage, and Direct Admin" <${process.env.EMAIL}>`, 
+      from: `"Sync, Manage, and Direct Admin" <${process.env.EMAIL}>`,
       to: req.body.email,
-      subject: 'Your OTP for Login',
+      subject: "Your OTP for Login",
       html: `<!DOCTYPE html>
         <html lang="en">
         <head>
@@ -112,13 +112,13 @@ router.post('/gmail/resend', async (req, res) => {
 
     res.status(200).json("Email has been sent successfully");
   } catch (error) {
-    console.error('Error sending email:', error);
-    res.status(500).json({ error: 'Failed to send OTP' });
+    console.error("Error sending email:", error);
+    res.status(500).json({ error: "Failed to send OTP" });
   }
 });
 
 // Endpoint untuk verifikasi OTP
-router.post('/gmail/verify', async (req, res) => {
+router.post("/gmail/verify", async (req, res) => {
   const { otp } = req.body;
 
   try {
@@ -126,13 +126,13 @@ router.post('/gmail/verify', async (req, res) => {
     const user = await User.findOne({ otp });
 
     if (user) {
-      res.status(200).json({ message: 'OTP verification successful' });
+      res.status(200).json({ message: "OTP verification successful" });
     } else {
-      res.status(401).json({ error: 'Invalid OTP' });
+      res.status(401).json({ error: "Invalid OTP" });
     }
   } catch (error) {
-    console.error('Error verifying OTP:', error);
-    res.status(500).json({ error: 'Failed to verify OTP' });
+    console.error("Error verifying OTP:", error);
+    res.status(500).json({ error: "Failed to verify OTP" });
   }
 });
 

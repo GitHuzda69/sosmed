@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const axios = require('axios');
+const axios = require("axios");
 const dotenv = require("dotenv");
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
@@ -15,21 +15,21 @@ const FACEBOOK_APP_SECRET = process.env.FB_SECRET_TOKEN;
 const CALLBACK_HTTPS = process.env.HTTPS;
 
 // Route untuk autentikasi menggunakan Facebook
-router.get('/facebook', async (req, res) => {
+router.get("/facebook", async (req, res) => {
   try {
     const redirectUrl = `https://www.facebook.com/v12.0/dialog/oauth?client_id=${FACEBOOK_APP_ID}&redirect_uri=${CALLBACK_HTTPS}&scope=email`;
     res.status(200).json(redirectUrl);
   } catch (error) {
-    console.error('Error making Facebook OAuth request:', error.message);
-    res.status(500).json({ error: 'Internal Server Error' });
+    console.error("Error making Facebook OAuth request:", error.message);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
-router.get('/facebook/callback', async (req, res) => {
+router.get("/facebook/callback", async (req, res) => {
   const code = req.query.code;
 
   if (!code) {
-    res.status(400).send('Authentication failed');
+    res.status(400).send("Authentication failed");
     return;
   }
 
@@ -46,20 +46,21 @@ router.get('/facebook/callback', async (req, res) => {
     const checkEmail = await User.findOne({ email: userData.email });
     if (checkEmail) {
       if (checkEmail.username) {
-        return res.redirect("http://localhost:3000/login")
+        return res.redirect("http://localhost:3000/login");
       }
-      return res.redirect(`http://localhost:3000/facebook?code=${checkEmail.otp}`)
+      return res.redirect(`http://localhost:3000/facebook?code=${checkEmail.otp}`);
     }
     const newUser = new User({
       email: userData.email,
+      facebook: userData.email,
       displayname: userData.name,
       otp: accessToken,
     });
     await newUser.save();
     return res.redirect(`http://localhost:3000/facebook?code=${accessToken}`);
   } catch (error) {
-    console.error('Error during Facebook authentication:', error.message);
-    res.status(500).send('Internal Server Error');
+    console.error("Error during Facebook authentication:", error.message);
+    res.status(500).send("Internal Server Error");
   }
 });
 
@@ -111,6 +112,5 @@ router.get("/facebook/users", async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 });
-
 
 module.exports = router;

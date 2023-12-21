@@ -17,9 +17,10 @@ import Connect from "./pages/connect/connect.js";
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import "./pages/home/Home.css";
 import AuthContext from "./context/authContext.js";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import WebFont from "webfontloader";
 import PF from "./Logo_BNW.webp";
+import { io } from "socket.io-client";
 
 function App() {
   useEffect(() => {
@@ -34,6 +35,16 @@ function App() {
   }, []);
 
   const { user } = useContext(AuthContext);
+
+  const socket = io("http://localhost:8900");
+
+  useEffect(() => {
+    socket.emit("addUser", user?._id);
+    socket.on("getUsers", (u) => {
+      console.log(u);
+    });
+  }, [socket, user]);
+
   return (
     <Router>
       <Routes>
@@ -50,6 +61,7 @@ function App() {
         <Route exact path="/signup" element={<Signup />} />
         <Route exact path="/login" element={user ? <Home /> : <Login />} />
         <Route exact path="/google" element={user ? <Home /> : <Google />} />
+        <Route path="/facebook" element={user ? <Home /> : <Facebook />} />
         <Route exact path="/google/signup" element={user ? <Home /> : <GSignup />} />
         <Route exact path="/google/otp" element={user ? <Home /> : <OTP />} />
         <Route exact path="/TermsOfServices" element={<TOS />} />

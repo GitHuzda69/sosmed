@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
-import profilimage from "../../assets/profil.jpg";
 import "./notif.css";
 import Sidebar from "../../component/Leftbar/Leftbar";
 import Rightbar from "../../component/rightbar/Rightbar";
@@ -10,11 +9,6 @@ import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import { io } from "socket.io-client";
 
-import avatar1 from "../../assets/friend/friend1.jpg";
-import avatar2 from "../../assets/friend/friend2.jpg";
-import avatar3 from "../../assets/friend/friend3.jpg";
-import avatar4 from "../../assets/friend/friend4.jpg";
-import avatar5 from "../../assets/friend/friend5.jpeg";
 import AuthContext from "../../context/authContext.js";
 import { makeRequest } from "../../fetch.js";
 import moment from "moment";
@@ -27,7 +21,7 @@ function Notif() {
   const [showUnread, setShowUnread] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [notification, setNotification] = useState([]);
-  const [notifications, setNotifications] = useState([]);
+  const [notifSocket, setNotifSocket] = useState([]);
   const [notificationsReaded, setNotificationReaded] = useState([]);
   const [notificationsUnReaded, setNotificationUnReaded] = useState([]);
   const [user, setUser] = useState([]);
@@ -35,17 +29,15 @@ function Notif() {
   const isNotifPage = true;
 
   //SOCKET IO
-  const socket = useRef();
-  socket.current = io("ws://localhost:8900");
+  const socket = io("http://localhost:8900");
 
   useEffect(() => {
-    socket.current.emit("addUser", currentUser._id);
-    socket.current.on("getUsers", (users) => {});
+    socket.on("getUsers", (users) => {});
   }, [currentUser]);
 
   useEffect(() => {
-    socket.current.on("getNotification", (data) => {
-      setNotifications((prev) => [...prev, data]);
+    socket.on("getNotification", (data) => {
+      setNotifSocket((prev) => [...prev, data]);
     });
   }, [socket]);
 
@@ -53,7 +45,6 @@ function Notif() {
     const fetchNotif = async () => {
       try {
         const res = await makeRequest(`notif?own=${currentUser._id}`, "GET");
-        console.log(res);
         setNotification(res);
       } catch (err) {
         console.error(err);
@@ -65,47 +56,50 @@ function Notif() {
   useEffect(() => {
     const fetchNotifRead = async () => {
       try {
-        const res = await makeRequest(`notif/read?own=${currentUser._id}&read=${true}`, "GET");
+        const res = await makeRequest(`notif?own=${currentUser._id}&read=true`, "GET");
         setNotificationReaded(res);
       } catch (err) {
         console.error(err);
       }
       fetchNotifRead();
     };
-  }, [notifications]);
+  }, []);
 
   useEffect(() => {
     const fetchNotifUnRead = async () => {
       try {
-        const res = await makeRequest(`notif/read?own=${currentUser._id}&read=${false}`, "GET");
+        const res = await makeRequest(`notif?own=${currentUser._id}&read=false`, "GET");
         setNotificationUnReaded(res);
       } catch (err) {
         console.error(err);
       }
       fetchNotifUnRead();
     };
-  }, [notifications]);
+  }, []);
 
-  const notif = notification.map((notification) => ({ ...notification }));
-
+  const notif = notification.find((originalNotification) => {
+    return originalNotification;
+  });
   useEffect(() => {
-    // Check if notif is an array and has at least one element
-    if (Array.isArray(notif) && notif.length > 0) {
-      const fetchUser = async () => {
-        const url = `users?userId=${notif[notif.length - 1].userId}`; // Assuming userId is in the first notification
+    const fetchUser = async () => {
+      if (notif && notif.userId) {
+        const url = `users?userId=${notif.userId}`;
         try {
           const res = await makeRequest(url);
           setUser(res);
         } catch (err) {
           console.error("Error:", err.message);
         }
-      };
+      } else {
+        console.error("Notification or userId is undefined");
+      }
+    };
+    if (notif) {
       fetchUser();
     }
   }, [notif]);
 
-  console.log(notifications);
-  console.log(notification);
+  console.log(notifSocket);
 
   const toggleSettings = () => {
     setSettingOpen(!settingOpen);
@@ -170,7 +164,7 @@ function Notif() {
                 All
               </button>
               <button onClick={toggleMentions} className={`mentions-button ${showMentions ? "bold-button" : ""}`}>
-                Mentions
+                Readed
               </button>
               <button onClick={toggleUnread} className={`unread-button ${showUnread ? "bold-button" : ""}`}>
                 Unread
@@ -208,7 +202,15 @@ function Notif() {
                           <img className="notif-avatar" src={user.profilePicture} alt={user.username} />
                           <div className="notif-text">
                             <p>
-                              <strong>{user.displayname}</strong> {notification.type}
+                              <strong>{user.displayname}</strong>
+                              {notification.type &&
+                                (notification.type === 1
+                                  ? " liked your post"
+                                  : notification.type === 2
+                                  ? " commented on your post"
+                                  : notification.type === 3
+                                  ? " started following you"
+                                  : " posted a new post")}
                             </p>
                           </div>
                         </div>
