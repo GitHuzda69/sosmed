@@ -13,6 +13,7 @@ import Result from "./pages/Result/Result.js";
 import Notif from "./pages/notif/notif.js";
 import TOS from "./pages/tos/tos.js";
 import NotFound from "./pages/NotFound/NotFound.js";
+import Connect from "./pages/connect/connect.js";
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import "./pages/home/Home.css";
 import AuthContext from "./context/authContext.js";
@@ -45,6 +46,7 @@ function App() {
         <Route path="/friend/:username" element={user ? <Friends /> : <Login />} />
         <Route exact path="/fyp" element={user ? <Fyp /> : <Login />} />
         <Route exact path="/notif" element={user ? <Notif /> : <Login />} />
+        <Route exact path="/connect" element={user ? <Connect /> : <Login />} />
         <Route exact path="/signup" element={<Signup />} />
         <Route exact path="/login" element={user ? <Home /> : <Login />} />
         <Route exact path="/google" element={user ? <Home /> : <Google />} />

@@ -5,11 +5,15 @@ import { Icon } from "@iconify/react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/authContext.js";
 
-const Settings = ({ onClose, isDarkMode, toggleDarkMode }) => {
+const Settings = ({ onClose, isDarkMode, toggleDarkMode, isShowRightBar, setIsShowRightBar }) => {
   const { user } = useContext(AuthContext);
 
   const handleSliderChange = () => {
     toggleDarkMode();
+  };
+
+  const handleRightBarToggle = () => {
+    setIsShowRightBar((prevIsShowRightBar) => !prevIsShowRightBar);
   };
 
   return (
@@ -24,11 +28,14 @@ const Settings = ({ onClose, isDarkMode, toggleDarkMode }) => {
         <div className="settings-mode">
           <h3>Dark Mode</h3>
           <label className="switch">
-            <input
-              type="checkbox"
-              checked={isDarkMode}
-              onChange={handleSliderChange}
-            />
+            <input type="checkbox" checked={isDarkMode} onChange={handleSliderChange} />
+            <span className="slider round"></span>
+          </label>
+        </div>
+        <div className="settings-mode">
+          <h3>Show Rightbar</h3>
+          <label className="switch">
+            <input type="checkbox" checked={isShowRightBar} onChange={handleRightBarToggle} />
             <span className="slider round"></span>
           </label>
         </div>
