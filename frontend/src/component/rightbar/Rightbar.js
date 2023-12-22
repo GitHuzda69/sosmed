@@ -8,15 +8,14 @@ import { useContext, useEffect, useRef, useState } from "react";
 import AuthContext from "../../context/authContext";
 import { io } from "socket.io-client";
 
-const Rightbar = () => {
+const Rightbar = (socket) => {
   const [friends, setFriends] = useState([]);
   const [onlineUser, setOnlineUser] = useState([]);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const { user: currentUser } = useContext(AuthContext);
 
-  const socket = io("http://localhost:8900");
   useEffect(() => {
-    socket?.on("getUsers", (users) => {
+    socket.socket?.on("getUsers", (users) => {
       setOnlineUser(currentUser.followings.filter((f) => users.some((u) => u.userId === f)));
     });
   }, [currentUser]);

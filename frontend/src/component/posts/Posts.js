@@ -7,7 +7,7 @@ import { makeRequest } from "../../fetch.js";
 import AuthContext from "../../context/authContext.js";
 import { io } from "socket.io-client";
 
-export default function Posts({ username, className, isHome }) {
+export default function Posts({ username, className, isHome, socket }) {
   const [posts, setPosts] = useState([""]);
   const { user } = useContext(AuthContext);
   const [openPostOption, setOpenPostOption] = useState(null);
@@ -15,7 +15,6 @@ export default function Posts({ username, className, isHome }) {
   const [arrivalPost, setArrivalPost] = useState(null);
 
   //SOCKET IO
-  const socket = io("http://localhost:8900");
   useEffect(() => {
     socket.on("getPostFollow", (data) => {
       const decodeBase64ToBlob = (base64) => {
@@ -48,10 +47,6 @@ export default function Posts({ username, className, isHome }) {
       setPosts((prev) => [arrivalPost, ...prev]);
     }
   }, [arrivalPost, posts]);
-
-  useEffect(() => {
-    socket.on("getUsers", (users) => {});
-  }, [user]);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -97,7 +92,11 @@ export default function Posts({ username, className, isHome }) {
     <>
       <div className={`posts ${className}`}>
         {!username || username === user.username}
-        {posts.length === 0 ? "There is no any post yet" : posts.map((p) => <Post key={p._id} post={p} openPostOption={openPostOption} handleOpenPostOption={handleOpenPostOption} handleClosePostOption={handleClosePostOption} friends={friends} socket={socket} />)}
+        {posts.length === 0
+          ? "There is no any post yet"
+          : posts.map((p) => (
+              <Post key={p._id} post={p} openPostOption={openPostOption} handleOpenPostOption={handleOpenPostOption} handleClosePostOption={handleClosePostOption} friends={friends} socket={socket} />
+            ))}
       </div>
     </>
   );

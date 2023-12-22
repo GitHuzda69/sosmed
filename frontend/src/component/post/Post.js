@@ -9,7 +9,7 @@ import Commento from "../Commento/Commento.js";
 import defaultprofile from "../../assets/profile/default_avatar.png";
 import { io } from "socket.io-client";
 
-const Post = ({ post, openPostOption, handleOpenPostOption, handleClosePostOption, friends }) => {
+const Post = ({ post, openPostOption, handleOpenPostOption, handleClosePostOption, friends, socket }) => {
   const [commentOpen, setCommentOpen] = useState(false);
   const [popupOpen, setPopupOpen] = useState(false);
   const [selectedPostImg, setSelectedPostImg] = useState(null);
@@ -22,7 +22,6 @@ const Post = ({ post, openPostOption, handleOpenPostOption, handleClosePostOptio
   const [like, setLike] = useState(post.likes && post.likes.length);
   const [isLiked, setIsLiked] = useState(false);
   const [user, setUser] = useState({});
-  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const { user: currentUser, dispatch } = useContext(AuthContext);
   const [following, setFollowing] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -72,12 +71,6 @@ const Post = ({ post, openPostOption, handleOpenPostOption, handleClosePostOptio
     });
   };
 
-  // SOCKET IO
-  const socket = io("http://localhost:8900");
-  useEffect(() => {
-    socket?.on("getUsers", (users) => {});
-  }, [currentUser]);
-
   const handleLike = async () => {
     try {
       await makeRequest(`likes/${post._id}/like`, "PUT", {
@@ -88,13 +81,13 @@ const Post = ({ post, openPostOption, handleOpenPostOption, handleClosePostOptio
         own: post.userId,
         userId: currentUser._id,
         postId: post._id,
-        type: 1,
+        type: " liked your post",
       });
 
       socket.emit("sendNotification", {
         senderId: currentUser._id,
         receiverId: post.userId,
-        type: 1,
+        type: " liked your post",
       });
 
       setLike(isLiked ? like - 1 : like + 1);
@@ -146,7 +139,7 @@ const Post = ({ post, openPostOption, handleOpenPostOption, handleClosePostOptio
         socket.emit("sendNotification", {
           senderId: currentUser._id,
           receiverId: post.userId,
-          type: 3,
+          type: " started follow you",
         });
 
         await makeRequest(`relationships/${post.userId}/follow`, "PUT", {
@@ -390,7 +383,15 @@ const Post = ({ post, openPostOption, handleOpenPostOption, handleClosePostOptio
                                   e.preventDefault();
                                 }}
                               >
-                                <input className="edit-post-text" type="text" name="desc" value={editedDesc} onClick={(e) => e.stopPropagation()} onChange={(e) => setEditedDesc(e.target.value)} ref={descInputRef} />
+                                <input
+                                  className="edit-post-text"
+                                  type="text"
+                                  name="desc"
+                                  value={editedDesc}
+                                  onClick={(e) => e.stopPropagation()}
+                                  onChange={(e) => setEditedDesc(e.target.value)}
+                                  ref={descInputRef}
+                                />
                                 <input type="file" name="img" id="img" onClick={(e) => e.stopPropagation()} onChange={(e) => setEditedImg(e.target.files[0])} />
                                 {post.img && post.desc && (
                                   <button className="del-img-edit-post" onClick={handleRemoveImg}>
@@ -451,14 +452,27 @@ const Post = ({ post, openPostOption, handleOpenPostOption, handleClosePostOptio
               <div className="post-audio">
                 <button className="audio-volume-button" onMouseEnter={() => setShowVolumeSlider(true)} onMouseLeave={() => setShowVolumeSlider(false)}>
                   <Icon icon="fluent:speaker-2-16-filled" width={20} height={20} />
-                  {showVolumeSlider && <input className="audio-volume-slider" type="range" min="0" max="100" value={volumeSliderValue} onChange={handleVolumeChange} onMouseEnter={() => setShowVolumeSlider(true)} onMouseLeave={() => setShowVolumeSlider(false)} />}
+                  {showVolumeSlider && (
+                    <input
+                      className="audio-volume-slider"
+                      type="range"
+                      min="0"
+                      max="100"
+                      value={volumeSliderValue}
+                      onChange={handleVolumeChange}
+                      onMouseEnter={() => setShowVolumeSlider(true)}
+                      onMouseLeave={() => setShowVolumeSlider(false)}
+                    />
+                  )}
                 </button>
                 <audio id={`audio-${post._id}`} style={{ display: "none" }} onError={(e) => console.error("Audio Error:", e)}>
                   <source src={post.file} type="audio/mpeg" />
                   Your browser does not support the audio element.
                 </audio>
                 <div className="custom-audio-controls">
-                  <button onClick={() => togglePlayPause(`audio-${post._id}`)}>{isPlaying ? <Icon icon="solar:pause-bold" width={25} height={25} /> : <Icon icon="solar:play-bold" width={25} height={25} />}</button>
+                  <button onClick={() => togglePlayPause(`audio-${post._id}`)}>
+                    {isPlaying ? <Icon icon="solar:pause-bold" width={25} height={25} /> : <Icon icon="solar:play-bold" width={25} height={25} />}
+                  </button>
                 </div>
                 <input
                   className="audio-duration-slider"

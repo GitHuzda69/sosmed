@@ -216,7 +216,7 @@ function Notif() {
                           <div className="notif-text">
                             <p>
                               <strong>{user.displayname}</strong>
-                              {notification.type && (notification.type === 1 ? " liked your post" : notification.type === 2 ? " commented on your post" : notification.type === 3 ? " started following you" : " posted a new post")}
+                              {notification.type && notification.type}
                             </p>
                           </div>
                         </div>

@@ -1,82 +1,82 @@
-.homeProfile{  
-    display: flex;
-    flex-direction: column;
-    top: 1%;
-    right: 20px;  
-    width: 270px;
-    padding: 10px;
-    margin-right: -5px;  
-    border-radius: 10px;  
-    background-color: #ffffff;
-    overflow-y: visible;
-    z-index: 99;
+.homeProfile {
+  display: flex;
+  flex-direction: column;
+  top: 1%;
+  right: 20px;
+  width: 270px;
+  padding: 10px;
+  margin-right: -5px;
+  border-radius: 10px;
+  background-color: #ffffff;
+  overflow-y: visible;
+  z-index: 99;
 }
-.homeProfile h2{
-    font-family: "Inter" ;
-    font-weight: bold;
-    font-size: 16px; 
-    margin-top: 1%;
-    margin-left: 36%;
-}
-
-.banner-homeProfile{
-    width: 290px;
-    height: 75px; 
-    object-fit: cover;
-    margin-top: -10px;
-    margin-left: -10px;
-    border-radius: 10px 10px 0px 0px;  
-}
-.banner-homeProfile:hover{
-    filter: brightness(0.7); 
+.homeProfile h2 {
+  font-family: "Inter";
+  font-weight: bold;
+  font-size: 16px;
+  margin-top: 1%;
+  margin-left: 36%;
 }
 
-.profile-homeProfile{
-    position: fixed; 
-    width: 70px;
-    height: 70px;
-    margin-top: -3%;
-    margin-left: 1%;
-    border-radius: 10px;
-    border: 1px black solid; 
+.banner-homeProfile {
+  width: 290px;
+  height: 75px;
+  object-fit: cover;
+  margin-top: -10px;
+  margin-left: -10px;
+  border-radius: 10px 10px 0px 0px;
 }
-.profile-homeProfile:hover{
-    filter: brightness(0.7); 
-}
-
-.follow-homeProfile{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 5px; 
-    margin-top: -5%;
-    font-family: "Inter" ;  
-}
-.follow-homeProfile h3{
-    font-size: 15px;
-}
-.follow-homeProfile h4{
-    font-size: 15px;
-    font-weight: 500;
-    margin-right: 10px;
+.banner-homeProfile:hover {
+  filter: brightness(0.7);
 }
 
-.connect-homeProfile{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%; 
-    gap: 20px;
-    padding: 5px; 
-    margin-top: -1%;
-    margin-bottom: -1px;
-    border-radius: 10px;
-    background-color: black;
-    color: white;
+.profile-homeProfile {
+  position: fixed;
+  width: 70px;
+  height: 70px;
+  margin-top: -3%;
+  margin-left: 1%;
+  border-radius: 10px;
+  border: 1px black solid;
 }
-.connect-homeProfile:hover{
-    border-radius: 12px;
-    background-color: rgb(54, 54, 54);
+.profile-homeProfile:hover {
+  filter: brightness(0.7);
 }
-  
+
+.follow-homeProfile {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  margin-top: -5%;
+  margin-bottom: -10px;
+  font-family: "Inter";
+}
+.follow-homeProfile h3 {
+  font-size: 15px;
+}
+.follow-homeProfile h4 {
+  font-size: 15px;
+  font-weight: 500;
+  margin-right: 10px;
+}
+
+.connect-homeProfile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 20px;
+  padding: 5px;
+  margin-top: -1%;
+  margin-bottom: -1px;
+  border-radius: 10px;
+  background-color: black;
+  color: white;
+}
+.connect-homeProfile:hover {
+  border-radius: 12px;
+  background-color: rgb(54, 54, 54);
+}

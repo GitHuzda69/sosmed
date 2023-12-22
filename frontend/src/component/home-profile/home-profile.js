@@ -12,21 +12,9 @@ const HomeProfile = () => {
 
   return (
     <div className="homeProfile">
-      <Link
-        to={`/profile/${user.username}`}
-        style={{ textDecoration: "none", color: "inherit" }}
-        className="profileavatar"
-      >
-        <img
-          className="banner-homeProfile"
-          src={user.coverPicture ? user.coverPicture : defaultprofile}
-          alt={user.displayname}
-        />
-        <img
-          className="profile-homeProfile"
-          src={user.profilePicture ? user.profilePicture : defaultprofile}
-          alt="profile"
-        />
+      <Link to={`/profile/${user.username}`} style={{ textDecoration: "none", color: "inherit" }} className="profileavatar">
+        <img className="banner-homeProfile" src={user.coverPicture ? user.coverPicture : defaultprofile} alt={user.displayname} />
+        <img className="profile-homeProfile" src={user.profilePicture ? user.profilePicture : defaultprofile} alt="profile" />
       </Link>
       <h2>{user.displayname}</h2>
       <div className="follow-homeProfile">
@@ -35,10 +23,6 @@ const HomeProfile = () => {
         <h3>{user.followers.length}</h3>
         <h4>Followers</h4>
       </div>
-      <button className="connect-homeProfile">
-        <Icon icon="ph:link" width="25" height="25" />
-        Connect Your Account
-      </button>
     </div>
   );
 };

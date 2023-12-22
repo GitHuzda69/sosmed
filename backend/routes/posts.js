@@ -60,22 +60,6 @@ router.get("/profile/:username", async (req, res) => {
   }
 });
 
-//get fyp
-router.get("/fyp", async (req, res) => {
-  try {
-    const posts = await Post.find();
-
-    posts.forEach((post) => {
-      const words = post.desc.split(" ").map((word) => (word.startsWith("#") ? word.slice(1) : word));
-      post.desc = words.join(" ");
-    });
-
-    res.status(200).json(posts);
-  } catch (err) {
-    res.status(500).json({ error: "Failed to fetch posts or apply social media algorithm" });
-  }
-});
-
 //create a post
 router.post("/", async (req, res) => {
   const newPost = new Post(req.body);

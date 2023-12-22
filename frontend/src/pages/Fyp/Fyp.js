@@ -22,8 +22,6 @@ const Fyp = (post, className, username) => {
   const [logoutOpen, setLogoutOpen] = useState(false);
   const { user: currentUser } = useContext(AuthContext);
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [showSideContent, setShowSideContent] = useState(true);
-  const [mainContentMaxWidth, setMainContentMaxWidth] = useState("100%");
   const [openPostOption, setOpenPostOption] = useState(null);
   const [friends, setFriends] = useState([]);
   const [isShowRightBar, setIsShowRightBar] = useState(true);
@@ -33,7 +31,7 @@ const Fyp = (post, className, username) => {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const res = await makeRequest("posts/fyp");
+        const res = await makeRequest("posts");
         res.sort((post1, post2) => post2.desc.length - post1.desc.length);
         setPosts(res);
       } catch (err) {
@@ -56,27 +54,6 @@ const Fyp = (post, className, username) => {
       fetchUser();
     }
   }, [post.userId]);
-
-  useEffect(() => {
-    const storedDarkModeStatus = localStorage.getItem("isDarkMode") === "true";
-    setIsDarkMode(storedDarkModeStatus);
-    setDarkMode(storedDarkModeStatus);
-
-    const handleZoomChange = () => {
-      if (window.devicePixelRatio >= 1.5) {
-        setShowSideContent(false);
-        setMainContentMaxWidth("calc(100% - 360px)");
-      } else {
-        setShowSideContent(true);
-        setMainContentMaxWidth("calc(100% - 360px)");
-      }
-    };
-    window.addEventListener("resize", handleZoomChange);
-    handleZoomChange();
-    return () => {
-      window.removeEventListener("resize", handleZoomChange);
-    };
-  }, []);
 
   useEffect(() => {
     if (currentUser && currentUser._id) {

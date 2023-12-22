@@ -14,7 +14,7 @@ const NotifSchema = new mongoose.Schema(
       type: String,
     },
     type: {
-      type: Number,
+      type: String,
     },
     read: {
       type: Boolean,

@@ -22,18 +22,22 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
   const currentUser = req.body.userId;
-  const checkData = await Notif.find(req.body);
   try {
     if (req.body.own === currentUser) {
-      return;
+      return res.status(200).json("returning");
     }
-    if (checkData) {
-      await Notif.deleteOne();
+
+    const existingNotif = await Notif.findOne(req.body);
+    if (existingNotif) {
+      await Notif.deleteOne(req.body);
+      return res.status(200).json("Notif removed");
     }
-    const notif = await Notif.save(req.body);
-    res.status(200).json(notif);
+    const newNotif = new Notif(req.body);
+    await newNotif.save();
+    return res.status(200).json("Notif saved");
   } catch (err) {
-    res.status(500).json(err);
+    console.error(err);
+    return res.status(500).json(err);
   }
 });
 

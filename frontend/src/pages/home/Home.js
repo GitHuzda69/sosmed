@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Sidebar from "../../component/Leftbar/Leftbar.js";
 import SearchBar from "../../component/search/Search";
 import Settings from "../../component/Settings/Settings.js";
@@ -12,15 +12,24 @@ import FypSwitch from "../../component/fyp-button/fyp-switch.js";
 import HomeProfile from "../../component/home-profile/home-profile.js";
 import Rightbar from "../../component/rightbar/Rightbar.js";
 import Navbar from "../../component/navbar/navbar.js";
+import AuthContext from "../../context/authContext.js";
+import { io } from "socket.io-client";
 
-function Home(socket) {
+function Home() {
   const [settingOpen, setSettingOpen] = useState(false);
   const [logoutOpen, setLogoutOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
   const [isShowRightBar, setIsShowRightBar] = useState(true);
-
   const isHomePage = true;
+
+  const { user } = useContext(AuthContext);
+
+  const socket = io("http://localhost:8900");
+
+  useEffect(() => {
+    socket.emit("addUser", user?._id);
+  }, [socket, user]);
 
   const toggleSettings = () => {
     setSettingOpen(!settingOpen);

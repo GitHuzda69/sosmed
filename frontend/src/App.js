@@ -20,7 +20,6 @@ import AuthContext from "./context/authContext.js";
 import { useContext, useEffect, useState } from "react";
 import WebFont from "webfontloader";
 import PF from "./Logo_BNW.webp";
-import { io } from "socket.io-client";
 
 function App() {
   useEffect(() => {
@@ -35,15 +34,6 @@ function App() {
   }, []);
 
   const { user } = useContext(AuthContext);
-
-  const socket = io("http://localhost:8900");
-
-  useEffect(() => {
-    socket.emit("addUser", user?._id);
-    socket.on("getUsers", (u) => {
-      console.log(u);
-    });
-  }, [socket, user]);
 
   return (
     <Router>
@@ -64,7 +54,7 @@ function App() {
         <Route path="/facebook" element={user ? <Home /> : <Facebook />} />
         <Route exact path="/google/signup" element={user ? <Home /> : <GSignup />} />
         <Route exact path="/google/otp" element={user ? <Home /> : <OTP />} />
-        <Route exact path="/TermsOfServices" element={<TOS />} />
+        <Route exact path="/other/terms-of-service" element={<TOS />} />
         <Route path="/*" element={<NotFound />} />
         <Route path="*" element={<Navigate to="/*" />} />
       </Routes>
