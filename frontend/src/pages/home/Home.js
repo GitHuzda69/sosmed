@@ -9,6 +9,9 @@ import Posts from "../../component/posts/Posts";
 import Upload from "../../component/Upload/Upload.js";
 import Logout from "../../component/Logout/Logout.js";
 import FypSwitch from "../../component/fyp-button/fyp-switch.js";
+import HomeProfile from "../../component/home-profile/home-profile.js";
+import Rightbar from "../../component/rightbar/Rightbar.js";
+import Navbar from "../../component/navbar/navbar.js";
 
 function Home(socket) {
   const [settingOpen, setSettingOpen] = useState(false);
@@ -48,18 +51,42 @@ function Home(socket) {
     setDarkMode(newDarkModeStatus);
   };
 
+  useEffect(() => {
+    const storedDarkModeStatus = localStorage.getItem("isDarkMode") === "true";
+    setIsDarkMode(storedDarkModeStatus);
+    setDarkMode(storedDarkModeStatus);
+
+    const storedIsShowRightBar = localStorage.getItem("isShowRightBar");
+    if (storedIsShowRightBar !== null) {
+      setIsShowRightBar(JSON.parse(storedIsShowRightBar));
+    }
+  }, []);
+
   return (
     <>
       <div className={`app ${isDarkMode ? "dark-mode" : ""}`}>
-        <div className="main-content">
-          <div className="topbar">
-            <FypSwitch />
-            <SearchBar />
-          </div>
+        <div className={`main-content ${!isShowRightBar ? "no-right-bar" : ""}`}>
+          {!isShowRightBar && (
+            <div className="home-navbar">
+              <Navbar />
+            </div>
+          )}
+          {isShowRightBar && (
+            <div className="topbar">
+              <FypSwitch />
+              <SearchBar />
+            </div>
+          )}
           <div className="home-content">
             <Upload />
             <Posts isHome={true} socket={socket} />
           </div>
+          {isShowRightBar && (
+            <div className="side-content">
+              <HomeProfile />
+              <Rightbar socket={socket} />
+            </div>
+          )}
         </div>
         <div className="leftbar">
           <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isHomePage={isHomePage} />

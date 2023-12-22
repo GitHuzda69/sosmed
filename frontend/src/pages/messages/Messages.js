@@ -29,6 +29,7 @@ function Message() {
   const [selectedConversation, setSelectedConversation] = useState(null);
   const [chatContainerHeight, setChatContainerHeight] = useState(0);
   const chatContainerRef = useRef(null);
+  const [isShowRightBar, setIsShowRightBar] = useState(true);
 
   const toggleSettings = () => {
     setSettingOpen(!settingOpen);
@@ -211,6 +212,17 @@ function Message() {
     }
   }, [selectedConversation]);
 
+  useEffect(() => {
+    const storedDarkModeStatus = localStorage.getItem("isDarkMode") === "true";
+    setIsDarkMode(storedDarkModeStatus);
+    setDarkMode(storedDarkModeStatus);
+
+    const storedIsShowRightBar = localStorage.getItem("isShowRightBar");
+    if (storedIsShowRightBar !== null) {
+      setIsShowRightBar(JSON.parse(storedIsShowRightBar));
+    }
+  }, []);
+
   return (
     <div className="main-messages" style={{ height: chatHeight }}>
       <div className="search-message-friend">
@@ -277,7 +289,7 @@ function Message() {
         <>
           <div className="settings-overlay" />
           <div className="settings-container">
-            <Settings onClose={toggleSettings} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
+            <Settings onClose={toggleSettings} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} isShowRightBar={isShowRightBar} setIsShowRightBar={setIsShowRightBar} />
           </div>
         </>
       )}

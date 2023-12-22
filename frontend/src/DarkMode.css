@@ -101,6 +101,19 @@
     color: white;
   }
 
+  .dark-mode .content-sidebar-rightbar{
+    background-color: #1E1E1E;
+  }
+  .dark-mode .nav-button{
+    color: white;
+  }
+  .dark-mode .nav-text{
+    color: white;
+  }
+  .dark-mode .nav-bold-text{
+    color: white;
+  }
+
   /*buat setting*/ 
   .dark-mode .settings-popup{  
     background-color: rgb(58, 58, 58); 

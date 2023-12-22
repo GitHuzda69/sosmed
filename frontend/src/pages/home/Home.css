@@ -73,10 +73,16 @@ html::-webkit-scrollbar-track {
   margin-left: 65px; 
   padding: 0; 
 }
+.main-content.no-right-bar {
+  margin-top: 80px;
+  margin-left: 415px;
+  max-width: calc(100% - 520px);  
+}
 
 .home-content{
   width: 100%;
   flex-grow: 1; 
+  margin-top: 3px;
 }
 .home-content .posts{
 }
@@ -96,4 +102,14 @@ html::-webkit-scrollbar-track {
 
 .home-content .posts {
   border: none;
+}
+
+/*buat navbar*/
+.home-navbar .navbar-home{
+  padding-bottom: 5px;
+  border-bottom: 2px white solid;
+  color: white;
+}
+.home-navbar .navbar-home button{
+  color: white;
 }

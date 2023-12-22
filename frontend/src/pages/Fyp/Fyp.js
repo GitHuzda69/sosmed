@@ -12,6 +12,7 @@ import Logout from "../../component/Logout/Logout.js";
 import { makeRequest } from "../../fetch.js";
 import FypSwitch from "../../component/fyp-button/fyp-switch.js";
 import HomeProfile from "../../component/home-profile/home-profile.js";
+import Navbar from "../../component/navbar/navbar.js";
 import AuthContext from "../../context/authContext.js";
 
 const Fyp = (post, className, username) => {
@@ -122,6 +123,17 @@ const Fyp = (post, className, username) => {
     setOpenPostOption(null);
   };
 
+  useEffect(() => {
+    const storedDarkModeStatus = localStorage.getItem("isDarkMode") === "true";
+    setIsDarkMode(storedDarkModeStatus);
+    setDarkMode(storedDarkModeStatus);
+
+    const storedIsShowRightBar = localStorage.getItem("isShowRightBar");
+    if (storedIsShowRightBar !== null) {
+      setIsShowRightBar(JSON.parse(storedIsShowRightBar));
+    }
+  }, []);
+
   return (
     <>
       <div className={`app ${isDarkMode ? "dark-mode" : ""}`}>
@@ -129,11 +141,18 @@ const Fyp = (post, className, username) => {
           <div className="leftbar-fyp">
             <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isHomePage={isHomePage} />
           </div>
-          <div className="main-content-fyp" style={{ maxWidth: mainContentMaxWidth }}>
-            <div className="topbar-fyp">
-              <FypSwitch />
-              <SearchBar />
-            </div>
+          <div className={`main-content ${!isShowRightBar ? "no-right-bar" : ""}`}>
+            {!isShowRightBar && (
+              <div className="fyp-navbar">
+                <Navbar />
+              </div>
+            )}
+            {isShowRightBar && (
+              <div className="topbar-fyp">
+                <FypSwitch />
+                <SearchBar />
+              </div>
+            )}
             <div className="home-content-fyp">
               <Upload />
               <div className={`posts ${className}`}>
@@ -146,6 +165,7 @@ const Fyp = (post, className, username) => {
             {isShowRightBar && (
               <div className="side-content">
                 <HomeProfile />
+                <Rightbar />
               </div>
             )}
           </div>

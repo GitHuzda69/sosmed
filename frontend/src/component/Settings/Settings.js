@@ -13,8 +13,14 @@ const Settings = ({ onClose, isDarkMode, toggleDarkMode, isShowRightBar, setIsSh
   };
 
   const handleRightBarToggle = () => {
-    setIsShowRightBar((prevIsShowRightBar) => !prevIsShowRightBar);
+    const newIsShowRightBar = !isShowRightBar;
+    setIsShowRightBar(newIsShowRightBar);
+    localStorage.setItem("isShowRightBar", JSON.stringify(newIsShowRightBar));
   };
+
+  useEffect(() => {
+    setIsShowRightBar(isShowRightBar);
+  }, [isShowRightBar]);
 
   return (
     <div className="settings-popup">

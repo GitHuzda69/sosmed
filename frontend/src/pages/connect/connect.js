@@ -7,12 +7,15 @@ import Sidebar from "../../component/Leftbar/Leftbar";
 import HomeProfile from "../../component/home-profile/home-profile";
 import Rightbar from "../../component/rightbar/Rightbar";
 import Settings from "../../component/Settings/Settings";
+import Logout from "../../component/Logout/Logout";
 
 const Connect = () => {
   const [settingOpen, setSettingOpen] = useState(false);
   const [logoutOpen, setLogoutOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const { user: currentUser } = useContext(AuthContext);
+  const [isShowRightBar, setIsShowRightBar] = useState(true);
+
   const isConnectPage = true;
 
   const toggleSettings = () => {
@@ -45,6 +48,17 @@ const Connect = () => {
     setDarkMode(newDarkModeStatus);
   };
 
+  useEffect(() => {
+    const storedDarkModeStatus = localStorage.getItem("isDarkMode") === "true";
+    setIsDarkMode(storedDarkModeStatus);
+    setDarkMode(storedDarkModeStatus);
+
+    const storedIsShowRightBar = localStorage.getItem("isShowRightBar");
+    if (storedIsShowRightBar !== null) {
+      setIsShowRightBar(JSON.parse(storedIsShowRightBar));
+    }
+  }, []);
+
   return (
     <div className="connect-container">
       <h1>Connected Account</h1>
@@ -75,16 +89,26 @@ const Connect = () => {
         {currentUser && currentUser.facebook ? <button className="disconnect-button">Disconnect</button> : <button className="connect-button">Connect</button>}
       </div>
       <button className="disconnect-all-button">Disconnect all</button>
-      <div className="side-content">
-        <HomeProfile />
-        <Rightbar />
-      </div>
+      {isShowRightBar && (
+        <div className="side-content">
+          <HomeProfile />
+          <Rightbar />
+        </div>
+      )}
       <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isConnectPage={isConnectPage} />
       {settingOpen && (
         <>
           <div className="settings-overlay" />
           <div className="settings-container">
-            <Settings onClose={toggleSettings} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
+            <Settings onClose={toggleSettings} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} isShowRightBar={isShowRightBar} setIsShowRightBar={setIsShowRightBar} />
+          </div>
+        </>
+      )}
+      {logoutOpen && (
+        <>
+          <div className="popup-logout-container" />
+          <div className="popup-logout">
+            <Logout onClose={toggleLogout} />
           </div>
         </>
       )}
