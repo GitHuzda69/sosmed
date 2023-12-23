@@ -16,7 +16,7 @@ export default function Posts({ username, className, isHome, socket }) {
 
   //SOCKET IO
   useEffect(() => {
-    socket.on("getPostFollow", (data) => {
+    socket.socket.on("getPostFollow", (data) => {
       const decodeBase64ToBlob = (base64) => {
         const binaryString = window.atob(base64);
         const arrayBuffer = new ArrayBuffer(binaryString.length);
@@ -94,9 +94,20 @@ export default function Posts({ username, className, isHome, socket }) {
         {!username || username === user.username}
         {posts.length === 0
           ? "There is no any post yet"
-          : posts.map((p) => (
-              <Post key={p._id} post={p} openPostOption={openPostOption} handleOpenPostOption={handleOpenPostOption} handleClosePostOption={handleClosePostOption} friends={friends} socket={socket} />
-            ))}
+          : posts.map(
+              (p) =>
+                p._id && (
+                  <Post
+                    key={p._id}
+                    post={p}
+                    openPostOption={openPostOption}
+                    handleOpenPostOption={handleOpenPostOption}
+                    handleClosePostOption={handleClosePostOption}
+                    friends={friends}
+                    socket={socket}
+                  />
+                )
+            )}
       </div>
     </>
   );

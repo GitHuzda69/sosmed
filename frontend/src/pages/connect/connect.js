@@ -79,14 +79,14 @@ const Connect = () => {
         <div className="connect-name">
           <h2>Connect to Instagram</h2>
         </div>
-        {currentUser && currentUser.facebook ? <button className="disconnect-button">Disconnect</button> : <button className="connect-button">Connect</button>}
+        <button className="connect-button">Connect</button>
       </div>
       <div className="connect-content">
         <Icon icon="fa6-brands:x-twitter" width={40} height={40} />
         <div className="connect-name">
           <h2>Connect to X/Twitter</h2>
         </div>
-        {currentUser && currentUser.facebook ? <button className="disconnect-button">Disconnect</button> : <button className="connect-button">Connect</button>}
+        <button className="connect-button">Connect</button>
       </div>
       <button className="disconnect-all-button">Disconnect all</button>
       {isShowRightBar && (

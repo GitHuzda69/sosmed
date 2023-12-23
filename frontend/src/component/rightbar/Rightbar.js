@@ -4,18 +4,16 @@ import { Link, useNavigate } from "react-router-dom";
 import { makeRequest } from "../../fetch.js";
 
 import defaultprofile from "../../assets/profile/default_avatar.png";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import AuthContext from "../../context/authContext";
-import { io } from "socket.io-client";
 
 const Rightbar = (socket) => {
   const [friends, setFriends] = useState([]);
   const [onlineUser, setOnlineUser] = useState([]);
-  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const { user: currentUser } = useContext(AuthContext);
 
   useEffect(() => {
-    socket.socket?.on("getUsers", (users) => {
+    socket.socket.socket?.on("getUsers", (users) => {
       setOnlineUser(currentUser.followings.filter((f) => users.some((u) => u.userId === f)));
     });
   }, [currentUser]);

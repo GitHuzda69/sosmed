@@ -6,14 +6,13 @@ import Logout from "../../component/Logout/Logout";
 import { makeRequest } from "../../fetch.js";
 import { AuthContext } from "../../context/authContext.js";
 import { Icon } from "@iconify/react";
-import { io } from "socket.io-client";
 
 import defaultprofile from "../../assets/profile/default_avatar.png";
 import { format, isToday, isSameDay, isYesterday, isThisYear } from "date-fns";
 import Conversation from "../../component/Conversations/Conversations.js";
 import Chat from "../../component/Chat/Chat.js";
 
-function Message() {
+function Message(socket) {
   const [settingOpen, setSettingOpen] = useState(false);
   const [logoutOpen, setLogoutOpen] = useState(false);
   const [conversations, setConversations] = useState([]);
@@ -35,10 +34,13 @@ function Message() {
     setSettingOpen(!settingOpen);
   };
 
+  useEffect(() => {
+    socket.socket.on("getUsers", (users) => {});
+  }, [currentUser]);
+
   const toggleLogout = () => {
     setLogoutOpen(!logoutOpen);
   };
-
   useEffect(() => {
     const getConversations = async () => {
       try {
@@ -63,10 +65,8 @@ function Message() {
     getMessages();
   }, [currentChat]);
 
-  const socket = io("http://localhost:8900");
-
   useEffect(() => {
-    socket.on("getMessage", (data) => {
+    socket.socket.on("getMessage", (data) => {
       setArrivalMessage({
         sender: data.senderId,
         text: data.text,
@@ -128,7 +128,7 @@ function Message() {
 
     const receiverId = currentChat.members.find((member) => member !== currentUser._id);
 
-    socket.emit("sendMessage", {
+    socket.socket.emit("sendMessage", {
       senderId: currentUser._id,
       receiverId: receiverId,
       text: newMessage,

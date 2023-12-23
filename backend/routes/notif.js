@@ -26,7 +26,6 @@ router.post("/", async (req, res) => {
     if (req.body.own === currentUser) {
       return res.status(200).json("returning");
     }
-
     const existingNotif = await Notif.findOne(req.body);
     if (existingNotif) {
       await Notif.deleteOne(req.body);

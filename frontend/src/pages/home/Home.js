@@ -12,24 +12,13 @@ import FypSwitch from "../../component/fyp-button/fyp-switch.js";
 import HomeProfile from "../../component/home-profile/home-profile.js";
 import Rightbar from "../../component/rightbar/Rightbar.js";
 import Navbar from "../../component/navbar/navbar.js";
-import AuthContext from "../../context/authContext.js";
-import { io } from "socket.io-client";
 
-function Home() {
+function Home(socket) {
   const [settingOpen, setSettingOpen] = useState(false);
   const [logoutOpen, setLogoutOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [searchResults, setSearchResults] = useState([]);
   const [isShowRightBar, setIsShowRightBar] = useState(true);
   const isHomePage = true;
-
-  const { user } = useContext(AuthContext);
-
-  const socket = io("http://localhost:8900");
-
-  useEffect(() => {
-    socket.emit("addUser", user?._id);
-  }, [socket, user]);
 
   const toggleSettings = () => {
     setSettingOpen(!settingOpen);

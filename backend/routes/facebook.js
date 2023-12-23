@@ -2,6 +2,7 @@ const router = require("express").Router();
 const axios = require("axios");
 const dotenv = require("dotenv");
 const User = require("../models/User");
+const Facebook = require("../models/Facebook");
 const bcrypt = require("bcrypt");
 
 dotenv.config();
@@ -48,15 +49,20 @@ router.get("/facebook/callback", async (req, res) => {
       if (checkEmail.username) {
         return res.redirect("http://localhost:3000/login");
       }
-      return res.redirect(`http://localhost:3000/facebook?code=${checkEmail.otp}`);
+      return res.redirect(`http://localhost:3000/facebook?code=${checkEmail.facebookOtp}`);
     }
     const newUser = new User({
       email: userData.email,
       facebook: userData.email,
       displayname: userData.name,
+      facebookOtp: accessToken,
+    });
+    const newAccount = new Facebook({
+      email: userData.email,
       otp: accessToken,
     });
     await newUser.save();
+    await newAccount.save();
     return res.redirect(`http://localhost:3000/facebook?code=${accessToken}`);
   } catch (error) {
     console.error("Error during Facebook authentication:", error.message);
@@ -100,7 +106,7 @@ router.put("/facebook/register", async (req, res) => {
 router.get("/facebook/users", async (req, res) => {
   const accessToken = req.query.code;
   try {
-    const user = await User.findOne({ otp: accessToken });
+    const user = await User.findOne({ facebookOtp: accessToken });
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }

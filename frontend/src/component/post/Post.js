@@ -7,9 +7,8 @@ import { Icon } from "@iconify/react";
 import moment from "moment";
 import Commento from "../Commento/Commento.js";
 import defaultprofile from "../../assets/profile/default_avatar.png";
-import { io } from "socket.io-client";
 
-const Post = ({ post, openPostOption, handleOpenPostOption, handleClosePostOption, friends, socket }) => {
+const Post = ({ post, key, openPostOption, handleOpenPostOption, handleClosePostOption, friends, socket }) => {
   const [commentOpen, setCommentOpen] = useState(false);
   const [popupOpen, setPopupOpen] = useState(false);
   const [selectedPostImg, setSelectedPostImg] = useState(null);
@@ -84,7 +83,7 @@ const Post = ({ post, openPostOption, handleOpenPostOption, handleClosePostOptio
         type: " liked your post",
       });
 
-      socket.emit("sendNotification", {
+      socket.socket.emit("sendNotification", {
         senderId: currentUser._id,
         receiverId: post.userId,
         type: " liked your post",
@@ -136,7 +135,7 @@ const Post = ({ post, openPostOption, handleOpenPostOption, handleClosePostOptio
       const isFollowing = !following;
 
       if (isFollowing) {
-        socket.emit("sendNotification", {
+        socket.socket.emit("sendNotification", {
           senderId: currentUser._id,
           receiverId: post.userId,
           type: " started follow you",
@@ -278,7 +277,7 @@ const Post = ({ post, openPostOption, handleOpenPostOption, handleClosePostOptio
   };
 
   return (
-    <div className="post-container">
+    <div className="post-container" key={key}>
       <div className="post">
         <div className="container">
           <div className="user">

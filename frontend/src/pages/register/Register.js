@@ -31,11 +31,7 @@ const Register = () => {
     e.preventDefault();
 
     /*buat ngecek kosong apa ga sama agree*/
-    if (
-      !inputs.username.trim() ||
-      !inputs.email.trim() ||
-      !inputs.password.trim()
-    ) {
+    if (!inputs.username.trim() || !inputs.email.trim() || !inputs.password.trim()) {
       setErrors("Please fill in all required fields.");
       return;
     }
@@ -97,14 +93,7 @@ const Register = () => {
               <strong style={{ paddingBottom: "5px" }}>
                 <label>Username</label>
               </strong>
-              <input
-                className="input-signup"
-                placeholder="Enter Your Username"
-                required
-                name="username"
-                ref={username}
-                onChange={handleChange}
-              />
+              <input className="input-signup" placeholder="Enter Your Username" required name="username" ref={username} onChange={handleChange} />
             </div>
             <div
               className="form-group"
@@ -117,14 +106,7 @@ const Register = () => {
               <strong style={{ paddingBottom: "5px" }}>
                 <label type="email">Email</label>
               </strong>
-              <input
-                className="input-signup"
-                placeholder="Enter Your Active Email"
-                required
-                name="email"
-                ref={email}
-                onChange={handleChange}
-              />
+              <input className="input-signup" placeholder="Enter Your Active Email" required name="email" ref={email} onChange={handleChange} />
             </div>
             <div
               className="form-group"
@@ -137,13 +119,7 @@ const Register = () => {
               <strong style={{ paddingBottom: "5px" }}>
                 <label>Display Name</label>
               </strong>
-              <input
-                className="input-signup"
-                placeholder="Enter Your Display Name "
-                name="displayname"
-                ref={displayname}
-                onChange={handleChange}
-              />
+              <input className="input-signup" placeholder="Enter Your Display Name " name="displayname" ref={displayname} onChange={handleChange} />
             </div>
             <div
               className="form-group"
@@ -156,47 +132,16 @@ const Register = () => {
               <strong style={{ paddingBottom: "5px" }}>
                 <label type="password">Password</label>
               </strong>
-              <input
-                className="input-signup"
-                type={showPassword ? "text" : "password"}
-                placeholder="Enter Your Password"
-                required
-                name="password"
-                ref={password}
-                onChange={handleChange}
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="show-password-signup-button"
-              >
-                {showPassword ? (
-                  <Icon
-                    icon="clarity:eye-hide-line"
-                    color="black"
-                    width={23}
-                    height={23}
-                  />
-                ) : (
-                  <Icon
-                    icon="clarity:eye-line"
-                    color="black"
-                    width={23}
-                    height={23}
-                  />
-                )}
+              <input className="input-signup" type={showPassword ? "text" : "password"} placeholder="Enter Your Password" required name="password" ref={password} onChange={handleChange} />
+              <button type="button" onClick={() => setShowPassword(!showPassword)} className="show-password-signup-button">
+                {showPassword ? <Icon icon="clarity:eye-hide-line" color="black" width={23} height={23} /> : <Icon icon="clarity:eye-line" color="black" width={23} height={23} />}
               </button>
             </div>
             <label className="checkbox-container-signup checkbox-label-signup">
-              <input
-                type="checkbox"
-                className="checkbox-input-signup"
-                checked={agreeStatus}
-                onChange={() => setAgreeStatus(!agreeStatus)}
-              />
+              <input type="checkbox" className="checkbox-input-signup" checked={agreeStatus} onChange={() => setAgreeStatus(!agreeStatus)} />
               <h4>
                 I Agree with
-                <Link to="/TermsOfServices">
+                <Link to="/other/terms-of-service">
                   <button type="button" className="terms-button">
                     Terms & Services
                   </button>

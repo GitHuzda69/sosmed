@@ -7,13 +7,12 @@ import Settings from "../../component/Settings/Settings";
 import Logout from "../../component/Logout/Logout";
 import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
-import { io } from "socket.io-client";
 
 import AuthContext from "../../context/authContext.js";
 import { makeRequest } from "../../fetch.js";
 import moment from "moment";
 
-function Notif() {
+function Notif(socket) {
   const [settingOpen, setSettingOpen] = useState(false);
   const [logoutOpen, setLogoutOpen] = useState(false);
   const [showAll, setShowAll] = useState(true);
@@ -31,17 +30,16 @@ function Notif() {
   const isNotifPage = true;
 
   //SOCKET IO
-  const socket = io("http://localhost:8900");
-
   useEffect(() => {
-    socket.on("getUsers", (users) => {});
+    socket.socket.on("getUsers", (users) => {});
   }, [currentUser]);
 
   useEffect(() => {
-    socket.on("getNotification", (data) => {
+    socket.socket.on("getNotification", (data) => {
+      console.log(data);
       setNotifSocket((prev) => [...prev, data]);
     });
-  }, [socket]);
+  }, [socket.socket]);
 
   useEffect(() => {
     const fetchNotif = async () => {
@@ -63,8 +61,8 @@ function Notif() {
       } catch (err) {
         console.error(err);
       }
-      fetchNotifRead();
     };
+    fetchNotifRead();
   }, []);
 
   useEffect(() => {
@@ -75,8 +73,8 @@ function Notif() {
       } catch (err) {
         console.error(err);
       }
-      fetchNotifUnRead();
     };
+    fetchNotifUnRead();
   }, []);
 
   const notif = notification.find((originalNotification) => {
@@ -249,10 +247,10 @@ function Notif() {
       {isShowRightBar && (
         <div className="side-content">
           <HomeProfile />
-          <Rightbar />
+          <Rightbar socket={socket} />
         </div>
       )}
-      <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isNotifPage={isNotifPage} />
+      <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isNotifPage={isNotifPage} socket={socket} />
       {settingOpen && (
         <>
           <div className="settings-overlay" />

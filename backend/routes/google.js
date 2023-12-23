@@ -4,6 +4,7 @@ const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const dotenv = require("dotenv");
 const { v4: uuidv4 } = require("uuid");
+const Google = require("../models/Google");
 
 dotenv.config();
 
@@ -33,19 +34,24 @@ router.post("/gmail/send", async (req, res) => {
       if (checkEmail.username) {
         return res.redirect("http://localhost:3000/login");
       }
-      otp = checkEmail.otp;
+      otp = checkEmail.googleOtp;
     } else {
       otp = generateOTP();
       const newUser = new User({
         email: req.body.email,
         google: req.body.email,
+        googleOtp: otp,
+      });
+      const newGoogle = new Google({
+        email: req.body.email,
         otp: otp,
       });
       await newUser.save();
+      await newGoogle.save();
     }
 
     const mailOptions = {
-      from: `"Sync, Manage, and Direct Admin" <${process.env.EMAIL}>`,
+      from: "Sync, Manage, and Direct Admin",
       to: req.body.email,
       subject: "Your OTP for Login",
       html: `

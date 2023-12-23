@@ -17,22 +17,23 @@ const Facebook = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState(null);
   const urlParams = new URLSearchParams(window.location.search);
-  const code = urlParams.get('code');
-  
+  const code = urlParams.get("code");
+
   useEffect(() => {
-      const fetchUser = async () => {
-        const url = `auth/facebook/users?code=${code}`;
-        try {
-          const res = await makeRequest(url);
-          setUser(res);
-        } catch (err) {
-          // Handle error
-          console.error("Error:", err.message);
-        }
-      };
-      fetchUser();
+    const fetchUser = async () => {
+      const url = `auth/facebook/users?code=${code}`;
+      try {
+        const res = await makeRequest(url);
+        setUser(res);
+      } catch (err) {
+        // Handle error
+        console.error("Error:", err.message);
+      }
+    };
+    fetchUser();
   }, []);
-  const email = user.email
+
+  const email = user.email;
 
   const handleClick = async (e) => {
     e.preventDefault();
@@ -80,13 +81,7 @@ const Facebook = () => {
               <strong style={{ paddingBottom: "5px" }}>
                 <label>Username</label>
               </strong>
-              <input
-                className="input-signup"
-                placeholder="Enter Your Username"
-                required
-                name="username"
-                ref={username}
-              />
+              <input className="input-signup" placeholder="Enter Your Username" required name="username" ref={username} />
             </div>
             <div
               className="form-group"
@@ -99,12 +94,7 @@ const Facebook = () => {
               <strong style={{ paddingBottom: "5px" }}>
                 <label>Email</label>
               </strong>
-              <input
-              type="email"
-              value={user.email}
-              className="input-signup"
-              readOnly
-            />
+              <input type="email" value={user.email} className="input-signup" readOnly />
             </div>
             <div
               className="form-group"
@@ -117,12 +107,7 @@ const Facebook = () => {
               <strong style={{ paddingBottom: "5px" }}>
                 <label>Display Name</label>
               </strong>
-              <input
-                className="input-signup"
-                defaultValue={user.displayname}
-                name="displayname"
-                ref={displayname}
-              />
+              <input className="input-signup" defaultValue={user.displayname} name="displayname" ref={displayname} />
             </div>
             <div
               className="form-group"
@@ -135,34 +120,9 @@ const Facebook = () => {
               <strong style={{ paddingBottom: "5px" }}>
                 <label type="password">Password</label>
               </strong>
-              <input
-                className="input-signup"
-                type={showPassword ? "text" : "password"}
-                placeholder="Enter Your Password"
-                required
-                name="password"
-                ref={password}
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="show-password-signup-button"
-              >
-                {showPassword ? (
-                  <Icon
-                    icon="clarity:eye-hide-line"
-                    color="black"
-                    width={23}
-                    height={23}
-                  />
-                ) : (
-                  <Icon
-                    icon="clarity:eye-line"
-                    color="black"
-                    width={23}
-                    height={23}
-                  />
-                )}
+              <input className="input-signup" type={showPassword ? "text" : "password"} placeholder="Enter Your Password" required name="password" ref={password} />
+              <button type="button" onClick={() => setShowPassword(!showPassword)} className="show-password-signup-button">
+                {showPassword ? <Icon icon="clarity:eye-hide-line" color="black" width={23} height={23} /> : <Icon icon="clarity:eye-line" color="black" width={23} height={23} />}
               </button>
             </div>
             {errors && (
@@ -172,12 +132,7 @@ const Facebook = () => {
               </div>
             )}
             <label className="checkbox-container-signup checkbox-label-signup">
-              <input
-                type="checkbox"
-                className="checkbox-input-signup"
-                checked={agreeStatus}
-                onChange={() => setAgreeStatus(!agreeStatus)}
-              />
+              <input type="checkbox" className="checkbox-input-signup" checked={agreeStatus} onChange={() => setAgreeStatus(!agreeStatus)} />
               <h4>
                 I Agree with
                 <button type="button" className="terms-button">
@@ -197,8 +152,7 @@ const Facebook = () => {
                 alignItems: "center",
                 justifyContent: "center",
               }}
-            >
-            </div>
+            ></div>
           </form>
         </div>
       </div>

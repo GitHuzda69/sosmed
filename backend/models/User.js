@@ -17,13 +17,11 @@ const UserSchema = new mongoose.Schema(
     },
     facebook: {
       type: String,
-      required: true,
       max: 50,
       unique: true,
     },
     google: {
       type: String,
-      required: true,
       max: 50,
       unique: true,
     },
@@ -69,7 +67,10 @@ const UserSchema = new mongoose.Schema(
       type: String,
       max: 50,
     },
-    otp: {
+    googleOtp: {
+      type: String,
+    },
+    facebookOtp: {
       type: String,
     },
     relationship: {

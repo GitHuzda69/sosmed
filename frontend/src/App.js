@@ -20,6 +20,7 @@ import AuthContext from "./context/authContext.js";
 import { useContext, useEffect, useState } from "react";
 import WebFont from "webfontloader";
 import PF from "./Logo_BNW.webp";
+import { io } from "socket.io-client";
 
 function App() {
   useEffect(() => {
@@ -35,21 +36,27 @@ function App() {
 
   const { user } = useContext(AuthContext);
 
+  const socket = io("http://localhost:8900");
+
+  useEffect(() => {
+    socket.emit("addUser", user?._id);
+  }, [socket, user]);
+
   return (
     <Router>
       <Routes>
-        <Route exact path="/" element={user ? <Home /> : <Login />} />
-        <Route exact path="/messages" element={user ? <Message /> : <Login />} />
+        <Route exact path="/" element={user ? <Home socket={socket} /> : <Login />} />
+        <Route exact path="/messages" element={user ? <Message socket={socket} /> : <Login />} />
         <Route path="/search/:keyword" element={user ? <Result /> : <Login />} />
         <Route path="/profile/:username" element={<Profile />} />
         <Route path="/fyp/profile/:username" element={<Profile />} />
         <Route path="/login/profile/:username" element={<Profile />} />
         <Route path="/friend/:username" element={user ? <Friends /> : <Login />} />
         <Route exact path="/fyp" element={user ? <Fyp /> : <Login />} />
-        <Route exact path="/notif" element={user ? <Notif /> : <Login />} />
+        <Route exact path="/notif" element={user ? <Notif socket={socket} /> : <Login />} />
         <Route exact path="/connect" element={user ? <Connect /> : <Login />} />
         <Route exact path="/signup" element={<Signup />} />
-        <Route exact path="/login" element={user ? <Home /> : <Login />} />
+        <Route exact path="/login" element={user ? <Home socket={socket} /> : <Login />} />
         <Route exact path="/google" element={user ? <Home /> : <Google />} />
         <Route path="/facebook" element={user ? <Home /> : <Facebook />} />
         <Route exact path="/google/signup" element={user ? <Home /> : <GSignup />} />
