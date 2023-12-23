@@ -5,6 +5,7 @@ import Rightbar from "../../component/rightbar/Rightbar";
 import HomeProfile from "../../component/home-profile/home-profile.js";
 import Settings from "../../component/Settings/Settings";
 import Logout from "../../component/Logout/Logout";
+import Navbar from "../../component/navbar/navbar.js";
 import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
 
@@ -162,7 +163,7 @@ function Notif(socket) {
 
   return (
     <div className={`app ${isDarkMode ? "dark-mode" : ""}`}>
-      <div className="main-notif">
+      <div className={isShowRightBar ? "main-notif" : "main-notif-norightbar"}>
         <h1>Notifications</h1>
         <button className="mark-read-button">
           <Icon icon="solar:check-read-linear" width={30} height={30} />
@@ -250,7 +251,12 @@ function Notif(socket) {
           <Rightbar socket={socket} />
         </div>
       )}
-      <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isNotifPage={isNotifPage} socket={socket} />
+      {!isShowRightBar && (
+        <div className="home-navbar">
+          <Navbar />
+        </div>
+      )}
+      <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isNotifPage={isNotifPage} socket={socket} isShowRightBar={isShowRightBar} setIsShowRightBar={setIsShowRightBar} />
       {settingOpen && (
         <>
           <div className="settings-overlay" />

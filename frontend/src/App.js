@@ -9,6 +9,7 @@ import Message from "./pages/messages/Messages.js";
 import Friends from "./component/friendlist/FriendsList.js";
 import Profile from "./pages/profile/Profile.js";
 import Fyp from "./pages/Fyp/Fyp.js";
+import Newest from "./pages/newest/newest.js";
 import Result from "./pages/Result/Result.js";
 import Notif from "./pages/notif/notif.js";
 import TOS from "./pages/tos/tos.js";
@@ -53,6 +54,7 @@ function App() {
         <Route path="/login/profile/:username" element={<Profile />} />
         <Route path="/friend/:username" element={user ? <Friends /> : <Login />} />
         <Route exact path="/fyp" element={user ? <Fyp /> : <Login />} />
+        <Route exact path="/newest" element={user ? <Newest /> : <Login />} />
         <Route exact path="/notif" element={user ? <Notif socket={socket} /> : <Login />} />
         <Route exact path="/connect" element={user ? <Connect /> : <Login />} />
         <Route exact path="/signup" element={<Signup />} />

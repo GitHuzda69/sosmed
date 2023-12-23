@@ -9,7 +9,6 @@ export default function Chat({ message, own }) {
   const [isHovered, setIsHovered] = useState(false);
   const { user } = useContext(AuthContext);
 
-
   const handleMouseEnter = () => {
     setIsHovered(true);
   };
@@ -29,11 +28,7 @@ export default function Chat({ message, own }) {
   };
 
   return (
-    <div
-      className={own ? "chat-self" : "chat-other"}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
+    <div className={own ? "chat-self" : "chat-other"} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       <h3>{message.text}</h3>
       <h4>{format(new Date(message.createdAt), "hh:mm a")}</h4>
       {isHovered && own && (

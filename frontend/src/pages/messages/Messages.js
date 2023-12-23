@@ -11,6 +11,7 @@ import defaultprofile from "../../assets/profile/default_avatar.png";
 import { format, isToday, isSameDay, isYesterday, isThisYear } from "date-fns";
 import Conversation from "../../component/Conversations/Conversations.js";
 import Chat from "../../component/Chat/Chat.js";
+import Navbar from "../../component/navbar/navbar.js";
 
 function Message(socket) {
   const [settingOpen, setSettingOpen] = useState(false);
@@ -224,11 +225,14 @@ function Message(socket) {
   }, []);
 
   return (
-    <div className="main-messages" style={{ height: chatHeight }}>
-      <div className="search-message-friend">
-        <h1>Messages</h1>
-        <Icon icon="octicon:search-16" className="searchbar-message-friend-button" width="22" height="22" />
-        <input className="input-search-friend" type="text" placeholder="Search on Messages" />
+    <div className={isShowRightBar ? "main-messages" : "main-messages-norightbar"} style={{ height: chatHeight }}>
+      <div className={isShowRightBar ? "search-message-friend" : "search-message-norightbar"}>
+        <div className="message-friend-pages">
+          {!isShowRightBar && <Icon icon="fluent:chat-16-regular" width={30} height={30} />}
+          <h1>Messages</h1>
+        </div>
+        <Icon icon="octicon:search-16" className={isShowRightBar ? "searchbar-message-friend-button" : "searchbar-message-friend-norightbar"} width="22" height="22" />
+        <input className={isShowRightBar ? "input-search-friend" : "input-search-friend-norightbar"} type="text" placeholder="Search on Messages" />
         <div
           style={{
             borderBottom: "1px gray solid",
@@ -238,7 +242,7 @@ function Message(socket) {
         />
         {conversations.map((c) => (
           <div key={c._id} onClick={() => handleConversationClick(c)}>
-            <Conversation conversation={c} currentUser={currentUser} onClick={handleConversationClick} isSelected={c === selectedConversation} />
+            <Conversation conversation={c} currentUser={currentUser} onClick={handleConversationClick} isSelected={c === selectedConversation} isShowRightBar={isShowRightBar} />
           </div>
         ))}
       </div>
@@ -255,7 +259,7 @@ function Message(socket) {
               >
                 <p>{formatDateLabel(date)}</p>
                 {messagesForDate.map((m) => (
-                  <Chat key={m._id} message={m} own={m.sender === currentUser._id} />
+                  <Chat key={m._id} message={m} own={m.sender === currentUser._id} isShowRightBar={isShowRightBar} />
                 ))}
               </div>
             ))}
@@ -279,12 +283,16 @@ function Message(socket) {
           </div>
         </div>
       ) : (
-        <div className="pick-chat">
+        <div className={isShowRightBar ? "pick-chat" : "pick-chat-norightbar"}>
           <span className="not-chat">Open a Conversation</span>
         </div>
       )}
-
-      <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isMessagesPage={isMessagesPage} />
+      {!isShowRightBar && (
+        <div className="home-navbar">
+          <Navbar />
+        </div>
+      )}
+      <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isMessagesPage={isMessagesPage} isShowRightBar={isShowRightBar} setIsShowRightBar={setIsShowRightBar} />
       {settingOpen && (
         <>
           <div className="settings-overlay" />

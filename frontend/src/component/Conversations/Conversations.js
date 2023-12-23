@@ -7,12 +7,7 @@ import { io } from "socket.io-client";
 import { makeRequest } from "../../fetch";
 import defaultprofile from "../../assets/profile/default_avatar.png";
 
-export default function Conversation({
-  conversation,
-  currentUser,
-  onClick,
-  isSelected,
-}) {
+export default function Conversation({ conversation, currentUser, onClick, isSelected, isShowRightbar }) {
   const [user, setUser] = useState();
   const [isOnline, setIsOnline] = useState(false);
 
@@ -24,9 +19,7 @@ export default function Conversation({
   useEffect(() => {
     socket.current.emit("addUser", currentUser._id);
     socket.current.on("getUsers", (users) => {
-      setIsOnline(
-        currentUser.followings.filter((f) => users.some((u) => u.userId === f))
-      );
+      setIsOnline(currentUser.followings.filter((f) => users.some((u) => u.userId === f)));
     });
   }, [currentUser]);
 
@@ -47,22 +40,9 @@ export default function Conversation({
   return (
     <div className="message-friend-container">
       <div className="message-friend-bar">
-        <button
-          className={`message-friend ${isSelected ? "selected-friend" : ""}`}
-          onClick={() => onClick(conversation)}
-        >
-          <img
-            className="message-friend-avatar"
-            src={
-              user && user.profilePicture ? user.profilePicture : defaultprofile
-            }
-            alt=""
-          />
-          {isOnline && isOnline.includes(friendId) ? (
-            <div className={`statusDot ${"greenDot"}`} />
-          ) : (
-            <div className={`statusDot ${"grayDot"}`} />
-          )}
+        <button className={`message-friend ${isSelected ? "selected-friend" : ""}`} onClick={() => onClick(conversation)}>
+          <img className="message-friend-avatar" src={user && user.profilePicture ? user.profilePicture : defaultprofile} alt="" />
+          {isOnline && isOnline.includes(friendId) ? <div className={`statusDot ${"greenDot"}`} /> : <div className={`statusDot ${"grayDot"}`} />}
           <div className="message-friend-bio">
             <h2>{user && user.displayname}</h2>
             <h3>{user && user.desc && user.desc.slice(0, 35)}...</h3>

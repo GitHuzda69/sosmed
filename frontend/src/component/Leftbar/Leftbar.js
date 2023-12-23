@@ -8,10 +8,9 @@ import Settings from "../Settings/Settings";
 import defaultprofile from "../../assets/profile/default_avatar.png";
 import logo from "../../assets/Logo_BNW.jpg";
 
-const Sidebar = ({ toggleSettings, toggleLogout, isFriendListPage, isHomePage, isMessagesPage, isNotifPage, isConnectPage, isProfilePage }) => {
+const Sidebar = ({ toggleSettings, toggleLogout, isFriendListPage, isHomePage, isMessagesPage, isNotifPage, isConnectPage, isProfilePage, isShowRightBar, setIsShowRightBar }) => {
   const { currentUser } = useContext(AuthContext);
   const { user } = useContext(AuthContext);
-  const [isShowRightBar, setIsShowRightBar] = useState(true);
 
   useEffect(() => {
     const storedIsShowRightBar = localStorage.getItem("isShowRightBar");
@@ -30,6 +29,7 @@ const Sidebar = ({ toggleSettings, toggleLogout, isFriendListPage, isHomePage, i
           </Link>
           <Link to="/notif">
             <button>{isNotifPage ? <Icon icon="mdi:bell" width="35" height="35" /> : <Icon icon="mdi:bell-outline" width="35" height="35" />}</button>
+            <div className="notif-nobar-dot"></div>
           </Link>
           <Link to="/messages">
             <button>{isMessagesPage ? <Icon icon="bxs:chat" width="35" height="35" /> : <Icon icon="bx:chat" width="35" height="35" />}</button>
@@ -57,6 +57,7 @@ const Sidebar = ({ toggleSettings, toggleLogout, isFriendListPage, isHomePage, i
           </Link>
           <Link to="/notif" className="nav-link">
             <button className="nav-button">{isNotifPage ? <Icon icon="mdi:bell" width="35" height="35" /> : <Icon icon="mdi:bell-outline" width="35" height="35" />}</button>
+            <div className="notif-dot"></div>
             <span className={isNotifPage ? "nav-bold-text" : "nav-text"}>Notification</span>
           </Link>
           <Link to="/messages" className="nav-link">
@@ -70,7 +71,9 @@ const Sidebar = ({ toggleSettings, toggleLogout, isFriendListPage, isHomePage, i
             </Link>
           )}
           <Link to="/connect" className="nav-link">
-            <button className="nav-button">{isConnectPage ? <Icon icon="mingcute:link-fill" width="35" height="35" rotate={1} /> : <Icon icon="mingcute:link-line" width="35" height="35" rotate={1} />}</button>
+            <button className="nav-button">
+              {isConnectPage ? <Icon icon="mingcute:link-fill" width="35" height="35" rotate={1} /> : <Icon icon="mingcute:link-line" width="35" height="35" rotate={1} />}
+            </button>
             <span className={isConnectPage ? "nav-bold-text" : "nav-text"}>Connect</span>
           </Link>
           <button onClick={toggleSettings} className="nav-button">
