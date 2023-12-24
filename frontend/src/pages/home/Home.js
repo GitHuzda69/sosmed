@@ -18,6 +18,7 @@ function Home(socket) {
   const [logoutOpen, setLogoutOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isShowRightBar, setIsShowRightBar] = useState(true);
+
   const isHomePage = true;
 
   const toggleSettings = () => {
@@ -66,7 +67,7 @@ function Home(socket) {
         <div className={`main-content ${!isShowRightBar ? "no-right-bar" : ""}`}>
           {!isShowRightBar && (
             <div className="home-navbar">
-              <Navbar />
+              <Navbar isHomePage={isHomePage} />
             </div>
           )}
           {isShowRightBar && (
@@ -87,7 +88,7 @@ function Home(socket) {
           )}
         </div>
         <div className="leftbar">
-          <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isHomePage={isHomePage} />
+          <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isHomePage={isHomePage} isShowRightBar={isShowRightBar} setIsShowRightBar={setIsShowRightBar} />
         </div>
       </div>
       {settingOpen && (

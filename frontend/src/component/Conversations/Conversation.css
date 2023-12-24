@@ -3,7 +3,7 @@
   height: 100%;
   position: relative;
   display: flex;
-  flex-direction: column;
+  flex-direction: column; 
   margin-left: -20px;
   margin-right: -20px;
 }
@@ -17,9 +17,9 @@
   flex-direction: column;
   height: 100%;
   margin-left: 0px;
-  margin-right: -8px;
-  overflow-y: scroll;
-  overflow-x: hidden;
+  margin-right: -8px; 
+  overflow-y: scroll; 
+  overflow-x: hidden; 
   scrollbar-width: thin;
   scrollbar-color: #999999 #ffffff;
 }
@@ -49,13 +49,14 @@
 
 .message-friend {
   display: flex;
-  flex-direction: row;
+  flex-direction: row; 
   padding: 5px 10px;
+  margin-bottom: 0;
   border-bottom: 1px gray solid;
 }
 .message-friend:hover {
   border-radius: 0;
-  background-color: #999999;
+  background-color: #b9b9b9;
   transition: all 0.3s ease;
 }
 
@@ -91,11 +92,12 @@
 }
 
 .statusDot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  margin-top: 40px;
-  margin-left: -15px;
+  position: absolute;
+  top: 6px;
+  left: 67px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%; 
   z-index: 10;
 }
 
@@ -106,3 +108,4 @@
 .grayDot {
   background-color: gray;
 }
+ 
