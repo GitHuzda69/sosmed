@@ -8,9 +8,10 @@ import Settings from "../Settings/Settings";
 import defaultprofile from "../../assets/profile/default_avatar.png";
 import logo from "../../assets/Logo_BNW.jpg";
 
-const Sidebar = ({ toggleSettings, toggleLogout, isFriendListPage, isHomePage, isMessagesPage, isNotifPage, isConnectPage, isProfilePage, isShowRightBar, setIsShowRightBar }) => {
+const Sidebar = ({ toggleSettings, toggleLogout, isFriendListPage, isHomePage, isMessagesPage, isNotifPage, isConnectPage, isProfilePage, isShowRightBar, setIsShowRightBar, socket }) => {
   const { currentUser } = useContext(AuthContext);
   const { user } = useContext(AuthContext);
+  const [notifDot, setNotifDot] = useState(false);
 
   useEffect(() => {
     const storedIsShowRightBar = localStorage.getItem("isShowRightBar");
@@ -18,6 +19,12 @@ const Sidebar = ({ toggleSettings, toggleLogout, isFriendListPage, isHomePage, i
       setIsShowRightBar(JSON.parse(storedIsShowRightBar), () => {});
     }
   }, []);
+
+  useEffect(() => {
+    socket.on("getNotification", (data) => {
+      setNotifDot(true);
+    });
+  }, [socket]);
 
   return (
     <div className={`sidebar ${isShowRightBar ? "hide-right-bar" : "show-right-bar"}`}>
@@ -29,7 +36,7 @@ const Sidebar = ({ toggleSettings, toggleLogout, isFriendListPage, isHomePage, i
           </Link>
           <Link to="/notif">
             <button>{isNotifPage ? <Icon icon="mdi:bell" width="35" height="35" /> : <Icon icon="mdi:bell-outline" width="35" height="35" />}</button>
-            <div className="notif-nobar-dot"></div>
+            {notifDot && notifDot === true ? <div className="notif-nobar-dot"></div> : ""}
           </Link>
           <Link to="/messages">
             <button>{isMessagesPage ? <Icon icon="bxs:chat" width="35" height="35" /> : <Icon icon="bx:chat" width="35" height="35" />}</button>

@@ -8,15 +8,25 @@ import HomeProfile from "../../component/home-profile/home-profile";
 import Rightbar from "../../component/rightbar/Rightbar";
 import Settings from "../../component/Settings/Settings";
 import Logout from "../../component/Logout/Logout";
+import { makeRequest } from "../../fetch";
 
-const Connect = () => {
+const Connect = (socket) => {
   const [settingOpen, setSettingOpen] = useState(false);
   const [logoutOpen, setLogoutOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const { user: currentUser } = useContext(AuthContext);
   const [isShowRightBar, setIsShowRightBar] = useState(true);
-
   const isConnectPage = true;
+
+  const handleFacebook = async () => {
+    try {
+      const res = await makeRequest("auth/facebook", "GET");
+      window.close();
+      window.open(res);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   const toggleSettings = () => {
     setSettingOpen(!settingOpen);
@@ -72,7 +82,13 @@ const Connect = () => {
           <h2>Connect to Facebook</h2>
           <h3>{currentUser && currentUser.facebook ? currentUser.facebook : ""}</h3>
         </div>
-        {currentUser && currentUser.facebook ? <button className="disconnect-button">Disconnect</button> : <button className="connect-button">Connect</button>}
+        {currentUser && currentUser.facebook ? (
+          <button className="disconnect-button">Disconnect</button>
+        ) : (
+          <button className="connect-button" onClick={handleFacebook}>
+            Connect
+          </button>
+        )}
       </div>
       <div className="connect-content">
         <Icon icon="streamline:instagram-solid" width={40} height={40} />
@@ -92,10 +108,10 @@ const Connect = () => {
       {isShowRightBar && (
         <div className="side-content">
           <HomeProfile />
-          <Rightbar />
+          <Rightbar socket={socket} />
         </div>
       )}
-      <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isConnectPage={isConnectPage} />
+      <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isConnectPage={isConnectPage} setIsShowRightBar={setIsShowRightBar} socket={socket.socket} />
       {settingOpen && (
         <>
           <div className="settings-overlay" />

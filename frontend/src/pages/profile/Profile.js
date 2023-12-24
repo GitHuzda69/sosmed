@@ -18,7 +18,7 @@ import FriendList from "../../component/friendlist/FriendsList.js";
 import defaultprofile from "../../assets/profile/default_avatar.png";
 import defaultcover from "../../assets/profile/default_banner.jpg";
 
-const Profile = () => {
+const Profile = (socket) => {
   const [imagePopupOpenbanner, setImagePopupOpenBanner] = useState(false);
   const [imagePopupOpenprofile, setImagePopupOpenProfile] = useState(false);
   const [isUpdateOpen, setIsUpdateOpen] = useState(false);
@@ -34,6 +34,7 @@ const Profile = () => {
   const [showPopupUnfollow, setShowPopupUnfollow] = useState(false);
   const [showPopupFollow, setShowPopupFollow] = useState(false);
   const [showUnfollowConfirmation, setShowUnfollowConfirmation] = useState(false);
+  const [isShowRightBar, setIsShowRightBar] = useState(true);
 
   const [followed, setFollowed] = useState(currentUser.followings.includes(user?._id));
 
@@ -222,12 +223,22 @@ const Profile = () => {
                 )}
               </div>
             </div>
-            {showPosts && <Posts username={username} className="posts-profile" />}
+            {showPosts && <Posts username={username} className="posts-profile" socket={socket.socket} />}
           </div>
-          <RightbarProfile user={currentUser} friends={friends} username={username} handleFollow={handleFollow} handleMessage={handleMessage} currentUser={currentUser} setShowUnfollowConfirmation={setShowUnfollowConfirmation} showUnfollowConfirmation={showUnfollowConfirmation} showPopupFollow={showPopupFollow} />
+          <RightbarProfile
+            user={currentUser}
+            friends={friends}
+            username={username}
+            handleFollow={handleFollow}
+            handleMessage={handleMessage}
+            currentUser={currentUser}
+            setShowUnfollowConfirmation={setShowUnfollowConfirmation}
+            showUnfollowConfirmation={showUnfollowConfirmation}
+            showPopupFollow={showPopupFollow}
+          />
         </div>
       </div>
-      <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isProfilePage={isProfilePage} />
+      <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isProfilePage={isProfilePage} setIsShowRightBar={setIsShowRightBar} socket={socket.socket} />
       {showUnfollowConfirmation && (
         <div className="popup-follow-container">
           <div className="popup-follow">

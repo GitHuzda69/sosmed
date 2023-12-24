@@ -1,11 +1,8 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import Post from "../post/Post.js";
-import HomeProfile from "../../component/home-profile/home-profile.js";
-import Rightbar from "../../component/rightbar/Rightbar.js";
 import "./Posts.css";
 import { makeRequest } from "../../fetch.js";
 import AuthContext from "../../context/authContext.js";
-import { io } from "socket.io-client";
 
 export default function Posts({ username, className, isHome, socket }) {
   const [posts, setPosts] = useState([""]);
@@ -16,7 +13,7 @@ export default function Posts({ username, className, isHome, socket }) {
 
   //SOCKET IO
   useEffect(() => {
-    socket.socket.on("getPostFollow", (data) => {
+    socket?.on("getPostFollow", (data) => {
       const decodeBase64ToBlob = (base64) => {
         const binaryString = window.atob(base64);
         const arrayBuffer = new ArrayBuffer(binaryString.length);

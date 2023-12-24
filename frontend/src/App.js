@@ -48,19 +48,19 @@ function App() {
       <Routes>
         <Route exact path="/" element={user ? <Home socket={socket} /> : <Login />} />
         <Route exact path="/messages" element={user ? <Message socket={socket} /> : <Login />} />
-        <Route path="/search/:keyword" element={user ? <Result /> : <Login />} />
-        <Route path="/profile/:username" element={<Profile />} />
+        <Route path="/search/:keyword" element={user ? <Result socket={socket} /> : <Login />} />
+        <Route path="/profile/:username" element={<Profile socket={socket} />} />
         <Route path="/fyp/profile/:username" element={<Profile />} />
         <Route path="/login/profile/:username" element={<Profile />} />
-        <Route path="/friend/:username" element={user ? <Friends /> : <Login />} />
-        <Route exact path="/fyp" element={user ? <Fyp /> : <Login />} />
-        <Route exact path="/newest" element={user ? <Newest /> : <Login />} />
+        <Route path="/friend/:username" element={user ? <Friends socket={socket} /> : <Login />} />
+        <Route exact path="/fyp" element={user ? <Fyp socket={socket} /> : <Login />} />
+        <Route exact path="/newest" element={user ? <Newest socket={socket} /> : <Login />} />
         <Route exact path="/notif" element={user ? <Notif socket={socket} /> : <Login />} />
-        <Route exact path="/connect" element={user ? <Connect /> : <Login />} />
+        <Route exact path="/connect" element={user ? <Connect socket={socket} /> : <Login />} />
         <Route exact path="/signup" element={<Signup />} />
-        <Route exact path="/login" element={user ? <Home socket={socket} /> : <Login />} />
+        <Route exact path="/login" element={user ? <Home /> : <Login />} />
         <Route exact path="/google" element={user ? <Home /> : <Google />} />
-        <Route path="/facebook" element={user ? <Home /> : <Facebook />} />
+        <Route path="/facebook" element={user ? <Home /> : <Facebook socket={socket} />} />
         <Route exact path="/google/signup" element={user ? <Home /> : <GSignup />} />
         <Route exact path="/google/otp" element={user ? <Home /> : <OTP />} />
         <Route exact path="/other/terms-of-service" element={<TOS />} />

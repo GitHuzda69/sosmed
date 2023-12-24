@@ -4,8 +4,6 @@ import { Icon } from "@iconify/react";
 import "./FriendsList.css";
 import { useParams } from "react-router";
 import Sidebar from "../../component/Leftbar/Leftbar";
-import HomeProfile from "../home-profile/home-profile.js";
-import Rightbar from "../rightbar/Rightbar.js";
 import Settings from "../../component/Settings/Settings";
 import Logout from "../../component/Logout/Logout";
 import RightbarProfile from "../../pages/profile/RightbarProfile.js";
@@ -15,7 +13,7 @@ import { useLocation, Link } from "react-router-dom";
 import defaultprofile from "../../assets/profile/default_avatar.png";
 import defaultcover from "../../assets/profile/default_banner.jpg";
 
-const FriendList = () => {
+const FriendList = (socket) => {
   const { user: currentUser } = useContext(AuthContext);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [user, setUser] = useState({});
@@ -28,8 +26,7 @@ const FriendList = () => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [showPopupUnfollow, setShowPopupUnfollow] = useState(false);
   const [showPopupFollow, setShowPopupFollow] = useState(false);
-  const [showUnfollowConfirmation, setShowUnfollowConfirmation] =
-    useState(false);
+  const [showUnfollowConfirmation, setShowUnfollowConfirmation] = useState(false);
   const [popupPosition, setPopupPosition] = useState({
     visible: false,
     top: 0,
@@ -48,10 +45,7 @@ const FriendList = () => {
     const getFriends = async () => {
       try {
         const id = await makeRequest(`users?username=${username}`, "GET");
-        const friendList = await makeRequest(
-          `relationships/friends/followers/${id._id}`,
-          "GET"
-        );
+        const friendList = await makeRequest(`relationships/friends/followers/${id._id}`, "GET");
         setFriends(friendList);
       } catch (err) {
         console.log(err);
@@ -106,20 +100,8 @@ const FriendList = () => {
             friends &&
             friends.map((friend) => (
               <div className="friend" key={friend.userId}>
-                <Link
-                  to={`/profile/${friend.userid}`}
-                  style={{ textDecoration: "none", color: "inherit" }}
-                  className="profileavatar"
-                >
-                  <img
-                    src={
-                      friend && friend.profilePicture
-                        ? PF + friend.profilePicture
-                        : defaultprofile
-                    }
-                    alt={friend.displayname}
-                    className="friend-avatar"
-                  />
+                <Link to={`/profile/${friend.userid}`} style={{ textDecoration: "none", color: "inherit" }} className="profileavatar">
+                  <img src={friend && friend.profilePicture ? PF + friend.profilePicture : defaultprofile} alt={friend.displayname} className="friend-avatar" />
                 </Link>
                 <div className="friend-info-container">
                   <div className="friend-info-details">
@@ -165,11 +147,7 @@ const FriendList = () => {
           </div>
         )}
       </div>
-      <Sidebar
-        toggleSettings={toggleSettings}
-        toggleLogout={toggleLogout}
-        isFriendListPage={isFriendListPage}
-      />
+      <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isFriendListPage={isFriendListPage} socket={socket} />
       <RightbarProfile
         user={user}
         username={username}
@@ -182,11 +160,7 @@ const FriendList = () => {
         <>
           <div className="settings-overlay" />
           <div className="settings-container">
-            <Settings
-              onClose={toggleSettings}
-              isDarkMode={isDarkMode}
-              toggleDarkMode={toggleDarkMode}
-            />
+            <Settings onClose={toggleSettings} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
           </div>
         </>
       )}

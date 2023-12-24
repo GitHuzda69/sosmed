@@ -292,7 +292,14 @@ function Message(socket) {
           <Navbar />
         </div>
       )}
-      <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isMessagesPage={isMessagesPage} isShowRightBar={isShowRightBar} setIsShowRightBar={setIsShowRightBar} />
+      <Sidebar
+        toggleSettings={toggleSettings}
+        toggleLogout={toggleLogout}
+        isMessagesPage={isMessagesPage}
+        isShowRightBar={isShowRightBar}
+        setIsShowRightBar={setIsShowRightBar}
+        socket={socket.socket}
+      />
       {settingOpen && (
         <>
           <div className="settings-overlay" />

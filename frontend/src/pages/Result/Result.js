@@ -15,7 +15,7 @@ import HomeProfile from "../../component/home-profile/home-profile.js";
 import AuthContext from "../../context/authContext.js";
 import { useParams } from "react-router";
 
-const Result = (post, className, username) => {
+const Result = (post, className, username, socket) => {
   const [posts, setPosts] = useState([""]);
   const [user, setUser] = useState({});
   const [settingOpen, setSettingOpen] = useState(false);
@@ -27,7 +27,6 @@ const Result = (post, className, username) => {
   const [openPostOption, setOpenPostOption] = useState(null);
   const [friends, setFriends] = useState([]);
   const [isShowRightBar, setIsShowRightBar] = useState(true);
-
   const keyword = useParams().keyword;
   const isHomePage = true;
 
@@ -99,7 +98,6 @@ const Result = (post, className, username) => {
       document.documentElement.classList.remove("dark-mode");
     }
   };
-
   const toggleDarkMode = () => {
     const newDarkModeStatus = !isDarkMode;
     setIsDarkMode(newDarkModeStatus);
@@ -128,7 +126,7 @@ const Result = (post, className, username) => {
       <div className={`app ${isDarkMode ? "dark-mode" : ""}`}>
         <div className="home">
           <div className="leftbar-fyp">
-            <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isHomePage={isHomePage} />
+            <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isHomePage={isHomePage} setIsShowRightBar={setIsShowRightBar} socket={socket} />
           </div>
           <div className="main-content-fyp" style={{ maxWidth: mainContentMaxWidth }}>
             <div className="topbar-fyp">
@@ -139,13 +137,28 @@ const Result = (post, className, username) => {
               <Upload />
               <div className={`posts ${className}`}>
                 {!username || username === user.username}
-                {posts === "There no result" ? "There is no result" : posts.map((p) => <Post key={p._id} post={p} openPostOption={openPostOption} handleOpenPostOption={handleOpenPostOption} handleClosePostOption={handleClosePostOption} friends={friends} />)}
+                {posts === "There no result"
+                  ? "There is no result"
+                  : posts.map(
+                      (p) =>
+                        p._id && (
+                          <Post
+                            key={p._id}
+                            post={p}
+                            openPostOption={openPostOption}
+                            handleOpenPostOption={handleOpenPostOption}
+                            handleClosePostOption={handleClosePostOption}
+                            friends={friends}
+                            socket={socket}
+                          />
+                        )
+                    )}
               </div>
             </div>
             {isShowRightBar && (
               <div className="side-content">
                 <HomeProfile />
-                <Rightbar />
+                <Rightbar socket={socket} />
               </div>
             )}
           </div>

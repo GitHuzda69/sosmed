@@ -15,7 +15,8 @@ import HomeProfile from "../../component/home-profile/home-profile.js";
 import Navbar from "../../component/navbar/navbar.js";
 import AuthContext from "../../context/authContext.js";
 
-const Fyp = (post, className, username) => {
+const Fyp = (post, className, socket) => {
+  console.log(socket);
   const [posts, setPosts] = useState([""]);
   const [user, setUser] = useState({});
   const [settingOpen, setSettingOpen] = useState(false);
@@ -25,7 +26,6 @@ const Fyp = (post, className, username) => {
   const [openPostOption, setOpenPostOption] = useState(null);
   const [friends, setFriends] = useState([]);
   const [isShowRightBar, setIsShowRightBar] = useState(true);
-
   const isHomePage = true;
 
   useEffect(() => {
@@ -116,7 +116,7 @@ const Fyp = (post, className, username) => {
       <div className={`app ${isDarkMode ? "dark-mode" : ""}`}>
         <div className="home">
           <div className="leftbar-fyp">
-            <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isHomePage={isHomePage} />
+            <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isHomePage={isHomePage} setIsShowRightBar={setIsShowRightBar} socket={socket} />
           </div>
           <div className={`main-content ${!isShowRightBar ? "no-right-bar" : ""}`}>
             {!isShowRightBar && (
@@ -133,10 +133,20 @@ const Fyp = (post, className, username) => {
             <div className="home-content-fyp">
               <Upload />
               <div className={`posts ${className}`}>
-                {!username || username === user.username}
-                {posts.map((p) => (
-                  <Post key={p._id} post={p} openPostOption={openPostOption} handleOpenPostOption={handleOpenPostOption} handleClosePostOption={handleClosePostOption} friends={friends} />
-                ))}
+                {posts.map(
+                  (p) =>
+                    p._id && (
+                      <Post
+                        key={p._id}
+                        post={p}
+                        openPostOption={openPostOption}
+                        handleOpenPostOption={handleOpenPostOption}
+                        handleClosePostOption={handleClosePostOption}
+                        friends={friends}
+                        socket={socket}
+                      />
+                    )
+                )}
               </div>
             </div>
             {isShowRightBar && (

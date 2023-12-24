@@ -78,17 +78,17 @@ function Home(socket) {
           )}
           <div className="home-content">
             <Upload />
-            <Posts isHome={true} socket={socket} />
+            <Posts isHome={true} socket={socket.socket} />
           </div>
           {isShowRightBar && (
             <div className="side-content">
               <HomeProfile />
-              <Rightbar socket={socket} />
+              <Rightbar socket={socket.socket} />
             </div>
           )}
         </div>
         <div className="leftbar">
-          <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isHomePage={isHomePage} isShowRightBar={isShowRightBar} setIsShowRightBar={setIsShowRightBar} />
+          <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isHomePage={isHomePage} isShowRightBar={isShowRightBar} setIsShowRightBar={setIsShowRightBar} socket={socket.socket} />
         </div>
       </div>
       {settingOpen && (

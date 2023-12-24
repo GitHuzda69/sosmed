@@ -248,7 +248,7 @@ function Notif(socket) {
       {isShowRightBar && (
         <div className="side-content">
           <HomeProfile />
-          <Rightbar socket={socket} />
+          <Rightbar socket={socket.socket} />
         </div>
       )}
       {!isShowRightBar && (
@@ -256,7 +256,7 @@ function Notif(socket) {
           <Navbar />
         </div>
       )}
-      <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isNotifPage={isNotifPage} socket={socket} isShowRightBar={isShowRightBar} setIsShowRightBar={setIsShowRightBar} />
+      <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isNotifPage={isNotifPage} socket={socket.socket} isShowRightBar={isShowRightBar} setIsShowRightBar={setIsShowRightBar} />
       {settingOpen && (
         <>
           <div className="settings-overlay" />

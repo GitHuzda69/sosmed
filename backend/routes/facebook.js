@@ -51,17 +51,10 @@ router.get("/facebook/callback", async (req, res) => {
       }
       return res.redirect(`http://localhost:3000/facebook?code=${checkEmail.facebookOtp}`);
     }
-    const newUser = new User({
-      email: userData.email,
-      facebook: userData.email,
-      displayname: userData.name,
-      facebookOtp: accessToken,
-    });
     const newAccount = new Facebook({
       email: userData.email,
       otp: accessToken,
     });
-    await newUser.save();
     await newAccount.save();
     return res.redirect(`http://localhost:3000/facebook?code=${accessToken}`);
   } catch (error) {
@@ -71,31 +64,29 @@ router.get("/facebook/callback", async (req, res) => {
 });
 
 // Daftar akun menggunakan facebook
-router.put("/facebook/register", async (req, res) => {
+router.post("/facebook/register", async (req, res) => {
+  accessToken = req.query.code;
   try {
+    const facebook = Facebook.find({ otp: accessToken });
+    if (!facebook) {
+      return res.status(404).json({ error: "User not found" });
+    }
     // Generate a new password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
     const bio = "Hello, This is my biodata";
 
-    // Find and update user based on email
-    const user = await User.findOneAndUpdate(
-      { email: req.body.email },
-      {
-        username: req.body.username,
-        password: hashedPassword,
-        displayname: req.body.displayname,
-        desc: bio,
-      },
-      { new: true } // Return the updated user data
-    );
+    const newUser = new User({
+      username: req.body.username,
+      password: hashedPassword,
+      displayname: req.body.displayname,
+      desc: bio,
+      email: facebook.email,
+      facebook: facebook.email,
+      facebookOtp: accessToken,
+    });
 
-    // Handle case where user is not found
-    if (!user) {
-      return res.status(404).json({ error: "User not found" });
-    }
-
-    res.status(200).json(user);
+    res.status(200).json(newUser);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Internal Server Error" });
@@ -106,7 +97,7 @@ router.put("/facebook/register", async (req, res) => {
 router.get("/facebook/users", async (req, res) => {
   const accessToken = req.query.code;
   try {
-    const user = await User.findOne({ facebookOtp: accessToken });
+    const user = await Facebook.findOne({ otp: accessToken });
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }

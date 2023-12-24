@@ -7,7 +7,7 @@ import { useAuth } from "../../context/authContext";
 
 import loginimages from "../../assets/Background.png";
 
-const Facebook = () => {
+const Facebook = (socket) => {
   const username = useRef();
   const displayname = useRef();
   const password = useRef();
@@ -51,7 +51,7 @@ const Facebook = () => {
     };
 
     try {
-      await makeRequest("auth/facebook/register", "PUT", user);
+      await makeRequest("auth/facebook/register", "POST", user);
       history("/login");
     } catch (err) {
       console.log(err);
