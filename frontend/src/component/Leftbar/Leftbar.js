@@ -87,9 +87,6 @@ const Sidebar = ({ toggleSettings, toggleLogout, isFriendListPage, isHomePage, i
             <Icon icon="solar:settings-outline" width="35" height="35" />
             <span className={isNotifPage ? "nav-bold-text" : "nav-text"}>Settings</span>
           </button>
-          <button onClick={toggleLogout} className="nav-button">
-            <Icon icon="tabler:logout" width="35" height="35" />
-          </button>
         </div>
       )}
     </div>

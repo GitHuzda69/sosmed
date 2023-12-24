@@ -11,11 +11,13 @@
   background-color: white;  
 }
 
-.message-friend-pages{
+.message-friend-pages{  
+  position: absolute;
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 10px;
+  gap: 10px;  
+  margin-left: 20px;
 }
 .message-friend-pages:hover{
   background-color: transparent;
@@ -25,6 +27,7 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start; 
+  margin-top: 80px;
   padding-left: 20px;
   padding-right: 20px; 
   padding-bottom: 20px;   
@@ -35,7 +38,7 @@
 }
 .searchbar-message-friend-button{
   position: absolute;
-  margin-top: 75px;
+  margin-top: 10px;
   margin-left: 10px;
 }
 .input-search-friend{  
@@ -52,8 +55,9 @@
   display: flex;
   flex-direction: column;
   flex: 1; 
-  padding-bottom: 20px;    
-  z-index: 200;
+  padding-top: 10px;
+  padding-bottom: 40px;    
+  z-index: 350;
   background-color: #F9F9F9;
 }
 
@@ -151,7 +155,6 @@
   padding-top: 10px;
   padding-bottom: 20px;
 }
-
 
 .chat-input textarea {
   width: calc(100% - 185px);
@@ -252,6 +255,7 @@
   margin-left: 430px;  
   margin-right: 10px;
   margin-bottom: 20px;
+  padding-right: 20px;
   border-radius: 10px;
   font-family: "Inter";
   font-weight: bold;
@@ -264,14 +268,31 @@
   flex-direction: column;
   justify-content: flex-start; 
   width: 200px;
+  margin-top: 110px;
   padding-left: 20px;
   padding-right: 20px; 
-  padding-bottom: 20px;   
+  padding-bottom: 10px;   
 }
+
+.message-friend-pages-norightbar{   
+  position: absolute;
+  min-width: 722px;
+  width: calc(100% - 586px);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;    
+  padding-left: 20px;
+  border-radius: 10px 10px 0px 0px;
+  border-bottom: 2px #E0E0E0 solid; 
+  background-color: #F9F9F9;
+  z-index: 300;
+} 
 
 .searchbar-message-friend-norightbar{
   position: absolute;  
-  top: 90px;
+  top: 10px;
   left: 30px;
 }
 
@@ -297,7 +318,108 @@
   min-width: 500px;
   width: auto;
   max-width: 1200px;
+  border-radius: 0px 15px 0px 0px;
   border-left: 2px #E0E0E0 solid; 
   background-color: #F9F9F9;
-  z-index: 200;
+  z-index: 10;
+}
+
+.message-chat-container-norightbar {
+  display: flex;
+  flex-direction: column;
+  min-width: 502px;
+  flex: 1; 
+  padding-top: 90px;
+  padding-bottom: 110px;    
+  border-radius: 0px 10px 0px 0px;
+  z-index: 250;
+  background-color: #F9F9F9;
+}
+
+.chat-button-norightbar {
+  position: absolute;
+  left: 23px;
+  bottom: 25px;
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  margin-top: 10px;
+  margin-left: auto; 
+  margin-right: 10px;
+  background-color: transparent;
+  color: #8D8D8D;
+  z-index: 69;
+}
+.chat-button-norightbar:hover{
+  background-color: transparent;
+}
+
+.chat-input-norightbar{
+  position: fixed;
+  bottom: 0;
+  left: 680px;
+  right: 130px;
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  padding-top: 10px;
+  padding-bottom: 20px;
+}
+.chat-input-norightbar textarea {
+  width: 100% ;
+  height: 30px;
+  resize: none;
+  margin-left: 15px;
+  background-color: #DBDBDB;
+  border: none;
+  border-radius: 15px;
+  padding: 10px;
+  padding-top: 20px;
+  padding-left: 50px; 
+  font-size: 14px;
+}
+.chat-input-norightbar textarea::placeholder{ 
+  color: #8D8D8D;
+}
+.chat-input-norightbar textarea:focus{  
+  outline: 2px #888888 solid;
+}
+.chat-input-norightbar textarea::-webkit-scrollbar {
+  width: 8px;
+}
+
+.chat-input-norightbar textarea::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
+
+.chat-input-norightbar textarea::-webkit-scrollbar-thumb {
+  background-color: gray;
+  border-radius: 5px;
+}
+.chat-input-norightbar textarea::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+
+.post-chat-norightbar{
+  position: absolute; 
+  right: 20px;
+  bottom: 33px;
+  width: 35px;
+  height: 35px;
+  border-radius: 10px;
+  background-color: transparent;
+  color: #8D8D8D;
+}
+.post-chat-norightbar:hover{ 
+  background-color: transparent; 
+}
+
+.chat-date-norightbar{
+  margin-top: 0px;
+  margin-bottom: 5px;
+  font-family: "Inter";
+  font-weight: bold;
+  font-size: 14px; 
 }

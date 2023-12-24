@@ -43,7 +43,7 @@
 }
 
 .selected-friend {
-  background-color: #999999;
+  background-color: #5c5c5c;
   color: white;
 }
 
@@ -52,7 +52,7 @@
   flex-direction: row; 
   padding: 5px 10px;
   margin-bottom: 0;
-  border-bottom: 1px gray solid;
+  border-bottom: 1px gray solid; 
 }
 .message-friend:hover {
   border-radius: 0;
@@ -109,3 +109,20 @@
   background-color: gray;
 }
  
+.message-friend-norightbar {
+  display: flex;
+  flex-direction: row; 
+  padding: 5px 10px;
+  margin-bottom: 0;
+  border-bottom: 2px #E0E0E0 solid; 
+  background-color: #F9F9F9;
+}
+.message-friend-norightbar:hover {
+  border-radius: 0;
+  background-color: #b9b9b9;
+  transition: all 0.3s ease;
+}
+.selected-friend-norightbar {
+  background-color: #E0E0E0;
+  color: black;
+}

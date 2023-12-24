@@ -50,6 +50,11 @@ const Facebook = (socket) => {
       password: password.current.value,
     };
 
+    if (user.password.length < 8) {
+      setErrors("Password must be at least 8 characters long.");
+      return;
+    }
+
     try {
       await makeRequest("auth/facebook/register", "POST", user);
       history("/login");
@@ -135,9 +140,11 @@ const Facebook = (socket) => {
               <input type="checkbox" className="checkbox-input-signup" checked={agreeStatus} onChange={() => setAgreeStatus(!agreeStatus)} />
               <h4>
                 I Agree with
-                <button type="button" className="terms-button">
-                  Terms & Services
-                </button>
+                <Link to="/other/terms-of-service">
+                  <button type="button" className="terms-button">
+                    Terms & Services
+                  </button>
+                </Link>
                 Policy
               </h4>
             </label>

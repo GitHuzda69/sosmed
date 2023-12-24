@@ -121,7 +121,7 @@ const Newest = (post, className, username) => {
           <div className={`main-content ${!isShowRightBar ? "no-right-bar" : ""}`}>
             {!isShowRightBar && (
               <div className="newest-navbar">
-                <Navbar />
+                <Navbar isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} toggleLogout={toggleLogout} />
               </div>
             )}
             {isShowRightBar && (
