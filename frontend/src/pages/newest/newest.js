@@ -106,7 +106,7 @@ const Newest = (socket) => {
           <div className={`main-content ${!isShowRightBar ? "no-right-bar" : ""}`}>
             {!isShowRightBar && (
               <div className="newest-navbar">
-                <Navbar isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} toggleLogout={toggleLogout} />
+                <Navbar isHomePage={isHomePage} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} toggleLogout={toggleLogout} />
               </div>
             )}
             {isShowRightBar && (
