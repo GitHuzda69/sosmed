@@ -27,6 +27,9 @@
     background-color: transparent;
     color: white;
   }
+  .dark-mode .navbar .searchbar-button{
+    color: white;
+  }
   .dark-mode .clear-search-button{
     background-color: transparent;
     color: white;
@@ -331,6 +334,9 @@
   .dark-mode .main-notif{
     background-color: #1E1E1E;
   }
+  .dark-mode .main-notif-norightbar{
+    background-color: #1E1E1E;
+  }
   .dark-mode .mark-read-button{
     color: white;
   }
@@ -349,6 +355,9 @@
 
   /*buat messages*/ 
   .dark-mode .main-messages{
+    background-color: #2F2F2F;
+  } 
+  .dark-mode .main-messages-norightbar{
     background-color: #2F2F2F;
   } 
   .dark-mode .input-search-friend{
@@ -391,7 +400,6 @@
     background-color: #2F2F2F;
     color: white;
   }
-
   .dark-mode .chat-input{
     background-color: transparent;
   }
@@ -420,6 +428,32 @@
   .dark-mode .post-chat:hover{
     background-color: #5C5C5C;
   }
+  .dark-mode .pick-chat-norightbar{ 
+      background-color: #2F2F2F; 
+  } 
+  .dark-mode .message-chat-container-norightbar {
+    background-color: #2F2F2F; 
+    color: black;
+  }
+  .dark-mode .message-friend-pages-norightbar{  
+    background-color: #2F2F2F; 
+   }
+   .dark-mode .input-search-friend-norightbar{  
+    background-color: #535353; 
+   }
+   .dark-mode .chat-date-norightbar{
+    color: white;
+   }
+   
+   .dark-mode .message-friend-norightbar {
+    background-color: #2F2F2F; 
+    color: white;
+   }
+   .dark-mode .selected-friend-norightbar {
+    background-color: #636363;
+    color: white;
+  }
+
 
   /*buat frendlist*/
   .dark-mode .friendlist-container{
@@ -436,6 +470,9 @@
 
   /*buat connect*/
   .dark-mode .connect-container{
+    background-color: #1E1E1E;
+  }
+  .dark-mode .connect-container-norightbar{
     background-color: #1E1E1E;
   }
   .dark-mode .connect-container h1 {
@@ -461,6 +498,9 @@
   }
   .dark-mode .disconnect-all-button:hover{
     background-color: #3B3B3B;
+  }
+  .dark-mode .connect-container-norightbar h1{
+    border-bottom: 2px #5C5C5C solid;  
   }
 
   /*buat profile*/

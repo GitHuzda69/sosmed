@@ -1,5 +1,6 @@
 .notfound-container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
@@ -10,3 +11,18 @@
     max-height: 100%;
   }
   
+.notfound-link{
+  margin-top: 10px;  
+}
+.notfound-link button{
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #4B4B4B;
+  color: white;
+  font-family: "Inter";
+  font-weight: bold;
+  font-size: 18px;
+}
+.notfound-link button:hover{
+  background-color: #838383;
+}

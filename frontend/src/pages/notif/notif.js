@@ -253,7 +253,7 @@ function Notif(socket) {
       )}
       {!isShowRightBar && (
         <div className="home-navbar">
-          <Navbar />
+          <Navbar isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} toggleLogout={toggleLogout} />
         </div>
       )}
       <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isNotifPage={isNotifPage} socket={socket.socket} isShowRightBar={isShowRightBar} setIsShowRightBar={setIsShowRightBar} />

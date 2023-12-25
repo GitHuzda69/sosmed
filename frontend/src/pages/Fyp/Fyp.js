@@ -121,7 +121,7 @@ const Fyp = (post, className, socket) => {
           <div className={`main-content ${!isShowRightBar ? "no-right-bar" : ""}`}>
             {!isShowRightBar && (
               <div className="fyp-navbar">
-                <Navbar />
+                <Navbar isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} toggleLogout={toggleLogout} />
               </div>
             )}
             {isShowRightBar && (

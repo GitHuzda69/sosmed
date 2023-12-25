@@ -67,7 +67,7 @@ function Home(socket) {
         <div className={`main-content ${!isShowRightBar ? "no-right-bar" : ""}`}>
           {!isShowRightBar && (
             <div className="home-navbar">
-              <Navbar isHomePage={isHomePage} />
+              <Navbar isHomePage={isHomePage} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} toggleLogout={toggleLogout} />
             </div>
           )}
           {isShowRightBar && (

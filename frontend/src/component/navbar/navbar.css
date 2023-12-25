@@ -11,6 +11,7 @@
   color: white;
   font-family: "Inter";
   text-decoration: none;
+  z-index: 400;
 }
 
 .navbar-logo {
@@ -29,7 +30,10 @@
 .navbar .search-container {
   width: 265px;
   margin-top: 15px;
-  margin-bottom: 20px;
+  margin-bottom: 20px; 
+}
+.navbar .searchbar-button{ 
+  color: black;
 }
 
 /**/
@@ -64,7 +68,7 @@
   justify-content: center;
   align-items: center;
   margin-left: auto;
-  margin-right: 20px;
+  margin-right: 5px;
 }
 .navbar-profile button {
   border-radius: 10px;
@@ -80,8 +84,80 @@
   height: 50px;
   border-radius: 10px;
 }
-
-
 .hidden-link {
   display: none;
+}
+ 
+.popup-navbar{
+  position: absolute;
+  top: 65px;
+  right: 25px;
+  width: 170px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 5px;
+  border-radius: 10px;
+  background-color: white;
+  color: gray;
+}
+.profile-navbar{
+  width: 150px;
+  display: flex; 
+  gap: 10px; 
+  text-decoration: none; 
+}
+.profile-navbar button{
+  display: flex;
+  align-items: center;
+  margin-left: 3px;
+  gap: 5px;
+  background-color: transparent;
+  color: #8E8E8E;
+  font-family: "Inter";
+  font-weight: bold;
+  font-size: 14px;
+}
+.navbar-mode{
+  display: flex;
+  flex-direction: row;
+  align-items: center; 
+  margin-left: 3px;
+  padding-left: 7px; 
+}
+.navbar-mode h3{
+  flex: 1;
+  color: #8E8E8E;
+  font-family: "Inter";
+  font-weight: bold;
+  font-size: 14px;
+}
+.switch-navbar {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 24px;
+    margin-left: auto;
+    margin-right: 10px;
+  }
+  .switch-navbar input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+.navbar-signout{
+  width: 150px;
+  display: flex; 
+  gap: 10px; 
+  text-decoration: none;
+}
+.navbar-signout button{
+  display: flex;
+  align-items: center;
+  margin-left: 3px;
+  gap: 5px;
+  background-color: transparent;
+  color: red;
+  font-family: "Inter";
+  font-weight: bold;
+  font-size: 14px;
 }

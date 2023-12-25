@@ -76,7 +76,7 @@ html::-webkit-scrollbar-track {
 .main-content.no-right-bar {
   margin-top: 80px;
   margin-left: 415px;
-  max-width: calc(100% - 520px);
+  max-width: calc(100% - 550px);
 }
 
 .home-content {

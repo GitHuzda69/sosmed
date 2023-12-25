@@ -6,6 +6,7 @@ import AuthContext from "../../context/authContext";
 import Sidebar from "../../component/Leftbar/Leftbar";
 import HomeProfile from "../../component/home-profile/home-profile";
 import Rightbar from "../../component/rightbar/Rightbar";
+import Navbar from "../../component/navbar/navbar";
 import Settings from "../../component/Settings/Settings";
 import Logout from "../../component/Logout/Logout";
 import { makeRequest } from "../../fetch";
@@ -70,17 +71,24 @@ const Connect = (socket) => {
   }, []);
 
   return (
-    <div className="connect-container">
+    <div className={isShowRightBar ? "connect-container" : "connect-container-norightbar"}>
       <h1>Connected Account</h1>
       <div className="connecth2">
         <Icon icon="iconamoon:information-circle-light" width={30} height={30} />
         <h2>These are the social accounts you connected to your SMD account to log in. You can always connect and disconnect the access here.</h2>
       </div>
       <div className="connect-content">
-        <Icon icon="entypo-social:facebook" width={40} height={40} />
+        <Icon icon="fa6-brands:x-twitter" width={40} height={40} />
         <div className="connect-name">
+          <h2>Connect to X/Twitter</h2>
+        </div>
+        <button className="connect-button">Connect</button>
+      </div>
+      <div className="connect-content">
+        <Icon icon="entypo-social:facebook" width={40} height={40} />
+        <div className="connect-name-fb">
           <h2>Connect to Facebook</h2>
-          <h3>{currentUser && currentUser.facebook ? currentUser.facebook : ""}</h3>
+          {currentUser && currentUser.facebook ? currentUser.facebook : <h3></h3>}
         </div>
         {currentUser && currentUser.facebook ? (
           <button className="disconnect-button">Disconnect</button>
@@ -105,13 +113,14 @@ const Connect = (socket) => {
         <button className="connect-button">Connect</button>
       </div>
       <button className="disconnect-all-button">Disconnect all</button>
+      {!isShowRightBar && <Navbar isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} toggleLogout={toggleLogout} />}
       {isShowRightBar && (
         <div className="side-content">
           <HomeProfile />
           <Rightbar socket={socket} />
         </div>
       )}
-      <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isConnectPage={isConnectPage} setIsShowRightBar={setIsShowRightBar} socket={socket.socket} />
+      <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isConnectPage={isConnectPage} isShowRightBar={isShowRightBar} setIsShowRightBar={setIsShowRightBar} socket={socket.socket} />
       {settingOpen && (
         <>
           <div className="settings-overlay" />

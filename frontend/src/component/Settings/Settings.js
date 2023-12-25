@@ -31,13 +31,15 @@ const Settings = ({ onClose, isDarkMode, toggleDarkMode, isShowRightBar, setIsSh
         </button>
       </div>
       <div className="settings-content">
-        <div className="settings-mode">
-          <h3>Dark Mode</h3>
-          <label className="switch">
-            <input type="checkbox" checked={isDarkMode} onChange={handleSliderChange} />
-            <span className="slider round"></span>
-          </label>
-        </div>
+        {isShowRightBar && (
+          <div className="settings-mode">
+            <h3>Dark Mode</h3>
+            <label className="switch">
+              <input type="checkbox" checked={isDarkMode} onChange={handleSliderChange} />
+              <span className="slider round"></span>
+            </label>
+          </div>
+        )}
         <div className="settings-mode">
           <h3>Show Rightbar</h3>
           <label className="switch">
