@@ -2,63 +2,63 @@
   display: flex;
   flex-direction: row;
   margin-top: 12px;
-  margin-left: 85px;  
+  margin-left: 85px;
   margin-right: 10px;
   margin-bottom: 20px;
   border-radius: 10px;
   font-family: "Inter";
   font-weight: bold;
-  background-color: white;  
+  background-color: white;
 }
 
-.message-friend-pages{  
+.message-friend-pages {
   position: absolute;
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 10px;  
+  gap: 10px;
   margin-left: 20px;
 }
-.message-friend-pages:hover{
+.message-friend-pages:hover {
   background-color: transparent;
 }
 
-.search-message-friend{
+.search-message-friend {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start; 
+  justify-content: flex-start;
   margin-top: 80px;
   padding-left: 20px;
-  padding-right: 20px; 
-  padding-bottom: 20px;   
+  padding-right: 20px;
+  padding-bottom: 20px;
 }
-.search-message-friend h1{
+.search-message-friend h1 {
   font-size: 24px;
   margin-bottom: 20px;
 }
-.searchbar-message-friend-button{
+.searchbar-message-friend-button {
   position: absolute;
   margin-top: 10px;
   margin-left: 10px;
 }
-.input-search-friend{  
+.input-search-friend {
   height: 40px;
   padding-left: 30px;
   margin-bottom: 20px;
-  border: 1px black solid; 
+  border: 1px black solid;
   border-radius: 8px;
   display: flex;
   text-indent: 10px;
 }
- 
+
 .message-chat-container {
   display: flex;
   flex-direction: column;
-  flex: 1; 
+  flex: 1;
   padding-top: 10px;
-  padding-bottom: 40px;    
+  padding-bottom: 10px;
   z-index: 350;
-  background-color: #F9F9F9;
+  background-color: #f9f9f9;
 }
 
 .chat-profile {
@@ -67,8 +67,8 @@
   align-items: center;
   height: 70px;
   gap: 10px;
-  border: 1px #E0E0E0 solid;
-  background-color: #DBDBDB;
+  border: 1px #e0e0e0 solid;
+  background-color: #dbdbdb;
 }
 
 .avatar-status-container {
@@ -112,16 +112,16 @@
   background-color: transparent;
 }
 
-.chat{
+.chat {
   height: 100%;
   display: flex;
   flex-direction: column;
   overflow-y: scroll;
-  padding-bottom: 70px;  
+  padding-bottom: 70px;
   gap: 10px;
-  border-left: 1px #E0E0E0 solid; 
+  border-left: 1px #e0e0e0 solid;
   scrollbar-width: thin;
-  scrollbar-color: #999999 #ffffff; 
+  scrollbar-color: #999999 #ffffff;
 }
 
 .chat::-webkit-scrollbar {
@@ -161,14 +161,14 @@
   height: 30px;
   resize: none;
   margin-left: 25px;
-  background-color: #DBDBDB;
+  background-color: #dbdbdb;
   border: none;
   border-radius: 10px;
   padding: 10px;
-  padding-top: 20px; 
+  padding-top: 20px;
   font-size: 14px;
 }
-.chat-input textarea:focus{  
+.chat-input textarea:focus {
   outline: 2px lightgray solid;
 }
 .chat-input textarea::-webkit-scrollbar {
@@ -196,8 +196,8 @@
   transition: all 0.2s ease;
 }
 
-.chat-input textarea:focus+.placeholder,
-.chat-input textarea:not(:placeholder-shown)+.placeholder {
+.chat-input textarea:focus + .placeholder,
+.chat-input textarea:not(:placeholder-shown) + .placeholder {
   transform: translateY(-26px) scale(0.8);
   color: #666;
 }
@@ -206,30 +206,30 @@
   display: flex;
   flex-direction: row;
   margin-top: 10px;
-  margin-left: auto; 
+  margin-left: auto;
   margin-right: 10px;
   z-index: 69;
   gap: 5px;
 }
-.chat-button{ 
+.chat-button {
   background-color: transparent;
   margin-left: 7px;
 }
-.chat-button:hover{
-  background-color: #5C5C5C;
+.chat-button:hover {
+  background-color: #5c5c5c;
 }
 
-.post-chat{
+.post-chat {
   width: 35px;
   height: 35px;
   border-radius: 10px;
   background-color: black;
 }
-.post-chat:hover{
+.post-chat:hover {
   background-color: #777777;
 }
 
-.pick-chat{
+.pick-chat {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -237,44 +237,44 @@
   min-width: 900px;
   width: auto;
   max-width: 1200px;
-  border-left: 1px gray solid;  
+  border-left: 1px gray solid;
   z-index: 200;
 }
-.not-chat{
+.not-chat {
   font-size: 20px;
   font-weight: bold;
 }
 
 /*norightbar*/
 
-.main-messages-norightbar { 
+.main-messages-norightbar {
   width: calc(100% - 580px);
   display: flex;
   flex-direction: row;
   margin-top: 90px;
-  margin-left: 430px;  
+  margin-left: 430px;
   margin-right: 10px;
   margin-bottom: 20px;
   padding-right: 20px;
   border-radius: 10px;
   font-family: "Inter";
   font-weight: bold;
-  background-color: #F9F9F9;
+  background-color: #f9f9f9;
 }
 
-.search-message-norightbar{
+.search-message-norightbar {
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start; 
+  justify-content: flex-start;
   width: 200px;
   margin-top: 110px;
   padding-left: 20px;
-  padding-right: 20px; 
-  padding-bottom: 10px;   
+  padding-right: 20px;
+  padding-bottom: 10px;
 }
 
-.message-friend-pages-norightbar{   
+.message-friend-pages-norightbar {
   position: absolute;
   min-width: 722px;
   width: calc(100% - 586px);
@@ -282,35 +282,35 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: 10px;    
+  gap: 10px;
   padding-left: 20px;
   border-radius: 10px 10px 0px 0px;
-  border-bottom: 2px #E0E0E0 solid; 
-  background-color: #F9F9F9;
+  border-bottom: 2px #e0e0e0 solid;
+  background-color: #f9f9f9;
   z-index: 300;
-} 
+}
 
-.searchbar-message-friend-norightbar{
-  position: absolute;  
+.searchbar-message-friend-norightbar {
+  position: absolute;
   top: 10px;
   left: 30px;
 }
 
-.input-search-friend-norightbar{  
+.input-search-friend-norightbar {
   display: flex;
   height: 40px;
   padding-left: 30px;
-  margin-bottom: 20px; 
+  margin-bottom: 20px;
   border: none;
   border-radius: 8px;
   text-indent: 10px;
-  background-color: #F0F0F0F0;
+  background-color: #f0f0f0f0;
 }
-.input-search-friend-norightbar:focus{
+.input-search-friend-norightbar:focus {
   outline: 1px lightgray solid;
 }
 
-.pick-chat-norightbar{
+.pick-chat-norightbar {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -319,8 +319,8 @@
   width: auto;
   max-width: 1200px;
   border-radius: 0px 15px 0px 0px;
-  border-left: 2px #E0E0E0 solid; 
-  background-color: #F9F9F9;
+  border-left: 2px #e0e0e0 solid;
+  background-color: #f9f9f9;
   z-index: 10;
 }
 
@@ -328,12 +328,12 @@
   display: flex;
   flex-direction: column;
   min-width: 502px;
-  flex: 1; 
+  flex: 1;
   padding-top: 90px;
-  padding-bottom: 110px;    
+  padding-bottom: 10px;
   border-radius: 0px 10px 0px 0px;
   z-index: 250;
-  background-color: #F9F9F9;
+  background-color: #f9f9f9;
 }
 
 .chat-button-norightbar {
@@ -344,17 +344,17 @@
   flex-direction: row;
   gap: 5px;
   margin-top: 10px;
-  margin-left: auto; 
+  margin-left: auto;
   margin-right: 10px;
   background-color: transparent;
-  color: #8D8D8D;
+  color: #8d8d8d;
   z-index: 69;
 }
-.chat-button-norightbar:hover{
+.chat-button-norightbar:hover {
   background-color: transparent;
 }
 
-.chat-input-norightbar{
+.chat-input-norightbar {
   position: fixed;
   bottom: 0;
   left: 680px;
@@ -368,22 +368,22 @@
   padding-bottom: 20px;
 }
 .chat-input-norightbar textarea {
-  width: 100% ;
+  width: 100%;
   height: 30px;
   resize: none;
   margin-left: 15px;
-  background-color: #DBDBDB;
+  background-color: #dbdbdb;
   border: none;
   border-radius: 15px;
   padding: 10px;
   padding-top: 20px;
-  padding-left: 50px; 
+  padding-left: 50px;
   font-size: 14px;
 }
-.chat-input-norightbar textarea::placeholder{ 
-  color: #8D8D8D;
+.chat-input-norightbar textarea::placeholder {
+  color: #8d8d8d;
 }
-.chat-input-norightbar textarea:focus{  
+.chat-input-norightbar textarea:focus {
   outline: 2px #888888 solid;
 }
 .chat-input-norightbar textarea::-webkit-scrollbar {
@@ -402,24 +402,24 @@
   background-color: #555;
 }
 
-.post-chat-norightbar{
-  position: absolute; 
+.post-chat-norightbar {
+  position: absolute;
   right: 20px;
   bottom: 33px;
   width: 35px;
   height: 35px;
   border-radius: 10px;
   background-color: transparent;
-  color: #8D8D8D;
+  color: #8d8d8d;
 }
-.post-chat-norightbar:hover{ 
-  background-color: transparent; 
+.post-chat-norightbar:hover {
+  background-color: transparent;
 }
 
-.chat-date-norightbar{
+.chat-date-norightbar {
   margin-top: 0px;
   margin-bottom: 5px;
   font-family: "Inter";
   font-weight: bold;
-  font-size: 14px; 
+  font-size: 14px;
 }

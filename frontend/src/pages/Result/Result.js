@@ -15,7 +15,7 @@ import HomeProfile from "../../component/home-profile/home-profile.js";
 import AuthContext from "../../context/authContext.js";
 import { useParams } from "react-router";
 
-const Result = (post, className, username, socket) => {
+const Result = (socket) => {
   const [posts, setPosts] = useState([""]);
   const [user, setUser] = useState({});
   const [settingOpen, setSettingOpen] = useState(false);
@@ -41,20 +41,6 @@ const Result = (post, className, username, socket) => {
     };
     fetchPost();
   }, []);
-
-  useEffect(() => {
-    if (post.userId) {
-      const fetchUser = async () => {
-        try {
-          const res = await makeRequest(`users?userId=${post.userId}`);
-          setUser(res);
-        } catch (err) {
-          console.error(err);
-        }
-      };
-      fetchUser();
-    }
-  }, [post.userId]);
 
   useEffect(() => {
     const storedDarkModeStatus = localStorage.getItem("isDarkMode") === "true";
@@ -135,8 +121,7 @@ const Result = (post, className, username, socket) => {
             </div>
             <div className="home-content-fyp">
               <Upload />
-              <div className={`posts ${className}`}>
-                {!username || username === user.username}
+              <div className={`posts`}>
                 {posts === "There no result"
                   ? "There is no result"
                   : posts.map(

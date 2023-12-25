@@ -15,9 +15,8 @@ import HomeProfile from "../../component/home-profile/home-profile.js";
 import Navbar from "../../component/navbar/navbar.js";
 import AuthContext from "../../context/authContext.js";
 
-const Newest = (post, className, username) => {
+const Newest = (socket) => {
   const [posts, setPosts] = useState([""]);
-  const [user, setUser] = useState({});
   const [settingOpen, setSettingOpen] = useState(false);
   const [logoutOpen, setLogoutOpen] = useState(false);
   const { user: currentUser } = useContext(AuthContext);
@@ -40,20 +39,6 @@ const Newest = (post, className, username) => {
     };
     fetchPost();
   }, []);
-
-  useEffect(() => {
-    if (post.userId) {
-      const fetchUser = async () => {
-        try {
-          const res = await makeRequest(`users?userId=${post.userId}`);
-          setUser(res);
-        } catch (err) {
-          console.error(err);
-        }
-      };
-      fetchUser();
-    }
-  }, [post.userId]);
 
   useEffect(() => {
     if (currentUser && currentUser._id) {
@@ -116,7 +101,7 @@ const Newest = (post, className, username) => {
       <div className={`app ${isDarkMode ? "dark-mode" : ""}`}>
         <div className="home">
           <div className="leftbar-newest">
-            <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isHomePage={isHomePage} isShowRightBar={isShowRightBar} setIsShowRightBar={setIsShowRightBar} />
+            <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isHomePage={isHomePage} isShowRightBar={isShowRightBar} setIsShowRightBar={setIsShowRightBar} socket={socket.socket} />
           </div>
           <div className={`main-content ${!isShowRightBar ? "no-right-bar" : ""}`}>
             {!isShowRightBar && (
@@ -132,8 +117,7 @@ const Newest = (post, className, username) => {
             )}
             <div className="home-content-newest">
               <Upload />
-              <div className={`posts ${className}`}>
-                {!username || username === user.username}
+              <div className={`posts`}>
                 {posts.map((p) => (
                   <Post key={p._id} post={p} openPostOption={openPostOption} handleOpenPostOption={handleOpenPostOption} handleClosePostOption={handleClosePostOption} friends={friends} />
                 ))}
@@ -142,7 +126,7 @@ const Newest = (post, className, username) => {
             {isShowRightBar && (
               <div className="side-content">
                 <HomeProfile />
-                <Rightbar />
+                <Rightbar socket={socket} />
               </div>
             )}
           </div>

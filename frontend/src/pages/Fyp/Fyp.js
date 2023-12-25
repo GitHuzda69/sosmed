@@ -15,8 +15,7 @@ import HomeProfile from "../../component/home-profile/home-profile.js";
 import Navbar from "../../component/navbar/navbar.js";
 import AuthContext from "../../context/authContext.js";
 
-const Fyp = (post, className, socket) => {
-  console.log(socket);
+const Fyp = (socket) => {
   const [posts, setPosts] = useState([""]);
   const [user, setUser] = useState({});
   const [settingOpen, setSettingOpen] = useState(false);
@@ -40,20 +39,6 @@ const Fyp = (post, className, socket) => {
     };
     fetchPost();
   }, []);
-
-  useEffect(() => {
-    if (post.userId) {
-      const fetchUser = async () => {
-        try {
-          const res = await makeRequest(`users?userId=${post.userId}`);
-          setUser(res);
-        } catch (err) {
-          console.error(err);
-        }
-      };
-      fetchUser();
-    }
-  }, [post.userId]);
 
   useEffect(() => {
     if (currentUser && currentUser._id) {
@@ -116,7 +101,7 @@ const Fyp = (post, className, socket) => {
       <div className={`app ${isDarkMode ? "dark-mode" : ""}`}>
         <div className="home">
           <div className="leftbar-fyp">
-            <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isHomePage={isHomePage} setIsShowRightBar={setIsShowRightBar} socket={socket} />
+            <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isHomePage={isHomePage} setIsShowRightBar={setIsShowRightBar} socket={socket.socket} />
           </div>
           <div className={`main-content ${!isShowRightBar ? "no-right-bar" : ""}`}>
             {!isShowRightBar && (
@@ -132,7 +117,7 @@ const Fyp = (post, className, socket) => {
             )}
             <div className="home-content-fyp">
               <Upload />
-              <div className={`posts ${className}`}>
+              <div className={`posts`}>
                 {posts.map(
                   (p) =>
                     p._id && (
@@ -152,7 +137,7 @@ const Fyp = (post, className, socket) => {
             {isShowRightBar && (
               <div className="side-content">
                 <HomeProfile />
-                <Rightbar />
+                <Rightbar socket={socket} />
               </div>
             )}
           </div>

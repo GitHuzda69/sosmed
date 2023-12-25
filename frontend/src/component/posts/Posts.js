@@ -8,7 +8,6 @@ export default function Posts({ username, className, isHome, socket }) {
   const [posts, setPosts] = useState([""]);
   const { user } = useContext(AuthContext);
   const [openPostOption, setOpenPostOption] = useState(null);
-  const [friends, setFriends] = useState([]);
   const [arrivalPost, setArrivalPost] = useState(null);
 
   //SOCKET IO
@@ -65,18 +64,6 @@ export default function Posts({ username, className, isHome, socket }) {
     fetchPosts();
   }, [username, user._id]);
 
-  useEffect(() => {
-    const getFriends = async () => {
-      try {
-        const friendList = await makeRequest("relationships/friends/" + user._id);
-        setFriends(friendList.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getFriends();
-  }, [user._id]);
-
   const handleOpenPostOption = (postId) => {
     setOpenPostOption(postId);
   };
@@ -92,18 +79,7 @@ export default function Posts({ username, className, isHome, socket }) {
         {posts.length === 0
           ? "There is no any post yet"
           : posts.map(
-              (p) =>
-                p._id && (
-                  <Post
-                    key={p._id}
-                    post={p}
-                    openPostOption={openPostOption}
-                    handleOpenPostOption={handleOpenPostOption}
-                    handleClosePostOption={handleClosePostOption}
-                    friends={friends}
-                    socket={socket}
-                  />
-                )
+              (p) => p._id && <Post key={p._id} post={p} openPostOption={openPostOption} handleOpenPostOption={handleOpenPostOption} handleClosePostOption={handleClosePostOption} socket={socket} />
             )}
       </div>
     </>

@@ -1,12 +1,12 @@
 const router = require("express").Router();
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
-const moment = require("moment")
+const moment = require("moment");
 
 router.post("/login", async (req, res) => {
   try {
     const user = await User.findOne({
-      $or: [{ username: req.body.username }, { email: req.body.username }]
+      $or: [{ username: req.body.username }, { email: req.body.username }],
     });
     if (!user) {
       return res.status(404).json("Wrong Username or Email");
@@ -16,18 +16,18 @@ router.post("/login", async (req, res) => {
     if (!validPassword) {
       return res.status(404).json("Wrong Password");
     }
-    res.status(200).json(user);
+    const { password, updatedAt, ...other } = user._doc;
+    return res.status(200).json(other);
   } catch (err) {
     return res.status(500).json({ err });
   }
 });
 
-
 router.post("/register", async (req, res) => {
   try {
     // Check if a user with the same username or email already exists
     const existingUser = await User.findOne({
-      $or: [{ username: req.body.username }, { email: req.body.email }]
+      $or: [{ username: req.body.username }, { email: req.body.email }],
     });
 
     if (existingUser) {
@@ -56,10 +56,8 @@ router.post("/register", async (req, res) => {
   }
 });
 
-
-  router.post("/logout", (req, res) => {
-    res.clearCookie("accessToken", {secure:true,sameSite:"none"}).status(200).json("User has been logged out");
-    });
-
+router.post("/logout", (req, res) => {
+  res.clearCookie("accessToken", { secure: true, sameSite: "none" }).status(200).json("User has been logged out");
+});
 
 module.exports = router;

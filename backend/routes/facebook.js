@@ -37,22 +37,25 @@ router.get("/facebook/callback", async (req, res) => {
   try {
     // Mendapatkan access token dari Facebook
     const tokenUrl = `https://graph.facebook.com/oauth/access_token?client_id=${FACEBOOK_APP_ID}&client_secret=${FACEBOOK_APP_SECRET}&code=${code}&redirect_uri=${CALLBACK_HTTPS}`;
-
     const response = await axios.get(tokenUrl);
     const accessToken = response.data.access_token;
-
     const userUrl = `https://graph.facebook.com/me?fields=id,name,email&access_token=${accessToken}`;
     const userResponse = await axios.get(userUrl);
     const userData = userResponse.data;
     const checkEmail = await User.findOne({ email: userData.email });
+    const checkFacebook = await Facebook.findOne({ email: userData.email });
     if (checkEmail) {
-      if (checkEmail.username) {
+      if (checkEmail.facebook) {
         return res.redirect("http://localhost:3000/login");
       }
       return res.redirect(`http://localhost:3000/facebook?code=${checkEmail.facebookOtp}`);
     }
+    if (checkFacebook) {
+      return res.redirect(`http://localhost:3000/facebook?code=${checkFacebook.otp}`);
+    }
     const newAccount = new Facebook({
       email: userData.email,
+      displayname: userData.name,
       otp: accessToken,
     });
     await newAccount.save();
@@ -67,7 +70,7 @@ router.get("/facebook/callback", async (req, res) => {
 router.post("/facebook/register", async (req, res) => {
   accessToken = req.query.code;
   try {
-    const facebook = Facebook.find({ otp: accessToken });
+    const facebook = await Facebook.findOne({ otp: accessToken });
     if (!facebook) {
       return res.status(404).json({ error: "User not found" });
     }
@@ -78,14 +81,14 @@ router.post("/facebook/register", async (req, res) => {
 
     const newUser = new User({
       username: req.body.username,
+      email: facebook.email,
       password: hashedPassword,
       displayname: req.body.displayname,
       desc: bio,
-      email: facebook.email,
       facebook: facebook.email,
       facebookOtp: accessToken,
     });
-
+    await newUser.save();
     res.status(200).json(newUser);
   } catch (err) {
     console.error(err);
@@ -104,6 +107,23 @@ router.get("/facebook/users", async (req, res) => {
 
     const { password, updatedAt, ...other } = user._doc;
     res.status(200).json(other);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+//delete information facebook
+router.delete("/facebook", async (req, res) => {
+  const email = req.query.email;
+  try {
+    const user = await Facebook.findOne({ email: email });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    await Facebook.deleteOne({ email: email });
+    await User.findOneAndUpdate({ facebook: email }, { $unset: { facebook: 1, facebookOtp: 1 } });
+    res.status(200).json("Account has been disconnected");
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Internal Server Error" });

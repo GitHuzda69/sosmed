@@ -34,7 +34,6 @@ const Facebook = (socket) => {
   }, []);
 
   const email = user.email;
-
   const handleClick = async (e) => {
     e.preventDefault();
 
@@ -42,21 +41,20 @@ const Facebook = (socket) => {
       setErrors("Please agree to the Terms & Services Policy.");
       return;
     }
-
-    const user = {
+    const users = {
       username: username.current.value,
-      email: email,
+      email: user.email,
       displayname: displayname.current.value,
       password: password.current.value,
     };
 
-    if (user.password.length < 8) {
+    if (users.password.length < 8) {
       setErrors("Password must be at least 8 characters long.");
       return;
     }
 
     try {
-      await makeRequest("auth/facebook/register", "POST", user);
+      await makeRequest(`auth/facebook/register?code=${code}`, "POST", users);
       history("/login");
     } catch (err) {
       console.log(err);
@@ -99,7 +97,7 @@ const Facebook = (socket) => {
               <strong style={{ paddingBottom: "5px" }}>
                 <label>Email</label>
               </strong>
-              <input type="email" value={user.email} className="input-signup" readOnly />
+              <input type="email" className="input-signup" value={email} readOnly />
             </div>
             <div
               className="form-group"

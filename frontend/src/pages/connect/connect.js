@@ -29,6 +29,14 @@ const Connect = (socket) => {
     }
   };
 
+  const disconnectFacebook = async () => {
+    try {
+      await makeRequest(`auth/facebook?email=${currentUser.email}`, "DELETE");
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const toggleSettings = () => {
     setSettingOpen(!settingOpen);
   };
@@ -91,7 +99,9 @@ const Connect = (socket) => {
           {currentUser && currentUser.facebook ? currentUser.facebook : <h3></h3>}
         </div>
         {currentUser && currentUser.facebook ? (
-          <button className="disconnect-button">Disconnect</button>
+          <button className="disconnect-button" onClick={disconnectFacebook}>
+            Disconnect
+          </button>
         ) : (
           <button className="connect-button" onClick={handleFacebook}>
             Connect
@@ -106,9 +116,9 @@ const Connect = (socket) => {
         <button className="connect-button">Connect</button>
       </div>
       <div className="connect-content">
-        <Icon icon="fa6-brands:x-twitter" width={40} height={40} />
+        <Icon icon="gg:google" width={40} height={40} />
         <div className="connect-name">
-          <h2>Connect to X/Twitter</h2>
+          <h2>Connect to Google</h2>
         </div>
         <button className="connect-button">Connect</button>
       </div>

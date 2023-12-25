@@ -12,6 +12,9 @@ const FacebookSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    displayname: {
+      type: String,
+    },
     otp: {
       type: String,
     },

@@ -22,7 +22,9 @@ const Sidebar = ({ toggleSettings, toggleLogout, isFriendListPage, isHomePage, i
 
   useEffect(() => {
     socket.on("getNotification", (data) => {
-      setNotifDot(true);
+      if (data) {
+        setNotifDot(true);
+      }
     });
   }, [socket]);
 
@@ -36,7 +38,7 @@ const Sidebar = ({ toggleSettings, toggleLogout, isFriendListPage, isHomePage, i
           </Link>
           <Link to="/notif">
             <button>{isNotifPage ? <Icon icon="mdi:bell" width="35" height="35" /> : <Icon icon="mdi:bell-outline" width="35" height="35" />}</button>
-            {notifDot && notifDot === true ? <div className="notif-nobar-dot"></div> : ""}
+            <div className={`${notifDot === true ? "notif-nobar-dot" : ""}`}></div>
           </Link>
           <Link to="/messages">
             <button>{isMessagesPage ? <Icon icon="bxs:chat" width="35" height="35" /> : <Icon icon="bx:chat" width="35" height="35" />}</button>
@@ -64,7 +66,7 @@ const Sidebar = ({ toggleSettings, toggleLogout, isFriendListPage, isHomePage, i
           </Link>
           <Link to="/notif" className="nav-link">
             <button className="nav-button">{isNotifPage ? <Icon icon="mdi:bell" width="35" height="35" /> : <Icon icon="mdi:bell-outline" width="35" height="35" />}</button>
-            <div className="notif-dot"></div>
+            <div className={`${notifDot === true ? "notif-dot" : ""}`}></div>
             <span className={isNotifPage ? "nav-bold-text" : "nav-text"}>Notification</span>
           </Link>
           <Link to="/messages" className="nav-link">

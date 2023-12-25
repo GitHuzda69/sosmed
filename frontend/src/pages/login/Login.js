@@ -15,6 +15,7 @@ const Login = () => {
   const [error, setError] = useState();
   const [rememberMe, setRememberMe] = useState(false);
   const [errorVisible, setErrorVisible] = useState(false);
+  const history = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -31,22 +32,14 @@ const Login = () => {
       localStorage.removeItem("userData");
     }
 
-    const loginCall = async (userCredential, dispatch) => {
-      dispatch({ type: "LOGIN_START" });
-      try {
-        const res = await makeRequest("auth/login", "POST", userCredential);
-        dispatch({ type: "LOGIN_SUCCESS", payload: res });
-      } catch (err) {
-        setError(err.message);
-        dispatch({ type: "LOGIN_FAILURE", payload: err });
-        setTimeout(() => setError(null), 3000);
-      }
-    };
-
     try {
-      await loginCall(userData, dispatch);
-    } catch (error) {
-      console.error(error);
+      const response = await makeRequest("auth/login", "POST", userData);
+      localStorage.setItem("user", JSON.stringify(response));
+      history("/");
+      window.location.reload();
+    } catch (err) {
+      setError(err.message);
+      setTimeout(() => setError(null), 3000);
     }
   };
 
