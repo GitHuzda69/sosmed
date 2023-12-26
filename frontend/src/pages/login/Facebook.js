@@ -7,7 +7,7 @@ import { useAuth } from "../../context/authContext";
 
 import loginimages from "../../assets/Background.png";
 
-const Facebook = (socket) => {
+const Facebook = () => {
   const username = useRef();
   const displayname = useRef();
   const password = useRef();

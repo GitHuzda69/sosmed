@@ -15,7 +15,7 @@ import HomeProfile from "../../component/home-profile/home-profile.js";
 import Navbar from "../../component/navbar/navbar.js";
 import AuthContext from "../../context/authContext.js";
 
-const Fyp = (socket) => {
+const Fyp = () => {
   const [posts, setPosts] = useState([""]);
   const [user, setUser] = useState({});
   const [settingOpen, setSettingOpen] = useState(false);
@@ -101,7 +101,7 @@ const Fyp = (socket) => {
       <div className={`app ${isDarkMode ? "dark-mode" : ""}`}>
         <div className="home">
           <div className="leftbar-fyp">
-            <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isHomePage={isHomePage} setIsShowRightBar={setIsShowRightBar} socket={socket.socket} />
+            <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isHomePage={isHomePage} setIsShowRightBar={setIsShowRightBar} />
           </div>
           <div className={`main-content ${!isShowRightBar ? "no-right-bar" : ""}`}>
             {!isShowRightBar && (
@@ -120,24 +120,14 @@ const Fyp = (socket) => {
               <div className={`posts`}>
                 {posts.map(
                   (p) =>
-                    p._id && (
-                      <Post
-                        key={p._id}
-                        post={p}
-                        openPostOption={openPostOption}
-                        handleOpenPostOption={handleOpenPostOption}
-                        handleClosePostOption={handleClosePostOption}
-                        friends={friends}
-                        socket={socket}
-                      />
-                    )
+                    p._id && <Post key={p._id} post={p} openPostOption={openPostOption} handleOpenPostOption={handleOpenPostOption} handleClosePostOption={handleClosePostOption} friends={friends} />
                 )}
               </div>
             </div>
             {isShowRightBar && (
               <div className="side-content">
                 <HomeProfile />
-                <Rightbar socket={socket} />
+                <Rightbar />
               </div>
             )}
           </div>

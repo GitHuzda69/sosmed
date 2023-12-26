@@ -223,7 +223,7 @@ const Profile = (socket) => {
                 )}
               </div>
             </div>
-            {showPosts && <Posts username={username} className="posts-profile" socket={socket.socket} />}
+            {showPosts && <Posts username={username} className="posts-profile" />}
           </div>
           <RightbarProfile
             user={currentUser}
@@ -238,7 +238,7 @@ const Profile = (socket) => {
           />
         </div>
       </div>
-      <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isProfilePage={isProfilePage} setIsShowRightBar={setIsShowRightBar} socket={socket.socket} />
+      <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isProfilePage={isProfilePage} setIsShowRightBar={setIsShowRightBar} />
       {showUnfollowConfirmation && (
         <div className="popup-follow-container">
           <div className="popup-follow">

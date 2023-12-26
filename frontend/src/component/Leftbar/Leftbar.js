@@ -8,7 +8,7 @@ import Settings from "../Settings/Settings";
 import defaultprofile from "../../assets/profile/default_avatar.png";
 import logo from "../../assets/Logo_BNW.jpg";
 
-const Sidebar = ({ toggleSettings, toggleLogout, isFriendListPage, isHomePage, isMessagesPage, isNotifPage, isConnectPage, isProfilePage, isShowRightBar, setIsShowRightBar, socket }) => {
+const Sidebar = ({ toggleSettings, toggleLogout, isFriendListPage, isHomePage, isMessagesPage, isNotifPage, isConnectPage, isProfilePage, isShowRightBar, setIsShowRightBar }) => {
   const { currentUser } = useContext(AuthContext);
   const { user } = useContext(AuthContext);
   const [notifDot, setNotifDot] = useState(false);
@@ -20,19 +20,13 @@ const Sidebar = ({ toggleSettings, toggleLogout, isFriendListPage, isHomePage, i
     }
   }, []);
 
-  useEffect(() => {
-    socket.on("getNotification", (data) => {
-      if (data) {
-        setNotifDot(true);
-      }
-    });
-  }, [socket]);
-
   return (
     <div className={`sidebar ${isShowRightBar ? "hide-right-bar" : "show-right-bar"}`}>
       {isShowRightBar ? (
         <div className="content-sidebar">
-          <img className="sidebar-logo" src={logo} alt="BNW logo" />
+          <Link to="/other">
+            <img className="sidebar-logo" src={logo} alt="BNW logo" />
+          </Link>
           <Link to="/">
             <button>{isHomePage ? <Icon icon="mingcute:home-4-fill" width="35" height="35" /> : <Icon icon="mingcute:home-4-line" width="35" height="35" />} </button>
           </Link>

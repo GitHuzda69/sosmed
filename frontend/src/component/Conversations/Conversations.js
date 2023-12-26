@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import "./Conversation.css";
 import { Icon } from "@iconify/react";
 import "../../DarkMode.css";
-import { io } from "socket.io-client";
 
 import { makeRequest } from "../../fetch";
 import defaultprofile from "../../assets/profile/default_avatar.png";
@@ -10,18 +9,6 @@ import defaultprofile from "../../assets/profile/default_avatar.png";
 export default function Conversation({ conversation, currentUser, onClick, isSelected, isShowRightBar }) {
   const [user, setUser] = useState();
   const [isOnline, setIsOnline] = useState(false);
-
-  //SOCKET IO
-  const socket = useRef();
-  useEffect(() => {
-    socket.current = io("ws://localhost:8900");
-  }, []);
-  useEffect(() => {
-    socket.current.emit("addUser", currentUser._id);
-    socket.current.on("getUsers", (users) => {
-      setIsOnline(currentUser.followings.filter((f) => users.some((u) => u.userId === f)));
-    });
-  }, [currentUser]);
 
   const friendId = conversation.members.find((m) => m !== currentUser._id);
   useEffect(() => {

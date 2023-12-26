@@ -141,7 +141,7 @@ const Register = () => {
               <input type="checkbox" className="checkbox-input-signup" checked={agreeStatus} onChange={() => setAgreeStatus(!agreeStatus)} />
               <h4>
                 I Agree with
-                <Link to="/other/terms-of-service">
+                <Link to="/other">
                   <button type="button" className="terms-button">
                     Terms & Services
                   </button>

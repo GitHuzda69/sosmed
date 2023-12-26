@@ -13,7 +13,7 @@ import { useLocation, Link } from "react-router-dom";
 import defaultprofile from "../../assets/profile/default_avatar.png";
 import defaultcover from "../../assets/profile/default_banner.jpg";
 
-const FriendList = (socket) => {
+const FriendList = () => {
   const { user: currentUser } = useContext(AuthContext);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [user, setUser] = useState({});
@@ -147,7 +147,7 @@ const FriendList = (socket) => {
           </div>
         )}
       </div>
-      <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isFriendListPage={isFriendListPage} socket={socket} />
+      <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isFriendListPage={isFriendListPage} />
       <RightbarProfile
         user={user}
         username={username}

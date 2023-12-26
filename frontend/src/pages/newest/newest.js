@@ -15,7 +15,7 @@ import HomeProfile from "../../component/home-profile/home-profile.js";
 import Navbar from "../../component/navbar/navbar.js";
 import AuthContext from "../../context/authContext.js";
 
-const Newest = (socket) => {
+const Newest = () => {
   const [posts, setPosts] = useState([""]);
   const [settingOpen, setSettingOpen] = useState(false);
   const [logoutOpen, setLogoutOpen] = useState(false);
@@ -101,7 +101,7 @@ const Newest = (socket) => {
       <div className={`app ${isDarkMode ? "dark-mode" : ""}`}>
         <div className="home">
           <div className="leftbar-newest">
-            <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isHomePage={isHomePage} isShowRightBar={isShowRightBar} setIsShowRightBar={setIsShowRightBar} socket={socket.socket} />
+            <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isHomePage={isHomePage} isShowRightBar={isShowRightBar} setIsShowRightBar={setIsShowRightBar} />
           </div>
           <div className={`main-content ${!isShowRightBar ? "no-right-bar" : ""}`}>
             {!isShowRightBar && (
@@ -126,7 +126,7 @@ const Newest = (socket) => {
             {isShowRightBar && (
               <div className="side-content">
                 <HomeProfile />
-                <Rightbar socket={socket} />
+                <Rightbar />
               </div>
             )}
           </div>

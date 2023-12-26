@@ -13,7 +13,7 @@ import AuthContext from "../../context/authContext.js";
 import { makeRequest } from "../../fetch.js";
 import moment from "moment";
 
-function Notif(socket) {
+function Notif() {
   const [settingOpen, setSettingOpen] = useState(false);
   const [logoutOpen, setLogoutOpen] = useState(false);
   const [showAll, setShowAll] = useState(true);
@@ -29,18 +29,6 @@ function Notif(socket) {
   const [isShowRightBar, setIsShowRightBar] = useState(true);
 
   const isNotifPage = true;
-
-  //SOCKET IO
-  useEffect(() => {
-    socket.socket.on("getUsers", (users) => {});
-  }, [currentUser]);
-
-  useEffect(() => {
-    socket.socket.on("getNotification", (data) => {
-      console.log(data);
-      setNotifSocket((prev) => [...prev, data]);
-    });
-  }, [socket.socket]);
 
   useEffect(() => {
     const fetchNotif = async () => {
@@ -99,8 +87,6 @@ function Notif(socket) {
       fetchUser();
     }
   }, [notif]);
-
-  console.log(notifSocket);
 
   const toggleSettings = () => {
     setSettingOpen(!settingOpen);
@@ -248,7 +234,7 @@ function Notif(socket) {
       {isShowRightBar && (
         <div className="side-content">
           <HomeProfile />
-          <Rightbar socket={socket.socket} />
+          <Rightbar />
         </div>
       )}
       {!isShowRightBar && (
@@ -256,7 +242,7 @@ function Notif(socket) {
           <Navbar isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} toggleLogout={toggleLogout} />
         </div>
       )}
-      <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isNotifPage={isNotifPage} socket={socket.socket} isShowRightBar={isShowRightBar} setIsShowRightBar={setIsShowRightBar} />
+      <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isNotifPage={isNotifPage} isShowRightBar={isShowRightBar} setIsShowRightBar={setIsShowRightBar} />
       {settingOpen && (
         <>
           <div className="settings-overlay" />

@@ -5,7 +5,6 @@ import "../comments/Comments.css";
 import { useContext, useState, useRef, useEffect } from "react";
 import AuthContext from "../../context/authContext.js";
 import { Icon } from "@iconify/react";
-import { io } from "socket.io-client";
 
 import defaultprofile from "../../assets/profile/default_avatar.png";
 
@@ -33,17 +32,6 @@ const Commento = ({ postid, className }) => {
       };
     });
   };
-
-  // SOCKET IO
-  const socket = useRef();
-  useEffect(() => {
-    socket.current = io("ws://localhost:8900");
-  }, []);
-
-  useEffect(() => {
-    socket.current.emit("addUser", currentUser._id);
-    socket.current.on("getUsers", (users) => {});
-  }, [currentUser]);
 
   const postUserId = async (postid) => {
     try {
@@ -99,12 +87,6 @@ const Commento = ({ postid, className }) => {
           const res = await convertbase64(file);
           imgUrl = res;
         }
-
-        socket.current.emit("sendNotification", {
-          senderId: currentUser._id,
-          receiverId: await postUserId(postid),
-          type: 2,
-        });
 
         try {
           const newComment = {

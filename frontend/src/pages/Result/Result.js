@@ -15,7 +15,7 @@ import HomeProfile from "../../component/home-profile/home-profile.js";
 import AuthContext from "../../context/authContext.js";
 import { useParams } from "react-router";
 
-const Result = (socket) => {
+const Result = () => {
   const [posts, setPosts] = useState([""]);
   const [user, setUser] = useState({});
   const [settingOpen, setSettingOpen] = useState(false);
@@ -112,7 +112,7 @@ const Result = (socket) => {
       <div className={`app ${isDarkMode ? "dark-mode" : ""}`}>
         <div className="home">
           <div className="leftbar-fyp">
-            <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isHomePage={isHomePage} setIsShowRightBar={setIsShowRightBar} socket={socket} />
+            <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isHomePage={isHomePage} setIsShowRightBar={setIsShowRightBar} />
           </div>
           <div className="main-content-fyp" style={{ maxWidth: mainContentMaxWidth }}>
             <div className="topbar-fyp">
@@ -127,15 +127,7 @@ const Result = (socket) => {
                   : posts.map(
                       (p) =>
                         p._id && (
-                          <Post
-                            key={p._id}
-                            post={p}
-                            openPostOption={openPostOption}
-                            handleOpenPostOption={handleOpenPostOption}
-                            handleClosePostOption={handleClosePostOption}
-                            friends={friends}
-                            socket={socket}
-                          />
+                          <Post key={p._id} post={p} openPostOption={openPostOption} handleOpenPostOption={handleOpenPostOption} handleClosePostOption={handleClosePostOption} friends={friends} />
                         )
                     )}
               </div>
@@ -143,7 +135,7 @@ const Result = (socket) => {
             {isShowRightBar && (
               <div className="side-content">
                 <HomeProfile />
-                <Rightbar socket={socket} />
+                <Rightbar />
               </div>
             )}
           </div>

@@ -4,45 +4,10 @@ import "./Posts.css";
 import { makeRequest } from "../../fetch.js";
 import AuthContext from "../../context/authContext.js";
 
-export default function Posts({ username, className, isHome, socket }) {
+export default function Posts({ username, className, isHome }) {
   const [posts, setPosts] = useState([""]);
   const { user } = useContext(AuthContext);
   const [openPostOption, setOpenPostOption] = useState(null);
-  const [arrivalPost, setArrivalPost] = useState(null);
-
-  //SOCKET IO
-  useEffect(() => {
-    socket?.on("getPostFollow", (data) => {
-      const decodeBase64ToBlob = (base64) => {
-        const binaryString = window.atob(base64);
-        const arrayBuffer = new ArrayBuffer(binaryString.length);
-        const byteArray = new Uint8Array(arrayBuffer);
-
-        for (let i = 0; i < binaryString.length; i++) {
-          byteArray[i] = binaryString.charCodeAt(i);
-        }
-
-        return new Blob([arrayBuffer], { type: "application/octet-stream" });
-      };
-
-      const decodedImg = typeof img === "string" ? decodeBase64ToBlob(data.img) : data.img;
-      const decodedFile = typeof file === "string" ? decodeBase64ToBlob(data.file) : data.file;
-
-      setArrivalPost({
-        userId: data.userId,
-        desc: data.desc,
-        img: decodedImg,
-        file: decodedFile,
-        createdAt: Date.now(),
-      });
-    });
-  }, []);
-
-  useEffect(() => {
-    if (arrivalPost && !posts.some((post) => post._id === arrivalPost._id)) {
-      setPosts((prev) => [arrivalPost, ...prev]);
-    }
-  }, [arrivalPost, posts]);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -78,9 +43,7 @@ export default function Posts({ username, className, isHome, socket }) {
         {!username || username === user.username}
         {posts.length === 0
           ? "There is no any post yet"
-          : posts.map(
-              (p) => p._id && <Post key={p._id} post={p} openPostOption={openPostOption} handleOpenPostOption={handleOpenPostOption} handleClosePostOption={handleClosePostOption} socket={socket} />
-            )}
+          : posts.map((p) => p._id && <Post key={p._id} post={p} openPostOption={openPostOption} handleOpenPostOption={handleOpenPostOption} handleClosePostOption={handleClosePostOption} />)}
       </div>
     </>
   );

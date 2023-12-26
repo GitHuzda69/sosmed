@@ -4,7 +4,6 @@ import AuthContext from "../../context/authContext.js";
 import { Icon } from "@iconify/react";
 import { makeRequest, makeAxios } from "../../fetch.js";
 import { useNavigate } from "react-router";
-import { io } from "socket.io-client";
 
 const Upload = () => {
   const [file, setFile] = useState(null);
@@ -20,12 +19,6 @@ const Upload = () => {
   const [recordingDuration, setRecordingDuration] = useState(0);
 
   const { user } = useContext(AuthContext);
-
-  //SOCKET IO
-  const socket = useRef();
-  useEffect(() => {
-    socket.current = io("ws://localhost:8900");
-  }, []);
 
   const handleFileInputChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -92,13 +85,6 @@ const Upload = () => {
       const res = await convertAudio64(audio);
       newPost.file = res;
     }
-
-    socket.current.emit("uploadPostFollow", {
-      userId: currentUser._id,
-      desc: newPost.desc,
-      img: newPost.img,
-      file: newPost.file,
-    });
 
     try {
       await makeRequest("posts", "POST", newPost);

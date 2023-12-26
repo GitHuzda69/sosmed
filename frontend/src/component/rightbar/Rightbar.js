@@ -6,14 +6,16 @@ import { makeRequest } from "../../fetch.js";
 import defaultprofile from "../../assets/profile/default_avatar.png";
 import { useContext, useEffect, useState } from "react";
 import AuthContext from "../../context/authContext";
+import { io } from "socket.io-client";
 
-const Rightbar = (socket) => {
+const Rightbar = () => {
   const [friends, setFriends] = useState([]);
   const [onlineUser, setOnlineUser] = useState([]);
   const { user: currentUser } = useContext(AuthContext);
 
+  const socket = io("http://localhost:8900");
   useEffect(() => {
-    socket.socket.socket?.on("getUsers", (users) => {
+    socket?.on("getUsers", (users) => {
       setOnlineUser(currentUser.followings.filter((f) => users.some((u) => u.userId === f)));
     });
   }, [currentUser]);

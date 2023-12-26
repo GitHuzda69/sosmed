@@ -44,14 +44,21 @@ router.get("/facebook/callback", async (req, res) => {
     const userData = userResponse.data;
     const checkEmail = await User.findOne({ email: userData.email });
     const checkFacebook = await Facebook.findOne({ email: userData.email });
-    if (checkEmail) {
-      if (checkEmail.facebook) {
-        return res.redirect("http://localhost:3000/login");
-      }
-      return res.redirect(`http://localhost:3000/facebook?code=${checkEmail.facebookOtp}`);
+    if (checkEmail && checkEmail.facebook) {
+      return res.redirect("http://localhost:3000/login");
     }
-    if (checkFacebook) {
-      return res.redirect(`http://localhost:3000/facebook?code=${checkFacebook.otp}`);
+    if (checkEmail && checkEmail.connectFB === true) {
+      const newAccount = new Facebook({
+        email: userData.email,
+        displayname: userData.name,
+        otp: accessToken,
+      });
+      await newAccount.save();
+      await axios.put(`http://localhost:8800/facebook/connect?email=${userData.email}`);
+      res.status(200).json("Your Account connected");
+    }
+    if (checkFacebook && checkFacebook) {
+      return res.redirect(`http://localhost:3000/login`);
     }
     const newAccount = new Facebook({
       email: userData.email,
@@ -87,6 +94,7 @@ router.post("/facebook/register", async (req, res) => {
       desc: bio,
       facebook: facebook.email,
       facebookOtp: accessToken,
+      connectFB: false,
     });
     await newUser.save();
     res.status(200).json(newUser);
@@ -122,8 +130,20 @@ router.delete("/facebook", async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
     await Facebook.deleteOne({ email: email });
-    await User.findOneAndUpdate({ facebook: email }, { $unset: { facebook: 1, facebookOtp: 1 } });
+    await User.findOneAndUpdate({ facebook: email }, { $unset: { facebook: 1, facebookOtp: 1 }, $set: { connectFB: true } });
     res.status(200).json("Account has been disconnected");
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+//update information facebook
+router.put("/facebook/connect", async (req, res) => {
+  const email = req.query.email;
+  try {
+    await User.findOneAndUpdate({ email: email }, { $set: { connectFB: false, facebook: email } });
+    res.status(200).json("Account has been Updated");
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Internal Server Error" });

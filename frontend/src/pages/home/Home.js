@@ -13,7 +13,7 @@ import HomeProfile from "../../component/home-profile/home-profile.js";
 import Rightbar from "../../component/rightbar/Rightbar.js";
 import Navbar from "../../component/navbar/navbar.js";
 
-function Home(socket) {
+function Home() {
   const [settingOpen, setSettingOpen] = useState(false);
   const [logoutOpen, setLogoutOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -78,17 +78,17 @@ function Home(socket) {
           )}
           <div className="home-content">
             <Upload />
-            <Posts isHome={true} socket={socket.socket} />
+            <Posts isHome={true} />
           </div>
           {isShowRightBar && (
             <div className="side-content">
               <HomeProfile />
-              <Rightbar socket={socket.socket} />
+              <Rightbar />
             </div>
           )}
         </div>
         <div className="leftbar">
-          <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isHomePage={isHomePage} isShowRightBar={isShowRightBar} setIsShowRightBar={setIsShowRightBar} socket={socket.socket} />
+          <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isHomePage={isHomePage} isShowRightBar={isShowRightBar} setIsShowRightBar={setIsShowRightBar} />
         </div>
       </div>
       {settingOpen && (

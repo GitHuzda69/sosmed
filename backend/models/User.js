@@ -55,6 +55,14 @@ const UserSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    connectFB: {
+      type: Boolean,
+      default: true,
+    },
+    connectGO: {
+      type: Boolean,
+      default: true,
+    },
     desc: {
       type: String,
       max: 50,

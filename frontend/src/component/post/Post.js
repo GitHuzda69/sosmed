@@ -8,7 +8,7 @@ import moment from "moment";
 import Commento from "../Commento/Commento.js";
 import defaultprofile from "../../assets/profile/default_avatar.png";
 
-const Post = ({ post, key, openPostOption, handleOpenPostOption, handleClosePostOption, friends, socket }) => {
+const Post = ({ post, key, openPostOption, handleOpenPostOption, handleClosePostOption, friends }) => {
   const [commentOpen, setCommentOpen] = useState(false);
   const [popupOpen, setPopupOpen] = useState(false);
   const [selectedPostImg, setSelectedPostImg] = useState(null);
@@ -83,12 +83,6 @@ const Post = ({ post, key, openPostOption, handleOpenPostOption, handleClosePost
         type: " liked your post",
       });
 
-      socket.socket.emit("sendNotification", {
-        senderId: currentUser._id,
-        receiverId: post.userId,
-        type: " liked your post",
-      });
-
       setLike(isLiked ? like - 1 : like + 1);
       setIsLiked(!isLiked);
     } catch (err) {
@@ -135,12 +129,6 @@ const Post = ({ post, key, openPostOption, handleOpenPostOption, handleClosePost
       const isFollowing = !following;
 
       if (isFollowing) {
-        socket.socket.emit("sendNotification", {
-          senderId: currentUser._id,
-          receiverId: post.userId,
-          type: " started follow you",
-        });
-
         await makeRequest(`relationships/${post.userId}/follow`, "PUT", {
           userId: currentUser._id,
         });

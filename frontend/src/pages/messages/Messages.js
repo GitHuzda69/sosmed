@@ -13,7 +13,7 @@ import Conversation from "../../component/Conversations/Conversations.js";
 import Chat from "../../component/Chat/Chat.js";
 import Navbar from "../../component/navbar/navbar.js";
 
-function Message(socket) {
+function Message() {
   const [settingOpen, setSettingOpen] = useState(false);
   const [logoutOpen, setLogoutOpen] = useState(false);
   const [conversations, setConversations] = useState([]);
@@ -34,10 +34,6 @@ function Message(socket) {
   const toggleSettings = () => {
     setSettingOpen(!settingOpen);
   };
-
-  useEffect(() => {
-    socket.socket.on("getUsers", (users) => {});
-  }, [currentUser]);
 
   const toggleLogout = () => {
     setLogoutOpen(!logoutOpen);
@@ -65,16 +61,6 @@ function Message(socket) {
     };
     getMessages();
   }, [currentChat]);
-
-  useEffect(() => {
-    socket.socket.on("getMessage", (data) => {
-      setArrivalMessage({
-        sender: data.senderId,
-        text: data.text,
-        createdAt: Date.now(),
-      });
-    });
-  }, []);
 
   useEffect(() => {
     arrivalMessage && currentChat?.members.includes(arrivalMessage.sender) && setMessages((prev) => [...prev, arrivalMessage]);
@@ -128,13 +114,6 @@ function Message(socket) {
     };
 
     const receiverId = currentChat.members.find((member) => member !== currentUser._id);
-
-    socket.socket.emit("sendMessage", {
-      senderId: currentUser._id,
-      receiverId: receiverId,
-      text: newMessage,
-    });
-
     try {
       const res = await makeRequest("messages", "POST", message);
       setMessages([...messages, res]);
@@ -309,14 +288,7 @@ function Message(socket) {
         </div>
       )}
       {!isShowRightBar && <Navbar isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} toggleLogout={toggleLogout} />}
-      <Sidebar
-        toggleSettings={toggleSettings}
-        toggleLogout={toggleLogout}
-        isMessagesPage={isMessagesPage}
-        isShowRightBar={isShowRightBar}
-        setIsShowRightBar={setIsShowRightBar}
-        socket={socket.socket}
-      />
+      <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isMessagesPage={isMessagesPage} isShowRightBar={isShowRightBar} setIsShowRightBar={setIsShowRightBar} />
       {settingOpen && (
         <>
           <div className="settings-overlay" />
