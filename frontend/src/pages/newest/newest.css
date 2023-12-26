@@ -18,7 +18,7 @@
 .topbar-fyp .link-following{  
 }
   
-.main-content-fyp {
+.main-content-newest {
   flex: 1; 
   display: flex;
   flex-direction: column;
@@ -29,13 +29,13 @@
   padding: 0; 
   }
   
-  .home-content-fyp{
+  .home-content-newest{
       width: 100%;
       flex-grow: 1;
   }
-  .home-content-fyp .posts{
+  .home-content-newest .posts{
   }
-  .home-content-fyp .post{
+  .home-content-newest .post{
       width: 98%; 
   }
   .home-content .upload{ 
