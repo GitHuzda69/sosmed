@@ -11,14 +11,14 @@
     transition: width 0.3s ease;
   }
 
-  .show-right-bar {
+  .hide-right-bar {
     width: 260px;
     top: 80px;
     left: 145px;
   }
   
-  .hide-right-bar {
-    width: 65px;
+  .show-right-bar {
+    width: 65px; 
   }
   
   button {

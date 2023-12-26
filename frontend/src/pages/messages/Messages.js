@@ -288,7 +288,14 @@ function Message() {
         </div>
       )}
       {!isShowRightBar && <Navbar isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} toggleLogout={toggleLogout} />}
-      <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isMessagesPage={isMessagesPage} isShowRightBar={isShowRightBar} setIsShowRightBar={setIsShowRightBar} />
+      <Sidebar
+        isDarkMode={isDarkMode}
+        toggleSettings={toggleSettings}
+        toggleLogout={toggleLogout}
+        isMessagesPage={isMessagesPage}
+        isShowRightBar={isShowRightBar}
+        setIsShowRightBar={setIsShowRightBar}
+      />
       {settingOpen && (
         <>
           <div className="settings-overlay" />

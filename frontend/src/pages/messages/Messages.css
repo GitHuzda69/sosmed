@@ -1,9 +1,9 @@
-.main-messages {
+.main-messages { 
   display: flex;
   flex-direction: row;
   margin-top: 12px;
-  margin-left: 85px;
-  margin-right: 10px;
+  margin-left: 80px;
+  margin-right: 20px;
   margin-bottom: 20px;
   border-radius: 10px;
   font-family: "Inter";
@@ -234,7 +234,7 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  min-width: 900px;
+  min-width: 500px;
   width: auto;
   max-width: 1200px;
   border-left: 1px gray solid;
@@ -251,10 +251,10 @@
   width: calc(100% - 580px);
   display: flex;
   flex-direction: row;
-  margin-top: 90px;
-  margin-left: 430px;
+  margin-top: 92px;
+  margin-left: 425px;
   margin-right: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 20px; 
   padding-right: 20px;
   border-radius: 10px;
   font-family: "Inter";
@@ -277,7 +277,7 @@
 .message-friend-pages-norightbar {
   position: absolute;
   min-width: 722px;
-  width: calc(100% - 586px);
+  width: calc(100% - 596px);
   display: flex;
   flex-direction: row;
   align-items: center;

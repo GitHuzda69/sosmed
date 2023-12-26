@@ -7,8 +7,9 @@ import Settings from "../Settings/Settings";
 
 import defaultprofile from "../../assets/profile/default_avatar.png";
 import logo from "../../assets/Logo_BNW.jpg";
+import logopng from "../../assets/Logo_BNW.png";
 
-const Sidebar = ({ toggleSettings, toggleLogout, isFriendListPage, isHomePage, isMessagesPage, isNotifPage, isConnectPage, isProfilePage, isShowRightBar, setIsShowRightBar }) => {
+const Sidebar = ({ toggleSettings, toggleLogout, isFriendListPage, isHomePage, isMessagesPage, isNotifPage, isConnectPage, isProfilePage, isShowRightBar, setIsShowRightBar, isDarkMode }) => {
   const { currentUser } = useContext(AuthContext);
   const { user } = useContext(AuthContext);
   const [notifDot, setNotifDot] = useState(false);
@@ -21,12 +22,10 @@ const Sidebar = ({ toggleSettings, toggleLogout, isFriendListPage, isHomePage, i
   }, []);
 
   return (
-    <div className={`sidebar ${isShowRightBar ? "hide-right-bar" : "show-right-bar"}`}>
+    <div className={`sidebar ${isShowRightBar ? "show-right-bar" : "hide-right-bar"}`}>
       {isShowRightBar ? (
         <div className="content-sidebar">
-          <Link to="/other">
-            <img className="sidebar-logo" src={logo} alt="BNW logo" />
-          </Link>
+          <Link to="/other">{isDarkMode ? <img className="sidebar-logo" src={logo} alt="BNW logo" /> : <img className="sidebar-logo" src={logopng} alt="BNW logo" />}</Link>
           <Link to="/">
             <button>{isHomePage ? <Icon icon="mingcute:home-4-fill" width="35" height="35" /> : <Icon icon="mingcute:home-4-line" width="35" height="35" />} </button>
           </Link>

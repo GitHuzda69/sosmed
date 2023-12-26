@@ -151,81 +151,98 @@ function Notif() {
     <div className={`app ${isDarkMode ? "dark-mode" : ""}`}>
       <div className={isShowRightBar ? "main-notif" : "main-notif-norightbar"}>
         <h1>Notifications</h1>
-        <button className="mark-read-button">
-          <Icon icon="solar:check-read-linear" width={30} height={30} />
-          Mark all as read
+        <button className={isShowRightBar ? "mark-read-button" : "mark-read-button-norightbar"}>
+          {isShowRightBar && <Icon icon="solar:check-read-linear" width={30} height={30} />}Mark all as read
         </button>
         <div className="notif-container">
-          <div className="notif-border">
+          <div className={isShowRightBar ? "notif-border" : "notif-border-norightbar"}>
             <div className="notif-buttons">
-              <button onClick={toggleAll} className={`all-button ${showAll ? "bold-button" : ""}`}>
+              <button onClick={toggleAll} className={showAll ? "bold-button" : "all-button"}>
                 All
               </button>
-              <button onClick={toggleMentions} className={`mentions-button ${showMentions ? "bold-button" : ""}`}>
+              <button onClick={toggleMentions} className={showMentions ? "bold-button" : "mentions-button"}>
                 Readed
               </button>
-              <button onClick={toggleUnread} className={`unread-button ${showUnread ? "bold-button" : ""}`}>
+              <button onClick={toggleUnread} className={showUnread ? "bold-button" : "unread-button"}>
                 Unread
               </button>
             </div>
           </div>
-          <div className="notif-content">
+          <div className={isShowRightBar ? "notif-content" : "notif-content-norightbar"}>
             {showAll && (
               <div className="all-notif-container">
-                {notification.length === 0
-                  ? "There no notification"
-                  : notification.map((notification) => (
-                      <div className="notif" key={notification.id}>
-                        <span className="notif-date">{moment(notification.createdAt).fromNow()}</span>
-                        <div className="notif-user">
-                          <img className="notif-avatar" src={user.profilePicture} alt={user.username} />
-                          <div className="notif-text">
-                            <p>
-                              <strong>{user.displayname}</strong> {notification.type}
-                            </p>
-                          </div>
+                {notification.length === 0 ? (
+                  <div className="notif-empty">
+                    <Icon icon="simple-line-icons:check" width={35} height={35} />
+                    <h2>You're all caught up!</h2>
+                    <h2>You've seen all the Notificationsss.</h2>
+                  </div>
+                ) : (
+                  notification.map((notification) => (
+                    <div className="notif" key={notification.id}>
+                      <span className="notif-date">{moment(notification.createdAt).fromNow()}</span>
+                      <div className="notif-user">
+                        <img className="notif-avatar" src={user.profilePicture} alt={user.username} />
+                        <div className="notif-text">
+                          <p>
+                            <strong>{user.displayname}</strong> {notification.type}
+                          </p>
                         </div>
                       </div>
-                    ))}
+                    </div>
+                  ))
+                )}
               </div>
             )}
             {showMentions && (
               <div className="mentions-notif-container">
-                {notificationsReaded.length === 0
-                  ? "There no notification has read yet"
-                  : notificationsReaded.map((notification) => (
-                      <div className="notif" key={notification.id}>
-                        <span className="notif-date">{moment(notification.createdAt).fromNow()}</span>
-                        <div className="notif-user">
-                          <img className="notif-avatar" src={user.profilePicture} alt={user.username} />
-                          <div className="notif-text">
-                            <p>
-                              <strong>{user.displayname}</strong>
-                              {notification.type && notification.type}
-                            </p>
-                          </div>
+                {notificationsReaded.length === 0 ? (
+                  <div className="notif-empty">
+                    <Icon icon="simple-line-icons:check" width={35} height={35} />
+                    <h2>You're all caught up!</h2>
+                    <h2>You've seen all the Notificationsss.</h2>
+                  </div>
+                ) : (
+                  notificationsReaded.map((notification) => (
+                    <div className="notif" key={notification.id}>
+                      <span className="notif-date">{moment(notification.createdAt).fromNow()}</span>
+                      <div className="notif-user">
+                        <img className="notif-avatar" src={user.profilePicture} alt={user.username} />
+                        <div className="notif-text">
+                          <p>
+                            <strong>{user.displayname}</strong>
+                            {notification.type && notification.type}
+                          </p>
                         </div>
                       </div>
-                    ))}
+                    </div>
+                  ))
+                )}
               </div>
             )}
             {showUnread && (
               <div className="unread-notif-container">
-                {notificationsUnReaded.length === 0
-                  ? "There no notification has unread"
-                  : notificationsUnReaded.map((notification) => (
-                      <div className="notif" key={notification.id}>
-                        <span className="notif-date">{moment(notification.createdAt).fromNow()}</span>
-                        <div className="notif-user">
-                          <img className="notif-avatar" src={user.profilePicture} alt={user.username} />
-                          <div className="notif-text">
-                            <p>
-                              <strong>{user.displayname}</strong> {notification.type}
-                            </p>
-                          </div>
+                {notificationsUnReaded.length === 0 ? (
+                  <div className="notif-empty">
+                    <Icon icon="simple-line-icons:check" width={35} height={35} />
+                    <h2>You're all caught up!</h2>
+                    <h2>You've seen all the Notificationsss.</h2>
+                  </div>
+                ) : (
+                  notificationsUnReaded.map((notification) => (
+                    <div className="notif" key={notification.id}>
+                      <span className="notif-date">{moment(notification.createdAt).fromNow()}</span>
+                      <div className="notif-user">
+                        <img className="notif-avatar" src={user.profilePicture} alt={user.username} />
+                        <div className="notif-text">
+                          <p>
+                            <strong>{user.displayname}</strong> {notification.type}
+                          </p>
                         </div>
                       </div>
-                    ))}
+                    </div>
+                  ))
+                )}
               </div>
             )}
           </div>
@@ -242,7 +259,7 @@ function Notif() {
           <Navbar isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} toggleLogout={toggleLogout} />
         </div>
       )}
-      <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isNotifPage={isNotifPage} isShowRightBar={isShowRightBar} setIsShowRightBar={setIsShowRightBar} />
+      <Sidebar isDarkMode={isDarkMode} toggleSettings={toggleSettings} toggleLogout={toggleLogout} isNotifPage={isNotifPage} isShowRightBar={isShowRightBar} setIsShowRightBar={setIsShowRightBar} />
       {settingOpen && (
         <>
           <div className="settings-overlay" />

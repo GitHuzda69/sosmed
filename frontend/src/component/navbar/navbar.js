@@ -24,8 +24,10 @@ const Navbar = ({ isHomePage, isDarkMode, toggleDarkMode, toggleLogout }) => {
 
   return (
     <div className="navbar">
-      <img className="navbar-logo" src={logo} alt="BNW logo" />
-      <span className="navbar-name">S M D</span>
+      <Link to="/other" className="tos-link-navbar">
+        <img className="navbar-logo" src={logo} alt="BNW logo" />
+        <span className="navbar-name">S M D</span>
+      </Link>
       <SearchBar />
       {isHomePage && (
         <>
@@ -53,7 +55,7 @@ const Navbar = ({ isHomePage, isDarkMode, toggleDarkMode, toggleLogout }) => {
       </Link>
       {isPopupNavbar && (
         <div className="popup-navbar">
-          <Link className="profile-navbar">
+          <Link to={`/profile/${user.username}`} className="profile-navbar">
             <button>
               <Icon icon="iconamoon:profile-light" width={25} height={25} />
               User Profile

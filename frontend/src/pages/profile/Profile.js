@@ -14,6 +14,7 @@ import Logout from "../../component/Logout/Logout";
 import Update from "../../component/Update/Update.js";
 import RightbarProfile from "./RightbarProfile.js";
 import FriendList from "../../component/friendlist/FriendsList.js";
+import Navbar from "../../component/navbar/navbar.js";
 
 import defaultprofile from "../../assets/profile/default_avatar.png";
 import defaultcover from "../../assets/profile/default_banner.jpg";
@@ -151,11 +152,12 @@ const Profile = (socket) => {
   return (
     <div className={`app ${isDarkMode ? "dark-mode" : ""}`}>
       <div className="profile-main">
-        <div className="profil">
+        <div className={isShowRightBar ? "profil" : "profil-norightbar"}>
+          {!isShowRightBar && <Navbar isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} toggleLogout={toggleLogout} />}
           <div className={`profil-container ${showPosts ? "profile-container-posts-view" : "profile-container-friends-view"}`}>
-            <div className="cover-img">
+            <div className={isShowRightBar ? "cover-img" : "cover-img-norightbar"}>
               <div className="post-img-banner">
-                <button className="img-button" onClick={() => setImagePopupOpenBanner(true)}>
+                <button className={isShowRightBar ? "img-button" : "img-button-norightbar"} onClick={() => setImagePopupOpenBanner(true)}>
                   <img src={user.coverPicture ? user.coverPicture : defaultcover} alt="banner" />
                 </button>
               </div>
@@ -225,20 +227,29 @@ const Profile = (socket) => {
             </div>
             {showPosts && <Posts username={username} className="posts-profile" />}
           </div>
-          <RightbarProfile
-            user={currentUser}
-            friends={friends}
-            username={username}
-            handleFollow={handleFollow}
-            handleMessage={handleMessage}
-            currentUser={currentUser}
-            setShowUnfollowConfirmation={setShowUnfollowConfirmation}
-            showUnfollowConfirmation={showUnfollowConfirmation}
-            showPopupFollow={showPopupFollow}
-          />
+          {isShowRightBar && (
+            <RightbarProfile
+              user={currentUser}
+              friends={friends}
+              username={username}
+              handleFollow={handleFollow}
+              handleMessage={handleMessage}
+              currentUser={currentUser}
+              setShowUnfollowConfirmation={setShowUnfollowConfirmation}
+              showUnfollowConfirmation={showUnfollowConfirmation}
+              showPopupFollow={showPopupFollow}
+            />
+          )}
         </div>
       </div>
-      <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isProfilePage={isProfilePage} setIsShowRightBar={setIsShowRightBar} />
+      <Sidebar
+        isDarkMode={isDarkMode}
+        toggleSettings={toggleSettings}
+        toggleLogout={toggleLogout}
+        isProfilePage={isProfilePage}
+        isShowRightBar={isShowRightBar}
+        setIsShowRightBar={setIsShowRightBar}
+      />
       {showUnfollowConfirmation && (
         <div className="popup-follow-container">
           <div className="popup-follow">
@@ -262,7 +273,7 @@ const Profile = (socket) => {
         <>
           <div className="settings-overlay" />
           <div className="settings-container">
-            <Settings onClose={toggleSettings} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
+            <Settings onClose={toggleSettings} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} isShowRightBar={isShowRightBar} setIsShowRightBar={setIsShowRightBar} />
           </div>
         </>
       )}

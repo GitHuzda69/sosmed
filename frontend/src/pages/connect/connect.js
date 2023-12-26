@@ -11,7 +11,7 @@ import Settings from "../../component/Settings/Settings";
 import Logout from "../../component/Logout/Logout";
 import { makeRequest } from "../../fetch";
 
-const Connect = () => {
+const Connect = (socket) => {
   const [settingOpen, setSettingOpen] = useState(false);
   const [logoutOpen, setLogoutOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -127,10 +127,18 @@ const Connect = () => {
       {isShowRightBar && (
         <div className="side-content">
           <HomeProfile />
-          <Rightbar />
+          <Rightbar socket={socket} />
         </div>
       )}
-      <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isConnectPage={isConnectPage} isShowRightBar={isShowRightBar} setIsShowRightBar={setIsShowRightBar} />
+      <Sidebar
+        isDarkMode={isDarkMode}
+        toggleSettings={toggleSettings}
+        toggleLogout={toggleLogout}
+        isConnectPage={isConnectPage}
+        isShowRightBar={isShowRightBar}
+        setIsShowRightBar={setIsShowRightBar}
+        socket={socket.socket}
+      />
       {settingOpen && (
         <>
           <div className="settings-overlay" />

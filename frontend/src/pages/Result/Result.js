@@ -109,10 +109,10 @@ const Result = () => {
 
   return (
     <>
-      <div className={`app ${isDarkMode ? "dark-mode" : ""}`}>
+      <div className={`app ${isDarkMode ? "dark-mode" : "light-mode"}`}>
         <div className="home">
           <div className="leftbar-fyp">
-            <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isHomePage={isHomePage} setIsShowRightBar={setIsShowRightBar} />
+            <Sidebar isDarkMode={isDarkMode} toggleSettings={toggleSettings} toggleLogout={toggleLogout} isHomePage={isHomePage} setIsShowRightBar={setIsShowRightBar} />
           </div>
           <div className="main-content-fyp" style={{ maxWidth: mainContentMaxWidth }}>
             <div className="topbar-fyp">

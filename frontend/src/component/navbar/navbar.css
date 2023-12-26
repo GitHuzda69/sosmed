@@ -14,6 +14,14 @@
   z-index: 400;
 }
 
+.tos-link-navbar{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: white;
+  text-decoration: none;
+}
+
 .navbar-logo {
   height: 50px;
   width: 50px;

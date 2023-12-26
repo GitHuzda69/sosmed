@@ -54,7 +54,7 @@ const Rightbar = () => {
                 <Link to={`/profile/${friend.username}`} className="rightBarLinkProfile">
                   <div className="rightBarUserInfo">
                     <img className="rightBarImg" src={friend.profilePicture ? friend.profilePicture : defaultprofile} alt={friend.displayname} />
-                    {onlineUser && onlineUser.includes(friend._id) ? <div className={`statusDot ${"greenDot"}`} /> : <div className={`statusDot ${"grayDot"}`} />}
+                    {onlineUser && onlineUser.includes(friend._id) ? <div className={`statusDot-rightbar ${"greenDot-rightbar"}`} /> : <div className={`statusDot-rightbar ${"grayDot-rightbar"}`} />}
                   </div>
                   <p className="rightBarUserStatus">
                     <span className="rightBarName">{friend.displayname}</span>

@@ -1,5 +1,11 @@
+ html{
+  background-color: white;
+}
 .login-pages {
-  background-color: #ffffff;
+  background-color: #ffffff; 
+}
+.login-pages html{
+  background-color: aqua;
 }
 .login-containers {
   display: flex;
