@@ -99,38 +99,36 @@ const Fyp = () => {
   return (
     <>
       <div className={`app ${isDarkMode ? "dark-mode" : ""}`}>
-        <div className="home">
-          <div className="leftbar-fyp">
-            <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isHomePage={isHomePage} setIsShowRightBar={setIsShowRightBar} />
-          </div>
-          <div className={`main-content ${!isShowRightBar ? "no-right-bar" : ""}`}>
-            {!isShowRightBar && (
-              <div className="fyp-navbar">
-                <Navbar isHomePage={isHomePage} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} toggleLogout={toggleLogout} />
-              </div>
-            )}
-            {isShowRightBar && (
-              <div className="topbar-fyp">
-                <FypSwitch />
-                <SearchBar />
-              </div>
-            )}
-            <div className="home-content-fyp">
-              <Upload />
-              <div className={`posts`}>
-                {posts.map(
-                  (p) =>
-                    p._id && <Post key={p._id} post={p} openPostOption={openPostOption} handleOpenPostOption={handleOpenPostOption} handleClosePostOption={handleClosePostOption} friends={friends} />
-                )}
-              </div>
+        <div className="leftbar-fyp">
+          <Sidebar isDarkMode={isDarkMode} toggleSettings={toggleSettings} toggleLogout={toggleLogout} isHomePage={isHomePage} isShowRightBar={isShowRightBar} setIsShowRightBar={setIsShowRightBar} />
+        </div>
+        <div className={`main-content ${!isShowRightBar ? "no-right-bar-fyp" : ""}`}>
+          {!isShowRightBar && (
+            <div className="fyp-navbar">
+              <Navbar isHomePage={isHomePage} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} toggleLogout={toggleLogout} />
             </div>
-            {isShowRightBar && (
-              <div className="side-content">
-                <HomeProfile />
-                <Rightbar />
-              </div>
-            )}
+          )}
+          {isShowRightBar && (
+            <div className="topbar-fyp">
+              <FypSwitch />
+              <SearchBar />
+            </div>
+          )}
+          <div className="home-content-fyp">
+            <Upload />
+            <div className={`posts`}>
+              {posts.map(
+                (p) =>
+                  p._id && <Post key={p._id} post={p} openPostOption={openPostOption} handleOpenPostOption={handleOpenPostOption} handleClosePostOption={handleClosePostOption} friends={friends} />
+              )}
+            </div>
           </div>
+          {isShowRightBar && (
+            <div className="side-content">
+              <HomeProfile />
+              <Rightbar />
+            </div>
+          )}
         </div>
       </div>
       {settingOpen && (

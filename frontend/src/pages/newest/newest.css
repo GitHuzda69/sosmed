@@ -28,6 +28,11 @@
   margin-left: 60px; 
   padding: 0; 
   }
+  .main-content.no-right-bar-newest {
+    margin-top: 83px;
+    margin-left: 415px;
+    max-width: calc(100% - 550px);
+  }
   
   .home-content-newest{
       width: 100%;

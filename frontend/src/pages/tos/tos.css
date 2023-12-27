@@ -1,6 +1,7 @@
 .main-tos{
   height: 100%;
   width: 100%;
+  min-height: 700px;
   display: flex;
   flex-direction: row;
   background-color: white;
@@ -20,8 +21,8 @@
 }
 .back-tos-button{
   position: absolute;
-  top: 20px;
-  left: 20px;
+  top: 10px;
+  left: 10px;
 }
 .tos-buttons{ 
   min-width: 200px;
@@ -32,6 +33,9 @@
   padding-left: 15px;
   margin-top: 40px; 
 }
+.tos-buttons button:hover{
+  border-radius: 5px;
+}
 .tos-button {
   font-weight: normal;
   font-size: 16px;
@@ -39,21 +43,33 @@
 
 .tos-content{
   height: 100%;
+  max-height: 1000px; 
   width: 100%;
+  transition: max-height 0.5s ease-in-out;  
+  overflow: hidden;
 }
 
-.tos-container{
+.about-container,
+.tos-container,
+.privacy-container,
+.copyright-container{
+  position: relative;
   display: flex;
   flex-direction: column; 
+  justify-content: center;
   border: 2px #8E8E8E solid;
-  border-radius: 10px;
-  margin: 20px;
-  margin-right: 30px;
-  padding: 20px;
+  border-radius: 10px; 
+  margin: 10px;
+  padding: 15px;
 }
+.about-container h2{
+  margin: 0;
+  margin-bottom: 20px;
+}
+
 .tos-container h2{
-  margin-top: 0px;
-  margin-bottom: 25px;
+  margin: 0;
+  margin-bottom: 20px;
   font-weight: bold;
   font-size: 25px;
 }
@@ -67,23 +83,14 @@
   font-weight: normal;
   font-size: 16px;
 }
-
-.privacy-container{
-  display: flex;
-  flex-direction: column; 
-  border: 2px #8E8E8E solid;
-  border-radius: 10px;
-  margin: 20px;
-  margin-right: 30px;
-  padding: 20px;
-}
+ 
 .privacy-container h2{ 
   display: flex;
   flex-direction: row;
   align-items: center; 
   gap: 10px;
-  margin-top: 0px;
-  margin-bottom: 30px;
+  margin: 0;
+  margin-bottom: 20px;
   font-size: 25px;
   font-weight: bold;
 }
@@ -101,7 +108,47 @@
   font-weight: normal;
   font-size: 16px;
 }
+ 
+.copyright-container h2{
+  margin: 0;
+  margin-bottom: 20px;
+}
 
 .bold-tos-button{
   font-weight: bold;
+}
+
+.showTosButton{
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.tos-content {
+  height: 100%;
+  width: 100%;
+  transition: height 0.5s ease-in-out;
+  overflow: hidden;
+}
+.tos-content.closed {
+  height: 0;
+}
+ 
+.about-container,
+.tos-container,
+.privacy-container,
+.copyright-container {
+  width: calc(100% - 60px);
+  transition: margin 0.5s ease-in-out, padding 0.5s ease-in-out;
+}
+ 
+.about-container.closed,
+.tos-container.closed,
+.privacy-container.closed,
+.copyright-container.closed { 
+  max-height: 60px;
+  width: calc(100% - 60px); 
+  margin: 10px;
+  padding: 15px;
+  padding-bottom: 20px;
 }

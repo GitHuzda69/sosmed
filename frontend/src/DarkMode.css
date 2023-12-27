@@ -2,6 +2,7 @@
   .dark-mode {
     background-color: #101010; 
     color: white;
+    z-index: 20
   }
 
 
@@ -338,18 +339,28 @@
     background-color: #1E1E1E;
   }
   .dark-mode .mark-read-button{
-    color: white;
+    color: white; 
   }
   .dark-mode .bold-button{
     border-bottom: 2px white solid;
+    color: white;
   }
   .dark-mode .all-button{
-    color: white;
+    color: gray;
   }
   .dark-mode .mentions-button{
-    color: white;
+    color: gray;
   }
   .dark-mode .unread-button{
+    color: gray;
+  }
+  .dark-mode .notif-content-norightbar{
+    background-color: #5C5C5C;
+  }
+  .dark-mode .mark-read-button-norightbar{
+    color: white;
+  }
+  .dark-mode .notif-date{
     color: white;
   }
 
