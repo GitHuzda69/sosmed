@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./notif.css";
 import Sidebar from "../../component/Leftbar/Leftbar";
 import Rightbar from "../../component/rightbar/Rightbar";
@@ -6,9 +6,7 @@ import HomeProfile from "../../component/home-profile/home-profile.js";
 import Settings from "../../component/Settings/Settings";
 import Logout from "../../component/Logout/Logout";
 import Navbar from "../../component/navbar/navbar.js";
-import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
-
 import AuthContext from "../../context/authContext.js";
 import { makeRequest } from "../../fetch.js";
 import moment from "moment";
@@ -21,7 +19,6 @@ function Notif() {
   const [showUnread, setShowUnread] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [notification, setNotification] = useState([]);
-  const [notifSocket, setNotifSocket] = useState([]);
   const [notificationsReaded, setNotificationReaded] = useState([]);
   const [notificationsUnReaded, setNotificationUnReaded] = useState([]);
   const [user, setUser] = useState([]);
@@ -40,7 +37,7 @@ function Notif() {
       }
     };
     fetchNotif();
-  }, []);
+  }, [currentUser]);
 
   useEffect(() => {
     const fetchNotifRead = async () => {
@@ -52,7 +49,7 @@ function Notif() {
       }
     };
     fetchNotifRead();
-  }, []);
+  }, [currentUser]);
 
   useEffect(() => {
     const fetchNotifUnRead = async () => {
@@ -64,7 +61,7 @@ function Notif() {
       }
     };
     fetchNotifUnRead();
-  }, []);
+  }, [currentUser]);
 
   const notif = notification.find((originalNotification) => {
     return originalNotification;

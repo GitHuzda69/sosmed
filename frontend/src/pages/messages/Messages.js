@@ -7,8 +7,7 @@ import { makeRequest } from "../../fetch.js";
 import { AuthContext } from "../../context/authContext.js";
 import { Icon } from "@iconify/react";
 
-import defaultprofile from "../../assets/profile/default_avatar.png";
-import { format, isToday, isSameDay, isYesterday, isThisYear } from "date-fns";
+import { format, isToday, isYesterday } from "date-fns";
 import Conversation from "../../component/Conversations/Conversations.js";
 import Chat from "../../component/Chat/Chat.js";
 import Navbar from "../../component/navbar/navbar.js";
@@ -18,16 +17,14 @@ function Message() {
   const [logoutOpen, setLogoutOpen] = useState(false);
   const [conversations, setConversations] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
-  const [arrivalMessage, setArrivalMessage] = useState(null);
   const [newMessage, setNewMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const { user: currentUser } = useContext(AuthContext);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const isMessagesPage = true;
   const [chatHeight, setChatHeight] = useState("80vh");
-  const [displayedDate, setDisplayedDate] = useState(null);
   const [selectedConversation, setSelectedConversation] = useState(null);
-  const [chatContainerHeight, setChatContainerHeight] = useState(0);
+  const [chatContainerHeight] = useState(0);
   const chatContainerRef = useRef(null);
   const [isShowRightBar, setIsShowRightBar] = useState(true);
 
@@ -63,8 +60,8 @@ function Message() {
   }, [currentChat]);
 
   useEffect(() => {
-    arrivalMessage && currentChat?.members.includes(arrivalMessage.sender) && setMessages((prev) => [...prev, arrivalMessage]);
-  }, [arrivalMessage, currentChat]);
+    setMessages((prev) => [...prev, messages]);
+  }, [messages]);
 
   useEffect(() => {
     const storedDarkModeStatus = localStorage.getItem("isDarkMode") === "true";
@@ -113,7 +110,6 @@ function Message() {
       createdAt: currentDate,
     };
 
-    const receiverId = currentChat.members.find((member) => member !== currentUser._id);
     try {
       const res = await makeRequest("messages", "POST", message);
       setMessages([...messages, res]);
@@ -131,14 +127,6 @@ function Message() {
       }
     }
   };
-
-  useEffect(() => {
-    const firstMessageWithDate = messages.find((m) => m.createdAt);
-
-    if (firstMessageWithDate) {
-      setDisplayedDate(new Date(firstMessageWithDate.createdAt));
-    }
-  }, [messages]);
 
   const handleConversationClick = (conversation) => {
     if (selectedConversation === conversation) {
@@ -202,8 +190,6 @@ function Message() {
       setIsShowRightBar(JSON.parse(storedIsShowRightBar));
     }
   }, []);
-
-  console.log("isShowRightbar:", isShowRightBar);
 
   return (
     <div className={isShowRightBar ? "main-messages" : "main-messages-norightbar"} style={{ height: chatHeight }}>

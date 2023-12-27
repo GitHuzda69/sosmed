@@ -8,26 +8,21 @@ import Settings from "../../component/Settings/Settings";
 import Logout from "../../component/Logout/Logout";
 import RightbarProfile from "../../pages/profile/RightbarProfile.js";
 import { makeRequest } from "../../fetch.js";
-import { useLocation, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import defaultprofile from "../../assets/profile/default_avatar.png";
-import defaultcover from "../../assets/profile/default_banner.jpg";
 
 const FriendList = () => {
   const { user: currentUser } = useContext(AuthContext);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [user, setUser] = useState({});
-  const [id, setId] = useState({});
   const [friends, setFriends] = useState([]);
   const username = useParams().username;
   const [settingOpen, setSettingOpen] = useState(false);
   const [logoutOpen, setLogoutOpen] = useState(false);
   const isFriendListPage = true;
-  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-  const [showPopupUnfollow, setShowPopupUnfollow] = useState(false);
-  const [showPopupFollow, setShowPopupFollow] = useState(false);
   const [showUnfollowConfirmation, setShowUnfollowConfirmation] = useState(false);
-  const [popupPosition, setPopupPosition] = useState({
+  const [popupPosition] = useState({
     visible: false,
     top: 0,
     left: 0,
@@ -101,7 +96,7 @@ const FriendList = () => {
             friends.map((friend) => (
               <div className="friend" key={friend.userId}>
                 <Link to={`/profile/${friend.userid}`} style={{ textDecoration: "none", color: "inherit" }} className="profileavatar">
-                  <img src={friend && friend.profilePicture ? PF + friend.profilePicture : defaultprofile} alt={friend.displayname} className="friend-avatar" />
+                  <img src={friend && friend.profilePicture ? friend.profilePicture : defaultprofile} alt={friend.displayname} className="friend-avatar" />
                 </Link>
                 <div className="friend-info-container">
                   <div className="friend-info-details">
@@ -148,14 +143,7 @@ const FriendList = () => {
         )}
       </div>
       <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isFriendListPage={isFriendListPage} />
-      <RightbarProfile
-        user={user}
-        username={username}
-        currentUser={currentUser}
-        setShowUnfollowConfirmation={setShowUnfollowConfirmation}
-        showUnfollowConfirmation={showUnfollowConfirmation}
-        showPopupFollow={showPopupFollow}
-      />
+      <RightbarProfile user={user} username={username} currentUser={currentUser} setShowUnfollowConfirmation={setShowUnfollowConfirmation} showUnfollowConfirmation={showUnfollowConfirmation} />
       {settingOpen && (
         <>
           <div className="settings-overlay" />

@@ -17,7 +17,6 @@ import AuthContext from "../../context/authContext.js";
 
 const Fyp = () => {
   const [posts, setPosts] = useState([""]);
-  const [user, setUser] = useState({});
   const [settingOpen, setSettingOpen] = useState(false);
   const [logoutOpen, setLogoutOpen] = useState(false);
   const { user: currentUser } = useContext(AuthContext);

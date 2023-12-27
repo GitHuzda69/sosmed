@@ -1,7 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import "./connect.css";
 import { Icon } from "@iconify/react";
-import { Link } from "react-router-dom";
 import AuthContext from "../../context/authContext";
 import Sidebar from "../../component/Leftbar/Leftbar";
 import HomeProfile from "../../component/home-profile/home-profile";
@@ -11,7 +10,7 @@ import Settings from "../../component/Settings/Settings";
 import Logout from "../../component/Logout/Logout";
 import { makeRequest } from "../../fetch";
 
-const Connect = (socket) => {
+const Connect = () => {
   const [settingOpen, setSettingOpen] = useState(false);
   const [logoutOpen, setLogoutOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -96,7 +95,7 @@ const Connect = (socket) => {
         <Icon icon="entypo-social:facebook" width={40} height={40} />
         <div className="connect-name-fb">
           <h2>Connect to Facebook</h2>
-          {currentUser && currentUser.facebook ? currentUser.facebook : <h3></h3>}
+          {currentUser && currentUser.facebook ? currentUser.facebook : ""}
         </div>
         {currentUser && currentUser.facebook ? (
           <button className="disconnect-button" onClick={disconnectFacebook}>
@@ -127,7 +126,7 @@ const Connect = (socket) => {
       {isShowRightBar && (
         <div className="side-content">
           <HomeProfile />
-          <Rightbar socket={socket} />
+          <Rightbar />
         </div>
       )}
       <Sidebar
@@ -137,7 +136,6 @@ const Connect = (socket) => {
         isConnectPage={isConnectPage}
         isShowRightBar={isShowRightBar}
         setIsShowRightBar={setIsShowRightBar}
-        socket={socket.socket}
       />
       {settingOpen && (
         <>

@@ -1,35 +1,23 @@
 import "./Comments.css";
-import { useContext, useState, useRef, useEffect } from "react";
-import { useLocation, Link } from "react-router-dom";
+import { useContext, useState, useEffect } from "react";
 import AuthContext from "../../context/authContext.js";
 import { Icon } from "@iconify/react";
-import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import { makeRequest } from "../../fetch.js";
 import moment from "moment";
 
 import defaultprofile from "../../assets/profile/default_avatar.png";
 
-const Comments = ({ postid, comment, friends }) => {
+const Comments = ({ comment, friends }) => {
   const { user: currentUser, dispatch } = useContext(AuthContext);
-  const userId = parseInt(useLocation().pathname.split("/")[2]);
   const [popupOpen, setPopupOpen] = useState(false);
   const [user, setUser] = useState();
   const [comments, setComments] = useState();
   const [selectedCommentImg, setSelectedCommentImg] = useState(null);
-  const [img, setImg] = useState(null);
-  const [texts, setTexts] = useState({ desc: comment.desc });
   const [commentEditOpen, setCommentEditOpen] = useState(null);
-  const [commentOptionOpen, setCommentOptionOpen] = useState({});
+  const [commentOptionOpen] = useState({});
   const [editedDescComment, setEditedDescComment] = useState(comment.desc);
   const [editedImgComment, setEditedImgComment] = useState(null);
   const [isDescCommentEmpty, setIsDescCommentEmpty] = useState(false);
-  const [originalDescComment, setOriginalDescComment] = useState(comment.desc);
-  const [commentOptionButtonPosition, setCommentOptionButtonPosition] =
-    useState(null);
-  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-  const [followed, setFollowed] = useState(
-    currentUser.followings.includes(user?._id)
-  );
 
   useEffect(() => {
     if (comment.userId) {
@@ -40,46 +28,38 @@ const Comments = ({ postid, comment, friends }) => {
           setUser(res);
         } catch (error) {
           // Handle error
-          console.error('Error fetching user:', error.message);
+          console.error("Error fetching user:", error.message);
         }
       };
       fetchUser();
     }
   }, [comment.userId]);
 
-    // BASE 64 SYSTEM
+  // BASE 64 SYSTEM
   const convertbase64 = (file) => {
     return new Promise((resolve, reject) => {
       const fileReader = new FileReader();
       fileReader.readAsDataURL(file);
 
       fileReader.onload = () => {
-        resolve(fileReader.result)
-      }
+        resolve(fileReader.result);
+      };
 
       fileReader.onerror = (error) => {
-        reject(error)
-      }
-    })
-  }
+        reject(error);
+      };
+    });
+  };
 
   const handleDelete = async () => {
     try {
       const deleteUrl = `comments/${comment._id}`;
-      const deleteData = { userId: currentUser._id }
+      const deleteData = { userId: currentUser._id };
       await makeRequest(deleteUrl, "DELETE", deleteData);
-      window.location.reload()
+      window.location.reload();
     } catch (err) {
       console.log(err);
     }
-  };
-
-  const toggleCommentOptions = (commentId) => {
-    setCommentOptionButtonPosition(commentId);
-    setCommentOptionOpen((prevOptions) => ({
-      ...prevOptions,
-      [commentId]: !prevOptions[commentId],
-    }));
   };
 
   const handleEdit = async (e) => {
@@ -99,14 +79,10 @@ const Comments = ({ postid, comment, friends }) => {
     };
 
     try {
-      const updateUrl = `comments/${comment._id}`
-      const updatedComment = await makeRequest(
-        updateUrl, "PUT", editedComment
-      );
+      const updateUrl = `comments/${comment._id}`;
+      const updatedComment = await makeRequest(updateUrl, "PUT", editedComment);
 
-      const updatedComments = comments.map((commentItem) =>
-        commentItem.id === updatedComment.id ? updatedComment : commentItem
-      );
+      const updatedComments = comments.map((commentItem) => (commentItem.id === updatedComment.id ? updatedComment : commentItem));
       setCommentEditOpen(false);
       setComments(updatedComments);
     } catch (error) {
@@ -157,29 +133,18 @@ const Comments = ({ postid, comment, friends }) => {
         });
         dispatch({ type: "FOLLOW", payload: user._id });
       }
-
-      setFollowed(!isFollowing);
     } catch (err) {
       console.log(err);
     }
   };
 
-  const following = friends
-    ? friends.some((friend) => friend._id === comment.userId)
-    : false;
+  const following = friends ? friends.some((friend) => friend._id === comment.userId) : false;
 
   return (
     <div className="comments">
       <div className="comment" key={comment.id}>
         <div className="comment-info">
-          <img
-            className="comments-pic"
-            src={
-              user && user.profilePicture
-                ? user.profilePicture
-                : defaultprofile
-            }
-          />
+          <img className="comments-pic" src={user && user.profilePicture ? user.profilePicture : defaultprofile} alt={user.displayname} />
           <span>{user && user.displayname}</span>
           <h3>{moment(comment.createdAt).fromNow()}</h3>
           {commentEditOpen && (
@@ -189,7 +154,6 @@ const Comments = ({ postid, comment, friends }) => {
                   <button
                     className="close-warn-comment"
                     onClick={() => {
-                      setEditedDescComment(originalDescComment);
                       setIsDescCommentEmpty(false);
                     }}
                   >
@@ -199,31 +163,14 @@ const Comments = ({ postid, comment, friends }) => {
                 </div>
               )}
               <form className="edit-comment-content">
-                <input
-                  className="comment-content-text"
-                  type="text"
-                  name="desc"
-                  value={editedDescComment}
-                  onChange={(e) => setEditedDescComment(e.target.value)}
-                />
-                <input
-                  type="file"
-                  name="img"
-                  onChange={(e) => setEditedImgComment(e.target.files[0])}
-                />
+                <input className="comment-content-text" type="text" name="desc" value={editedDescComment} onChange={(e) => setEditedDescComment(e.target.value)} />
+                <input type="file" name="img" onChange={(e) => setEditedImgComment(e.target.files[0])} />
                 {comment.img && comment.desc && (
-                  <button
-                    className="del-img-edit-comment"
-                    onClick={handleRemoveImgComment}
-                  >
+                  <button className="del-img-edit-comment" onClick={handleRemoveImgComment}>
                     Hapus Gambar
                   </button>
                 )}
-                <button
-                  className="save-edit-comment"
-                  onClick={handleEditButtonClick}
-                  disabled={isDescCommentEmpty}
-                >
+                <button className="save-edit-comment" onClick={handleEditButtonClick} disabled={isDescCommentEmpty}>
                   Save
                 </button>
                 <button
@@ -252,11 +199,7 @@ const Comments = ({ postid, comment, friends }) => {
                       gap: "5px",
                     }}
                   >
-                    <Icon
-                      icon="ion:chatbox-ellipses-outline"
-                      width={20}
-                      height={20}
-                    />
+                    <Icon icon="ion:chatbox-ellipses-outline" width={20} height={20} />
                     Message
                   </button>
                   <button
@@ -269,15 +212,7 @@ const Comments = ({ postid, comment, friends }) => {
                       gap: "5px",
                     }}
                   >
-                    {following ? (
-                      <Icon
-                        icon="bi:person-check-fill"
-                        width={20}
-                        height={20}
-                      />
-                    ) : (
-                      <Icon icon="bi:person-plus-fill" width={20} height={20} />
-                    )}
+                    {following ? <Icon icon="bi:person-check-fill" width={20} height={20} /> : <Icon icon="bi:person-plus-fill" width={20} height={20} />}
                     {following ? "Unfollow" : "Follow"}
                   </button>
                 </div>
@@ -318,7 +253,6 @@ const Comments = ({ postid, comment, friends }) => {
           <button
             className="button-comment-desc"
             onClick={() => {
-              toggleCommentOptions(comment._id);
               setCommentEditOpen(false);
             }}
           >
@@ -329,32 +263,15 @@ const Comments = ({ postid, comment, friends }) => {
           {comment.desc && <h4>{editedDescComment}</h4>}
           <div className="img-comments-container">
             {comment.img && (
-              <button
-                className="img-button-comments"
-                onClick={() =>
-                  openPopup(`/data/${editedImgComment || comment.img}`)
-                }
-              >
-                <img
-                  className="comments-image"
-                  src={comment.img}
-                  alt="comment-img"
-                />
+              <button className="img-button-comments" onClick={() => openPopup(`/data/${editedImgComment || comment.img}`)}>
+                <img className="comments-image" src={comment.img} alt="comment-img" />
               </button>
             )}
           </div>
         </div>
         {popupOpen && (
           <div className="popup-overlay-comments" onClick={closePopup}>
-            <div className="popup-comments">
-              {selectedCommentImg && (
-                <img
-                  className="popup-image-comments"
-                  src={selectedCommentImg}
-                  alt="comment-img"
-                />
-              )}
-            </div>
+            <div className="popup-comments">{selectedCommentImg && <img className="popup-image-comments" src={selectedCommentImg} alt="comment-img" />}</div>
           </div>
         )}
       </div>

@@ -1,11 +1,10 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import "./navbar.css";
 import { Icon } from "@iconify/react";
 import { Link } from "react-router-dom";
 
 import SearchBar from "../search/Search";
 import { AuthContext } from "../../context/authContext.js";
-import Settings from "../Settings/Settings.js";
 
 import logo from "../../assets/Logo_BNW.jpg";
 import defaultprofile from "../../assets/profile/default_avatar.png";

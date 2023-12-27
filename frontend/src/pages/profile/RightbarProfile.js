@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, Link, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import moment from "moment";
 
 import defaultprofile from "../../assets/profile/default_avatar.png";
 import { makeRequest } from "../../fetch";
 
-const RightbarProfile = ({ handleFollow, handleMessage, currentUser, setShowUnfollowConfirmation, showUnfollowConfirmation, showPopupFollow,}) => {
+const RightbarProfile = ({ handleFollow, handleMessage, currentUser }) => {
   const [user, setUser] = useState();
   const username = useParams().username;
   const [friends, setFriends] = useState();
@@ -17,7 +17,7 @@ const RightbarProfile = ({ handleFollow, handleMessage, currentUser, setShowUnfo
       setUser(res);
     };
     fetchUser();
-  }, [username,]);
+  }, [username]);
 
   useEffect(() => {
     const getFriends = async () => {
@@ -30,26 +30,18 @@ const RightbarProfile = ({ handleFollow, handleMessage, currentUser, setShowUnfo
     };
     getFriends();
   }, [user]);
-  
+
   const truncateText = (text, maxLength) => {
     if (!text) return "";
-    return text.length > maxLength
-      ? text.substring(0, maxLength) + "..."
-      : text;
+    return text.length > maxLength ? text.substring(0, maxLength) + "..." : text;
   };
 
-  const [followed, setFollowed] = useState(
-    currentUser.followings.includes(user?._id)
-  );
+  const [followed] = useState(currentUser.followings.includes(user?._id));
   return (
     <div className="rightProfile-Container">
       <div className="rightProfileBar">
         <div className="search-profile">
-          <input
-            className="input-profile"
-            type="text"
-            placeholder="Search on Your profile"
-          />
+          <input className="input-profile" type="text" placeholder="Search on Your profile" />
         </div>
         <div className="intro">
           <h2>Intro</h2>
@@ -61,20 +53,13 @@ const RightbarProfile = ({ handleFollow, handleMessage, currentUser, setShowUnfo
           <h3>
             <Icon icon="fluent:location-16-filled" width={25} height={25} />
             From
-            <span>{user && user.city || "Earth"}</span>
+            <span>{(user && user.city) || "Earth"}</span>
           </h3>
-          <h4>
-            {user && user.desc ||
-              "This is your biodata, You can update it on the edit profile."}
-          </h4>
+          <h4>{(user && user.desc) || "This is your biodata, You can update it on the edit profile."}</h4>
         </div>
         <div className="friends-rec">
           {friends && friends.length === 0 ? (
-            <span className="friendlist-empty">
-              {user.username === currentUser.username
-                ? "You haven't followed anyone yet."
-                : `This user hasn't followed anyone yet.`}
-            </span>
+            <span className="friendlist-empty">{user.username === currentUser.username ? "You haven't followed anyone yet." : `This user hasn't followed anyone yet.`}</span>
           ) : friends && friends.length > 0 ? (
             friends.map((friend) => (
               <div key={friend._id} className="rightBarUserProfile">
@@ -88,15 +73,7 @@ const RightbarProfile = ({ handleFollow, handleMessage, currentUser, setShowUnfo
                   }}
                 >
                   <div className="rightBarUserInfoProfile">
-                    <img
-                      className="rightBarImgProfile"
-                      src={
-                        friend.profilePicture
-                          ? friend.profilePicture
-                          : defaultprofile
-                      }
-                      alt=""
-                    />
+                    <img className="rightBarImgProfile" src={friend.profilePicture ? friend.profilePicture : defaultprofile} alt="" />
                     <div className={`statusDot ${"grayDot"}`} />
                   </div>
                   <div className="rightBarNameProfile">
@@ -105,26 +82,17 @@ const RightbarProfile = ({ handleFollow, handleMessage, currentUser, setShowUnfo
                   </div>
                 </Link>
                 {currentUser.username === username ? (
-                  <button
-                    className="rightBarButtonProfile"
-                    onClick={handleMessage}
-                  >
+                  <button className="rightBarButtonProfile" onClick={handleMessage}>
                     Chat
                   </button>
                 ) : (
                   <div>
                     {followed ? (
-                      <button
-                        className="rightBarButtonProfile"
-                        onClick={handleFollow}
-                      >
+                      <button className="rightBarButtonProfile" onClick={handleFollow}>
                         Follow
                       </button>
                     ) : (
-                      <button
-                        className="rightBarButtonProfile"
-                        onClick={handleMessage}
-                      >
+                      <button className="rightBarButtonProfile" onClick={handleMessage}>
                         Chat
                       </button>
                     )}

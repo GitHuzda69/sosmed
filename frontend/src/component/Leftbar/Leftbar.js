@@ -1,25 +1,20 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import "./Leftbar.css";
 import { Icon } from "@iconify/react";
 import { Link } from "react-router-dom";
 import AuthContext from "../../context/authContext";
-import Settings from "../Settings/Settings";
-
-import defaultprofile from "../../assets/profile/default_avatar.png";
 import logo from "../../assets/Logo_BNW.jpg";
 import logopng from "../../assets/Logo_BNW.png";
 
-const Sidebar = ({ toggleSettings, toggleLogout, isFriendListPage, isHomePage, isMessagesPage, isNotifPage, isConnectPage, isProfilePage, isShowRightBar, setIsShowRightBar, isDarkMode }) => {
-  const { currentUser } = useContext(AuthContext);
+const Sidebar = ({ toggleSettings, toggleLogout, isHomePage, isMessagesPage, isNotifPage, isConnectPage, isProfilePage, isShowRightBar, setIsShowRightBar, isDarkMode }) => {
   const { user } = useContext(AuthContext);
-  const [notifDot, setNotifDot] = useState(false);
 
   useEffect(() => {
     const storedIsShowRightBar = localStorage.getItem("isShowRightBar");
     if (storedIsShowRightBar !== null) {
       setIsShowRightBar(JSON.parse(storedIsShowRightBar), () => {});
     }
-  }, []);
+  }, [setIsShowRightBar]);
 
   return (
     <div className={`sidebar ${isShowRightBar ? "show-right-bar" : "hide-right-bar"}`}>
@@ -31,7 +26,6 @@ const Sidebar = ({ toggleSettings, toggleLogout, isFriendListPage, isHomePage, i
           </Link>
           <Link to="/notif">
             <button>{isNotifPage ? <Icon icon="mdi:bell" width="35" height="35" /> : <Icon icon="mdi:bell-outline" width="35" height="35" />}</button>
-            <div className={`${notifDot === true ? "notif-nobar-dot" : ""}`}></div>
           </Link>
           <Link to="/messages">
             <button>{isMessagesPage ? <Icon icon="bxs:chat" width="35" height="35" /> : <Icon icon="bx:chat" width="35" height="35" />}</button>
@@ -59,7 +53,6 @@ const Sidebar = ({ toggleSettings, toggleLogout, isFriendListPage, isHomePage, i
           </Link>
           <Link to="/notif" className="nav-link">
             <button className="nav-button">{isNotifPage ? <Icon icon="mdi:bell" width="35" height="35" /> : <Icon icon="mdi:bell-outline" width="35" height="35" />}</button>
-            <div className={`${notifDot === true ? "notif-dot" : ""}`}></div>
             <span className={isNotifPage ? "nav-bold-text" : "nav-text"}>Notification</span>
           </Link>
           <Link to="/messages" className="nav-link">

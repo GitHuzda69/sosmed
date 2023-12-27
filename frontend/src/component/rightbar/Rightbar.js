@@ -1,5 +1,4 @@
 import "./Rightbar.css";
-import { Icon } from "@iconify/react";
 import { Link, useNavigate } from "react-router-dom";
 import { makeRequest } from "../../fetch.js";
 
@@ -30,7 +29,7 @@ const Rightbar = () => {
       }
     };
     getFriends();
-  }, []);
+  }, [currentUser]);
 
   const navigate = useNavigate();
   const handleMessage = async () => {

@@ -17,12 +17,11 @@ import { useParams } from "react-router";
 
 const Result = () => {
   const [posts, setPosts] = useState([""]);
-  const [user, setUser] = useState({});
   const [settingOpen, setSettingOpen] = useState(false);
   const [logoutOpen, setLogoutOpen] = useState(false);
   const { user: currentUser } = useContext(AuthContext);
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [showSideContent, setShowSideContent] = useState(true);
+  const [setShowSideContent] = useState(true);
   const [mainContentMaxWidth, setMainContentMaxWidth] = useState("100%");
   const [openPostOption, setOpenPostOption] = useState(null);
   const [friends, setFriends] = useState([]);
@@ -40,7 +39,7 @@ const Result = () => {
       }
     };
     fetchPost();
-  }, []);
+  }, [keyword]);
 
   useEffect(() => {
     const storedDarkModeStatus = localStorage.getItem("isDarkMode") === "true";
@@ -61,7 +60,7 @@ const Result = () => {
     return () => {
       window.removeEventListener("resize", handleZoomChange);
     };
-  }, []);
+  }, [setShowSideContent]);
 
   useEffect(() => {
     if (currentUser && currentUser._id) {

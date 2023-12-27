@@ -4,7 +4,6 @@ import { useParams } from "react-router";
 import { makeRequest } from "../../fetch.js";
 import { AuthContext } from "../../context/authContext.js";
 import { Icon } from "@iconify/react";
-import moment from "moment";
 
 import "./Profile.css";
 import Posts from "../../component/posts/Posts.js";
@@ -13,13 +12,11 @@ import Settings from "../../component/Settings/Settings";
 import Logout from "../../component/Logout/Logout";
 import Update from "../../component/Update/Update.js";
 import RightbarProfile from "./RightbarProfile.js";
-import FriendList from "../../component/friendlist/FriendsList.js";
 import Navbar from "../../component/navbar/navbar.js";
 
-import defaultprofile from "../../assets/profile/default_avatar.png";
 import defaultcover from "../../assets/profile/default_banner.jpg";
 
-const Profile = (socket) => {
+const Profile = () => {
   const [imagePopupOpenbanner, setImagePopupOpenBanner] = useState(false);
   const [imagePopupOpenprofile, setImagePopupOpenProfile] = useState(false);
   const [isUpdateOpen, setIsUpdateOpen] = useState(false);
@@ -31,8 +28,8 @@ const Profile = (socket) => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const username = useParams().username;
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [showPosts, setShowPosts] = useState(true);
-  const [showPopupUnfollow, setShowPopupUnfollow] = useState(false);
+  const [showPosts] = useState(true);
+  const [setShowPopupUnfollow] = useState(false);
   const [showPopupFollow, setShowPopupFollow] = useState(false);
   const [showUnfollowConfirmation, setShowUnfollowConfirmation] = useState(false);
   const [isShowRightBar, setIsShowRightBar] = useState(true);
@@ -61,7 +58,7 @@ const Profile = (socket) => {
       }
     };
     getFriends();
-  }, [user]);
+  }, [username]);
 
   const handleFollow = async () => {
     try {

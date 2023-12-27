@@ -41,7 +41,7 @@ function App() {
 
   useEffect(() => {
     socket.emit("addUser", user?._id);
-  }, [socket, user]);
+  }, [user]);
 
   return (
     <Router>

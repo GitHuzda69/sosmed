@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import Sidebar from "../../component/Leftbar/Leftbar.js";
 import SearchBar from "../../component/search/Search";
 import Settings from "../../component/Settings/Settings.js";

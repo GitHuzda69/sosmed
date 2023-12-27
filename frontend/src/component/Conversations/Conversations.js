@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import "./Conversation.css";
-import { Icon } from "@iconify/react";
 import "../../DarkMode.css";
 
 import { makeRequest } from "../../fetch";
 import defaultprofile from "../../assets/profile/default_avatar.png";
+import { io } from "socket.io-client";
 
 export default function Conversation({ conversation, currentUser, onClick, isSelected, isShowRightBar }) {
   const [user, setUser] = useState();
@@ -22,7 +22,14 @@ export default function Conversation({ conversation, currentUser, onClick, isSel
       }
     };
     getUser();
-  }, [currentUser, conversation]);
+  }, [friendId, conversation]);
+
+  const socket = io("http://localhost:8900");
+  useEffect(() => {
+    socket?.on("getUsers", (users) => {
+      setIsOnline(currentUser.followings.filter((f) => users.some((u) => u.userId === f)));
+    });
+  }, [currentUser]);
 
   return (
     <div className="message-friend-container">

@@ -1,527 +1,525 @@
-.profile-main{  
+.profile-main {
   width: 100%;
-  height: 100%; 
+  height: 100%;
   min-height: 700px;
 }
 .profil {
-    max-width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: row;
-    margin-top: -8px; 
-    margin-left: 80px;
-    margin-right: -5px;
-    margin-bottom: 60px;
-    padding-bottom: 40px;  
-  }
-  
-  .profile-container-posts-view {  
-    width: calc(100% - 305px);   
-    position: relative;     
-  }
-  .profile-container-friends-view {  
-    width: calc(100% - 305px);   
-    position: relative;     
-  }
-  
-  .cover-img {
-    width: 100%;
-    margin-right: -12px; 
-    position: relative; 
-  }
-  
-  .cover-img img {
-    width: 100%;
-    max-height: 160px; 
-    object-fit: cover;
-    position: absolute;
-    top: 0;
-    left: 0; 
-  }  
-  
-  .profil-user{
-    display: flex;
-    flex-direction: row;
-    align-items: start;
-    justify-content: space-between;
-    margin-top: 142px; 
-    background-color: white;
-  }
-  .profil-info{
-    width: 70%;
-  }
-  .profilePic {
-    width: 130px;
-    position: relative;
-    margin-top: -75px;
-    margin-left: 30px;
-    text-align: flex-start; 
-  }
-  
-  .profilePic img {
-    width: 140px;
-    height: 140px;
-    border: 1px white solid;
-    border-radius: 10px; 
-    object-fit: cover;
-  }
-  .profil-bio{
-    height: 110px;
-    margin-top: -105px;
-    margin-left: 190px; 
-  }
-  .profil-bio h2 {
-    font-family: "Inter";
-    font-weight: bold;
-    font-size: 28px;
-  }
-  .profil-bio h4{
-    margin-top: -20px;
-    font-family: "Inter";
-    font-weight: 500;
-    font-size: 18px;
-  }
-  .profil-bio button{
-    color: black; 
-    background-color: transparent;
-    font-family: "Inter";
-    font-weight: 500;
-    font-size: 18px;
-  }
-  .profil-bio button:hover{
-    background-color: #D5D5D5;
-    border-radius: 10px;
-  }
-  .profiluser-button {
-    margin-top: 10px; 
-    margin-right: 30px;
-    display: flex;
-    flex-direction: row;
-    align-items: end;
-    text-align: center;
-    text-decoration: none;
-    gap: 5px;
-  }
-  .edit-profile-button{ 
-    border-radius: 10px;
-    display: flex; 
-    align-items: center;
-    padding: 8px 15px;
-    background-color: #DDDDDD;
-    color: black;
-    cursor: pointer;
-    gap: 8px;
-  }
-  .edit-profile-button:hover{
-    border-radius: 11px;
-    background-color: lightgray;
-  }
-  .follow-button{  
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: black;
-    cursor: pointer; 
-    font-size: 16px; 
-    font-weight: bold; 
-    background-color: transparent;
-  }
-  .follow-button:hover{
-    border-radius: 11px;
-    background-color: transparent;
-  }
-  .follow-profile{
-    display: flex;
-    align-items: center;
-    gap: 10px; 
-    padding: 8px 15px;
-    border-radius: 10px;
-    background-color: #DDDDDD;
-  }
-  .follow-profile:hover{
-    background-color: #999999;
-  }
-  .following-profile{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center; 
-    gap: 8px;
-  }
-  .followed-profile{
-    display: flex;
-    align-items: center;
-    gap: 10px; 
-    padding: 8px 15px;
-    border-radius: 10px;
-    background-color: #000000;
-    color: white;
-  }
-  .followed-profile:hover{ 
-    background-color: #5C5C5C;
-  }
-  .message-profile{
-    display: flex;
-    align-items: center;
-    gap: 10px; 
-    padding: 8px 15px;
-    border-radius: 10px;
-    background-color: #DDDDDD;
-  }
-  .message-profile:hover{
-    background-color: #999999;
-  }
-  .share-profile{
-    display: flex;
-    align-items: center;
-    gap: 10px; 
-    padding: 8px 15px;
-    border-radius: 10px;
-    background-color: #DDDDDD;
-  }
-  .share-profile:hover{
-    background-color: #999999;
-  }
-  .add-button{
-    padding: 5px 12px; 
-    border-radius: 50px;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-  }
-  .add-button:hover{
-    border-radius: 50px;
-    background-color: lightgray;
-  }
-  .add-button span{
-    margin-left: 8px;
-    font-family: "Inter";
-    font-size: 15px;
-  }
-  
-  .post-profil { 
-    margin-right: -1px;
-    margin-top: -1px;
-    height: auto;
-    font-family: "Inter";
-  }
-  .avatar-post{
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    margin-top: 10px;
-    margin-left: 15px;
-  }
-  .post-avatar-profil{
-    display: flex;
-    flex-direction: row;
-  }
-  .post-profil-info{
-    display: flex;
-    flex-direction: column;
-    width: 530px;
-    margin-top: 5px;
-    margin-left: 15px;
-  }
-  .post-profil-info h2{
-    font-weight: bold;
-    font-size: 17px;
-  }
-  .post-profil-info h3{
-    font-weight: normal;
-    font-size: 15px;
-    margin-top: -15px;
-  }
-  
-  .button-post-profil-pinned{
-    display: flex;
-    margin-left: 130px;
-    margin-top: 10px;
-  }
-  .button-post-profil{
-    display: flex;
-    margin-left: 245px;
-    margin-top: 10px;
-  }
-  .pinned-post{
-    display: flex;
-    flex-direction: row;
-    margin-top: 13px;
-  }
-  .pinned-post h5{
-    margin-top: 5px;
-    margin-left: 5px;
-    font-size: 15px;
-    font-weight: 500;
-  }
-  .posts-profil-content{
-    margin-top: -10px;
-  }
-  .posts-profil-content h4{
-    font-weight: normal;
-    font-size: 15px;
-    margin-left: 20px;
-    margin-right: 25px;
-  }
-  .posts-profil-img{
-    width: auto;
-    height: auto;
-    max-width: 400px;
-    max-height: 400px;
-    margin-left: 20px; 
-  }
-  .img-button{
-    background-color: transparent;
-    padding: 0;
-  }
-  .img-button:hover{
-    border-radius: 0;
-    background-color: transparent;
-  }
-  .img-button img:hover{
-    border-radius: 0;
-    filter: brightness(0.7);
-  }
-  .img-button-profile{
-    background-color: transparent;
-  }
-  .img-button-profile:hover{
-    background-color: transparent;
-  }
-  .img-button-profile:hover img {
-    filter: brightness(0.7);
-  }
-  .image-popup-profil {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-  }
-  .popup-banner {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 80vh;
-    max-width: 100%;
-    max-height: 100%;
-    position: relative;
-    border-radius: 10px;
-  }
-  
-  .popup-img-banner {
-    height: auto;
-    width: auto;
-    max-width: 100%;
-    max-height: 100%;
-    display: block;
-    margin: 0 auto;
-    border-radius: 10px;
-    object-fit: contain;
-  }
+  max-width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  margin-top: -8px;
+  margin-left: 80px;
+  margin-right: -5px;
+  margin-bottom: 60px;
+  padding-bottom: 40px;
+}
 
-  .popup-profil {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 80vh;
-    max-width: 100%;
-    max-height: 100%;
-    position: relative;
-    border-radius: 10px;
-  }
-  
-  .popup-img-profil {
-    height: auto;
-    width: auto;
-    max-width: 100%;
-    max-height: 100%;
-    display: block;
-    margin: 0 auto;
-    border-radius: 10px;
-    object-fit: contain;
-  }
+.profile-container-posts-view {
+  width: calc(100% - 305px);
+  position: relative;
+}
+.profile-container-friends-view {
+  width: calc(100% - 305px);
+  position: relative;
+}
 
+.cover-img {
+  width: 100%;
+  margin-right: -12px;
+  position: relative;
+}
 
-  .button-posts-profil{
-    display: flex;
-    align-items: center;
-    font-size: 14px;
-    margin-left: 25px;
-    margin-bottom: 10px;
-  }
-  .button-posts {
-    align-items: center;
-    margin-right: 20px;
-    display: grid;
-    grid-template-columns: repeat(3, auto);
-    gap: 5px;
-  }
-  .button-posts:hover .icon {
-    cursor: pointer;
-  }
-  .button-posts h3{
-    font-size: 15px;
-    font-weight: bold;
-  } 
+.cover-img img {
+  width: 100%;
+  max-height: 160px;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
 
-  .rightProfile-Container{
-    position: fixed;
-    height: 100%;
-    top: 0;
-    right: 0;
-  }
-  .rightProfileBar{ 
-    display: flex;
-    flex-direction: column;
-    width: 320px;
-    height: 100%;
-    background-color: white;
-  }
-  .search-profile{
-    display: flex;
-    justify-content: center;
-    margin-top: 30px;
-  }
-  .input-profile{
-    width: 300px; 
-    border-radius: 20px;
-    display: flex;
-    text-indent: 10px;
-  }
-  .intro{
-    margin-left: 25px;
-    font-family: "Inter";
-  }
-  .intro h2{
-    font-size: 25px;
-  }
-  .intro h3{
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 15px;
-    font-weight: normal;
-  }
-  .intro span{
-    font-size: 15px;
-    font-weight: bold;
-  }
-  .intro h4{
-    font-size: 15px;
-    font-weight: normal;
-    margin-right: 30px;
-  }
-  .friends-rec {
-    flex-grow: 1;  
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    padding-bottom: 20px;
-    margin-left: 25px;
-    margin-bottom: 20px;
-    scrollbar-width: thin;
-    scrollbar-color: #999999 #ffffff; 
-    }
-    
-    .friends-rec::-webkit-scrollbar {
-      width: 10px;
-    }
-    
-    .friends-rec::-webkit-scrollbar-thumb {
-      background-color: transparent;
-      border-radius: 10px;
-    }
-    
-    .friends-rec::-webkit-scrollbar-thumb:hover {
-      background-color: transparent;
-    }
-    
-    .friends-rec::-webkit-scrollbar-track {
-      background-color: transparent;
-      border-radius: 10px;
-    }
+.profil-user {
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  justify-content: space-between;
+  margin-top: 142px;
+  background-color: white;
+}
+.profil-info {
+  width: 70%;
+}
+.profilePic {
+  width: 130px;
+  position: relative;
+  margin-top: -75px;
+  margin-left: 30px;
+  text-align: flex-start;
+}
 
-    .friends-rec span{
-      margin-top: 20px;
-      margin-left: 0px;
-      font-size: 20px; 
-    }
-  .friend-profil{
+.profilePic img {
+  width: 140px;
+  height: 140px;
+  border: 1px white solid;
+  border-radius: 10px;
+  object-fit: cover;
+}
+.profil-bio {
+  height: 110px;
+  margin-top: -105px;
+  margin-left: 190px;
+}
+.profil-bio h2 {
+  font-family: "Inter";
+  font-weight: bold;
+  font-size: 28px;
+}
+.profil-bio h4 {
+  margin-top: -20px;
+  font-family: "Inter";
+  font-weight: 500;
+  font-size: 18px;
+}
+.profil-bio button {
+  color: black;
+  background-color: transparent;
+  font-family: "Inter";
+  font-weight: 500;
+  font-size: 18px;
+}
+.profil-bio button:hover {
+  background-color: #d5d5d5;
+  border-radius: 10px;
+}
+.profiluser-button {
+  margin-top: 10px;
+  margin-right: 30px;
+  display: flex;
+  flex-direction: row;
+  align-items: end;
+  text-align: center;
+  text-decoration: none;
+  gap: 5px;
+}
+.edit-profile-button {
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  padding: 8px 15px;
+  background-color: #dddddd;
+  color: black;
+  cursor: pointer;
+  gap: 8px;
+}
+.edit-profile-button:hover {
+  border-radius: 11px;
+  background-color: lightgray;
+}
+.follow-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: black;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: transparent;
+}
+.follow-button:hover {
+  border-radius: 11px;
+  background-color: transparent;
+}
+.follow-profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 15px;
+  border-radius: 10px;
+  background-color: #dddddd;
+}
+.follow-profile:hover {
+  background-color: #999999;
+}
+.following-profile {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.followed-profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 15px;
+  border-radius: 10px;
+  background-color: #000000;
+  color: white;
+}
+.followed-profile:hover {
+  background-color: #5c5c5c;
+}
+.message-profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 15px;
+  border-radius: 10px;
+  background-color: #dddddd;
+}
+.message-profile:hover {
+  background-color: #999999;
+}
+.share-profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 15px;
+  border-radius: 10px;
+  background-color: #dddddd;
+}
+.share-profile:hover {
+  background-color: #999999;
+}
+.add-button {
+  padding: 5px 12px;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.add-button:hover {
+  border-radius: 50px;
+  background-color: lightgray;
+}
+.add-button span {
+  margin-left: 8px;
+  font-family: "Inter";
+  font-size: 15px;
+}
+
+.post-profil {
+  margin-right: -1px;
+  margin-top: -1px;
+  height: auto;
+  font-family: "Inter";
+}
+.avatar-post {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-top: 10px;
+  margin-left: 15px;
+}
+.post-avatar-profil {
+  display: flex;
+  flex-direction: row;
+}
+.post-profil-info {
+  display: flex;
+  flex-direction: column;
+  width: 530px;
+  margin-top: 5px;
+  margin-left: 15px;
+}
+.post-profil-info h2 {
+  font-weight: bold;
+  font-size: 17px;
+}
+.post-profil-info h3 {
+  font-weight: normal;
+  font-size: 15px;
+  margin-top: -15px;
+}
+
+.button-post-profil-pinned {
+  display: flex;
+  margin-left: 130px;
+  margin-top: 10px;
+}
+.button-post-profil {
+  display: flex;
+  margin-left: 245px;
+  margin-top: 10px;
+}
+.pinned-post {
+  display: flex;
+  flex-direction: row;
+  margin-top: 13px;
+}
+.pinned-post h5 {
+  margin-top: 5px;
+  margin-left: 5px;
+  font-size: 15px;
+  font-weight: 500;
+}
+.posts-profil-content {
+  margin-top: -10px;
+}
+.posts-profil-content h4 {
+  font-weight: normal;
+  font-size: 15px;
+  margin-left: 20px;
+  margin-right: 25px;
+}
+.posts-profil-img {
+  width: auto;
+  height: auto;
+  max-width: 400px;
+  max-height: 400px;
+  margin-left: 20px;
+}
+.img-button {
+  background-color: transparent;
+  padding: 0;
+}
+.img-button:hover {
+  border-radius: 0;
+  background-color: transparent;
+}
+.img-button img:hover {
+  border-radius: 0;
+  filter: brightness(0.7);
+}
+.img-button-profile {
+  background-color: transparent;
+}
+.img-button-profile:hover {
+  background-color: transparent;
+}
+.img-button-profile:hover img {
+  filter: brightness(0.7);
+}
+.image-popup-profil {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+.popup-banner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  max-width: 100%;
+  max-height: 100%;
+  position: relative;
+  border-radius: 10px;
+}
+
+.popup-img-banner {
+  height: auto;
+  width: auto;
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
+  margin: 0 auto;
+  border-radius: 10px;
+  object-fit: contain;
+}
+
+.popup-profil {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  max-width: 100%;
+  max-height: 100%;
+  position: relative;
+  border-radius: 10px;
+}
+
+.popup-img-profil {
+  height: auto;
+  width: auto;
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
+  margin: 0 auto;
+  border-radius: 10px;
+  object-fit: contain;
+}
+
+.button-posts-profil {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  margin-left: 25px;
+  margin-bottom: 10px;
+}
+.button-posts {
+  align-items: center;
+  margin-right: 20px;
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  gap: 5px;
+}
+.button-posts:hover .icon {
+  cursor: pointer;
+}
+.button-posts h3 {
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.rightProfile-Container {
+  position: fixed;
+  height: 100%;
+  top: 0;
+  right: 0;
+}
+.rightProfileBar {
+  display: flex;
+  flex-direction: column;
+  width: 320px;
+  height: 100%;
+  background-color: white;
+}
+.search-profile {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+.input-profile {
+  width: 300px;
+  border-radius: 20px;
+  display: flex;
+  text-indent: 10px;
+}
+.intro {
+  margin-left: 25px;
+  font-family: "Inter";
+}
+.intro h2 {
+  font-size: 25px;
+}
+.intro h3 {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 15px;
+  font-weight: normal;
+}
+.intro span {
+  font-size: 15px;
+  font-weight: bold;
+}
+.intro h4 {
+  font-size: 15px;
+  font-weight: normal;
+  margin-right: 30px;
+}
+.friends-rec {
+  flex-grow: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  padding-bottom: 20px;
+  margin-left: 25px;
+  margin-bottom: 20px;
+  scrollbar-width: thin;
+  scrollbar-color: #999999 #ffffff;
+}
+
+.friends-rec::-webkit-scrollbar {
+  width: 10px;
+}
+
+.friends-rec::-webkit-scrollbar-thumb {
+  background-color: transparent;
+  border-radius: 10px;
+}
+
+.friends-rec::-webkit-scrollbar-thumb:hover {
+  background-color: transparent;
+}
+
+.friends-rec::-webkit-scrollbar-track {
+  background-color: transparent;
+  border-radius: 10px;
+}
+
+.friends-rec span {
+  margin-top: 20px;
+  margin-left: 0px;
+  font-size: 20px;
+}
+.friend-profil {
   width: 280px;
   display: flex;
   flex-direction: column;
   margin-bottom: 10px;
   margin-right: 10px;
-  margin-left: 10px; 
-  border-radius: 8px; 
-  }
-.friend-avatar-profil{
-    margin-top: 10px;
-    margin-left: 15px;
-  }
-  .avatar-rightBarprofile {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    margin-right: 10px;
-  }
-  .friend-info-profil {
-    display: flex;
-    flex-direction: column;
-    align-items: top;
-    margin-top: -50px;
-    margin-left: 75px;
-    margin-bottom: 10px; 
-  }
-  .friend-info-profil h3{
-    font-family: "Inter";
-    font-size: 12px;
-    font-size: bold;
-    margin-top: 8px;
-    margin-bottom: -8px;
-  }
-  .friend-info-profil h4{
-    font-family: "Inter";
-    font-size: 12px;
-    font-weight: normal;
-    margin-top: 8px;
-  }
-  .button-add{
-    display: flex;
-    justify-content: center;
-    height: 35px;
-    width: 35px; 
-    border-radius: 50%;
-    margin-top: -45px;
-    margin-left: 160px;
-  }
-  .button-add:hover{
-    border-radius: 50%;
-    background-color: lightgray;
-  } 
+  margin-left: 10px;
+  border-radius: 8px;
+}
+.friend-avatar-profil {
+  margin-top: 10px;
+  margin-left: 15px;
+}
+.avatar-rightBarprofile {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+.friend-info-profil {
+  display: flex;
+  flex-direction: column;
+  align-items: top;
+  margin-top: -50px;
+  margin-left: 75px;
+  margin-bottom: 10px;
+}
+.friend-info-profil h3 {
+  font-family: "Inter";
+  font-size: 12px;
+  font-size: bold;
+  margin-top: 8px;
+  margin-bottom: -8px;
+}
+.friend-info-profil h4 {
+  font-family: "Inter";
+  font-size: 12px;
+  font-weight: normal;
+  margin-top: 8px;
+}
+.button-add {
+  display: flex;
+  justify-content: center;
+  height: 35px;
+  width: 35px;
+  border-radius: 50%;
+  margin-top: -45px;
+  margin-left: 160px;
+}
+.button-add:hover {
+  border-radius: 50%;
+  background-color: lightgray;
+}
 
-  
 .rightBarUserProfile {
   width: 100%;
   display: flex;
   justify-content: space-between;
-  align-items: center;  
+  align-items: center;
   margin-left: 10px;
-  margin-bottom: 4px;  
-  text-decoration: none;  
+  margin-bottom: 4px;
+  text-decoration: none;
 }
 .LinkUserProfile {
   padding: 4px;
   text-decoration: none;
-  color: inherit; 
+  color: inherit;
 }
 .LinkUserProfile:hover .rightBarImgProfile {
   filter: brightness(0.7);
@@ -544,8 +542,8 @@
   border-radius: 50%;
   object-fit: cover;
 }
-.rightBarImgProfile:hover{
-filter: brightness(0.7);
+.rightBarImgProfile:hover {
+  filter: brightness(0.7);
 }
 .statusDot {
   width: 12px;
@@ -562,28 +560,28 @@ filter: brightness(0.7);
 
 .grayDot {
   background-color: gray;
-} 
-.rightBarNameProfile {  
+}
+.rightBarNameProfile {
   display: flex;
   flex-direction: column;
   color: black;
   margin-top: 10px;
 }
-.rightBarNameProfile span{
+.rightBarNameProfile span {
   font-size: 16px;
   font-weight: bold;
-  font-family: "Inter" ;   
+  font-family: "Inter";
 }
-.rightBarNameProfile p{
+.rightBarNameProfile p {
   font-size: 13px;
   font-weight: normal;
-  font-family: "Inter" ;   
+  font-family: "Inter";
   margin-top: 2px;
 }
-.link-rightbarProfile{
-text-decoration: none;
+.link-rightbarProfile {
+  text-decoration: none;
 }
-.rightBarButtonProfile{
+.rightBarButtonProfile {
   display: flex;
   padding: 8px 16px;
   margin-top: 20px;
@@ -592,153 +590,152 @@ text-decoration: none;
   color: white;
   background-color: black;
   border-radius: 5px;
-  cursor: pointer; 
+  cursor: pointer;
   font-size: 15px;
 }
-.rightBarButtonProfile:hover{
-color: white;
-background-color: rgb(54, 54, 54);
-border-radius: 7px;
+.rightBarButtonProfile:hover {
+  color: white;
+  background-color: rgb(54, 54, 54);
+  border-radius: 7px;
 }
 
-.profile-switch-buttons{
-  margin-left: 45px;  
-  margin-bottom: -5px; 
-  background-color: transparent;  
+.profile-switch-buttons {
+  margin-left: 45px;
+  margin-bottom: -5px;
+  background-color: transparent;
 }
-.profile-switch-buttons button{
+.profile-switch-buttons button {
   font-size: 20px;
   margin-right: 30px;
 }
-.profile-switch-buttons button:hover{
+.profile-switch-buttons button:hover {
   border-radius: 5px 5px 0px 0px;
 }
-.bold-button-profile{
+.bold-button-profile {
   font-weight: bold;
-  font-family: "Inter"; 
+  font-family: "Inter";
   border-bottom: 2px black solid;
   background-color: transparent;
-} 
-.posts-profile-switch-button{ 
-  background-color: transparent; 
 }
-.posts-profile-switch-button:hover{
-  background-color: #D5D5D5; 
-}
-
-.following-profile-switch-button{
+.posts-profile-switch-button {
   background-color: transparent;
 }
-.following-profile-switch-button:hover{
-  background-color: #D5D5D5;
+.posts-profile-switch-button:hover {
+  background-color: #d5d5d5;
 }
 
-  /*css posts profile*/
+.following-profile-switch-button {
+  background-color: transparent;
+}
+.following-profile-switch-button:hover {
+  background-color: #d5d5d5;
+}
 
-  .posts-profile{
-    width: calc(100% - 45px);  
-    margin-top: 10px;
-    margin-left: 10px;
-    padding-top: 0px;
-    padding-right: 5px;
-    padding-bottom: 0px; 
-    overflow-x: hidden;  
-  }
-  .posts-profile .post-container{ 
-    margin-bottom: 0px; 
-    margin-left: -32px; 
-  }
-  .posts-profile .post{
-    width: 100%; 
-    margin-left: 25px; 
-  }
-  .posts-profile .user{ 
-    margin-left: 0px;
-  }
-  .posts-profile .post-img-container{
-    margin-top: -10px;
-  }
-  .posts-profile .post-content{
-    margin-top: -5px;
-  }
-  .posts-profile .commento{ 
-    width: 100%;
-  }
- 
-  .popup-follow-container {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: rgba(0, 0, 0, 0.5);
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: "Inter";
-  }
-  
-  .popup-follow {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    text-align: center;
-  }
-  
-  .popup-follow button { 
-    background-color: black;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 10px;
-  }
-  
-  .popup-follow button:hover{
-    background-color: #5C5C5C;
-    border-radius: 8px;
-  }
+/*css posts profile*/
 
+.posts-profile {
+  width: calc(100% - 45px);
+  margin-top: 10px;
+  margin-left: 10px;
+  padding-top: 0px;
+  padding-right: 5px;
+  padding-bottom: 0px;
+  overflow-x: hidden;
+}
+.posts-profile .post-container {
+  margin-bottom: 0px;
+  margin-left: -32px;
+}
+.posts-profile .post {
+  width: 100%;
+  margin-left: 25px;
+}
+.posts-profile .user {
+  margin-left: 0px;
+}
+.posts-profile .post-img-container {
+  margin-top: -10px;
+}
+.posts-profile .post-content {
+  margin-top: -5px;
+}
+.posts-profile .commento {
+  width: 100%;
+}
 
-  .profil-norightbar {
-    max-width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: row;
-    margin-top: 95px; 
-    margin-left: 425px;
-    margin-right: -5px;
-    margin-bottom: 60px;
-    padding-bottom: 40px;   
-  }
+.popup-follow-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Inter";
+}
 
-  .cover-img-norightbar {
-    width: 100%;
-    margin-right: -12px; 
-    position: relative; 
-  }
-  
-  .cover-img-norightbar img {
-    width: 100%;
-    max-height: 160px; 
-    object-fit: cover;
-    position: absolute;
-    top: 0;
-    left: 0; 
-    border-radius: 10px 10px 0px 0px;
-  }  
-  .img-button-norightbar{
-    background-color: transparent;
-    padding: 0;
-  }
-  .img-button-norightbar:hover{
-    border-radius: 0;
-    background-color: transparent;
-  }
-  .img-button-norightbar img:hover{
-    border-radius: 0;
-    filter: brightness(0.7);
-    border-radius: 10px 10px 0px 0px;
-  }
+.popup-follow {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.popup-follow button {
+  background-color: black;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.popup-follow button:hover {
+  background-color: #5c5c5c;
+  border-radius: 8px;
+}
+
+.profil-norightbar {
+  max-width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  margin-top: 95px;
+  margin-left: 425px;
+  margin-right: -5px;
+  margin-bottom: 60px;
+  padding-bottom: 40px;
+}
+
+.cover-img-norightbar {
+  width: 100%;
+  margin-right: -12px;
+  position: relative;
+}
+
+.cover-img-norightbar img {
+  width: 100%;
+  max-height: 160px;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 10px 10px 0px 0px;
+}
+.img-button-norightbar {
+  background-color: transparent;
+  padding: 0;
+}
+.img-button-norightbar:hover {
+  border-radius: 0;
+  background-color: transparent;
+}
+.img-button-norightbar img:hover {
+  border-radius: 0;
+  filter: brightness(0.7);
+  border-radius: 10px 10px 0px 0px;
+}

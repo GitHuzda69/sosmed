@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Icon } from "@iconify/react";
 
@@ -12,8 +12,6 @@ function TermsOfService() {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   const navigate = useNavigate();
-
-  const isNotifPage = true;
 
   const toggleSection = (section) => {
     switch (section) {
@@ -39,13 +37,6 @@ function TermsOfService() {
 
   const handleGoBack = () => {
     navigate(-1);
-  };
-
-  const toggleDarkMode = () => {
-    const newDarkModeStatus = !isDarkMode;
-    setIsDarkMode(newDarkModeStatus);
-    localStorage.setItem("isDarkMode", newDarkModeStatus.toString());
-    setDarkMode(newDarkModeStatus);
   };
 
   useEffect(() => {
