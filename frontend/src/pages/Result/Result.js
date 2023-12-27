@@ -108,7 +108,7 @@ const Result = () => {
 
   return (
     <>
-      <div className={`app ${isDarkMode ? "dark-mode" : "light-mode"}`}>
+      <div className={isDarkMode ? "dark-mode" : "app"}>
         <div className="home">
           <div className="leftbar-fyp">
             <Sidebar isDarkMode={isDarkMode} toggleSettings={toggleSettings} toggleLogout={toggleLogout} isHomePage={isHomePage} setIsShowRightBar={setIsShowRightBar} />

@@ -12,6 +12,7 @@ import defaultprofile from "../../assets/profile/default_avatar.png";
 const Navbar = ({ isHomePage, isDarkMode, toggleDarkMode, toggleLogout }) => {
   const { user } = useContext(AuthContext);
   const [isPopupNavbar, setIsPopupNavbar] = useState(false);
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
   const togglePopupNavbar = () => {
     setIsPopupNavbar(!isPopupNavbar);
@@ -46,7 +47,7 @@ const Navbar = ({ isHomePage, isDarkMode, toggleDarkMode, toggleLogout }) => {
       )}
       <Link className="navbar-profile">
         <button>
-          <img className="navbar-profile-img" src={user.profilePicture ? user.profilePicture : defaultprofile} alt="profile" />
+          <img className="navbar-profile-img" src={user.profilePicture ? PF + user.profilePicture : defaultprofile} alt="profile" />
         </button>
         <button className="navbar-popup" onClick={togglePopupNavbar}>
           <Icon icon="mingcute:down-line" width={30} height={30} />

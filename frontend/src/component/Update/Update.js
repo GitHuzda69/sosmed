@@ -40,21 +40,18 @@ const Update = ({ user, onClose }) => {
   const [originalName, setOriginalName] = useState(currentUser.displayname);
   const [isNameEmpty, setIsNameEmpty] = useState(false);
 
-  // BASE 64 SYSTEM
-  const convertbase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-
-      fileReader.onload = () => {
-        resolve(fileReader.result)
-      }
-
-      fileReader.onerror = (error) => {
-        reject(error)
-      }
-    })
-  }
+  const upload = async (file) => {
+    try {
+      const formData = new FormData();
+      const fileName = Date.now() + file.name;
+      formData.append("name", fileName);
+      formData.append("file", file);
+      await makeRequest("upload", "POST", formData);
+      return fileName;
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const handleChange = (e) => {
     setTexts((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -72,11 +69,11 @@ const Update = ({ user, onClose }) => {
       let profileUrl = user.profilePicture;
 
       if (coverInput) {
-        coverUrl = await convertbase64(coverInput);
+        coverUrl = await upload(coverInput);
       }
 
       if (profileInput) {
-        profileUrl = await convertbase64(profileInput);
+        profileUrl = await upload(profileInput);
       }
       const editUser = {
         ...texts,
@@ -163,106 +160,41 @@ const Update = ({ user, onClose }) => {
             </button>
             <div className="edit-image">
               <div className="edit-image-profile">
-                <img
-                  src={
-                    selectedProfileImage ||
-                    (user.profilePicture
-                      ? PF + user.profilePicture
-                      : defaultprofile)
-                  }
-                  alt="Selected Profile Image"
-                  className="selected-image-edit-profile"
-                />
+                <img src={selectedProfileImage || (user.profilePicture ? PF + user.profilePicture : defaultprofile)} alt="Selected Profile Image" className="selected-image-edit-profile" />
                 <div className="button-profile">
                   <label htmlFor="profileInput" className="file-label">
-                    <Icon
-                      icon="material-symbols:add-a-photo-outline"
-                      width={25}
-                      height={25}
-                    />
+                    <Icon icon="material-symbols:add-a-photo-outline" width={25} height={25} />
                   </label>
                 </div>
-                <input
-                  type="file"
-                  id="profileInput"
-                  ref={profileInputRef}
-                  onChange={handleProfileFileChange}
-                  style={{ display: "none" }}
-                />
+                <input type="file" id="profileInput" ref={profileInputRef} onChange={handleProfileFileChange} style={{ display: "none" }} />
               </div>
               <div className="edit-image-cover">
-                <img
-                  src={
-                    selectedCoverImage ||
-                    (user.coverPicture ? PF + user.coverPicture : defaultcover)
-                  }
-                  alt="Selected Cover Image"
-                  className="selected-image-edit-cover"
-                />
+                <img src={selectedCoverImage || (user.coverPicture ? PF + user.coverPicture : defaultcover)} alt="Selected Cover Image" className="selected-image-edit-cover" />
                 <div className="button-cover">
                   <label htmlFor="coverInput" className="file-label">
-                    <Icon
-                      icon="material-symbols:add-a-photo-outline"
-                      width={25}
-                      height={25}
-                    />
+                    <Icon icon="material-symbols:add-a-photo-outline" width={25} height={25} />
                   </label>
                 </div>
-                <input
-                  type="file"
-                  id="coverInput"
-                  ref={coverInputRef}
-                  onChange={handleCoverFileChange}
-                  style={{ display: "none" }}
-                />
+                <input type="file" id="coverInput" ref={coverInputRef} onChange={handleCoverFileChange} style={{ display: "none" }} />
               </div>
             </div>
             <div className="edit-profile-popup">
               <div className="edit-name">
                 <h4>Name</h4>
-                <input
-                  className="input-edit-name"
-                  type="text"
-                  name="displayname"
-                  value={texts.displayname}
-                  onChange={handleChange}
-                />
+                <input className="input-edit-name" type="text" name="displayname" value={texts.displayname} onChange={handleChange} />
               </div>
               <div className="edit-city">
                 <h4>City</h4>
-                <Icon
-                  icon="fluent:location-16-filled"
-                  height={25}
-                  width={25}
-                  className="city-icon"
-                />
-                <input
-                  className="input-edit-city"
-                  type="text"
-                  name="city"
-                  value={texts.city}
-                  onChange={handleChange}
-                  ref={city}
-                />
+                <Icon icon="fluent:location-16-filled" height={25} width={25} className="city-icon" />
+                <input className="input-edit-city" type="text" name="city" value={texts.city} onChange={handleChange} ref={city} />
               </div>
             </div>
             <div className="edit-bio">
               <h4>Edit Your Bio</h4>
-              <textarea
-                className="input-edit-bio"
-                type="text"
-                name="desc"
-                value={texts.desc}
-                onChange={handleChange}
-                ref={desc}
-              />
+              <textarea className="input-edit-bio" type="text" name="desc" value={texts.desc} onChange={handleChange} ref={desc} />
             </div>
           </form>
-          <button
-            className="edit-save"
-            onClick={handleSubmit}
-            disabled={isNameEmpty}
-          >
+          <button className="edit-save" onClick={handleSubmit} disabled={isNameEmpty}>
             Save
           </button>
         </div>

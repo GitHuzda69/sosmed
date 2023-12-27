@@ -97,7 +97,7 @@ const Fyp = () => {
 
   return (
     <>
-      <div className={`app ${isDarkMode ? "dark-mode" : ""}`}>
+      <div className={isDarkMode ? "dark-mode" : "app"}>
         <div className="leftbar-fyp">
           <Sidebar isDarkMode={isDarkMode} toggleSettings={toggleSettings} toggleLogout={toggleLogout} isHomePage={isHomePage} isShowRightBar={isShowRightBar} setIsShowRightBar={setIsShowRightBar} />
         </div>

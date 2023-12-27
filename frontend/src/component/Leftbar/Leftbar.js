@@ -3,8 +3,10 @@ import "./Leftbar.css";
 import { Icon } from "@iconify/react";
 import { Link } from "react-router-dom";
 import AuthContext from "../../context/authContext";
+
 import logo from "../../assets/Logo_BNW.jpg";
 import logopng from "../../assets/Logo_BNW.png";
+import logopnghitam from "../../assets/Logo_BNW_black.png";
 
 const Sidebar = ({ toggleSettings, toggleLogout, isHomePage, isMessagesPage, isNotifPage, isConnectPage, isProfilePage, isShowRightBar, setIsShowRightBar, isDarkMode }) => {
   const { user } = useContext(AuthContext);
@@ -20,7 +22,7 @@ const Sidebar = ({ toggleSettings, toggleLogout, isHomePage, isMessagesPage, isN
     <div className={`sidebar ${isShowRightBar ? "show-right-bar" : "hide-right-bar"}`}>
       {isShowRightBar ? (
         <div className="content-sidebar">
-          <Link to="/other">{isDarkMode ? <img className="sidebar-logo" src={logo} alt="BNW logo" /> : <img className="sidebar-logo" src={logopng} alt="BNW logo" />}</Link>
+          <Link to="/other">{isDarkMode ? <img className="sidebar-logo" src={logopng} alt="BNW logo" /> : <img className="sidebar-logo" src={logopnghitam} alt="BNW logo" />}</Link>
           <Link to="/">
             <button>{isHomePage ? <Icon icon="mingcute:home-4-fill" width="35" height="35" /> : <Icon icon="mingcute:home-4-line" width="35" height="35" />} </button>
           </Link>
@@ -73,7 +75,7 @@ const Sidebar = ({ toggleSettings, toggleLogout, isHomePage, isMessagesPage, isN
           </Link>
           <button onClick={toggleSettings} className="nav-button">
             <Icon icon="solar:settings-outline" width="35" height="35" />
-            <span className={isNotifPage ? "nav-bold-text" : "nav-text"}>Settings</span>
+            <span className={isNotifPage ? " " : "nav-text"}>Settings</span>
           </button>
         </div>
       )}

@@ -9,14 +9,18 @@
   display: flex;
   flex-direction: row;
   margin-top: -8px;
-  margin-left: 80px;
+  margin-left: 90px;
   margin-right: -5px;
   margin-bottom: 60px;
   padding-bottom: 40px;
 }
 
+.profil-container {
+  margin-right: -20px;
+}
+
 .profile-container-posts-view {
-  width: calc(100% - 305px);
+  width: calc(100% - 300px);
   position: relative;
 }
 .profile-container-friends-view {
@@ -46,6 +50,7 @@
   justify-content: space-between;
   margin-top: 142px;
   background-color: white;
+  border-radius: 0px 0px 0px 10px;
 }
 .profil-info {
   width: 70%;
@@ -631,12 +636,19 @@
   background-color: #d5d5d5;
 }
 
+.message-profile-link {
+  display: flex;
+  margin-top: -5px;
+  text-decoration: none;
+  color: black;
+}
+
 /*css posts profile*/
 
 .posts-profile {
-  width: calc(100% - 45px);
+  width: calc(100% - 30px);
   margin-top: 10px;
-  margin-left: 10px;
+  margin-left: -3px;
   padding-top: 0px;
   padding-right: 5px;
   padding-bottom: 0px;
@@ -661,6 +673,21 @@
 }
 .posts-profile .commento {
   width: 100%;
+}
+
+.posts-profile-norightbar {
+  width: 100%;
+  margin-left: -5px;
+  padding: 0;
+  overflow-x: hidden;
+}
+.posts-profile-norightbar .post-container {
+  margin-bottom: 0px;
+  margin-left: 2px;
+}
+.posts-profile-norightbar .post {
+  margin-left: 3px;
+  margin-right: 8px;
 }
 
 .popup-follow-container {
@@ -700,20 +727,32 @@
 }
 
 .profil-norightbar {
-  max-width: 100%;
+  max-width: calc(100% - 200px);
   height: 100%;
   display: flex;
   flex-direction: row;
-  margin-top: 95px;
-  margin-left: 425px;
+  margin-top: 93px;
+  margin-left: 435px;
   margin-right: -5px;
   margin-bottom: 60px;
   padding-bottom: 40px;
 }
 
+.profil-container-norightbar {
+  margin-right: -20px;
+}
+
+.profile-container-posts-view-norightbar {
+  width: calc(100% - 150px);
+  position: relative;
+}
+.profile-container-friends-view-norightbar {
+  width: calc(100% - 155px);
+  position: relative;
+}
+
 .cover-img-norightbar {
-  width: 100%;
-  margin-right: -12px;
+  margin-right: 20px;
   position: relative;
 }
 
@@ -738,4 +777,15 @@
   border-radius: 0;
   filter: brightness(0.7);
   border-radius: 10px 10px 0px 0px;
+}
+
+.profil-user-norightbar {
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  justify-content: space-between;
+  margin-top: 142px;
+  margin-right: 20px;
+  background-color: white;
+  border-radius: 0px 0px 10px 10px;
 }

@@ -15,29 +15,20 @@ const Commento = ({ postid, className }) => {
   const [desc, setDesc] = useState(null);
   const [file, setFile] = useState(null);
   const [showFileInput, setShowFileInput] = useState(false);
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [friends, setFriends] = useState([]);
 
-  // BASE 64 SYSTEM
-  const convertbase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-
-      fileReader.onload = () => {
-        resolve(fileReader.result);
-      };
-
-      fileReader.onerror = (error) => {
-        reject(error);
-      };
-    });
-  };
-
-  const postUserId = async (postid) => {
+  const upload = async () => {
     try {
-      const res = await makeRequest(`posts/${postid}`, "GET");
-      return res;
-    } catch (err) {}
+      const formData = new FormData();
+      const fileName = Date.now() + file.name;
+      formData.append("name", fileName);
+      formData.append("file", file);
+      await makeRequest("upload", "POST", formData);
+      return fileName;
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   useEffect(() => {
@@ -84,8 +75,9 @@ const Commento = ({ postid, className }) => {
 
         let imgUrl = "";
         if (file) {
-          const res = await convertbase64(file);
-          imgUrl = res;
+          imgUrl = await upload(file).catch((uploadError) => {
+            console.log(uploadError.message);
+          });
         }
 
         try {
@@ -133,7 +125,7 @@ const Commento = ({ postid, className }) => {
     <div className={`commento ${className}`}>
       <div className="write">
         <div className="write1">
-          <img className="comments-pic-write" src={currentUser && currentUser.profilePicture ? currentUser.profilePicture : defaultprofile} alt={currentUser.displayname} />
+          <img className="comments-pic-write" src={currentUser && currentUser.profilePicture ? PF + currentUser.profilePicture : defaultprofile} alt={currentUser.displayname} />
           <input className="input-comment" type="text" id="desc" placeholder="Write a comment . . . " value={desc} onChange={(e) => setDesc(e.target.value)} />
           <div className="uploadItem-comment-row">
             <button className="uploadItem-comment">

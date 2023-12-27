@@ -55,7 +55,7 @@ function TermsOfService() {
   };
 
   return (
-    <div className={`app ${isDarkMode ? "dark-mode" : "light-mode"}`}>
+    <div className={isDarkMode ? "dark-mode" : "app"}>
       <div className="main-tos">
         <div className="tos-main">
           <div className="tos-border">

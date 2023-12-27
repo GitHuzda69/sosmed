@@ -17,7 +17,6 @@ const SearchBar = ({ onSearch }) => {
     navigate(`/search/${searchTermValue}`);
     window.location.reload(true);
   };
-  
 
   const handleClearSearch = () => {
     setSearchTerm("");
@@ -33,20 +32,8 @@ const SearchBar = ({ onSearch }) => {
   return (
     <div className="search-container">
       <div className="search-bar-container">
-        <Icon
-          icon="octicon:search-16"
-          className="searchbar-button"
-          width="22"
-          height="22"
-        />
-        <input
-          className="search-bar-input"
-          type="text"
-          placeholder="Search . . ."
-          value={searchTerm}
-          onChange={handleInputChange}
-          onKeyDown={handleEnterKey}
-        />
+        <Icon icon="octicon:search-16" className="searchbar-button" width="22" height="22" />
+        <input className="search-bar-input" type="text" style={{ fontFamily: "Inter" }} placeholder="Search . . ." value={searchTerm} onChange={handleInputChange} onKeyDown={handleEnterKey} />
         {searchTerm && (
           <button className="clear-search-button" onClick={handleClearSearch}>
             <Icon icon="ph:x-bold" width="22" height="22" />

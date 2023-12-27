@@ -11,6 +11,7 @@ const Rightbar = () => {
   const [friends, setFriends] = useState([]);
   const [onlineUser, setOnlineUser] = useState([]);
   const { user: currentUser } = useContext(AuthContext);
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
   const socket = io("http://localhost:8900");
   useEffect(() => {
@@ -52,7 +53,7 @@ const Rightbar = () => {
               <div key={friend._id} className="rightBarUser">
                 <Link to={`/profile/${friend.username}`} className="rightBarLinkProfile">
                   <div className="rightBarUserInfo">
-                    <img className="rightBarImg" src={friend.profilePicture ? friend.profilePicture : defaultprofile} alt={friend.displayname} />
+                    <img className="rightBarImg" src={friend.profilePicture ? PF + friend.profilePicture : defaultprofile} alt={friend.displayname} />
                     {onlineUser && onlineUser.includes(friend._id) ? <div className={`statusDot-rightbar ${"greenDot-rightbar"}`} /> : <div className={`statusDot-rightbar ${"grayDot-rightbar"}`} />}
                   </div>
                   <p className="rightBarUserStatus">

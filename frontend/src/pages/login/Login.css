@@ -1,18 +1,16 @@
- html{
+.login-pages html {
   background-color: white;
 }
 .login-pages {
-  background-color: #ffffff; 
-}
-.login-pages html{
-  background-color: aqua;
+  background-color: white;
 }
 .login-containers {
+  height: 100%;
   display: flex;
   justify-content: flex-end;
   height: 95vh;
   align-items: center;
-  background-color: #ffffff;
+  background-color: white;
   margin-right: 20vh;
 }
 .login-containers h1 {

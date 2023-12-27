@@ -1,526 +1,524 @@
 .post-container {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    margin-top: 20px; 
-    margin-bottom: 5px;
-    width: 100%;  
-    transition: height 0.3s ease-in-out;
-  } 
-  .post { 
-    width: 100%;
-    height: 100%;
-    border-radius: 10px;
-    flex-direction: column;
-    display: flex;
-    flex: 1; 
-    margin-top: -15px;  
-    padding-right: 0;
-    border: none;
-    background-color: white;
-  }
-  .container {
-    padding: 10px;
-  }
-  .user {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;  
-  }
-  .user:focus {
-    border-color: grey;
-    outline: none;
-    box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
-  }
-  
-  .userinfo {
-    display: flex; 
-    flex: 1;
-  }
-  .profile {
-    width: 60px;
-    height: 60px;
-    border-radius: 10px;
-    object-fit: cover;
-    margin-top: 5px;
-    margin-left: 5px;
-  }
-  .profile:hover{
-    filter: brightness(0.7); 
-  }
-  .details {
-    display: flex;
-    flex-direction: column;
-    margin-top: -60px;
-    margin-left: 70px; 
-  }
-  .name {
-    font-size: 25px;
-    font-family: "Inter" ;
-    font-weight: bold;
-    margin-top: 5px;
-  }
-  .date {
-    font-size: 12px;
-    font-family: "Inter" ;
-    font-weight: 600; 
-  }
-  
-  .options {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end; 
-    margin-left: auto;
-  }
-  
-  .opsi-post-button { 
-    width: 30px;
-    height: 30px;
-    margin-top: -35px; 
-    margin-left: auto; 
-  }
-  .opsi-post-button:hover{
-    background-color: lightgray;
-    border-radius: 10px;
-  }
-  .delete-post-button{
-  
-  }
-  
-  .post-option-popup{ 
-    margin-right: -10px;
-  }
-  
-  
-  .post-option-popup-other {
-    top: 0;
-    width: 130px;
-    height: 55px;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    background-color: white;
-    border: 1px black solid;
-    z-index: 1;
-    border-radius: 8px;
-    padding: 5px;
-    padding-top: 2px;
-    margin-right: 20px;
-  }
-  .post-option-popup-other button:hover{
-    background-color: lightgray;
-    border-radius: 5px;
-  }
-  .post-option-popup-self {
-    top: 0;
-    width: 130px;
-    height: 50px;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    background-color: white;
-    border: 1px black solid;
-    z-index: 1;
-    border-radius: 8px;
-    padding: 5px;
-    padding-top: 2px;
-    margin-right: 20px;
-  }  
-  .delete-post{
-    background-color: transparent;
-    color: red;
-  }
-  .delete-post:hover{
-    background-color: red;
-    color: white;
-    border-radius: 10px;
-  }
-  .edit-post1{
-    background-color: transparent;
-    color: black;
-    z-index: 20;
-  }
-  .edit-post2{
-    z-index: 10;
-  } 
-  .edit-post1:hover, .edit-post2:hover{
-    background-color: #5c5c5c;
-    color: white;
-    border-radius: 10px;
-  }
-  
-  .edit-post{
-    position: absolute;
-    left: 510px;
-    padding: 10px;
-    background-color: white;
-    border: 1px black solid;
-    border-radius: 10px;
-    z-index: 30;
-  }
-  .edit-post-content{
-    display: flex;
-    flex-direction: column;
-    gap: 10px; 
-    z-index: 30;
-  } 
-  .edit-post-warn{
-    position: absolute;
-    padding: 10px;
-    border: 1px black solid;
-    border-radius: 10px;
-    background-color: white;
-  }
-  .edit-post-warn p{
-    margin-top: 10px;
-    margin-right: 20px;
-  }
-  .close-warn-post{
-    position: absolute;
-    width: 25px;
-    height: 25px;
-    margin-top: -8px;
-    margin-left: 80px;
-    background-color: transparent;
-  }
-  .close-warn-post:hover{
-    width: 25px;
-    height: 25px;
-  }
-  
-  .post-content {
-    display: flex;
-    flex-direction: column;
-    margin: 0;
-    border: none;
-    border-radius: 10px;
-    padding-top: 10px;
-    padding-left: 15px;
-    padding-bottom: 5px;
-    padding-right: 10px;
-    margin-top: 0px;
-    scrollbar-width: thin;
-    scrollbar-color: gray transparent;
-  }
-  
-  .post-img-container { 
-    margin-left: 10px;
-    margin-bottom: 10px; 
-  }
-  .post-img {
-    width: 100%;
-    height: 100%;
-    max-width: 1000px; 
-    max-height: 500px;
-    object-fit: cover;
-    border-radius: 10px;
-    margin-top: 5px;
-    margin-left: -10px;
-    margin-right: 15px;
-    margin-bottom: -10px; 
-  }
-  .post-img:hover {
-    border-radius: 15px;
-  }
-  
-  .post-desc {
-    font-size: 14px;
-    font-family: "Inter" ;
-    margin-top: 4px;
-    margin-left: 8px;
-    margin-right: 3px;
-    overflow-y: auto;
-    margin-bottom: 10px;
-  }
-  
-  .info {
-    display: flex;
-    align-items: center;
-    font-size: 14px;
-    margin-left: 25px;
-    margin-bottom: 10px; 
-  }
-  .item {
-    align-items: center;
-    margin-right: 20px;
-    display: grid;
-    grid-template-columns: repeat(3, auto);
-    gap: 5px; 
-  }
-  .item:hover .icon {
-    cursor: pointer;
-  }
-  
-  .like-post{
-    height: 35px;
-    width: 80px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;  
-  }
-  .like-post:hover{
-    background-color: #82c3eb;
-    border-radius: 10px;
-    cursor: pointer;
-  }
-  .liked-post{
-    height: 35px;
-    width: 80px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 10px; 
-    border-radius: 10px;
-    background-color: #24A0ED;
-    cursor: pointer;
-  }
-  
-  .img-button-post {
-    background-color: transparent;
-    padding: 0;
-    z-index: 1;
-  }
-  .img-button-post:hover {
-    background-color: transparent;
-  }
-  .img-button-post:hover img {
-    background-color: transparent;
-    filter: brightness(0.5);
-    z-index: 0;
-    border-radius: 10px;
-  }
-  
-  .popup-overlay-post {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 999; 
-  }
-  
-  .popup-post {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 80vh;
-    max-width: 100%;
-    max-height: 100%;
-    position: relative;
-    border-radius: 10px;
-  }
-  
-  .popup-image-post {
-    height: auto;
-    width: auto;
-    max-width: 100%;
-    max-height: 100%;
-    display: block;
-    margin: 0 auto;
-    border-radius: 10px;
-    object-fit: contain;
-  }
-
-  .del-img-edit-post{
-    border-radius: 10px;
-    background-color: darkred;
-    color: white;
-  }
-  .del-img-edit-post:hover{
-    border-radius: 10px;
-    background-color: red;
-    color: white;
-  }
-  .save-edit-post{
-    margin-top: -10px;
-    border-radius: 10px;
-    background-color: black;
-    color: white;
-  }
-  .save-edit-post:hover{
-    border-radius: 10px;
-    background-color: #5C5C5C;
-    color: white;
-  }
-  .close-edit-post{
-    margin-top: -10px;
-    border-radius: 10px;
-    background-color: black;
-    color: white;
-  }
-  .close-edit-post:hover{
-    border-radius: 10px;
-    background-color: #5C5C5C;
-    color: white;
-  }
-
-  .post-audio-container{ 
-    position: relative; 
-    display: flex;
-    flex-direction: column; 
-    max-width: 1000px;
-    height: 250px;
-    background-color: #FFE9BE; 
-    border-radius: 10px;
-    padding: 10px;
-    margin-right: 15px;
-  }
-
-  .post-audio-container:hover{
-    cursor: pointer;
-  }
-
-  .profile-audio{
-    position: absolute; 
-    width: 200px;
-    height: 200px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border-radius: 50%; 
-    opacity: 0.7;
-  }
- 
-  .post-audio {
-    height: 100%;
-    position: relative; 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: black;
-    font-family: "Inter";
-    font-size: 18px;
-  }
-
-  .audio-total-duration {
-    position: absolute;
-    top: 10px;
-    left: 5px; 
-  }
-  
-  .audio-volume-button {
-    position: absolute;
-    display: inline-block; 
-    right: 60px;
-    bottom: -9px;
-    cursor: pointer; 
-    background-color: transparent;
-  } 
-
-  .audio-volume-button:hover{
-    background-color: transparent;
-    z-index: 20;
-  }
-
-  .audio-volume-slider {
-    position: absolute;
-    transform: rotate(90deg);
-    top: -50px;
-    right: -34px;  
-    width: 100px; 
-    height: 5px;
-    border-radius: 5px;
-    background: linear-gradient(to right, black 0%, black 100%); 
-    appearance: none; 
-    outline: none;  
-    border: none; 
-    margin: 0; 
-    padding: 0;  
-    cursor: pointer;  
-    z-index: 20;
- }
-  
-  .audio-volume-slider::-webkit-slider-thumb { 
-    appearance: none;
-    width: 10px; 
-    height: 10px; 
-    background-color: black; 
-    border-radius: 50%;  
-    cursor: pointer;  
-  }
-  
-  .audio-volume-slider::-moz-range-thumb { 
-    width: 10px; 
-    height: 10px; 
-    background-color: black;  
-    border-radius: 50%;  
-    cursor: pointer; 
-  }
-
-  .custom-audio-controls {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .custom-audio-controls button { 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px;
-    border-radius: 50%;
-    background-color: rgba(0, 0, 0, 0.5); 
-    color: white; 
-  }
-
-  .audio-duration-slider {
-    position: absolute;
-    bottom: 30px;  
-    left: 0;
-    width: 100%;
-    height: 5px; 
-    background-color: #888;  
-  }
-
-  .audio-duration {
-    position: absolute;
-    bottom: 0;
-    left: 10px;
-    margin-bottom: 5px; 
-  }
-  
-  .audio-not-played {
-    position: absolute;
-    bottom: 0;
-    right: 10px;
-    margin-bottom: 5px; 
-  }
-
-  .post-container:hover .post-content .post-img-container,
-  .post-container:hover .post-content .post-audio-container {
-  display: block; 
-  transition: opacity 0.3s ease-in-out; 
-  }
-
-  .post-content .post-audio-container .audio-volume-button,
-  .post-content .post-audio-container .audio-volume-slider,
-  .post-content .post-audio-container .custom-audio-controls,
-  .post-content .post-audio-container .audio-duration-slider,
-  .post-content .post-audio-container .audio-duration,
-  .post-content .post-audio-container .audio-not-played {
-  display: none;
-  transition: opacity 0.3s ease-in-out; 
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  margin-bottom: 5px;
+  width: 100%;
+  transition: height 0.3s ease-in-out;
+}
+.post {
+  height: 100%;
+  border-radius: 10px;
+  flex-direction: column;
+  display: flex;
+  flex: 1;
+  margin-top: -15px;
+  padding-right: 0;
+  border: none;
+  background-color: white;
+}
+.container {
+  padding: 10px;
+}
+.user {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.user:focus {
+  border-color: grey;
+  outline: none;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
 }
 
-  .post-content .post-audio-container:hover .audio-volume-button,
-  .post-content .post-audio-container:hover .audio-volume-slider,
-  .post-content .post-audio-container:hover .custom-audio-controls,
-  .post-content .post-audio-container:hover .audio-duration-slider,
-  .post-content .post-audio-container:hover .audio-duration,
-  .post-content .post-audio-container:hover .audio-not-played {
+.userinfo {
+  display: flex;
+  flex: 1;
+}
+.profile {
+  width: 60px;
+  height: 60px;
+  border-radius: 10px;
+  object-fit: cover;
+  margin-top: 5px;
+  margin-left: 5px;
+}
+.profile:hover {
+  filter: brightness(0.7);
+}
+.details {
+  display: flex;
+  flex-direction: column;
+  margin-top: -60px;
+  margin-left: 70px;
+}
+.name {
+  font-size: 25px;
+  font-family: "Inter";
+  font-weight: bold;
+  margin-top: 5px;
+}
+.date {
+  font-size: 12px;
+  font-family: "Inter";
+  font-weight: 600;
+}
+
+.options {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-left: auto;
+}
+
+.opsi-post-button {
+  width: 30px;
+  height: 30px;
+  margin-top: -35px;
+  margin-left: auto;
+}
+.opsi-post-button:hover {
+  background-color: lightgray;
+  border-radius: 10px;
+}
+.delete-post-button {
+}
+
+.post-option-popup {
+  margin-right: -10px;
+}
+
+.post-option-popup-other {
+  top: 0;
+  width: 130px;
+  height: 55px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  background-color: white;
+  border: 1px black solid;
+  z-index: 1;
+  border-radius: 8px;
+  padding: 5px;
+  padding-top: 2px;
+  margin-right: 20px;
+}
+.post-option-popup-other button:hover {
+  background-color: lightgray;
+  border-radius: 5px;
+}
+.post-option-popup-self {
+  top: 0;
+  width: 130px;
+  height: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  background-color: white;
+  border: 1px black solid;
+  z-index: 1;
+  border-radius: 8px;
+  padding: 5px;
+  padding-top: 2px;
+  margin-right: 20px;
+}
+.delete-post {
+  background-color: transparent;
+  color: red;
+}
+.delete-post:hover {
+  background-color: red;
+  color: white;
+  border-radius: 10px;
+}
+.edit-post1 {
+  background-color: transparent;
+  color: black;
+  z-index: 20;
+}
+.edit-post2 {
+  z-index: 10;
+}
+.edit-post1:hover,
+.edit-post2:hover {
+  background-color: #5c5c5c;
+  color: white;
+  border-radius: 10px;
+}
+
+.edit-post {
+  position: absolute;
+  left: 510px;
+  padding: 10px;
+  background-color: white;
+  border: 1px black solid;
+  border-radius: 10px;
+  z-index: 30;
+}
+.edit-post-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 30;
+}
+.edit-post-warn {
+  position: absolute;
+  padding: 10px;
+  border: 1px black solid;
+  border-radius: 10px;
+  background-color: white;
+}
+.edit-post-warn p {
+  margin-top: 10px;
+  margin-right: 20px;
+}
+.close-warn-post {
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  margin-top: -8px;
+  margin-left: 80px;
+  background-color: transparent;
+}
+.close-warn-post:hover {
+  width: 25px;
+  height: 25px;
+}
+
+.post-content {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  border: none;
+  border-radius: 10px;
+  padding-top: 10px;
+  padding-left: 15px;
+  padding-bottom: 5px;
+  padding-right: 10px;
+  margin-top: 0px;
+  scrollbar-width: thin;
+  scrollbar-color: gray transparent;
+}
+
+.post-img-container {
+  margin-left: 10px;
+  margin-bottom: 10px;
+}
+.post-img {
+  width: 100%;
+  height: 100%;
+  max-width: 1000px;
+  max-height: 500px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-top: 5px;
+  margin-left: -10px;
+  margin-right: 15px;
+  margin-bottom: -10px;
+}
+.post-img:hover {
+  border-radius: 15px;
+}
+
+.post-desc {
+  font-size: 18px;
+  font-family: "Inter";
+  margin-top: 4px;
+  margin-left: 8px;
+  margin-right: 3px;
+  overflow-y: auto;
+  margin-bottom: 10px;
+}
+
+.info {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  margin-left: 25px;
+  margin-bottom: 10px;
+}
+.item {
+  align-items: center;
+  margin-right: 20px;
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  gap: 5px;
+}
+.item:hover .icon {
+  cursor: pointer;
+}
+
+.like-post {
+  height: 35px;
+  width: 80px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.like-post:hover {
+  background-color: #82c3eb;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.liked-post {
+  height: 35px;
+  width: 80px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 10px;
+  background-color: #24a0ed;
+  cursor: pointer;
+}
+
+.img-button-post {
+  background-color: transparent;
+  padding: 0;
+  z-index: 1;
+}
+.img-button-post:hover {
+  background-color: transparent;
+}
+.img-button-post:hover img {
+  background-color: transparent;
+  filter: brightness(0.5);
+  z-index: 0;
+  border-radius: 10px;
+}
+
+.popup-overlay-post {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.popup-post {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  max-width: 100%;
+  max-height: 100%;
+  position: relative;
+  border-radius: 10px;
+}
+
+.popup-image-post {
+  height: auto;
+  width: auto;
+  max-width: 100%;
+  max-height: 100%;
   display: block;
-  transition: opacity 0.3s ease-in-out;  
+  margin: 0 auto;
+  border-radius: 10px;
+  object-fit: contain;
+}
+
+.del-img-edit-post {
+  border-radius: 10px;
+  background-color: darkred;
+  color: white;
+}
+.del-img-edit-post:hover {
+  border-radius: 10px;
+  background-color: red;
+  color: white;
+}
+.save-edit-post {
+  margin-top: -10px;
+  border-radius: 10px;
+  background-color: black;
+  color: white;
+}
+.save-edit-post:hover {
+  border-radius: 10px;
+  background-color: #5c5c5c;
+  color: white;
+}
+.close-edit-post {
+  margin-top: -10px;
+  border-radius: 10px;
+  background-color: black;
+  color: white;
+}
+.close-edit-post:hover {
+  border-radius: 10px;
+  background-color: #5c5c5c;
+  color: white;
+}
+
+.post-audio-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  max-width: 1000px;
+  height: 250px;
+  background-color: #ffe9be;
+  border-radius: 10px;
+  padding: 10px;
+  margin-right: 15px;
+}
+
+.post-audio-container:hover {
+  cursor: pointer;
+}
+
+.profile-audio {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  opacity: 0.7;
+}
+
+.post-audio {
+  height: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: black;
+  font-family: "Inter";
+  font-size: 18px;
+}
+
+.audio-total-duration {
+  position: absolute;
+  top: 10px;
+  left: 5px;
+}
+
+.audio-volume-button {
+  position: absolute;
+  display: inline-block;
+  right: 60px;
+  bottom: -9px;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+.audio-volume-button:hover {
+  background-color: transparent;
+  z-index: 20;
+}
+
+.audio-volume-slider {
+  position: absolute;
+  transform: rotate(90deg);
+  top: -50px;
+  right: -34px;
+  width: 100px;
+  height: 5px;
+  border-radius: 5px;
+  background: linear-gradient(to right, black 0%, black 100%);
+  appearance: none;
+  outline: none;
+  border: none;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  z-index: 20;
+}
+
+.audio-volume-slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 10px;
+  height: 10px;
+  background-color: black;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.audio-volume-slider::-moz-range-thumb {
+  width: 10px;
+  height: 10px;
+  background-color: black;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.custom-audio-controls {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.custom-audio-controls button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+}
+
+.audio-duration-slider {
+  position: absolute;
+  bottom: 30px;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background-color: #888;
+}
+
+.audio-duration {
+  position: absolute;
+  bottom: 0;
+  left: 10px;
+  margin-bottom: 5px;
+}
+
+.audio-not-played {
+  position: absolute;
+  bottom: 0;
+  right: 10px;
+  margin-bottom: 5px;
+}
+
+.post-container:hover .post-content .post-img-container,
+.post-container:hover .post-content .post-audio-container {
+  display: block;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.post-content .post-audio-container .audio-volume-button,
+.post-content .post-audio-container .audio-volume-slider,
+.post-content .post-audio-container .custom-audio-controls,
+.post-content .post-audio-container .audio-duration-slider,
+.post-content .post-audio-container .audio-duration,
+.post-content .post-audio-container .audio-not-played {
+  display: none;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.post-content .post-audio-container:hover .audio-volume-button,
+.post-content .post-audio-container:hover .audio-volume-slider,
+.post-content .post-audio-container:hover .custom-audio-controls,
+.post-content .post-audio-container:hover .audio-duration-slider,
+.post-content .post-audio-container:hover .audio-duration,
+.post-content .post-audio-container:hover .audio-not-played {
+  display: block;
+  transition: opacity 0.3s ease-in-out;
 }

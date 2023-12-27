@@ -1,14 +1,17 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./Conversation.css";
 import "../../DarkMode.css";
 
 import { makeRequest } from "../../fetch";
 import defaultprofile from "../../assets/profile/default_avatar.png";
 import { io } from "socket.io-client";
+import AuthContext from "../../context/authContext";
 
-export default function Conversation({ conversation, currentUser, onClick, isSelected, isShowRightBar }) {
+export default function Conversation({ conversation, onClick, isSelected, isShowRightBar }) {
   const [user, setUser] = useState();
+  const { user: currentUser } = useContext(AuthContext);
   const [isOnline, setIsOnline] = useState(false);
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
   const friendId = conversation.members.find((m) => m !== currentUser._id);
   useEffect(() => {
@@ -29,14 +32,14 @@ export default function Conversation({ conversation, currentUser, onClick, isSel
     socket?.on("getUsers", (users) => {
       setIsOnline(currentUser.followings.filter((f) => users.some((u) => u.userId === f)));
     });
-  }, [currentUser]);
+  }, [user]);
 
   return (
     <div className="message-friend-container">
       <div className="message-friend-bar">
         {isShowRightBar ? (
           <button className={`message-friend ${isSelected ? "selected-friend" : ""}`} onClick={() => onClick(conversation)}>
-            <img className="message-friend-avatar" src={user && user.profilePicture ? user.profilePicture : defaultprofile} alt="" />
+            <img className="message-friend-avatar" src={user && user.profilePicture ? PF + user.profilePicture : defaultprofile} alt="" />
             {isOnline && isOnline.includes(friendId) ? <div className={`statusDot ${"greenDot"}`} /> : <div className={`statusDot ${"grayDot"}`} />}
             <div className="message-friend-bio">
               <h2>{user && user.displayname}</h2>
@@ -45,7 +48,7 @@ export default function Conversation({ conversation, currentUser, onClick, isSel
           </button>
         ) : (
           <button className={`message-friend-norightbar ${isSelected ? "selected-friend-norightbar" : ""}`} onClick={() => onClick(conversation)}>
-            <img className="message-friend-avatar" src={user && user.profilePicture ? user.profilePicture : defaultprofile} alt="" />
+            <img className="message-friend-avatar" src={user && user.profilePicture ? PF + user.profilePicture : defaultprofile} alt="" />
             {isOnline && isOnline.includes(friendId) ? <div className={`statusDot ${"greenDot"}`} /> : <div className={`statusDot ${"grayDot"}`} />}
             <div className="message-friend-bio">
               <h2>{user && user.displayname}</h2>

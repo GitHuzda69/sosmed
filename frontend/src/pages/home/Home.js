@@ -63,7 +63,7 @@ function Home() {
 
   return (
     <>
-      <div className={`app ${isDarkMode ? "dark-mode" : ""}`}>
+      <div className={isDarkMode ? "dark-mode" : "app"}>
         <div className={`main-content ${!isShowRightBar ? "no-right-bar" : ""}`}>
           {!isShowRightBar && (
             <div className="home-navbar">

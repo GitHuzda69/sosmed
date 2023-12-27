@@ -29,6 +29,7 @@ const Post = ({ post, key, openPostOption, handleOpenPostOption, handleClosePost
   const [sliderValue, setSliderValue] = useState(0);
   const [showVolumeSlider, setShowVolumeSlider] = useState(false);
   const [volumeSliderValue, setVolumeSliderValue] = useState(50);
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
   useEffect(() => {
     setIsLiked(post.likes && post.likes.includes(currentUser._id));
@@ -54,20 +55,17 @@ const Post = ({ post, key, openPostOption, handleOpenPostOption, handleClosePost
     }
   }, [post.userId]);
 
-  // BASE 64 SYSTEM
-  const convertbase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-
-      fileReader.onload = () => {
-        resolve(fileReader.result);
-      };
-
-      fileReader.onerror = (error) => {
-        reject(error);
-      };
-    });
+  const upload = async (file) => {
+    try {
+      const formData = new FormData();
+      const fileName = Date.now() + file.name;
+      formData.append("name", fileName);
+      formData.append("file", file);
+      await makeAxios.post("/upload", { formData });
+      return fileName;
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const handleLike = async () => {
@@ -113,7 +111,7 @@ const Post = ({ post, key, openPostOption, handleOpenPostOption, handleClosePost
     const editedPost = {
       ...post,
       desc: editedDesc,
-      img: editedImg ? await await convertbase64(editedImg) : post.img,
+      img: editedImg ? await upload(editedImg) : post.img,
     };
 
     try {
@@ -271,7 +269,7 @@ const Post = ({ post, key, openPostOption, handleOpenPostOption, handleClosePost
           <div className="user">
             <div className="userinfo">
               <Link to={`profile/${user.username}`} style={{ textDecoration: "none", color: "inherit" }}>
-                <img className="profile" src={user.profilePicture ? user.profilePicture : defaultprofile} alt="" />
+                <img className="profile" src={user.profilePicture ? PF + user.profilePicture : defaultprofile} alt="" />
               </Link>
               <div className="details">
                 <span className="name">{user.displayname}</span>
@@ -429,13 +427,13 @@ const Post = ({ post, key, openPostOption, handleOpenPostOption, handleClosePost
           {post.img && !post.audio && (
             <div className="post-img-container">
               <button className="img-button-post" onClick={() => openPopup(editedImg || post.img)}>
-                <img className="post-img" src={post.img} alt="" />
+                <img className="post-img" src={PF + post.img} alt="" />
               </button>
             </div>
           )}
           {post.file && (
             <div className="post-audio-container">
-              <img className="profile-audio" src={user.profilePicture ? user.profilePicture : defaultprofile} alt="" />
+              <img className="profile-audio" src={user.profilePicture ? PF + user.profilePicture : defaultprofile} alt="" />
               <div className="post-audio">
                 <button className="audio-volume-button" onMouseEnter={() => setShowVolumeSlider(true)} onMouseLeave={() => setShowVolumeSlider(false)}>
                   <Icon icon="fluent:speaker-2-16-filled" width={20} height={20} />
@@ -453,7 +451,7 @@ const Post = ({ post, key, openPostOption, handleOpenPostOption, handleClosePost
                   )}
                 </button>
                 <audio id={`audio-${post._id}`} style={{ display: "none" }} onError={(e) => console.error("Audio Error:", e)}>
-                  <source src={post.file} type="audio/mpeg" />
+                  <source src={PF + post.file} type="audio/mpeg" />
                   Your browser does not support the audio element.
                 </audio>
                 <div className="custom-audio-controls">
@@ -497,9 +495,6 @@ const Post = ({ post, key, openPostOption, handleOpenPostOption, handleClosePost
           </div>
           <div className="item" onClick={() => setCommentOpen(!commentOpen)}>
             <Icon className="icon" icon="majesticons:comment-text-line" width={25} height={25} />
-          </div>
-          <div className="item">
-            <Icon className="icon" icon="fluent:share-24-regular" width={30} height={30} />
           </div>
         </div>
         {commentOpen && <Commento postid={post._id} />}

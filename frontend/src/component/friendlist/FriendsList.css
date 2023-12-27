@@ -1,45 +1,45 @@
-.friendlist-main{
-  width: calc(100% - 420px);   
+.friendlist-main {
+  width: calc(100% - 420px);
   margin-top: 20px;
-  margin-left: 80px;   
+  margin-left: 80px;
 }
-.friendlist-container{
-  width: 100%;  
-  height: 100%; 
+.friendlist-container {
+  width: 100%;
+  height: 100%;
   background-color: white;
-  border-radius: 15px;  
+  border-radius: 15px;
   padding-bottom: 100px;
 }
-.friendlist-container h2{
+.friendlist-container h2 {
   font-size: 40px;
   font-family: "Inter";
-  font-weight: 1000; 
+  font-weight: 1000;
 }
 .friendlist-header {
   display: flex;
-  justify-content: space-between; 
-  align-items: center; 
+  justify-content: space-between;
+  align-items: center;
   border-bottom: 2px lightgray solid;
   margin-bottom: 5px;
 }
-.friendlist-header h2{
+.friendlist-header h2 {
   font-size: 25px;
   margin-left: -70px;
 }
 
 .button-info {
-  color: black;  
+  color: black;
   padding: 3px 6px;
   margin-top: 10px;
   margin-left: 20px;
   margin-right: 80px;
   cursor: pointer;
 }
-.button-info:hover{
+.button-info:hover {
   border-radius: 12px;
 }
 
-.friendlist-empty{ 
+.friendlist-empty {
   font-family: "Inter";
   font-weight: bold;
   font-size: 25px;
@@ -47,12 +47,12 @@
   margin-left: 30px;
 }
 
-.friendlist {   
+.friendlist {
   display: flex;
-  flex-direction: column; 
-  margin-bottom: 10px; 
+  flex-direction: column;
+  margin-bottom: 10px;
   overflow-y: scroll;
-  overflow-x: hidden; 
+  overflow-x: hidden;
 }
 
 .friendlist::-webkit-scrollbar {
@@ -70,42 +70,42 @@
 .friendlist::-webkit-scrollbar-thumb:hover {
   background-color: transparent;
 }
-.friend { 
+.friend {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 5px;   
-  border-bottom: 1px lightgray solid;   
+  margin-bottom: 5px;
+  border-bottom: 1px lightgray solid;
 }
-  
-.friend-avatar{ 
+
+.friend-avatar {
   width: 55px;
-  height: 55px; 
+  height: 55px;
   object-fit: cover;
-  border-radius: 50%; 
+  border-radius: 50%;
   margin-top: 0px;
-  margin-left: 20px; 
+  margin-left: 20px;
   z-index: 5;
 }
-.friend-avatar:hover{
-  filter: brightness(0.7); 
+.friend-avatar:hover {
+  filter: brightness(0.7);
   cursor: pointer;
 }
 .friend-info-container {
   display: flex;
   flex: 1;
   flex-direction: row;
-  justify-content: space-between; 
+  justify-content: space-between;
   align-items: flex-start;
   margin-top: 30px;
-  padding: 0 25px;  
+  padding: 0 25px;
 }
 
 .friend-info-details {
   display: flex;
-  flex-direction: column;  
-  margin-top: -20px; 
+  flex-direction: column;
+  margin-top: -20px;
 }
 
 .friend-info-details h3 {
@@ -120,8 +120,8 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 5px; 
-  margin-top: -5px; 
+  gap: 5px;
+  margin-top: -5px;
 }
 
 .friend-follower h3 {
@@ -149,12 +149,12 @@
   font-weight: normal;
 }
 
-.button-popup { 
+.button-popup {
   display: flex;
   flex-direction: row;
   align-items: center;
   height: 30px;
-  gap: 10px; 
+  gap: 10px;
   padding: 2px 8px;
   margin-right: 30px;
   border-radius: 8px;
@@ -167,7 +167,7 @@
   border-radius: 10px;
 }
 
-.popup{
+.popup {
   top: 0;
   width: 100px;
   display: flex;
@@ -190,7 +190,7 @@
   cursor: pointer;
 }
 
-.icon-button:hover{
+.icon-button:hover {
   border-radius: 10px;
 }
 
@@ -201,4 +201,10 @@
   margin-right: 10px;
 }
 
- 
+.friendlist-main-norightbar {
+  height: 100%;
+  width: calc(100% - 550px);
+  margin-top: 93px;
+  margin-left: 435px;
+  overflow-y: hidden;
+}

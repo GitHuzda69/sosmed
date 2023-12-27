@@ -60,10 +60,6 @@ function Message() {
   }, [currentChat]);
 
   useEffect(() => {
-    setMessages((prev) => [...prev, messages]);
-  }, [messages]);
-
-  useEffect(() => {
     const storedDarkModeStatus = localStorage.getItem("isDarkMode") === "true";
     setIsDarkMode(storedDarkModeStatus);
     setDarkMode(storedDarkModeStatus);
@@ -192,112 +188,107 @@ function Message() {
   }, []);
 
   return (
-    <div className={isShowRightBar ? "main-messages" : "main-messages-norightbar"} style={{ height: chatHeight }}>
-      <div className={!isShowRightBar ? "message-friend-pages-norightbar" : "message-friend-pages"}>
-        {!isShowRightBar && <Icon icon="fluent:chat-16-regular" width={30} height={30} />}
-        <h1>Messages</h1>
-      </div>
-      <div className={isShowRightBar ? "search-message-friend" : "search-message-norightbar"}>
-        <Icon icon="octicon:search-16" className={isShowRightBar ? "searchbar-message-friend-button" : "searchbar-message-friend-norightbar"} width="22" height="22" />
-        <input className={isShowRightBar ? "input-search-friend" : "input-search-friend-norightbar"} type="text" placeholder="Search on Messages" />
-        <div
-          style={{
-            borderBottom: `${isShowRightBar ? "1px gray solid" : " 2px #E0E0E0 solid"} `,
-            marginLeft: "-20px",
-            marginRight: "-20px",
-          }}
+    <div className={isDarkMode ? "dark-mode" : "app"}>
+      <div className={isShowRightBar ? "main-messages" : "main-messages-norightbar"} style={{ height: chatHeight }}>
+        <div className={!isShowRightBar ? "message-friend-pages-norightbar" : "message-friend-pages"}>
+          {!isShowRightBar && <Icon icon="fluent:chat-16-regular" width={30} height={30} />}
+          <h1>Messages</h1>
+        </div>
+        <div className={isShowRightBar ? "search-message-friend" : "search-message-norightbar"}>
+          <Icon icon="octicon:search-16" className={isShowRightBar ? "searchbar-message-friend-button" : "searchbar-message-friend-norightbar"} width="22" height="22" />
+          <input className={isShowRightBar ? "input-search-friend" : "input-search-friend-norightbar"} type="text" placeholder="Search on Messages" />
+          <div
+            style={{
+              borderBottom: `${isShowRightBar ? "1px gray solid" : " 2px #E0E0E0 solid"} `,
+              marginLeft: "-20px",
+              marginRight: "-20px",
+            }}
+          />
+          {conversations.map((c) => (
+            <div key={c._id} onClick={() => handleConversationClick(c)}>
+              <Conversation conversation={c} onClick={handleConversationClick} isSelected={c === selectedConversation} isShowRightBar={isShowRightBar} setIsShowRightBar={setIsShowRightBar} />
+            </div>
+          ))}
+        </div>
+        {selectedConversation ? (
+          <div className={isShowRightBar ? "message-chat-container" : "message-chat-container-norightbar"}>
+            <div className="chat" ref={chatContainerRef}>
+              {Object.entries(groupedMessages).map(([date, messagesForDate]) => (
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                >
+                  <p className={!isShowRightBar ? "chat-date-norightbar" : ""}>{formatDateLabel(date)}</p>
+                  {messagesForDate.map((m) => (
+                    <Chat key={m._id} message={m} own={m.sender === currentUser._id} isShowRightBar={isShowRightBar} setIsShowRightBar={setIsShowRightBar} />
+                  ))}
+                </div>
+              ))}
+            </div>
+            {isShowRightBar ? (
+              <div className="chat-input">
+                <textarea placeholder={`Tuliskan sesuatu `} value={newMessage} onChange={(e) => setNewMessage(e.target.value)} onKeyDown={handleEnterPress} />
+                <div className="chat-input-button">
+                  <button className="chat-button">
+                    <Icon icon="mdi:paperclip" width={25} height={25} />
+                  </button>
+                  <button className="chat-button">
+                    <Icon icon="fluent:gif-16-regular" width={25} height={25} />
+                  </button>
+                  <button className="chat-button">
+                    <Icon icon="material-symbols:folder-copy-outline" width={25} height={25} />
+                  </button>
+                  <button className="post-chat" onClick={handleSubmit} disabled={newMessage.trim() === ""}>
+                    <Icon icon="icon-park-outline:send-one" width={23} height={23} color="white" />
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div className="chat-input-norightbar">
+                <button className="chat-button-norightbar">
+                  <Icon icon="ep:circle-plus-filled" width={30} height={30} />
+                </button>
+                <textarea placeholder={`Tuliskan sesuatu `} value={newMessage} onChange={(e) => setNewMessage(e.target.value)} onKeyDown={handleEnterPress} />
+                <button className="post-chat-norightbar" onClick={handleSubmit} disabled={newMessage.trim() === ""}>
+                  <Icon icon="iconamoon:send-light" width={35} height={35} />
+                </button>
+              </div>
+            )}
+          </div>
+        ) : (
+          <div className={isShowRightBar ? "pick-chat" : "pick-chat-norightbar"}>
+            <span className="not-chat">Open a Conversation</span>
+          </div>
+        )}
+        {!isShowRightBar && <Navbar isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} toggleLogout={toggleLogout} />}
+        <Sidebar
+          isDarkMode={isDarkMode}
+          toggleSettings={toggleSettings}
+          toggleLogout={toggleLogout}
+          isMessagesPage={isMessagesPage}
+          isShowRightBar={isShowRightBar}
+          setIsShowRightBar={setIsShowRightBar}
         />
-        {conversations.map((c) => (
-          <div key={c._id} onClick={() => handleConversationClick(c)}>
-            <Conversation
-              conversation={c}
-              currentUser={currentUser}
-              onClick={handleConversationClick}
-              isSelected={c === selectedConversation}
-              isShowRightBar={isShowRightBar}
-              setIsShowRightBar={setIsShowRightBar}
-            />
-          </div>
-        ))}
+        {settingOpen && (
+          <>
+            <div className="settings-overlay" />
+            <div className="settings-container">
+              <Settings onClose={toggleSettings} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} isShowRightBar={isShowRightBar} setIsShowRightBar={setIsShowRightBar} />
+            </div>
+          </>
+        )}
+        {logoutOpen && (
+          <>
+            <div className="popup-logout-container" />
+            <div className="popup-logout">
+              <Logout onClose={toggleLogout} />
+            </div>
+          </>
+        )}
       </div>
-      {selectedConversation ? (
-        <div className={isShowRightBar ? "message-chat-container" : "message-chat-container-norightbar"}>
-          <div className="chat" ref={chatContainerRef}>
-            {Object.entries(groupedMessages).map(([date, messagesForDate]) => (
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                }}
-              >
-                <p className={!isShowRightBar ? "chat-date-norightbar" : ""}>{formatDateLabel(date)}</p>
-                {messagesForDate.map((m) => (
-                  <Chat key={m._id} message={m} own={m.sender === currentUser._id} isShowRightBar={isShowRightBar} setIsShowRightBar={setIsShowRightBar} />
-                ))}
-              </div>
-            ))}
-          </div>
-          {isShowRightBar ? (
-            <div className="chat-input">
-              <textarea placeholder={`Tuliskan sesuatu `} value={newMessage} onChange={(e) => setNewMessage(e.target.value)} onKeyDown={handleEnterPress} />
-              <div className="chat-input-button">
-                <button className="chat-button">
-                  <Icon icon="mdi:paperclip" width={25} height={25} />
-                </button>
-                <button className="chat-button">
-                  <Icon icon="fluent:gif-16-regular" width={25} height={25} />
-                </button>
-                <button className="chat-button">
-                  <Icon icon="material-symbols:folder-copy-outline" width={25} height={25} />
-                </button>
-                <button className="post-chat" onClick={handleSubmit} disabled={newMessage.trim() === ""}>
-                  <Icon icon="icon-park-outline:send-one" width={23} height={23} color="white" />
-                </button>
-              </div>
-            </div>
-          ) : (
-            <div className="chat-input-norightbar">
-              <button className="chat-button-norightbar">
-                <Icon icon="ep:circle-plus-filled" width={30} height={30} />
-              </button>
-              <textarea placeholder={`Tuliskan sesuatu `} value={newMessage} onChange={(e) => setNewMessage(e.target.value)} onKeyDown={handleEnterPress} />
-              <button className="post-chat-norightbar" onClick={handleSubmit} disabled={newMessage.trim() === ""}>
-                <Icon icon="iconamoon:send-light" width={35} height={35} />
-              </button>
-            </div>
-          )}
-        </div>
-      ) : (
-        <div className={isShowRightBar ? "pick-chat" : "pick-chat-norightbar"}>
-          <span className="not-chat">Open a Conversation</span>
-        </div>
-      )}
-      {!isShowRightBar && <Navbar isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} toggleLogout={toggleLogout} />}
-      <Sidebar
-        isDarkMode={isDarkMode}
-        toggleSettings={toggleSettings}
-        toggleLogout={toggleLogout}
-        isMessagesPage={isMessagesPage}
-        isShowRightBar={isShowRightBar}
-        setIsShowRightBar={setIsShowRightBar}
-      />
-      {settingOpen && (
-        <>
-          <div className="settings-overlay" />
-          <div className="settings-container">
-            <Settings onClose={toggleSettings} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} isShowRightBar={isShowRightBar} setIsShowRightBar={setIsShowRightBar} />
-          </div>
-        </>
-      )}
-      {logoutOpen && (
-        <>
-          <div className="popup-logout-container" />
-          <div className="popup-logout">
-            <Logout onClose={toggleLogout} />
-          </div>
-        </>
-      )}
     </div>
   );
 }

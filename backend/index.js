@@ -4,6 +4,8 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const cors = require("cors");
 const morgan = require("morgan");
+const multer = require("multer");
+const path = require("path");
 
 const authRoutes = require("./routes/auth");
 const googleRoutes = require("./routes/google");
@@ -33,6 +35,7 @@ async function connectToDatabase() {
 connectToDatabase();
 const allowedOrigins = ["http://localhost:3000", "http://localhost:8800", "http://localhost:8900"];
 // Middlewares
+app.use("/images", express.static(path.join(__dirname, "public/images")));
 app.use(express.json({ limit: "500mb" }));
 app.use(express.urlencoded({ limit: "500mb", extended: true }));
 app.use(morgan("tiny"));
@@ -47,6 +50,35 @@ app.use(
     },
     credentials: true,
   })
+);
+
+// Middleware to handle file upload
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "public/images");
+  },
+  filename: function (req, file, cb) {
+    cb(null, req.body.name);
+  },
+});
+
+const upload = multer({ storage: storage });
+
+// Use file upload middleware for the specific route
+app.post(
+  "/api/upload",
+  (req, res, next) => {
+    upload.single("file")(req, res, (err) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).json("File upload failed");
+      }
+      next();
+    });
+  },
+  (req, res) => {
+    return res.status(200).json("File uploaded successfully");
+  }
 );
 
 // Routes

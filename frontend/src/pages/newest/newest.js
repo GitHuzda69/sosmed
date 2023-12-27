@@ -98,7 +98,7 @@ const Newest = () => {
 
   return (
     <>
-      <div className={`app ${isDarkMode ? "dark-mode" : ""}`}>
+      <div className={isDarkMode ? "dark-mode" : "app"}>
         <div className="leftbar-newest">
           <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isHomePage={isHomePage} isShowRightBar={isShowRightBar} setIsShowRightBar={setIsShowRightBar} />
         </div>

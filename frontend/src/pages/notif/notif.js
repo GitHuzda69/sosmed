@@ -24,6 +24,7 @@ function Notif() {
   const [user, setUser] = useState([]);
   const { user: currentUser } = useContext(AuthContext);
   const [isShowRightBar, setIsShowRightBar] = useState(true);
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
   const isNotifPage = true;
 
@@ -145,7 +146,7 @@ function Notif() {
   }, []);
 
   return (
-    <div className={`app ${isDarkMode ? "dark-mode" : ""}`}>
+    <div className={isDarkMode ? "dark-mode" : "app"}>
       <div className={isShowRightBar ? "main-notif" : "main-notif-norightbar"}>
         <h1>Notifications</h1>
         <button className={isShowRightBar ? "mark-read-button" : "mark-read-button-norightbar"}>
@@ -179,7 +180,7 @@ function Notif() {
                     <div className="notif" key={notification.id}>
                       <span className="notif-date">{moment(notification.createdAt).fromNow()}</span>
                       <div className="notif-user">
-                        <img className="notif-avatar" src={user.profilePicture} alt={user.username} />
+                        <img className="notif-avatar" src={PF + user.profilePicture} alt={user.username} />
                         <div className="notif-text">
                           <p>
                             <strong>{user.displayname}</strong> {notification.type}
@@ -204,7 +205,7 @@ function Notif() {
                     <div className="notif" key={notification.id}>
                       <span className="notif-date">{moment(notification.createdAt).fromNow()}</span>
                       <div className="notif-user">
-                        <img className="notif-avatar" src={user.profilePicture} alt={user.username} />
+                        <img className="notif-avatar" src={PF + user.profilePicture} alt={user.username} />
                         <div className="notif-text">
                           <p>
                             <strong>{user.displayname}</strong>
@@ -230,7 +231,7 @@ function Notif() {
                     <div className="notif" key={notification.id}>
                       <span className="notif-date">{moment(notification.createdAt).fromNow()}</span>
                       <div className="notif-user">
-                        <img className="notif-avatar" src={user.profilePicture} alt={user.username} />
+                        <img className="notif-avatar" src={PF + user.profilePicture} alt={user.username} />
                         <div className="notif-text">
                           <p>
                             <strong>{user.displayname}</strong> {notification.type}

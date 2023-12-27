@@ -17,6 +17,7 @@ const Upload = () => {
   const mediaRecorder = useRef(null);
   const [recordingText, setRecordingText] = useState("Recording");
   const [recordingDuration, setRecordingDuration] = useState(0);
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
   const { user } = useContext(AuthContext);
 
@@ -33,37 +34,6 @@ const Upload = () => {
     setFile(null);
   };
 
-  // BASE 64 SYSTEM
-  const convertbase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-
-      fileReader.onload = () => {
-        resolve(fileReader.result);
-      };
-
-      fileReader.onerror = (error) => {
-        reject(error);
-      };
-    });
-  };
-
-  const convertAudio64 = (audio) => {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(audio);
-
-      fileReader.onload = () => {
-        resolve(fileReader.result);
-      };
-
-      fileReader.onerror = (error) => {
-        reject(error);
-      };
-    });
-  };
-
   const handleClick = async (e) => {
     e.preventDefault();
 
@@ -77,13 +47,33 @@ const Upload = () => {
     };
 
     if (file) {
-      const res = await convertbase64(file);
-      newPost.img = res;
+      const data = new FormData();
+      const fileName = Date.now() + file.name;
+      data.append("name", fileName);
+      data.append("file", file);
+      newPost.img = fileName;
+
+      try {
+        await makeAxios.post("/upload", data);
+      } catch (err) {
+        // Handle error
+        console.error("Error uploading file:", err.message);
+      }
     }
 
     if (audio) {
-      const res = await convertAudio64(audio);
-      newPost.file = res;
+      const data = new FormData();
+      const audioName = Date.now() + audio.name;
+      data.append("name", audioName);
+      data.append("file", audio);
+      newPost.file = audioName;
+
+      try {
+        await makeAxios.post("/upload", data);
+      } catch (err) {
+        // Handle error
+        console.error("Error uploading file:", err.message);
+      }
     }
 
     try {
@@ -310,7 +300,7 @@ const Upload = () => {
         )}
       </div>
       <div className="input-post">
-        <textarea type="text" placeholder={"What's in your mind " + user.username + "?"} ref={desc} onKeyDown={handleEnterKey} />
+        <textarea style={{ fontFamily: "Inter", fontSize: "18px" }} type="text" placeholder={"What's in your mind " + user.username + "?"} ref={desc} onKeyDown={handleEnterKey} />
       </div>
       <div className="button-upload">
         <div className="uploadItem-row">

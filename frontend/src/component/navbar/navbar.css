@@ -2,7 +2,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
+  right: 0;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -14,7 +14,7 @@
   z-index: 400;
 }
 
-.tos-link-navbar{
+.tos-link-navbar {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -37,10 +37,10 @@
 /*buat search*/
 .navbar .search-container {
   width: 265px;
-  margin-top: 15px;
-  margin-bottom: 20px; 
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
-.navbar .searchbar-button{ 
+.navbar .searchbar-button {
   color: black;
 }
 
@@ -91,12 +91,13 @@
   width: 50px;
   height: 50px;
   border-radius: 10px;
+  object-fit: cover;
 }
 .hidden-link {
   display: none;
 }
- 
-.popup-navbar{
+
+.popup-navbar {
   position: absolute;
   top: 65px;
   right: 25px;
@@ -108,57 +109,57 @@
   background-color: white;
   color: gray;
 }
-.profile-navbar{
+.profile-navbar {
   width: 150px;
-  display: flex; 
-  gap: 10px; 
-  text-decoration: none; 
+  display: flex;
+  gap: 10px;
+  text-decoration: none;
 }
-.profile-navbar button{
+.profile-navbar button {
   display: flex;
   align-items: center;
   margin-left: 3px;
   gap: 5px;
   background-color: transparent;
-  color: #8E8E8E;
+  color: #8e8e8e;
   font-family: "Inter";
   font-weight: bold;
   font-size: 14px;
 }
-.navbar-mode{
+.navbar-mode {
   display: flex;
   flex-direction: row;
-  align-items: center; 
+  align-items: center;
   margin-left: 3px;
-  padding-left: 7px; 
+  padding-left: 7px;
 }
-.navbar-mode h3{
+.navbar-mode h3 {
   flex: 1;
-  color: #8E8E8E;
+  color: #8e8e8e;
   font-family: "Inter";
   font-weight: bold;
   font-size: 14px;
 }
 .switch-navbar {
-    position: relative;
-    display: inline-block;
-    width: 40px;
-    height: 24px;
-    margin-left: auto;
-    margin-right: 10px;
-  }
-  .switch-navbar input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
-.navbar-signout{
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 24px;
+  margin-left: auto;
+  margin-right: 10px;
+}
+.switch-navbar input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.navbar-signout {
   width: 150px;
-  display: flex; 
-  gap: 10px; 
+  display: flex;
+  gap: 10px;
   text-decoration: none;
 }
-.navbar-signout button{
+.navbar-signout button {
   display: flex;
   align-items: center;
   margin-left: 3px;

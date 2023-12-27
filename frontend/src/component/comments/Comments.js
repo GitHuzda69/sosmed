@@ -18,6 +18,7 @@ const Comments = ({ comment, friends }) => {
   const [editedDescComment, setEditedDescComment] = useState(comment.desc);
   const [editedImgComment, setEditedImgComment] = useState(null);
   const [isDescCommentEmpty, setIsDescCommentEmpty] = useState(false);
+  const PF = process.env.REACT_APP_PUBLIC_APP;
 
   useEffect(() => {
     if (comment.userId) {
@@ -35,20 +36,17 @@ const Comments = ({ comment, friends }) => {
     }
   }, [comment.userId]);
 
-  // BASE 64 SYSTEM
-  const convertbase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-
-      fileReader.onload = () => {
-        resolve(fileReader.result);
-      };
-
-      fileReader.onerror = (error) => {
-        reject(error);
-      };
-    });
+  const upload = async (file) => {
+    try {
+      const formData = new FormData();
+      const fileName = Date.now() + file.name;
+      formData.append("name", fileName);
+      formData.append("file", file);
+      await makeRequest("upload", "POST", formData);
+      return fileName;
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const handleDelete = async () => {
@@ -75,7 +73,7 @@ const Comments = ({ comment, friends }) => {
     const editedComment = {
       ...comment,
       desc: editedDescComment,
-      img: editedImgComment ? await convertbase64(editedImgComment) : comment.img,
+      img: editedImgComment ? await upload(editedImgComment) : comment.img,
     };
 
     try {
@@ -144,7 +142,7 @@ const Comments = ({ comment, friends }) => {
     <div className="comments">
       <div className="comment" key={comment.id}>
         <div className="comment-info">
-          <img className="comments-pic" src={user && user.profilePicture ? user.profilePicture : defaultprofile} alt={user.displayname} />
+          <img className="comments-pic" src={user && user.profilePicture ? PF + user.profilePicture : defaultprofile} alt={user.displayname} />
           <span>{user && user.displayname}</span>
           <h3>{moment(comment.createdAt).fromNow()}</h3>
           {commentEditOpen && (
@@ -264,7 +262,7 @@ const Comments = ({ comment, friends }) => {
           <div className="img-comments-container">
             {comment.img && (
               <button className="img-button-comments" onClick={() => openPopup(`/data/${editedImgComment || comment.img}`)}>
-                <img className="comments-image" src={comment.img} alt="comment-img" />
+                <img className="comments-image" src={PF + comment.img} alt="comment-img" />
               </button>
             )}
           </div>

@@ -5,11 +5,21 @@ import moment from "moment";
 
 import defaultprofile from "../../assets/profile/default_avatar.png";
 import { makeRequest } from "../../fetch";
+import { io } from "socket.io-client";
 
 const RightbarProfile = ({ handleFollow, handleMessage, currentUser }) => {
   const [user, setUser] = useState();
   const username = useParams().username;
   const [friends, setFriends] = useState();
+  const [onlineUser, setOnlineUser] = useState();
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+
+  const socket = io("http://localhost:8900");
+  useEffect(() => {
+    socket?.on("getUsers", (users) => {
+      setOnlineUser(currentUser.followings.filter((f) => users.some((u) => u.userId === f)));
+    });
+  }, [currentUser]);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -73,8 +83,8 @@ const RightbarProfile = ({ handleFollow, handleMessage, currentUser }) => {
                   }}
                 >
                   <div className="rightBarUserInfoProfile">
-                    <img className="rightBarImgProfile" src={friend.profilePicture ? friend.profilePicture : defaultprofile} alt="" />
-                    <div className={`statusDot ${"grayDot"}`} />
+                    <img className="rightBarImgProfile" src={friend.profilePicture ? PF + friend.profilePicture : defaultprofile} alt="" />
+                    {onlineUser && onlineUser.includes(friend._id) ? <div className={`statusDot-rightbar ${"greenDot-rightbar"}`} /> : <div className={`statusDot-rightbar ${"grayDot-rightbar"}`} />}
                   </div>
                   <div className="rightBarNameProfile">
                     <span>{friend.displayname}</span>
