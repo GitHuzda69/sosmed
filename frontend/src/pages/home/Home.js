@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router";
 import Sidebar from "../../component/Leftbar/Leftbar.js";
 import SearchBar from "../../component/search/Search";
 import Settings from "../../component/Settings/Settings.js";
@@ -18,6 +19,8 @@ function Home() {
   const [logoutOpen, setLogoutOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isShowRightBar, setIsShowRightBar] = useState(true);
+  const [isUploadVisible, setIsUploadVisible] = useState(false);
+  const location = useLocation();
 
   const isHomePage = true;
 
@@ -61,6 +64,16 @@ function Home() {
     }
   }, []);
 
+  const toggleUpload = () => {
+    setIsUploadVisible(!isUploadVisible);
+  };
+  useEffect(() => {
+    // Check for the callback function and update the state accordingly
+    if (location.state && location.state.updateUploadVisibility !== undefined) {
+      setIsUploadVisible(location.state.updateUploadVisibility);
+    }
+  }, [location.state]);
+
   return (
     <>
       <div className={isDarkMode ? "dark-mode" : "app"}>
@@ -77,7 +90,7 @@ function Home() {
             </div>
           )}
           <div className="home-content">
-            <Upload />
+            {!isShowRightBar ? isUploadVisible && <Upload /> : <Upload />}
             <Posts isHome={true} />
           </div>
           {isShowRightBar && (
@@ -88,7 +101,15 @@ function Home() {
           )}
         </div>
         <div className="leftbar">
-          <Sidebar isDarkMode={isDarkMode} toggleSettings={toggleSettings} toggleLogout={toggleLogout} isHomePage={isHomePage} isShowRightBar={isShowRightBar} setIsShowRightBar={setIsShowRightBar} />
+          <Sidebar
+            isDarkMode={isDarkMode}
+            toggleUpload={toggleUpload}
+            toggleSettings={toggleSettings}
+            toggleLogout={toggleLogout}
+            isHomePage={isHomePage}
+            isShowRightBar={isShowRightBar}
+            setIsShowRightBar={setIsShowRightBar}
+          />
         </div>
       </div>
       {settingOpen && (

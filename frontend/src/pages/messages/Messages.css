@@ -147,8 +147,8 @@
 .chat-input {
   position: fixed;
   bottom: 0;
-  left: 380px;
-  right: 0;
+  left: 390px;
+  right: 20px;
   background-color: white;
   display: flex;
   justify-content: center;

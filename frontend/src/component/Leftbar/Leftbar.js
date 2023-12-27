@@ -1,14 +1,27 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./Leftbar.css";
 import { Icon } from "@iconify/react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AuthContext from "../../context/authContext";
 
 import logo from "../../assets/Logo_BNW.jpg";
 import logopng from "../../assets/Logo_BNW.png";
 import logopnghitam from "../../assets/Logo_BNW_black.png";
 
-const Sidebar = ({ toggleSettings, toggleLogout, isHomePage, isMessagesPage, isNotifPage, isConnectPage, isProfilePage, isShowRightBar, setIsShowRightBar, isDarkMode }) => {
+const Sidebar = ({
+  toggleSettings,
+  toggleLogout,
+  isHomePage,
+  isMessagesPage,
+  isNotifPage,
+  isConnectPage,
+  isProfilePage,
+  isSettingsPage,
+  isShowRightBar,
+  setIsShowRightBar,
+  isDarkMode,
+  toggleUpload,
+}) => {
   const { user } = useContext(AuthContext);
 
   useEffect(() => {
@@ -73,9 +86,15 @@ const Sidebar = ({ toggleSettings, toggleLogout, isHomePage, isMessagesPage, isN
             </button>
             <span className={isConnectPage ? "nav-bold-text" : "nav-text"}>Connect</span>
           </Link>
-          <button onClick={toggleSettings} className="nav-button">
-            <Icon icon="solar:settings-outline" width="35" height="35" />
-            <span className={isNotifPage ? " " : "nav-text"}>Settings</span>
+          <Link to="/settings" className="nav-link">
+            <button onClick={toggleSettings} className="nav-button">
+              {isSettingsPage ? <Icon icon="solar:settings-bold" width="35" height="35" /> : <Icon icon="solar:settings-outline" width="35" height="35" />}
+              <span className={isSettingsPage ? "nav-bold-text" : "nav-text"}>Settings</span>
+            </button>
+          </Link>
+          <button className="nav-button-post" onClick={toggleUpload}>
+            <Icon icon="gridicons:create" width="35" height="35" />
+            <span className="">Create Post</span>
           </button>
         </div>
       )}

@@ -8,6 +8,7 @@ import Home from "./pages/home/Home.js";
 import Message from "./pages/messages/Messages.js";
 import Friends from "./component/friendlist/FriendsList.js";
 import Profile from "./pages/profile/Profile.js";
+import SettingsPages from "./component/Settings/SettingsPages.js";
 import Fyp from "./pages/Fyp/Fyp.js";
 import Newest from "./pages/newest/newest.js";
 import Result from "./pages/Result/Result.js";
@@ -57,6 +58,7 @@ function App() {
         <Route exact path="/newest" element={user ? <Newest /> : <Login />} />
         <Route exact path="/notif" element={user ? <Notif /> : <Login />} />
         <Route exact path="/connect" element={user ? <Connect /> : <Login />} />
+        <Route exact path="/settings" element={user ? <SettingsPages /> : <Login />} />
         <Route exact path="/signup" element={<Signup />} />
         <Route exact path="/login" element={user ? <Home /> : <Login />} />
         <Route exact path="/google" element={user ? <Home /> : <Google />} />

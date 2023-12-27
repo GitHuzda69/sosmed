@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import "./notif.css";
 import Sidebar from "../../component/Leftbar/Leftbar";
 import Rightbar from "../../component/rightbar/Rightbar";
@@ -24,6 +25,9 @@ function Notif() {
   const [user, setUser] = useState([]);
   const { user: currentUser } = useContext(AuthContext);
   const [isShowRightBar, setIsShowRightBar] = useState(true);
+  const [isUploadVisible, setIsUploadVisible] = useState(false);
+  const navigate = useNavigate();
+
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
   const isNotifPage = true;
@@ -145,6 +149,14 @@ function Notif() {
     }
   }, []);
 
+  const toggleUpload = () => {
+    navigate("/", { state: { updateUploadVisibility: !isUploadVisible } });
+    setIsUploadVisible(!isUploadVisible);
+  };
+  useEffect(() => {
+    setIsUploadVisible(!isUploadVisible);
+  }, [navigate, isUploadVisible]);
+
   return (
     <div className={isDarkMode ? "dark-mode" : "app"}>
       <div className={isShowRightBar ? "main-notif" : "main-notif-norightbar"}>
@@ -257,7 +269,15 @@ function Notif() {
           <Navbar isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} toggleLogout={toggleLogout} />
         </div>
       )}
-      <Sidebar isDarkMode={isDarkMode} toggleSettings={toggleSettings} toggleLogout={toggleLogout} isNotifPage={isNotifPage} isShowRightBar={isShowRightBar} setIsShowRightBar={setIsShowRightBar} />
+      <Sidebar
+        isDarkMode={isDarkMode}
+        toggleUpload={toggleUpload}
+        toggleSettings={toggleSettings}
+        toggleLogout={toggleLogout}
+        isNotifPage={isNotifPage}
+        isShowRightBar={isShowRightBar}
+        setIsShowRightBar={setIsShowRightBar}
+      />
       {settingOpen && (
         <>
           <div className="settings-overlay" />

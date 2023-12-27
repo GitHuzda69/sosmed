@@ -9,7 +9,7 @@ import { AuthContext } from "../../context/authContext.js";
 import logo from "../../assets/Logo_BNW.jpg";
 import defaultprofile from "../../assets/profile/default_avatar.png";
 
-const Navbar = ({ isHomePage, isDarkMode, toggleDarkMode, toggleLogout }) => {
+const Navbar = ({ isHomePage, isFypPage, isNewestPage, isDarkMode, toggleDarkMode, toggleLogout }) => {
   const { user } = useContext(AuthContext);
   const [isPopupNavbar, setIsPopupNavbar] = useState(false);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -29,18 +29,18 @@ const Navbar = ({ isHomePage, isDarkMode, toggleDarkMode, toggleLogout }) => {
         <span className="navbar-name">S M D</span>
       </Link>
       <SearchBar />
-      {isHomePage && (
+      {(isHomePage || isFypPage || isNewestPage) && (
         <>
           <Link to="/fyp" className="navbar-fyp">
-            <Icon icon="fluent:sparkle-48-regular" width={30} height={30} />
+            {isFypPage ? <Icon icon="fluent:sparkle-48-filled" width={30} height={30} /> : <Icon icon="fluent:sparkle-48-regular" width={30} height={30} />}
             <button>For you</button>
           </Link>
           <Link to="/" className="navbar-home">
-            <Icon icon="mingcute:user-follow-2-line" width={30} height={30} />
+            {isHomePage ? <Icon icon="mingcute:user-follow-2-fill" width={30} height={30} /> : <Icon icon="mingcute:user-follow-2-line" width={30} height={30} />}
             <button>Following</button>
           </Link>
           <Link to="/newest" className="navbar-newest">
-            <Icon icon="solar:graph-new-up-bold" width={30} height={30} />
+            {isNewestPage ? <Icon icon="solar:graph-new-up-bold" width={30} height={30} /> : <Icon icon="solar:graph-new-up-outline" width={30} height={30} />}
             <button>Newest</button>
           </Link>
         </>

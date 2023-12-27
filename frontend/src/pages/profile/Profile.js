@@ -33,6 +33,8 @@ const Profile = () => {
   const [showPopupFollow, setShowPopupFollow] = useState(false);
   const [showUnfollowConfirmation, setShowUnfollowConfirmation] = useState(false);
   const [isShowRightBar, setIsShowRightBar] = useState(true);
+  const [isUploadVisible, setIsUploadVisible] = useState(false);
+  const navigate = useNavigate();
 
   const [followed, setFollowed] = useState(currentUser.followings.includes(user?._id));
 
@@ -75,8 +77,6 @@ const Profile = () => {
       console.log(err);
     }
   };
-
-  const navigate = useNavigate();
 
   const handleMessage = async () => {
     try {
@@ -145,6 +145,13 @@ const Profile = () => {
   const handleCancelUnfollow = () => {
     setShowUnfollowConfirmation(false);
   };
+  const toggleUpload = () => {
+    navigate("/", { state: { updateUploadVisibility: !isUploadVisible } });
+    setIsUploadVisible(!isUploadVisible);
+  };
+  useEffect(() => {
+    setIsUploadVisible(!isUploadVisible);
+  }, [navigate, isUploadVisible]);
 
   return (
     <div className={isDarkMode ? "dark-mode" : "app"}>
@@ -319,6 +326,7 @@ const Profile = () => {
       </div>
       <Sidebar
         isDarkMode={isDarkMode}
+        toggleUpload={toggleUpload}
         toggleSettings={toggleSettings}
         toggleLogout={toggleLogout}
         isProfilePage={isProfilePage}

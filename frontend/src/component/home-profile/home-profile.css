@@ -39,6 +39,7 @@
   margin-left: 1%;
   border-radius: 10px;
   border: 1px black solid;
+  object-fit: cover;
 }
 .profile-homeProfile:hover {
   filter: brightness(0.7);

@@ -24,6 +24,7 @@ const Fyp = () => {
   const [openPostOption, setOpenPostOption] = useState(null);
   const [friends, setFriends] = useState([]);
   const [isShowRightBar, setIsShowRightBar] = useState(true);
+  const isFypPage = true;
   const isHomePage = true;
 
   useEffect(() => {
@@ -104,7 +105,7 @@ const Fyp = () => {
         <div className={`main-content ${!isShowRightBar ? "no-right-bar-fyp" : ""}`}>
           {!isShowRightBar && (
             <div className="fyp-navbar">
-              <Navbar isHomePage={isHomePage} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} toggleLogout={toggleLogout} />
+              <Navbar isFypPage={isFypPage} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} toggleLogout={toggleLogout} />
             </div>
           )}
           {isShowRightBar && (
