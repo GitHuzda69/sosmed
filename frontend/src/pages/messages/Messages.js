@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Messages.css";
 import Sidebar from "../../component/Leftbar/Leftbar";
 import Settings from "../../component/Settings/Settings";
@@ -27,6 +28,8 @@ function Message() {
   const [chatContainerHeight] = useState(0);
   const chatContainerRef = useRef(null);
   const [isShowRightBar, setIsShowRightBar] = useState(true);
+  const [isUploadVisible, setIsUploadVisible] = useState(false);
+  const navigate = useNavigate();
 
   const toggleSettings = () => {
     setSettingOpen(!settingOpen);
@@ -187,6 +190,14 @@ function Message() {
     }
   }, []);
 
+  const toggleUpload = () => {
+    navigate("/", { state: { updateUploadVisibility: !isUploadVisible } });
+    setIsUploadVisible(!isUploadVisible);
+  };
+  useEffect(() => {
+    setIsUploadVisible(!isUploadVisible);
+  }, [navigate, isUploadVisible]);
+
   return (
     <div className={isDarkMode ? "dark-mode" : "app"}>
       <div className={isShowRightBar ? "main-messages" : "main-messages-norightbar"} style={{ height: chatHeight }}>
@@ -266,6 +277,7 @@ function Message() {
         {!isShowRightBar && <Navbar isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} toggleLogout={toggleLogout} />}
         <Sidebar
           isDarkMode={isDarkMode}
+          toggleUpload={toggleUpload}
           toggleSettings={toggleSettings}
           toggleLogout={toggleLogout}
           isMessagesPage={isMessagesPage}

@@ -132,6 +132,26 @@
   background-color: transparent;
   color: white;
 }
+.dark-mode .settings-pages{
+  margin-top: 90px;
+  margin-left: 425px;
+  background-color: #1e1e1e;
+  color: white;
+}
+.dark-mode .settingspage-title{
+  background-color: #1e1e1e;
+  border-bottom: 2px #afafaf solid;
+}
+.dark-mode .button-link-settings{
+  color: white;
+}
+.dark-mode .link-settings{
+  color: white;
+}
+.dark-mode .logout-settings-container button{
+  background-color: #5c5c5c;
+  border-radius: 10px;
+}
 
 /*buat post*/
 .dark-mode .post {
@@ -294,6 +314,14 @@
 /*buat home*/
 .dark-mode .home {
 }
+.dark-mode .main-content{
+  margin-top: -10px;
+  margin-left: 70px;
+}
+.dark-mode .main-content.no-right-bar{
+  margin-top: 77px;
+  margin-left: 415px;
+}
 
 /*buat homeprofile*/
 .dark-mode .homeProfile {
@@ -328,10 +356,12 @@
 }
 .dark-mode .topbar-fyp .link-following {
   color: white;
-}
+} 
 
 /*buat notif*/
 .dark-mode .main-notif {
+  margin-top: 12px;
+  margin-left: 80px;
   background-color: #1e1e1e;
 }
 .dark-mode .main-notif-norightbar {
@@ -362,12 +392,20 @@
 .dark-mode .notif-date {
   color: white;
 }
+.dark-mode .main-notif-norightbar {
+  margin-top: 90px;
+  margin-left: 425px;
+}
 
 /*buat messages*/
 .dark-mode .main-messages {
+  margin-top: 11px;
+  margin-left: 80px;
   background-color: #2f2f2f;
 }
 .dark-mode .main-messages-norightbar {
+  margin-top: 90px;
+  margin-left: 425px;
   background-color: #2f2f2f;
 }
 .dark-mode .input-search-friend {
@@ -479,9 +517,13 @@
 
 /*buat connect*/
 .dark-mode .connect-container {
+  margin-top: 12px;
+  margin-left: 80px;
   background-color: #1e1e1e;
 }
 .dark-mode .connect-container-norightbar {
+  margin-top: 90px;
+  margin-left: 425px;
   background-color: #1e1e1e;
 }
 .dark-mode .connect-container h1 {
@@ -516,6 +558,7 @@
 
 .dark-mode .profile-main {
   background-color: rgb(58, 58, 58);
+  padding-top: 20px;
 }
 .dark-mode .profil-user {
   background-color: #1e1e1e;
@@ -548,6 +591,10 @@
 }
 .dark-mode .following-profile-switch-button:hover {
   background-color: #5c5c5c;
+}
+.dark-mode .profil-norightbar{
+  margin-top: 83px;
+  margin-left: 425px;
 }
 .dark-mode .profil-user-norightbar {
   background-color: #1e1e1e;

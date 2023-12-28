@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "./connect.css";
 import { Icon } from "@iconify/react";
 import AuthContext from "../../context/authContext";
@@ -16,6 +17,9 @@ const Connect = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const { user: currentUser } = useContext(AuthContext);
   const [isShowRightBar, setIsShowRightBar] = useState(true);
+  const [isUploadVisible, setIsUploadVisible] = useState(false);
+  const navigate = useNavigate();
+
   const isConnectPage = true;
 
   const handleFacebook = async () => {
@@ -77,6 +81,14 @@ const Connect = () => {
     }
   }, []);
 
+  const toggleUpload = () => {
+    navigate("/", { state: { updateUploadVisibility: !isUploadVisible } });
+    setIsUploadVisible(!isUploadVisible);
+  };
+  useEffect(() => {
+    setIsUploadVisible(!isUploadVisible);
+  }, [navigate, isUploadVisible]);
+
   return (
     <div className={isDarkMode ? "dark-mode" : "app"}>
       <div className={isShowRightBar ? "connect-container" : "connect-container-norightbar"}>
@@ -132,6 +144,7 @@ const Connect = () => {
         )}
         <Sidebar
           isDarkMode={isDarkMode}
+          toggleUpload={toggleUpload}
           toggleSettings={toggleSettings}
           toggleLogout={toggleLogout}
           isConnectPage={isConnectPage}

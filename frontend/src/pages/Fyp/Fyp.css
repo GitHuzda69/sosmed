@@ -24,19 +24,20 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;  
-  max-width: calc(100% - 460px);  
-  margin-left: 60px; 
+  max-width: calc(100% - 460px);   
+  margin-left: 70px;
   padding: 0; 
   }
   .main-content.no-right-bar-fyp {
-    margin-top: 83px;
-    margin-left: 415px;
+    margin-top: 80px;
+    margin-left: 425px;
     max-width: calc(100% - 550px);
   }
   
   .home-content-fyp{
       width: 100%;
       flex-grow: 1;
+      margin-top: 3px;
   }
   .home-content-fyp .posts{
   }

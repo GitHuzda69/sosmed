@@ -26,6 +26,7 @@ const Newest = () => {
   const [isShowRightBar, setIsShowRightBar] = useState(true);
 
   const isHomePage = true;
+  const isNewestPage = true;
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -105,7 +106,7 @@ const Newest = () => {
         <div className={`main-content ${!isShowRightBar ? "no-right-bar-newest" : ""}`}>
           {!isShowRightBar && (
             <div className="newest-navbar">
-              <Navbar isHomePage={isHomePage} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} toggleLogout={toggleLogout} />
+              <Navbar isNewestPage={isNewestPage} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} toggleLogout={toggleLogout} />
             </div>
           )}
           {isShowRightBar && (
