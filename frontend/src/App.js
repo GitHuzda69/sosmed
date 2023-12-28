@@ -9,6 +9,7 @@ import Message from "./pages/messages/Messages.js";
 import Friends from "./component/friendlist/FriendsList.js";
 import Profile from "./pages/profile/Profile.js";
 import SettingsPages from "./component/Settings/SettingsPages.js";
+import PostSolo from "./component/PostSolo/PostSolo.js";
 import Fyp from "./pages/Fyp/Fyp.js";
 import Newest from "./pages/newest/newest.js";
 import Result from "./pages/Result/Result.js";
@@ -51,6 +52,7 @@ function App() {
         <Route exact path="/messages" element={user ? <Message /> : <Login />} />
         <Route path="/search/:keyword" element={user ? <Result /> : <Login />} />
         <Route path="/profile/:username" element={<Profile />} />
+        <Route path="/posts/:postid" element={<PostSolo />} />
         <Route path="/fyp/profile/:username" element={<Profile />} />
         <Route path="/login/profile/:username" element={<Profile />} />
         <Route path="/friend/:username" element={user ? <Friends /> : <Login />} />

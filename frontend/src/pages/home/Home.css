@@ -71,7 +71,7 @@ html::-webkit-scrollbar-track {
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
-  max-width: calc(100% - 371px); 
+  max-width: calc(100% - 371px);
   margin-left: 80px;
   padding: 0;
 }

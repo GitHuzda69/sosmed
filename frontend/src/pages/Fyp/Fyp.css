@@ -1,69 +1,69 @@
-.home{
-    display: grid;
-    grid-template-columns: auto 1fr; 
-    grid-gap: 5px;
-  }
-  
-.topbar-fyp{
+.home {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-gap: 5px;
+}
+
+.topbar-fyp {
   width: 100%;
   display: flex;
   flex-direction: row;
   gap: 10px;
-  margin-top: 20px; 
-  margin-left: -10px;  
+  margin-top: 20px;
+  margin-left: -10px;
 }
-.topbar-fyp .link-fyp{ 
+.topbar-fyp .link-fyp {
   border-bottom: 3px black solid;
 }
-.topbar-fyp .link-following{  
+.topbar-fyp .link-following {
 }
-  
+
 .main-content-fyp {
-  flex: 1; 
+  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: flex-start;  
-  max-width: calc(100% - 460px);   
+  align-items: flex-start;
+  max-width: calc(100% - 460px);
   margin-left: 70px;
-  padding: 0; 
-  }
-  .main-content.no-right-bar-fyp {
-    margin-top: 80px;
-    margin-left: 425px;
-    max-width: calc(100% - 550px);
-  }
-  
-  .home-content-fyp{
-      width: 100%;
-      flex-grow: 1;
-      margin-top: 3px;
-  }
-  .home-content-fyp .posts{
-  }
-  .home-content-fyp .post{
-      width: 98%; 
-  }
-  .home-content .upload{ 
-  }
-   
-  .side-content h5{
-    position: fixed; 
-    text-align: center;
-    width: 230px;
-    right: 60px; 
-    bottom: 0px;
-    font-size: 12px;
-    font-family: "Inter" ;
-    font-weight: bold;
-  }
+  padding: 0;
+}
+.main-content.no-right-bar-fyp {
+  margin-top: 70px;
+  margin-left: 425px;
+  max-width: calc(100% - 550px);
+}
 
-  /*buat navbar*/
-.fyp-navbar .navbar-fyp{
+.home-content-fyp {
+  width: 100%;
+  flex-grow: 1;
+  margin-top: 3px;
+}
+.home-content-fyp .posts {
+}
+.home-content-fyp .post {
+  width: 98%;
+}
+.home-content .upload {
+}
+
+.side-content h5 {
+  position: fixed;
+  text-align: center;
+  width: 230px;
+  right: 60px;
+  bottom: 0px;
+  font-size: 12px;
+  font-family: "Inter";
+  font-weight: bold;
+}
+
+/*buat navbar*/
+.fyp-navbar .navbar-fyp {
   padding-bottom: 5px;
   border-bottom: 2px white solid;
   color: white;
 }
-.fyp-navbar .navbar-fyp button{
+.fyp-navbar .navbar-fyp button {
   color: white;
 }

@@ -28,6 +28,22 @@ router.get("/:postId", async (req, res) => {
   }
 });
 
+//get a 1 post
+router.get("/posts/:postId", async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.postId);
+
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+
+    res.status(200).json(post);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
 //get timeline posts
 router.get("/timeline/:userId", async (req, res) => {
   try {

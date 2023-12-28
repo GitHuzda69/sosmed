@@ -18,7 +18,7 @@ const Comments = ({ comment, friends }) => {
   const [editedDescComment, setEditedDescComment] = useState(comment.desc);
   const [editedImgComment, setEditedImgComment] = useState(null);
   const [isDescCommentEmpty, setIsDescCommentEmpty] = useState(false);
-  const PF = process.env.REACT_APP_PUBLIC_APP;
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
   useEffect(() => {
     if (comment.userId) {
@@ -28,7 +28,6 @@ const Comments = ({ comment, friends }) => {
           const res = await makeRequest(userUrl);
           setUser(res);
         } catch (error) {
-          // Handle error
           console.error("Error fetching user:", error.message);
         }
       };
@@ -135,14 +134,13 @@ const Comments = ({ comment, friends }) => {
       console.log(err);
     }
   };
-
   const following = friends ? friends.some((friend) => friend._id === comment.userId) : false;
 
   return (
     <div className="comments">
       <div className="comment" key={comment.id}>
         <div className="comment-info">
-          <img className="comments-pic" src={user && user.profilePicture ? PF + user.profilePicture : defaultprofile} alt={user.displayname} />
+          <img className="comments-pic" src={user && user.profilePicture ? PF + user.profilePicture : defaultprofile} alt={user && user.username} />
           <span>{user && user.displayname}</span>
           <h3>{moment(comment.createdAt).fromNow()}</h3>
           {commentEditOpen && (
@@ -251,7 +249,7 @@ const Comments = ({ comment, friends }) => {
           <button
             className="button-comment-desc"
             onClick={() => {
-              setCommentEditOpen(false);
+              setCommentEditOpen(true);
             }}
           >
             <Icon icon="tabler:dots" width={20} height={20} />
@@ -260,8 +258,8 @@ const Comments = ({ comment, friends }) => {
         <div className="comments-content">
           {comment.desc && <h4>{editedDescComment}</h4>}
           <div className="img-comments-container">
-            {comment.img && (
-              <button className="img-button-comments" onClick={() => openPopup(`/data/${editedImgComment || comment.img}`)}>
+            {comment?.img && (
+              <button className="img-button-comments" onClick={() => openPopup(`/data/${editedImgComment || PF + comment.img}`)}>
                 <img className="comments-image" src={PF + comment.img} alt="comment-img" />
               </button>
             )}

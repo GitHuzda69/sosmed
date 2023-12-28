@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Sidebar from "../../component/Leftbar/Leftbar.js";
 import Rightbar from "../../component/rightbar/Rightbar.js";
 import SearchBar from "../../component/search/Search";
@@ -24,8 +25,11 @@ const Fyp = () => {
   const [openPostOption, setOpenPostOption] = useState(null);
   const [friends, setFriends] = useState([]);
   const [isShowRightBar, setIsShowRightBar] = useState(true);
+  const [isUploadVisible, setIsUploadVisible] = useState(false);
   const isFypPage = true;
   const isHomePage = true;
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -96,11 +100,27 @@ const Fyp = () => {
     }
   }, []);
 
+  const toggleUpload = () => {
+    navigate("/", { state: { updateUploadVisibility: !isUploadVisible } });
+    setIsUploadVisible(!isUploadVisible);
+  };
+  useEffect(() => {
+    setIsUploadVisible(!isUploadVisible);
+  }, [navigate, isUploadVisible]);
+
   return (
     <>
       <div className={isDarkMode ? "dark-mode" : "app"}>
         <div className="leftbar-fyp">
-          <Sidebar isDarkMode={isDarkMode} toggleSettings={toggleSettings} toggleLogout={toggleLogout} isHomePage={isHomePage} isShowRightBar={isShowRightBar} setIsShowRightBar={setIsShowRightBar} />
+          <Sidebar
+            isDarkMode={isDarkMode}
+            toggleUpload={toggleUpload}
+            toggleSettings={toggleSettings}
+            toggleLogout={toggleLogout}
+            isHomePage={isHomePage}
+            isShowRightBar={isShowRightBar}
+            setIsShowRightBar={setIsShowRightBar}
+          />
         </div>
         <div className={`main-content ${!isShowRightBar ? "no-right-bar-fyp" : ""}`}>
           {!isShowRightBar && (
@@ -115,7 +135,6 @@ const Fyp = () => {
             </div>
           )}
           <div className="home-content-fyp">
-            <Upload />
             <div className={`posts`}>
               {posts.map(
                 (p) =>

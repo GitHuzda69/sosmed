@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Sidebar from "../../component/Leftbar/Leftbar.js";
 import Rightbar from "../../component/rightbar/Rightbar.js";
 import SearchBar from "../../component/search/Search.js";
@@ -9,6 +10,7 @@ import "../../component/Logout/Logout.css";
 import Post from "../../component/post/Post.js";
 import Upload from "../../component/Upload/Upload.js";
 import Logout from "../../component/Logout/Logout.js";
+import Navbar from "../../component/navbar/navbar.js";
 import { makeRequest } from "../../fetch.js";
 import FypSwitch from "../../component/fyp-button/fyp-switch.js";
 import HomeProfile from "../../component/home-profile/home-profile.js";
@@ -21,13 +23,14 @@ const Result = () => {
   const [logoutOpen, setLogoutOpen] = useState(false);
   const { user: currentUser } = useContext(AuthContext);
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [setShowSideContent] = useState(true);
   const [mainContentMaxWidth, setMainContentMaxWidth] = useState("100%");
   const [openPostOption, setOpenPostOption] = useState(null);
   const [friends, setFriends] = useState([]);
   const [isShowRightBar, setIsShowRightBar] = useState(true);
+  const [isUploadVisible, setIsUploadVisible] = useState(false);
   const keyword = useParams().keyword;
   const isHomePage = true;
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -45,22 +48,7 @@ const Result = () => {
     const storedDarkModeStatus = localStorage.getItem("isDarkMode") === "true";
     setIsDarkMode(storedDarkModeStatus);
     setDarkMode(storedDarkModeStatus);
-
-    const handleZoomChange = () => {
-      if (window.devicePixelRatio >= 1.5) {
-        setShowSideContent(false);
-        setMainContentMaxWidth("calc(100% - 340px)");
-      } else {
-        setShowSideContent(true);
-        setMainContentMaxWidth("calc(100% - 340px)");
-      }
-    };
-    window.addEventListener("resize", handleZoomChange);
-    handleZoomChange();
-    return () => {
-      window.removeEventListener("resize", handleZoomChange);
-    };
-  }, [setShowSideContent]);
+  });
 
   useEffect(() => {
     if (currentUser && currentUser._id) {
@@ -105,39 +93,55 @@ const Result = () => {
   const handleClosePostOption = () => {
     setOpenPostOption(null);
   };
+  const toggleUpload = () => {
+    navigate("/", { state: { updateUploadVisibility: !isUploadVisible } });
+    setIsUploadVisible(!isUploadVisible);
+  };
 
   return (
     <>
       <div className={isDarkMode ? "dark-mode" : "app"}>
-        <div className="home">
-          <div className="leftbar-fyp">
-            <Sidebar isDarkMode={isDarkMode} toggleSettings={toggleSettings} toggleLogout={toggleLogout} isHomePage={isHomePage} setIsShowRightBar={setIsShowRightBar} />
+        <div className="leftbar-fyp">
+          <Sidebar
+            isDarkMode={isDarkMode}
+            toggleUpload={toggleUpload}
+            toggleSettings={toggleSettings}
+            toggleLogout={toggleLogout}
+            isHomePage={isHomePage}
+            isShowRightBar={isShowRightBar}
+            setIsShowRightBar={setIsShowRightBar}
+          />
+        </div>
+        {!isShowRightBar && (
+          <div className="home-navbar">
+            <Navbar isHomePage={isHomePage} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} toggleLogout={toggleLogout} />
           </div>
-          <div className="main-content-fyp" style={{ maxWidth: mainContentMaxWidth }}>
-            <div className="topbar-fyp">
+        )}
+        <div className={`main-content-result ${!isShowRightBar ? "no-right-bar-result" : ""}`} style={{ maxWidth: mainContentMaxWidth }}>
+          {isShowRightBar && (
+            <div className="topbar-result">
               <FypSwitch />
               <SearchBar />
             </div>
-            <div className="home-content-fyp">
-              <Upload />
-              <div className={`posts`}>
-                {posts === "There no result"
-                  ? "There is no result"
-                  : posts.map(
-                      (p) =>
-                        p._id && (
-                          <Post key={p._id} post={p} openPostOption={openPostOption} handleOpenPostOption={handleOpenPostOption} handleClosePostOption={handleClosePostOption} friends={friends} />
-                        )
-                    )}
-              </div>
+          )}
+          <div className={isShowRightBar ? "home-content-result" : "home-content-result-norightbar"}>
+            <div className={`posts-result`}>
+              {posts === "There no result" ? (
+                <div className={isShowRightBar ? "no-result" : "no-result-norightbar"}>There is no result</div>
+              ) : (
+                posts.map(
+                  (p) =>
+                    p._id && <Post key={p._id} post={p} openPostOption={openPostOption} handleOpenPostOption={handleOpenPostOption} handleClosePostOption={handleClosePostOption} friends={friends} />
+                )
+              )}
             </div>
-            {isShowRightBar && (
-              <div className="side-content">
-                <HomeProfile />
-                <Rightbar />
-              </div>
-            )}
           </div>
+          {isShowRightBar && (
+            <div className="side-content">
+              <HomeProfile />
+              <Rightbar />
+            </div>
+          )}
         </div>
       </div>
       {settingOpen && (

@@ -8,6 +8,7 @@ export default function Posts({ username, className, isHome }) {
   const [posts, setPosts] = useState([""]);
   const { user } = useContext(AuthContext);
   const [openPostOption, setOpenPostOption] = useState(null);
+  const [openCommentSection, setOpenCommentSection] = useState(null);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -37,13 +38,31 @@ export default function Posts({ username, className, isHome }) {
     setOpenPostOption(null);
   };
 
+  const handleToggleCommentSection = (postId) => {
+    setOpenCommentSection(openCommentSection === postId ? null : postId);
+    setOpenPostOption(null);
+  };
+
   return (
     <>
       <div className={`posts ${className}`}>
         {!username || username === user.username}
         {posts.length === 0
           ? "There is no any post yet"
-          : posts.map((p) => p._id && <Post key={p._id} post={p} openPostOption={openPostOption} handleOpenPostOption={handleOpenPostOption} handleClosePostOption={handleClosePostOption} />)}
+          : posts.map(
+              (p) =>
+                p._id && (
+                  <Post
+                    key={p._id}
+                    post={p}
+                    openPostOption={openPostOption}
+                    handleOpenPostOption={handleOpenPostOption}
+                    handleClosePostOption={handleClosePostOption}
+                    isCommentOpen={openCommentSection === p._id}
+                    handleToggleCommentSection={handleToggleCommentSection}
+                  />
+                )
+            )}
       </div>
     </>
   );

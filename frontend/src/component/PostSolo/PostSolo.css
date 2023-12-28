@@ -1,0 +1,114 @@
+.post-solo-container {
+  width: 100%;
+  font-family: "Inter";
+  padding-bottom: 20px;
+}
+.post-solo {
+  width: calc(100% - 405px);
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  margin-top: 13px;
+  margin-left: 90px;
+  border-radius: 10px;
+}
+.post-solo-norightbar {
+  width: calc(100% - 580px);
+  margin-top: 93px;
+  margin-left: 435px;
+  padding-bottom: 20px;
+  border-radius: 10px;
+  background-color: white;
+}
+
+.post-nav {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px 10px 0px 0px;
+  background-color: white;
+  border-bottom: 2px #e0e0e0 solid;
+}
+.post-nav button {
+  position: absolute;
+  left: 15px;
+  background-color: transparent;
+}
+.post-nav h2 {
+  margin-top: 15px;
+  font-size: 25px;
+}
+
+.user-solo {
+  display: flex;
+  flex-direction: row;
+  padding-top: 10px;
+  padding-left: 20px;
+  padding-bottom: 10px;
+  background-color: white;
+}
+.user-solo img {
+  width: 60px;
+  height: 60px;
+  border-radius: 15px;
+  object-fit: cover;
+}
+.post-solo-img img {
+  width: 100%;
+  height: 100%;
+  max-width: 900px;
+  max-height: 400px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-top: 5px;
+  margin-left: 0px;
+  margin-right: 15px;
+  margin-bottom: -10px;
+}
+
+.user-solo-info {
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+}
+
+.user-solo-info h3 {
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 5px;
+}
+.user-solo-info h4 {
+  font-size: 15px;
+  font-weight: normal;
+  margin-top: -20px;
+}
+
+.post-solo-content {
+  background-color: white;
+  margin-top: -10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 20px;
+  border-bottom: 2px #e0e0e0 solid;
+}
+.post-solo-caption {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: normal;
+}
+
+.item-solo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 10px;
+  background-color: white;
+}
+
+.commento-solo {
+  margin-left: 10px;
+  margin-right: -10px;
+}

@@ -8,8 +8,7 @@ import moment from "moment";
 import Commento from "../Commento/Commento.js";
 import defaultprofile from "../../assets/profile/default_avatar.png";
 
-const Post = ({ post, key, openPostOption, handleOpenPostOption, handleClosePostOption, friends }) => {
-  const [commentOpen, setCommentOpen] = useState(false);
+const Post = ({ post, key, openPostOption, handleOpenPostOption, handleClosePostOption, friends, isCommentOpen, handleToggleCommentSection }) => {
   const [popupOpen, setPopupOpen] = useState(false);
   const [selectedPostImg, setSelectedPostImg] = useState(null);
   const [postEditOpen, setPostEditOpen] = useState(false);
@@ -18,7 +17,7 @@ const Post = ({ post, key, openPostOption, handleOpenPostOption, handleClosePost
   const [isDescEmpty, setIsDescEmpty] = useState(false);
   const descInputRef = useRef(null);
   const [originalDesc, setOriginalDesc] = useState(post.desc);
-  const [like, setLike] = useState(post.likes && post.likes.length);
+  const [like, setLike] = useState(post.likes ? post.likes.length : 0);
   const [isLiked, setIsLiked] = useState(false);
   const [user, setUser] = useState({});
   const { user: currentUser, dispatch } = useContext(AuthContext);
@@ -211,11 +210,6 @@ const Post = ({ post, key, openPostOption, handleOpenPostOption, handleClosePost
       setIsPlaying(false);
       setSliderValue(0);
     });
-  }
-
-  function setVolume(audioId, volume) {
-    const audio = document.getElementById(audioId);
-    audio.volume = volume / 100;
   }
 
   useEffect(() => {
@@ -423,10 +417,12 @@ const Post = ({ post, key, openPostOption, handleOpenPostOption, handleClosePost
           </div>
         </div>
         <div className="post-content">
-          {post?.desc && <p className="post-desc">{editedDesc}</p>}
+          <Link className="post-link" to={`/posts/${post._id}`}>
+            {post?.desc && <p className="post-desc">{editedDesc}</p>}
+          </Link>
           {post.img && !post.audio && (
             <div className="post-img-container">
-              <button className="img-button-post" onClick={() => openPopup(editedImg || post.img)}>
+              <button className="img-button-post" onClick={() => openPopup(editedImg || PF + post.img)}>
                 <img className="post-img" src={PF + post.img} alt="" />
               </button>
             </div>
@@ -493,11 +489,15 @@ const Post = ({ post, key, openPostOption, handleOpenPostOption, handleClosePost
               </div>
             )}
           </div>
-          <div className="item" onClick={() => setCommentOpen(!commentOpen)}>
+          <div className="item" onClick={() => handleToggleCommentSection(post._id)}>
             <Icon className="icon" icon="majesticons:comment-text-line" width={25} height={25} />
           </div>
         </div>
-        {commentOpen && <Commento postid={post._id} />}
+        {isCommentOpen && (
+          <div className="post-comment">
+            <Commento postid={post._id} />
+          </div>
+        )}
       </div>
       {popupOpen && (
         <div className="popup-overlay-post" onClick={closePopup}>

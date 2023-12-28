@@ -1,61 +1,61 @@
-.comments{
+.comments {
 }
-.write{
+.write {
   position: sticky;
   top: 0px;
   background-color: white;
   z-index: 10;
-  border-bottom: 1px black solid;
+  border-bottom: 1px #a9a9a9 solid;
 }
-.write1{
+.write1 {
   position: sticky;
   background-color: white;
   display: flex;
   flex-direction: row;
   align-items: center;
 }
-.write-pic{
+.write-pic {
   width: 800px;
 }
 .write img {
-  margin-right: 10px; 
+  margin-right: 10px;
 }
 .comments-pic-write {
   width: 50px;
   height: 50px;
-  border-radius: 50%;
+  border-radius: 10px;
   object-fit: cover;
-  margin-top: 15px;
-  margin-left: 40px;
+  margin-top: 20px;
+  margin-left: 20px;
   margin-bottom: 20px;
 }
-.input-comment{
+.input-comment {
   display: flex;
-  width: 69%;
+  width: 80%;
   height: 15px;
   padding: 15px;
   border-radius: 10px;
   border: 1px black solid;
 }
-.input-comment::placeholder{
+.input-comment::placeholder {
   font-size: 15px;
   color: black;
 }
-.uploadItem-comment-row{
+.uploadItem-comment-row {
   display: flex;
   flex-direction: row;
-  margin-left: 5px; 
+  margin-left: 5px;
 }
 .uploadItem-comment {
   display: flex;
   align-items: center;
   border-radius: 4px;
 }
-.uploadItem-comment:hover{
+.uploadItem-comment:hover {
   background-color: lightgray;
   border-radius: 10px;
 }
-.selected-file-comment{
+.selected-file-comment {
   display: flex;
   flex-direction: column;
   background-color: white;
@@ -63,16 +63,16 @@
   margin-left: 100px;
   font-weight: bold;
   font-size: 15px;
-  font-family: "Inter" ;
+  font-family: "Inter";
 }
-.selected-image-comment{
+.selected-image-comment {
   max-width: 150px;
   max-height: 100px;
   border-radius: 9px 9px 5px 5px;
-  object-fit: contain; 
+  object-fit: contain;
   border: 1px black solid;
 }
-.file-name-comment{
+.file-name-comment {
   margin-left: 5px;
   margin-right: 30px;
   margin-bottom: 8px;
@@ -95,7 +95,7 @@
 .file-name-comment::-webkit-scrollbar-thumb:hover {
   background-color: #555;
 }
-.clear-file-button-comment{
+.clear-file-button-comment {
   display: flex;
   position: absolute;
   left: 260px;
@@ -103,13 +103,13 @@
   padding: 3px 4px;
   background-color: rgb(0, 0, 0, 0.5);
 }
-.clear-file-button-comment:hover{  
+.clear-file-button-comment:hover {
   background-color: rgba(0, 0, 0, 0.3);
   border-radius: 50%;
-  transform: translate(0, -1px) scale(1.0);
+  transform: translate(0, -1px) scale(1);
   filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
 }
-.button-comment{
+.button-comment {
   border: none;
   background-color: whitesmoke;
   color: black;
@@ -119,7 +119,7 @@
   margin-left: -5px;
   margin-right: 20px;
 }
-.comment{
+.comment {
   margin-top: 1px;
   padding-bottom: 15px;
   display: flex;
@@ -127,17 +127,17 @@
   flex-direction: column;
   gap: 20px;
   width: 100%;
-  border-bottom: 1px black solid;
+  border-bottom: 1px #a9a9a9 solid;
 }
 .comments-pic {
   width: 50px;
   height: 50px;
-  border-radius: 50%;
+  border-radius: 10px;
   object-fit: cover;
   margin-top: 10px;
-  margin-left: 40px;
+  margin-left: 20px;
 }
-.comment-info{
+.comment-info {
   position: relative;
   flex: 5;
   display: flex;
@@ -146,46 +146,46 @@
   justify-content: flex-start;
   gap: 3px;
   margin-top: 8px;
-  width: 100%; 
+  width: 100%;
 }
 .comment-info > * {
-  margin-right: 10px; 
+  margin-right: 10px;
 }
 
-.comment-info span{
+.comment-info span {
   font-size: 20px;
   font-weight: bold;
-  font-family: "Inter" ;
-  margin-top: 0px; 
+  font-family: "Inter";
+  margin-top: 0px;
 }
 
-.comment-info h3{
+.comment-info h3 {
   flex: 1;
   font-size: 15px;
-  font-family: "Inter" ;
+  font-family: "Inter";
   font-weight: 400;
   margin-top: 13px;
-  margin-left: 10px; 
+  margin-left: 10px;
 }
-.button-comment-desc{
+.button-comment-desc {
   width: 30px;
   height: 30px;
-  margin-top: -40px; 
+  margin-top: -40px;
   margin-left: auto;
   background-color: transparent;
 }
-.button-comment-desc:hover{
+.button-comment-desc:hover {
   border-radius: 10px;
   background-color: lightgray;
 }
-.comments-content{
+.comments-content {
   margin-top: 0px;
-  margin-left: 50px;
+  margin-left: 25px;
 }
-.comments-content h4{
+.comments-content h4 {
   font-size: 15px;
   font-weight: normal;
-  font-family: "Inter" ;
+  font-family: "Inter";
   text-decoration: none;
   margin-top: -5px;
   margin-bottom: 10px;
@@ -206,7 +206,7 @@
 .img-button-comments:hover img {
   filter: brightness(0.7);
   z-index: 0;
-}  
+}
 
 .popup-overlay-comments {
   position: fixed;
@@ -218,7 +218,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 999; 
+  z-index: 999;
 }
 
 .popup-comments {
@@ -248,7 +248,7 @@
 }
 
 .post-option-popup-other-comment,
-.post-option-popup-self-comment { 
+.post-option-popup-self-comment {
   position: relative;
   background-color: white;
   border: 1px solid #ccc;
@@ -274,7 +274,7 @@
   padding-top: 2px;
   margin-right: 20px;
 }
-.post-option-popup-other-comment button:hover{
+.post-option-popup-other-comment button:hover {
   background-color: lightgray;
   border-radius: 5px;
 }
@@ -293,9 +293,9 @@
   padding: 5px;
   padding-top: 2px;
   margin-right: 20px;
-} 
+}
 
-.post-option-popup-self-comment button:hover{
+.post-option-popup-self-comment button:hover {
   background-color: lightgray;
   border-radius: 5px;
 }
@@ -308,28 +308,28 @@
   border: 1px black solid;
   border-radius: 10px;
   width: 300px;
-  margin-top: 90px; 
+  margin-top: 90px;
   z-index: 12;
 }
-.edit-comment-content{
+.edit-comment-content {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.edit-comment-warn{
+.edit-comment-warn {
   position: absolute;
   padding: 10px;
   border: 1px black solid;
   border-radius: 10px;
   background-color: white;
 }
-.edit-comment-warn p{
+.edit-comment-warn p {
   font-size: 12px;
   margin-top: 10px;
   margin-right: 20px;
 }
-.close-warn-comment{
+.close-warn-comment {
   position: absolute;
   width: 25px;
   height: 25px;
@@ -337,43 +337,43 @@
   margin-left: 172px;
   background-color: transparent;
 }
-.close-warn-comment:hover{
+.close-warn-comment:hover {
   width: 25px;
   height: 25px;
 }
-.del-img-edit-comment{
+.del-img-edit-comment {
   border-radius: 10px;
   background-color: darkred;
   color: white;
 }
-.del-img-edit-comment:hover{
+.del-img-edit-comment:hover {
   border-radius: 10px;
   background-color: red;
   color: white;
 }
-.save-edit-comment{
+.save-edit-comment {
   margin-top: -5px;
   border-radius: 10px;
   background-color: black;
   color: white;
 }
-.save-edit-comment:hover{
+.save-edit-comment:hover {
   border-radius: 10px;
-  background-color: #5C5C5C;
+  background-color: #5c5c5c;
   color: white;
 }
-.close-edit-comment{
+.close-edit-comment {
   margin-top: -5px;
   border-radius: 10px;
   background-color: black;
   color: white;
 }
-.close-edit-comment:hover{
+.close-edit-comment:hover {
   border-radius: 10px;
-  background-color: #5C5C5C;
+  background-color: #5c5c5c;
   color: white;
 }
-.info-comment{
+.info-comment {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -383,7 +383,7 @@
   margin-left: 40px;
   gap: 90px;
 }
-.item-comment{
+.item-comment {
   display: flex;
   align-items: center;
   gap: 5px;
@@ -391,38 +391,37 @@
 .item-comment:hover .icon {
   cursor: pointer;
 }
-.item-comment h3{
-  font-family: "Inter" ;
+.item-comment h3 {
+  font-family: "Inter";
   font-size: 15px;
   font-weight: bold;
   margin: 0;
 }
 
-
 /*Commento.css*/
 
-.commento{
+.commento {
   display: flex;
   flex-direction: column;
   overflow-y: auto;
   height: auto;
   width: 100%;
   max-height: 600px;
-  overflow-y: auto; 
+  overflow-y: auto;
   scrollbar-width: thin;
-  scrollbar-color: #aaa #ddd; 
+  scrollbar-color: #aaa #ddd;
   margin-left: -10px;
   margin-bottom: 10px;
-  border-top: 1px black solid;
-  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
+  margin-right: -10px;
+  border-top: 1px #a9a9a9 solid;
 }
 
 .commento::-webkit-scrollbar {
-  width: 8px; 
+  width: 8px;
 }
 
 .commento::-webkit-scrollbar-thumb {
-  background-color: transparent; 
+  background-color: transparent;
   border-radius: 10px;
 }
 
@@ -430,6 +429,3 @@
   background-color: transparent;
   border-radius: 10px;
 }
- 
-
-

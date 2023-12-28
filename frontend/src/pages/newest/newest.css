@@ -1,68 +1,68 @@
-.home{
-    display: grid;
-    grid-template-columns: auto 1fr; 
-    grid-gap: 5px;
-  }
-  
-.topbar-fyp{
+.home {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-gap: 5px;
+}
+
+.topbar-fyp {
   width: 100%;
   display: flex;
   flex-direction: row;
   gap: 10px;
-  margin-top: 20px; 
-  margin-left: -5px; 
+  margin-top: 20px;
+  margin-left: -5px;
 }
-.topbar-fyp .link-fyp{ 
+.topbar-fyp .link-fyp {
   border-bottom: 3px black solid;
 }
-.topbar-fyp .link-following{  
+.topbar-fyp .link-following {
 }
-  
+
 .main-content-newest {
-  flex: 1; 
+  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: flex-start;  
-  max-width: calc(100% - 460px);  
-  margin-left: 60px; 
-  padding: 0; 
-  }
-  .main-content.no-right-bar-newest {
-    margin-top: 83px;
-    margin-left: 425px;
-    max-width: calc(100% - 550px);
-  }
-  
-  .home-content-newest{
-      width: 100%;
-      flex-grow: 1;
-  }
-  .home-content-newest .posts{
-  }
-  .home-content-newest .post{
-      width: 98%; 
-  }
-  .home-content .upload{ 
-  }
-   
-  .side-content h5{
-    position: fixed; 
-    text-align: center;
-    width: 230px;
-    right: 60px; 
-    bottom: 0px;
-    font-size: 12px;
-    font-family: "Inter" ;
-    font-weight: bold;
-  }
+  align-items: flex-start;
+  max-width: calc(100% - 460px);
+  margin-left: 60px;
+  padding: 0;
+}
+.main-content.no-right-bar-newest {
+  margin-top: 73px;
+  margin-left: 425px;
+  max-width: calc(100% - 550px);
+}
 
-  /*buat navbar*/
-.newest-navbar .navbar-newest{
+.home-content-newest {
+  width: 100%;
+  flex-grow: 1;
+}
+.home-content-newest .posts {
+}
+.home-content-newest .post {
+  width: 98%;
+}
+.home-content .upload {
+}
+
+.side-content h5 {
+  position: fixed;
+  text-align: center;
+  width: 230px;
+  right: 60px;
+  bottom: 0px;
+  font-size: 12px;
+  font-family: "Inter";
+  font-weight: bold;
+}
+
+/*buat navbar*/
+.newest-navbar .navbar-newest {
   padding-bottom: 5px;
   border-bottom: 2px white solid;
   color: white;
 }
-.newest-navbar .navbar-newest button{
+.newest-navbar .navbar-newest button {
   color: white;
 }

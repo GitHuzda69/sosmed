@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Sidebar from "../../component/Leftbar/Leftbar.js";
 import Rightbar from "../../component/rightbar/Rightbar.js";
 import SearchBar from "../../component/search/Search";
@@ -7,7 +8,6 @@ import "./newest.css";
 import "../../component/Settings/Settings.css";
 import "../../component/Logout/Logout.css";
 import Post from "../../component/post/Post.js";
-import Upload from "../../component/Upload/Upload.js";
 import Logout from "../../component/Logout/Logout.js";
 import { makeRequest } from "../../fetch.js";
 import FypSwitch from "../../component/fyp-button/fyp-switch.js";
@@ -24,6 +24,8 @@ const Newest = () => {
   const [openPostOption, setOpenPostOption] = useState(null);
   const [friends, setFriends] = useState([]);
   const [isShowRightBar, setIsShowRightBar] = useState(true);
+  const [isUploadVisible, setIsUploadVisible] = useState(false);
+  const navigate = useNavigate();
 
   const isHomePage = true;
   const isNewestPage = true;
@@ -32,7 +34,7 @@ const Newest = () => {
     const fetchPost = async () => {
       try {
         const res = await makeRequest("posts");
-        res.sort((post1, post2) => post2.desc.length - post1.desc.length);
+        res.sort((post1, post2) => new Date(post2.createdAt) - new Date(post1.createdAt));
         setPosts(res);
       } catch (err) {
         console.log(err);
@@ -97,11 +99,26 @@ const Newest = () => {
     }
   }, []);
 
+  const toggleUpload = () => {
+    navigate("/", { state: { updateUploadVisibility: !isUploadVisible } });
+    setIsUploadVisible(!isUploadVisible);
+  };
+  useEffect(() => {
+    setIsUploadVisible(!isUploadVisible);
+  }, [navigate, isUploadVisible]);
+
   return (
     <>
       <div className={isDarkMode ? "dark-mode" : "app"}>
         <div className="leftbar-newest">
-          <Sidebar toggleSettings={toggleSettings} toggleLogout={toggleLogout} isHomePage={isHomePage} isShowRightBar={isShowRightBar} setIsShowRightBar={setIsShowRightBar} />
+          <Sidebar
+            toggleSettings={toggleSettings}
+            toggleUpload={toggleUpload}
+            toggleLogout={toggleLogout}
+            isHomePage={isHomePage}
+            isShowRightBar={isShowRightBar}
+            setIsShowRightBar={setIsShowRightBar}
+          />
         </div>
         <div className={`main-content ${!isShowRightBar ? "no-right-bar-newest" : ""}`}>
           {!isShowRightBar && (
@@ -116,7 +133,6 @@ const Newest = () => {
             </div>
           )}
           <div className="home-content-newest">
-            <Upload />
             <div className={`posts`}>
               {posts.map((p) => (
                 <Post key={p._id} post={p} openPostOption={openPostOption} handleOpenPostOption={handleOpenPostOption} handleClosePostOption={handleClosePostOption} friends={friends} />

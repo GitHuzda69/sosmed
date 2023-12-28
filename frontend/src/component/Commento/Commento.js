@@ -1,5 +1,5 @@
 import React from "react";
-import { makeRequest } from "../../fetch.js";
+import { makeAxios, makeRequest } from "../../fetch.js";
 import Comments from "../comments/Comments.js";
 import "../comments/Comments.css";
 import { useContext, useState, useRef, useEffect } from "react";
@@ -18,13 +18,13 @@ const Commento = ({ postid, className }) => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [friends, setFriends] = useState([]);
 
-  const upload = async () => {
+  const upload = async (file) => {
     try {
       const formData = new FormData();
       const fileName = Date.now() + file.name;
       formData.append("name", fileName);
       formData.append("file", file);
-      await makeRequest("upload", "POST", formData);
+      await makeAxios.post("/upload", { formData });
       return fileName;
     } catch (err) {
       console.log(err);
@@ -43,11 +43,9 @@ const Commento = ({ postid, className }) => {
           })
         );
       } catch (error) {
-        // Handle error
         console.error("Error fetching comments:", error.message);
       }
     };
-
     fetchComments();
   }, [postid]);
 
@@ -88,9 +86,7 @@ const Commento = ({ postid, className }) => {
             userId: currentUser._id,
           };
           await makeRequest("comments", "POST", newComment);
-
           setComments((prevComments) => [...prevComments, newComment]);
-
           setDesc("");
           setFile(null);
         } catch (error) {
@@ -128,12 +124,6 @@ const Commento = ({ postid, className }) => {
           <img className="comments-pic-write" src={currentUser && currentUser.profilePicture ? PF + currentUser.profilePicture : defaultprofile} alt={currentUser.displayname} />
           <input className="input-comment" type="text" id="desc" placeholder="Write a comment . . . " value={desc} onChange={(e) => setDesc(e.target.value)} />
           <div className="uploadItem-comment-row">
-            <button className="uploadItem-comment">
-              <Icon icon="ic:outline-poll" width={25} height={25}></Icon>
-            </button>
-            <button className="uploadItem-comment">
-              <Icon icon="fluent:gif-16-regular" width={25} height={25}></Icon>
-            </button>
             <button className="uploadItem-comment" onClick={handleMediaButtonClick}>
               <Icon icon="material-symbols:perm-media-outline" width={25} height={25}></Icon>
             </button>

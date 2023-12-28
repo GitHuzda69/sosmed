@@ -132,23 +132,23 @@
   background-color: transparent;
   color: white;
 }
-.dark-mode .settings-pages{
+.dark-mode .settings-pages {
   margin-top: 90px;
   margin-left: 425px;
   background-color: #1e1e1e;
   color: white;
 }
-.dark-mode .settingspage-title{
+.dark-mode .settingspage-title {
   background-color: #1e1e1e;
   border-bottom: 2px #afafaf solid;
 }
-.dark-mode .button-link-settings{
+.dark-mode .button-link-settings {
   color: white;
 }
-.dark-mode .link-settings{
+.dark-mode .link-settings {
   color: white;
 }
-.dark-mode .logout-settings-container button{
+.dark-mode .logout-settings-container button {
   background-color: #5c5c5c;
   border-radius: 10px;
 }
@@ -229,6 +229,35 @@
   border-radius: 10px;
   background-color: #5c5c5c;
   color: white;
+}
+.dark-mode .post-link {
+  color: white;
+}
+
+/*buat post solo*/
+.dark-mode .post-solo {
+  margin-top: 11px;
+  margin-left: 80px;
+  background-color: #1e1e1e;
+}
+.dark-mode .post-nav {
+  background-color: #1e1e1e;
+}
+.dark-mode .post-nav button {
+  color: white;
+}
+.dark-mode .post-solo-content {
+  background-color: #1e1e1e;
+}
+.dark-mode .post-solo-norightbar {
+  margin-left: 425px;
+  background-color: #1e1e1e;
+}
+.dark-mode .user-solo {
+  background-color: #1e1e1e;
+}
+.dark-mode .item-solo {
+  background-color: #1e1e1e;
 }
 
 /*buat commento & comments */
@@ -314,12 +343,52 @@
 /*buat home*/
 .dark-mode .home {
 }
-.dark-mode .main-content{
+.dark-mode .main-content {
   margin-top: -10px;
   margin-left: 70px;
 }
-.dark-mode .main-content.no-right-bar{
+.dark-mode .main-content.no-right-bar {
   margin-top: 77px;
+  margin-left: 415px;
+}
+
+/*buat result*/
+.dark-mode .no-result {
+  margin-left: 0px;
+  background-color: #1e1e1e;
+}
+.dark-mode .main-content-result {
+  margin-left: 70px;
+}
+.dark-mode .main-content-result.no-right-bar {
+  margin-top: 78px;
+  margin-left: 415px;
+}
+.dark-mode .topbar-result {
+  margin-top: 12px;
+}
+.dark-mode .no-result-norightbar {
+  background-color: #1e1e1e;
+}
+
+.dark-mode .topbar-result .fyp-switch {
+  background-color: #1e1e1e;
+}
+.dark-mode .topbar-result .link-fyp {
+  color: white;
+}
+.dark-mode .topbar-result .link-following {
+  color: white;
+}
+/*buat fyp*/
+.dark-mode .main-content.no-right-bar-fyp {
+  margin-top: 67px;
+  margin-left: 415px;
+}
+
+/*buat newest*/
+.dark-mode .main-content.no-right-bar-newest {
+  margin-top: 70px;
   margin-left: 415px;
 }
 
@@ -356,7 +425,7 @@
 }
 .dark-mode .topbar-fyp .link-following {
   color: white;
-} 
+}
 
 /*buat notif*/
 .dark-mode .main-notif {
@@ -592,7 +661,7 @@
 .dark-mode .following-profile-switch-button:hover {
   background-color: #5c5c5c;
 }
-.dark-mode .profil-norightbar{
+.dark-mode .profil-norightbar {
   margin-top: 83px;
   margin-left: 425px;
 }

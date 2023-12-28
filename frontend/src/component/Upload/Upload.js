@@ -15,7 +15,6 @@ const Upload = () => {
   const [audioRecording, setAudioRecording] = useState(null);
   const [isRecording, setIsRecording] = useState(false);
   const mediaRecorder = useRef(null);
-  const [recordingText, setRecordingText] = useState("Recording");
   const [recordingDuration, setRecordingDuration] = useState(0);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
@@ -70,6 +69,7 @@ const Upload = () => {
 
       try {
         await makeAxios.post("/upload", data);
+        window.location.reload();
       } catch (err) {
         // Handle error
         console.error("Error uploading file:", err.message);
