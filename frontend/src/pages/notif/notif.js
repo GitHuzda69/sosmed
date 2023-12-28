@@ -20,6 +20,7 @@ function Notif() {
   const [showUnread, setShowUnread] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [notification, setNotification] = useState([]);
+  const [notif, masukNotif] = useState([]);
   const [notificationsReaded, setNotificationReaded] = useState([]);
   const [notificationsUnReaded, setNotificationUnReaded] = useState([]);
   const [user, setUser] = useState([]);
@@ -36,6 +37,7 @@ function Notif() {
     const fetchNotif = async () => {
       try {
         const res = await makeRequest(`notif?own=${currentUser._id}`, "GET");
+        res.sort((n1, n2) => new Date(n2.createdAt) - new Date(n1.createdAt));
         setNotification(res);
       } catch (err) {
         console.error(err);
@@ -48,6 +50,7 @@ function Notif() {
     const fetchNotifRead = async () => {
       try {
         const res = await makeRequest(`notif?own=${currentUser._id}&read=true`, "GET");
+        res.sort((n1, n2) => new Date(n2.createdAt) - new Date(n1.createdAt));
         setNotificationReaded(res);
       } catch (err) {
         console.error(err);
@@ -60,6 +63,7 @@ function Notif() {
     const fetchNotifUnRead = async () => {
       try {
         const res = await makeRequest(`notif?own=${currentUser._id}&read=false`, "GET");
+        res.sort((n1, n2) => new Date(n2.createdAt) - new Date(n1.createdAt));
         setNotificationUnReaded(res);
       } catch (err) {
         console.error(err);
@@ -68,27 +72,36 @@ function Notif() {
     fetchNotifUnRead();
   }, [currentUser]);
 
-  const notif = notification.find((originalNotification) => {
-    return originalNotification;
-  });
+  const markAsRead = async () => {
+    try {
+      await makeRequest(`notif/read`, "PUT", { userId: currentUser._id });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   useEffect(() => {
     const fetchUser = async () => {
-      if (notif && notif.userId) {
-        const url = `users?userId=${notif.userId}`;
-        try {
-          const res = await makeRequest(url);
-          setUser(res);
-        } catch (err) {
-          console.error("Error:", err.message);
-        }
-      } else {
-        console.error("Notification or userId is undefined");
+      try {
+        const usersPromises = notification.map(async (notif) => {
+          if (notif.userId) {
+            const url = `users?userId=${notif.userId}`;
+            const res = await makeRequest(url);
+            return res;
+          }
+          return null;
+        });
+        const users = await Promise.all(usersPromises);
+        const filteredUsers = users.filter((user) => user !== null);
+        filteredUsers.map((a) => {
+          setUser(a);
+        });
+      } catch (err) {
+        console.error("Error:", err.message);
       }
     };
-    if (notif) {
-      fetchUser();
-    }
-  }, [notif]);
+    fetchUser();
+  }, [notification]);
 
   const toggleSettings = () => {
     setSettingOpen(!settingOpen);
@@ -155,13 +168,13 @@ function Notif() {
   };
   useEffect(() => {
     setIsUploadVisible(!isUploadVisible);
-  }, [navigate, isUploadVisible]);
+  }, [navigate]);
 
   return (
     <div className={isDarkMode ? "dark-mode" : "app"}>
       <div className={isShowRightBar ? "main-notif" : "main-notif-norightbar"}>
         <h1>Notifications</h1>
-        <button className={isShowRightBar ? "mark-read-button" : "mark-read-button-norightbar"}>
+        <button className={isShowRightBar ? "mark-read-button" : "mark-read-button-norightbar"} onClick={markAsRead}>
           {isShowRightBar && <Icon icon="solar:check-read-linear" width={30} height={30} />}Mark all as read
         </button>
         <div className="notif-container">

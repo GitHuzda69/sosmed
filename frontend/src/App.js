@@ -43,7 +43,7 @@ function App() {
 
   useEffect(() => {
     socket.emit("addUser", user?._id);
-  }, [user]);
+  }, []);
 
   return (
     <Router>
@@ -54,6 +54,7 @@ function App() {
         <Route path="/profile/:username" element={<Profile />} />
         <Route path="/posts/:postid" element={<PostSolo />} />
         <Route path="/fyp/profile/:username" element={<Profile />} />
+        <Route path="/newest/profile/:username" element={<Profile />} />
         <Route path="/login/profile/:username" element={<Profile />} />
         <Route path="/friend/:username" element={user ? <Friends /> : <Login />} />
         <Route exact path="/fyp" element={user ? <Fyp /> : <Login />} />

@@ -55,6 +55,10 @@ const PostSolo = () => {
     setDarkMode(storedDarkModeStatus);
   });
 
+  useEffect(() => {
+    setIsLiked(posts.likes && posts.likes.includes(currentUser._id));
+  }, [posts.likes]);
+
   const setDarkMode = (isDarkMode) => {
     if (isDarkMode) {
       document.documentElement.classList.add("dark-mode");

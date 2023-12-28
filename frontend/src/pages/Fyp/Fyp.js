@@ -106,7 +106,7 @@ const Fyp = () => {
   };
   useEffect(() => {
     setIsUploadVisible(!isUploadVisible);
-  }, [navigate, isUploadVisible]);
+  }, [navigate]);
 
   return (
     <>

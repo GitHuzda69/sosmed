@@ -1,13 +1,14 @@
-.main-tos{
+.main-tos {
   height: 100%;
   width: 100%;
   min-height: 700px;
+  padding-bottom: 150px;
   display: flex;
   flex-direction: row;
   background-color: white;
   font-family: "Inter";
-} 
-.tos-main{
+}
+.tos-main {
   height: 100%;
   width: 100%;
   display: flex;
@@ -15,25 +16,25 @@
   background-color: white;
   font-family: "Inter";
 }
-.tos-border{ 
+.tos-border {
   display: flex;
   flex-direction: column;
 }
-.back-tos-button{
+.back-tos-button {
   position: absolute;
   top: 10px;
   left: 10px;
 }
-.tos-buttons{ 
+.tos-buttons {
   min-width: 200px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   padding: 10px;
   padding-left: 15px;
-  margin-top: 40px; 
+  margin-top: 40px;
 }
-.tos-buttons button:hover{
+.tos-buttons button:hover {
   border-radius: 5px;
 }
 .tos-button {
@@ -41,84 +42,83 @@
   font-size: 16px;
 }
 
-.tos-content{
+.tos-content {
   height: 100%;
-  max-height: 1000px; 
   width: 100%;
-  transition: max-height 0.5s ease-in-out;  
+  margin-left: 260px;
+  margin-right: 260px;
+  transition: max-height 0.5s ease-in-out;
   overflow: hidden;
 }
 
 .about-container,
 .tos-container,
 .privacy-container,
-.copyright-container{
+.copyright-container {
   position: relative;
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   justify-content: center;
-  border: 2px #8E8E8E solid;
-  border-radius: 10px; 
+  border: 2px #8e8e8e solid;
+  border-radius: 10px;
   margin: 10px;
   padding: 15px;
 }
-.about-container h2{
+.about-container h2 {
   margin: 0;
   margin-bottom: 20px;
 }
 
-.tos-container h2{
+.tos-container h2 {
   margin: 0;
   margin-bottom: 20px;
   font-weight: bold;
   font-size: 25px;
 }
-.tos-container h3{
+.tos-container h3 {
   margin-top: 5px;
   font-weight: bold;
   font-size: 20px;
 }
-.tos-container p{
+.tos-container p {
   margin-top: -15px;
   font-weight: normal;
   font-size: 16px;
 }
- 
-.privacy-container h2{ 
+
+.about-container h2,
+.tos-container h2,
+.copyright-container h2,
+.privacy-container h2 {
   display: flex;
   flex-direction: row;
-  align-items: center; 
+  align-items: center;
   gap: 10px;
   margin: 0;
   margin-bottom: 20px;
   font-size: 25px;
   font-weight: bold;
 }
-.privacy-container h3{
+.privacy-container h3 {
   margin-top: 0px;
   font-size: 20px;
   font-weight: bold;
 }
-.privacy-container p{
+.privacy-container p {
   margin-top: -10px;
   font-weight: normal;
   font-size: 16px;
 }
-.privacy-container span{
+.privacy-container span {
   font-weight: normal;
   font-size: 16px;
 }
- 
-.copyright-container h2{
-  margin: 0;
-  margin-bottom: 20px;
-}
 
-.bold-tos-button{
+.bold-tos-button {
   font-weight: bold;
 }
 
-.showTosButton{
+.showTosButton {
   position: absolute;
   top: 20px;
   right: 20px;
@@ -133,7 +133,7 @@
 .tos-content.closed {
   height: 0;
 }
- 
+
 .about-container,
 .tos-container,
 .privacy-container,
@@ -141,13 +141,13 @@
   width: calc(100% - 60px);
   transition: margin 0.5s ease-in-out, padding 0.5s ease-in-out;
 }
- 
+
 .about-container.closed,
 .tos-container.closed,
 .privacy-container.closed,
-.copyright-container.closed { 
+.copyright-container.closed {
   max-height: 60px;
-  width: calc(100% - 60px); 
+  width: calc(100% - 60px);
   margin: 10px;
   padding: 15px;
   padding-bottom: 20px;

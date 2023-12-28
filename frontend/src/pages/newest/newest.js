@@ -105,7 +105,7 @@ const Newest = () => {
   };
   useEffect(() => {
     setIsUploadVisible(!isUploadVisible);
-  }, [navigate, isUploadVisible]);
+  }, [navigate]);
 
   return (
     <>

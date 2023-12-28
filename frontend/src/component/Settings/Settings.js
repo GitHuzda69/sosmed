@@ -47,18 +47,6 @@ const Settings = ({ onClose, isDarkMode, toggleDarkMode, isShowRightBar, setIsSh
             <span className="slider round"></span>
           </label>
         </div>
-        <button>
-          Connect to Instagram
-          <Icon icon="bi:instagram" width="20" height="20" />
-        </button>
-        <button>
-          Connect to Facebook
-          <Icon icon="ic:baseline-facebook" width="23" height="23" />
-        </button>
-        <button style={{ marginTop: "0px" }}>
-          Connect to Twitter
-          <Icon icon="mdi:twitter" width="20" height="20" />
-        </button>
         <Link to={`/profile/${user.username}`}>
           <button>Edit Profile</button>
         </Link>

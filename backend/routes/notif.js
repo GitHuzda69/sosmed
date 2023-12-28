@@ -43,13 +43,13 @@ router.post("/", async (req, res) => {
 // marks all read
 router.put("/read", async (req, res) => {
   try {
-    Notif.findByIdAndUpdate(
+    await Notif.updateMany(
       { own: req.body.userId },
       {
         $set: { read: true },
       }
     );
-    return res.status(200).json("Notif saved");
+    return res.status(200).json("Notif read");
   } catch (err) {
     console.error(err);
     return res.status(500).json(err);

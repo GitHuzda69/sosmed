@@ -18,7 +18,7 @@ const Rightbar = () => {
     socket?.on("getUsers", (users) => {
       setOnlineUser(currentUser.followings.filter((f) => users.some((u) => u.userId === f)));
     });
-  }, [currentUser]);
+  }, []);
 
   useEffect(() => {
     const getFriends = async () => {

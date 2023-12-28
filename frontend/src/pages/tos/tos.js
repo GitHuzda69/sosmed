@@ -62,24 +62,13 @@ function TermsOfService() {
             <button onClick={handleGoBack} className="back-tos-button">
               <Icon icon="ion:arrow-back-outline" width={25} height={25} />
             </button>
-            <div className="tos-buttons">
-              <button onClick={() => toggleSection("about")} className={`tos-button ${showAbout ? "bold-tos-button" : ""}`}>
-                1. About
-              </button>
-              <button onClick={() => toggleSection("tos")} className={`tos-button ${showTos ? "bold-tos-button" : ""}`}>
-                2. Terms Of Services
-              </button>
-              <button onClick={() => toggleSection("privacy")} className={`tos-button ${showPrivacy ? "bold-tos-button" : ""}`}>
-                3. Privacy
-              </button>
-              <button onClick={() => toggleSection("copyright")} className={`tos-button ${showCopyright ? "bold-tos-button" : ""}`}>
-                4. Copyright
-              </button>
-            </div>
           </div>
           <div className="tos-content">
             <div className={`about-container ${showAbout ? "" : "closed"}`}>
-              <h2>Sync, Manage and Direct</h2>
+              <h2>
+                <Icon icon="ep:document" width={25} height={25} />
+                Sync, Manage and Direct
+              </h2>
               <button className="showTosButton" onClick={() => toggleSection("about")}>
                 {showAbout ? <Icon icon="mingcute:down-line" width={30} height={30} /> : <Icon icon="mingcute:up-line" width={30} height={30} />}
               </button>
@@ -113,7 +102,10 @@ function TermsOfService() {
               )}
             </div>
             <div className={`tos-container ${showTos ? "" : "closed"}`}>
-              <h2>Terms Of Services</h2>
+              <h2>
+                <Icon icon="ep:document" width={25} height={25} />
+                Terms Of Services
+              </h2>
               <button className="showTosButton" onClick={() => toggleSection("tos")}>
                 {showTos ? <Icon icon="mingcute:down-line" width={30} height={30} /> : <Icon icon="mingcute:up-line" width={30} height={30} />}
               </button>
@@ -187,7 +179,10 @@ function TermsOfService() {
               )}
             </div>
             <div className={`copyright-container ${showCopyright ? "" : "closed"}`}>
-              <h2>Copyright</h2>
+              <h2>
+                <Icon icon="tdesign:copyright" width={25} height={25} />
+                Copyright
+              </h2>
               <button className="showTosButton" onClick={() => toggleSection("copyright")}>
                 {showCopyright ? <Icon icon="mingcute:down-line" width={30} height={30} /> : <Icon icon="mingcute:up-line" width={30} height={30} />}
               </button>

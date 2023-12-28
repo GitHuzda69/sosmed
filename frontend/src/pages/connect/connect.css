@@ -55,19 +55,6 @@
   flex: 1;
 }
 
-.connect-name-fb {
-  padding: 5px;
-  padding-bottom: 15px;
-}
-.connect-name-fb h2 {
-  font-size: 18px;
-  font-weight: bold;
-}
-.connect-name-fb h3 {
-  margin-top: -10px;
-  font-size: 14px;
-  font-weight: normal;
-}
 .connect-name {
   padding: 5px;
 }
@@ -76,6 +63,7 @@
   font-weight: bold;
 }
 .connect-name h3 {
+  margin-top: -10px;
   font-size: 14px;
   font-weight: normal;
 }

@@ -87,7 +87,7 @@ const Connect = () => {
   };
   useEffect(() => {
     setIsUploadVisible(!isUploadVisible);
-  }, [navigate, isUploadVisible]);
+  }, [navigate]);
 
   return (
     <div className={isDarkMode ? "dark-mode" : "app"}>
@@ -106,9 +106,9 @@ const Connect = () => {
         </div>
         <div className="connect-content">
           <Icon icon="entypo-social:facebook" width={40} height={40} />
-          <div className="connect-name-fb">
-            <h2>Connect to Facebook</h2>
-            {currentUser && currentUser.facebook ? currentUser.facebook : ""}
+          <div className="connect-name">
+            <h2> {currentUser.facebook && currentUser.facebook ? "Connected to Facebook" : "Connect to Facebook"}</h2>
+            {currentUser && currentUser.facebook && <h3>{currentUser.facebook}</h3>}
           </div>
           {currentUser && currentUser.facebook ? (
             <button className="disconnect-button" onClick={disconnectFacebook}>

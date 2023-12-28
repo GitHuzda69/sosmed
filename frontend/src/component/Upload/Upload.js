@@ -69,7 +69,6 @@ const Upload = () => {
 
       try {
         await makeAxios.post("/upload", data);
-        window.location.reload();
       } catch (err) {
         // Handle error
         console.error("Error uploading file:", err.message);
@@ -82,6 +81,7 @@ const Upload = () => {
       setAudio(null);
       setFile(null);
       setAudioRecording(null);
+      window.location.reload();
     } catch (err) {
       console.error("Error creating post:", err.message);
     }

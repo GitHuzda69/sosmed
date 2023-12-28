@@ -151,7 +151,7 @@ const Profile = () => {
   };
   useEffect(() => {
     setIsUploadVisible(!isUploadVisible);
-  }, [navigate, isUploadVisible]);
+  }, [navigate]);
 
   return (
     <div className={isDarkMode ? "dark-mode" : "app"}>
