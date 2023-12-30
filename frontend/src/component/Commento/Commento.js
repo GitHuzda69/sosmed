@@ -24,7 +24,7 @@ const Commento = ({ postid, className }) => {
       const fileName = Date.now() + file.name;
       formData.append("name", fileName);
       formData.append("file", file);
-      await makeAxios.post("/upload", { formData });
+      await makeAxios.post("/upload", formData);
       return fileName;
     } catch (err) {
       console.log(err);

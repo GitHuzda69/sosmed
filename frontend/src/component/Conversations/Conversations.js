@@ -19,7 +19,7 @@ export default function Conversation({ conversation, onClick, isSelected, isShow
         const res = await makeRequest(userUrl);
         setUser(res);
       } catch (err) {
-        console.log(err);
+        console.error(err);
       }
     };
     getUser();

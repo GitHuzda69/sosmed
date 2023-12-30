@@ -1,7 +1,7 @@
 import { useContext, useState, useRef, useEffect } from "react";
 import { Icon } from "@iconify/react";
 import "./Update.css";
-import { makeRequest } from "../../fetch";
+import { makeRequest, makeAxios } from "../../fetch";
 import AuthContext from "../../context/authContext";
 import { useLocation, Link } from "react-router-dom";
 
@@ -46,7 +46,7 @@ const Update = ({ user, onClose }) => {
       const fileName = Date.now() + file.name;
       formData.append("name", fileName);
       formData.append("file", file);
-      await makeRequest("upload", "POST", formData);
+      await makeAxios.post("/upload", formData);
       return fileName;
     } catch (err) {
       console.log(err);
