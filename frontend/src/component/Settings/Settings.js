@@ -47,7 +47,7 @@ const Settings = ({ onClose, isDarkMode, toggleDarkMode, isShowRightBar, setIsSh
             <span className="slider round"></span>
           </label>
         </div>
-        <Link to={`/profile/${user.username}`}>
+        <Link style={{ textDecoration: "none" }} to={`/profile/${user.username}`}>
           <button>Edit Profile</button>
         </Link>
       </div>

@@ -30,6 +30,15 @@
 .dark-mode .navbar .searchbar-button {
   color: white;
 }
+.dark-mode .popup-navbar {
+  background-color: rgb(58, 58, 58);
+}
+.dark-mode .profile-navbar button {
+  color: white;
+}
+.dark-mode .navbar-mode h3 {
+  color: white;
+}
 .dark-mode .clear-search-button {
   background-color: transparent;
   color: white;
@@ -233,6 +242,14 @@
 .dark-mode .post-link {
   color: white;
 }
+.dark-mode .no-posts {
+  width: calc(100% - 70px);
+  margin-left: 0px;
+  background-color: #1e1e1e;
+}
+.dark-mode .no-posts-norightbar {
+  background-color: #1e1e1e;
+}
 
 /*buat post solo*/
 .dark-mode .post-solo {
@@ -344,12 +361,25 @@
 .dark-mode .home {
 }
 .dark-mode .main-content {
+  max-width: calc(100% - 369px);
   margin-top: -10px;
   margin-left: 70px;
 }
 .dark-mode .main-content.no-right-bar {
   margin-top: 77px;
   margin-left: 415px;
+}
+.dark-mode .home-content {
+  margin-right: 0;
+}
+.dark-mode .side-content {
+  position: fixed;
+  top: 13px;
+  right: 8px;
+  width: 300px;
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 /*buat result*/

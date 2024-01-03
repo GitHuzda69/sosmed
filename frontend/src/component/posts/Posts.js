@@ -4,7 +4,7 @@ import "./Posts.css";
 import { makeRequest } from "../../fetch.js";
 import AuthContext from "../../context/authContext.js";
 
-export default function Posts({ username, className, isHome }) {
+export default function Posts({ username, className, isHome, isShowRightBar }) {
   const [posts, setPosts] = useState([""]);
   const { user } = useContext(AuthContext);
   const [openPostOption, setOpenPostOption] = useState(null);
@@ -47,22 +47,24 @@ export default function Posts({ username, className, isHome }) {
     <>
       <div className={`posts ${className}`}>
         {!username || username === user.username}
-        {posts.length === 0
-          ? "There is no any post yet"
-          : posts.map(
-              (p) =>
-                p._id && (
-                  <Post
-                    key={p._id}
-                    post={p}
-                    openPostOption={openPostOption}
-                    handleOpenPostOption={handleOpenPostOption}
-                    handleClosePostOption={handleClosePostOption}
-                    isCommentOpen={openCommentSection === p._id}
-                    handleToggleCommentSection={handleToggleCommentSection}
-                  />
-                )
-            )}
+        {posts.length === 0 ? (
+          <div className={isShowRightBar ? "no-posts" : "no-posts-norightbar"}>There is no any post yet</div>
+        ) : (
+          posts.map(
+            (p) =>
+              p._id && (
+                <Post
+                  key={p._id}
+                  post={p}
+                  openPostOption={openPostOption}
+                  handleOpenPostOption={handleOpenPostOption}
+                  handleClosePostOption={handleClosePostOption}
+                  isCommentOpen={openCommentSection === p._id}
+                  handleToggleCommentSection={handleToggleCommentSection}
+                />
+              )
+          )
+        )}
       </div>
     </>
   );

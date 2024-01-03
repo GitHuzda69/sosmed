@@ -36,15 +36,19 @@ const Profile = () => {
   const [isUploadVisible, setIsUploadVisible] = useState(false);
   const navigate = useNavigate();
 
-  const [followed, setFollowed] = useState(currentUser.followings.includes(user?._id));
+  const [followed, setFollowed] = useState(currentUser.followings.includes(user._id));
 
   const isProfilePage = true;
+
+  useEffect(() => {
+    const isFollowing = currentUser.followings.includes(user._id);
+    setFollowed(isFollowing);
+  }, [currentUser.followings]);
 
   useEffect(() => {
     const fetchUser = async () => {
       const res = await makeRequest(`users?username=${username}`);
       setUser(res);
-      setFollowed(currentUser.followings.includes(res._id));
     };
     fetchUser();
   }, [username, currentUser.followings]);
@@ -70,7 +74,6 @@ const Profile = () => {
         await makeRequest(`relationships/${user._id}/follow`, "PUT", {
           userId: currentUser._id,
         });
-        dispatch({ type: "FOLLOW", payload: user._id });
         setShowPopupFollow(true);
       }
     } catch (err) {
@@ -222,10 +225,10 @@ const Profile = () => {
                           </Link>
                         </div>
                       ) : (
-                        <div className="follow-profile">
+                        <button className="follow-profile" onClick={handleFollow}>
                           <Icon icon="bi:person-plus-fill" width={20} height={20} />
                           Follow
-                        </div>
+                        </button>
                       )}
                     </>
                   )}
@@ -297,10 +300,10 @@ const Profile = () => {
                           </Link>
                         </div>
                       ) : (
-                        <div className="follow-profile">
+                        <button className="follow-profile" onClick={handleFollow}>
                           <Icon icon="bi:person-plus-fill" width={20} height={20} />
                           Follow
-                        </div>
+                        </button>
                       )}
                     </>
                   )}

@@ -127,7 +127,7 @@ const Result = () => {
           <div className={isShowRightBar ? "home-content-result" : "home-content-result-norightbar"}>
             <div className={`posts-result`}>
               {posts === "There no result" ? (
-                <div className={isShowRightBar ? "no-result" : "no-result-norightbar"}>There is no result</div>
+                <div className={isShowRightBar ? "no-result" : "no-result-norightbar"}>There is no result for "{keyword}"</div>
               ) : (
                 posts.map(
                   (p) =>

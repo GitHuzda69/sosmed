@@ -91,7 +91,7 @@ function Home() {
           )}
           <div className="home-content">
             {!isShowRightBar ? isUploadVisible && <Upload /> : <Upload />}
-            <Posts isHome={true} />
+            <Posts isHome={true} isShowRightBar={isShowRightBar} />
           </div>
           {isShowRightBar && (
             <div className="side-content">
